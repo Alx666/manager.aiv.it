@@ -22,3 +22,48 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.bold {
+    font-weight: bold;
+}
+
+.middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 30px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.title-margin {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.icon-right {
+    margin-left: 10px;
+}
+
+/* 
+    Sergio:
+    to define a specific style for a single menu section,
+    define a class with lowercase section name
+
+    example:   
+    
+    .topics { background-color: #ff0000; }
+    .topics table > tr { background-color: #333333; }
+    
+    etc...
+    Note you can also create classes for actions within a section:
+
+    .topics.edit { background-color: yellow; }
+    .topics.index { background-color: white; }
+
+*/

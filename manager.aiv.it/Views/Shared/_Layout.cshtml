@@ -24,27 +24,27 @@
 
                     @if(Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Admin))
                     {
-                        <li>@Html.ActionLink("Staff", "Index", "Users")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
                     }
 
                     @if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Secretary))
                     {
-                        <li>@Html.ActionLink("Students", "Index", "Students")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")">@Html.ActionLink("Students", "Index", "Students")</li>
                     }
 
                     @if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Director))
                     {
-                        <li>@Html.ActionLink("Courses", "Index", "Courses")</li>
-                        <li>@Html.ActionLink("Editions", "Index", "Editions")</li>
-                        <li>@Html.ActionLink("Classes", "Index", "Classes")</li>
-                        <li>@Html.ActionLink("Topics", "Index", "Topics")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")">@Html.ActionLink("Courses", "Index", "Courses")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
                     }
                     
                     @if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Teacher))
                     {
-                        <li>@Html.ActionLink("Lessons", "Index", "Lessons")</li>
-                        <li>@Html.ActionLink("Exercises", "Index", "Exercises")</li>
-                        <li>@Html.ActionLink("Assignments", "Index", "Assignments")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Exercises" ? "active" : "")">@Html.ActionLink("Exercises", "Index", "Exercises")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
 
                     }
                 </ul>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content @(ViewContext.RouteData.Values["controller"].ToString().ToLower()) @(ViewContext.RouteData.Values["action"].ToString().ToLower())">
         @RenderBody()
         <hr />
         <footer>            

@@ -4,47 +4,65 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="details">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Details</h2>
+        </div>
+    </div>
 
-<div>
-    <h4>Topic</h4>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Topic</h4>
+        </div>
+    </div>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
+                </div>
+                <div class="col-sm-6">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Description)</span>
+                </div>
+                <div class="col-sm-6">
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.DateAdded)</span>
+                </div>
+                <div class="col-sm-6">
+                    @Html.DisplayFor(model => model.DateAdded)
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.DateDeprecated)</span>
+                </div>
+                <div class="col-sm-6">
+                    @Html.DisplayFor(model => model.DateDeprecated)
+                </div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateDeprecated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateDeprecated)
-        </dd>
-
-    </dl>
+        <div class="col-sm-6">
+            <div class="text-right">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
