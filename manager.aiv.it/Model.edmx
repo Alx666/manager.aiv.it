@@ -1,0 +1,1274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AivModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assignment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExcerciseId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="Deadline" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attending">
+          <Key>
+            <PropertyRef Name="LessonId" />
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="LessonId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Binary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EditionId" Type="int" Nullable="false" />
+          <Property Name="Section" Type="nchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Grade" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CoveredTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="TopicId" Type="int" Nullable="false" />
+          <Property Name="LessonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Edition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="AcademicYear" Type="smallint" Nullable="false" />
+          <Property Name="DateStart" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+        </EntityType>
+        <EntityType Name="EditionSchedule">
+          <Key>
+            <PropertyRef Name="EditionId" />
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="EditionId" Type="int" Nullable="false" />
+          <Property Name="TopicId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Exercise">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BinaryId" Type="int" />
+          <Property Name="AuthorId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="tinyint" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExerciseTopic">
+          <Key>
+            <PropertyRef Name="ExerciseId" />
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="ExerciseId" Type="int" Nullable="false" />
+          <Property Name="TopicId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExerciseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="ClassSize" Type="smallint" />
+          <Property Name="Frequency" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Submit">
+          <Key>
+            <PropertyRef Name="AssignmentId" />
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="AssignmentId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="BinaryId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Score" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Teaching">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="EditionId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="EditionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateAdded" Type="date" Nullable="false" />
+          <Property Name="DateDeprecated" Type="date" />
+          <Property Name="Deprecated" Type="bit" Nullable="false" />
+          <Property Name="BinaryId" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+          <Property Name="ClassId" Type="int" />
+          <Property Name="PictureId" Type="int" />
+        </EntityType>
+        <Association Name="FK_Assignment_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assignment_ToExercise">
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercise">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="ExcerciseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attending_ToLesson">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attending_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_ToEdition">
+          <End Role="Edition" Type="Self.Edition" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="EditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CoveredTopic_ToTable_1">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="CoveredTopic" Type="Self.CoveredTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CoveredTopic">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CoveredTopic_ToTopic">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
+          <End Role="CoveredTopic" Type="Self.CoveredTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CoveredTopic">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edition_ToCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Edition" Type="Self.Edition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Edition">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditionSchedule_ToEdition">
+          <End Role="Edition" Type="Self.Edition" Multiplicity="1" />
+          <End Role="EditionSchedule" Type="Self.EditionSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EditionSchedule">
+              <PropertyRef Name="EditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditionSchedule_ToTopic">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
+          <End Role="EditionSchedule" Type="Self.EditionSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EditionSchedule">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToBinary">
+          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToExerciseType">
+          <End Role="ExerciseType" Type="Self.ExerciseType" Multiplicity="1" />
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExerciseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExerciseTopics_ToExercise">
+          <End Role="Exercise" Type="Self.Exercise" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExerciseTopic" Type="Self.ExerciseTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercise">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExerciseTopic">
+              <PropertyRef Name="ExerciseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExerciseTopics_ToTopic">
+          <End Role="Topic" Type="Self.Topic" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExerciseTopic" Type="Self.ExerciseTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topic">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExerciseTopic">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_ToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Roles_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submit_ToAssignment">
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="1" />
+          <End Role="Submit" Type="Self.Submit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Submit">
+              <PropertyRef Name="AssignmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submit_ToBinary">
+          <End Role="Binary" Type="Self.Binary" Multiplicity="1" />
+          <End Role="Submit" Type="Self.Submit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Submit">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teaching_ToEdition">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Teaching" Type="Self.Teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teaching">
+              <PropertyRef Name="EditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teaching_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Teaching" Type="Self.Teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Teaching">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topic_ToBinary">
+          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AivModelStoreContainer">
+          <EntitySet Name="Assignment" EntityType="Self.Assignment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attending" EntityType="Self.Attending" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Binary" EntityType="Self.Binary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CoveredTopic" EntityType="Self.CoveredTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Edition" EntityType="Self.Edition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EditionSchedule" EntityType="Self.EditionSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exercise" EntityType="Self.Exercise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExerciseTopic" EntityType="Self.ExerciseTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExerciseType" EntityType="Self.ExerciseType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Submit" EntityType="Self.Submit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teaching" EntityType="Self.Teaching" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assignment_ToClass" Association="Self.FK_Assignment_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Assignment" EntitySet="Assignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assignment_ToExercise" Association="Self.FK_Assignment_ToExercise">
+            <End Role="Exercise" EntitySet="Exercise" />
+            <End Role="Assignment" EntitySet="Assignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attending_ToLesson" Association="Self.FK_Attending_ToLesson">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="Attending" EntitySet="Attending" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attending_ToUser" Association="Self.FK_Attending_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Attending" EntitySet="Attending" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_ToEdition" Association="Self.FK_Class_ToEdition">
+            <End Role="Edition" EntitySet="Edition" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CoveredTopic_ToTable_1" Association="Self.FK_CoveredTopic_ToTable_1">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="CoveredTopic" EntitySet="CoveredTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CoveredTopic_ToTopic" Association="Self.FK_CoveredTopic_ToTopic">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="CoveredTopic" EntitySet="CoveredTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edition_ToCourse" Association="Self.FK_Edition_ToCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Edition" EntitySet="Edition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditionSchedule_ToEdition" Association="Self.FK_EditionSchedule_ToEdition">
+            <End Role="Edition" EntitySet="Edition" />
+            <End Role="EditionSchedule" EntitySet="EditionSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditionSchedule_ToTopic" Association="Self.FK_EditionSchedule_ToTopic">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="EditionSchedule" EntitySet="EditionSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToBinary" Association="Self.FK_Exercise_ToBinary">
+            <End Role="Binary" EntitySet="Binary" />
+            <End Role="Exercise" EntitySet="Exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToCourse" Association="Self.FK_Exercise_ToCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Exercise" EntitySet="Exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToExerciseType" Association="Self.FK_Exercise_ToExerciseType">
+            <End Role="ExerciseType" EntitySet="ExerciseType" />
+            <End Role="Exercise" EntitySet="Exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToUser" Association="Self.FK_Exercise_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Exercise" EntitySet="Exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExerciseTopics_ToExercise" Association="Self.FK_ExerciseTopics_ToExercise">
+            <End Role="Exercise" EntitySet="Exercise" />
+            <End Role="ExerciseTopic" EntitySet="ExerciseTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExerciseTopics_ToTopic" Association="Self.FK_ExerciseTopics_ToTopic">
+            <End Role="Topic" EntitySet="Topic" />
+            <End Role="ExerciseTopic" EntitySet="ExerciseTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToClass" Association="Self.FK_Lesson_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_ToRole" Association="Self.FK_Roles_ToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_ToUser" Association="Self.FK_Roles_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submit_ToAssignment" Association="Self.FK_Submit_ToAssignment">
+            <End Role="Assignment" EntitySet="Assignment" />
+            <End Role="Submit" EntitySet="Submit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submit_ToBinary" Association="Self.FK_Submit_ToBinary">
+            <End Role="Binary" EntitySet="Binary" />
+            <End Role="Submit" EntitySet="Submit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teaching_ToEdition" Association="Self.FK_Teaching_ToEdition">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Teaching" EntitySet="Teaching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teaching_ToUser" Association="Self.FK_Teaching_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Teaching" EntitySet="Teaching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topic_ToBinary" Association="Self.FK_Topic_ToBinary">
+            <End Role="Binary" EntitySet="Binary" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToClass" Association="Self.FK_User_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AivModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AivEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assignments" EntityType="AivModel.Assignment" />
+          <EntitySet Name="Binaries" EntityType="AivModel.Binary" />
+          <EntitySet Name="Classes" EntityType="AivModel.Class" />
+          <EntitySet Name="Courses" EntityType="AivModel.Course" />
+          <EntitySet Name="Editions" EntityType="AivModel.Edition" />
+          <EntitySet Name="Submits" EntityType="AivModel.Submit" />
+          <AssociationSet Name="FK_Assignment_ToClass" Association="AivModel.FK_Assignment_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Assignment" EntitySet="Assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submit_ToAssignment" Association="AivModel.FK_Submit_ToAssignment">
+            <End Role="Assignment" EntitySet="Assignments" />
+            <End Role="Submit" EntitySet="Submits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submit_ToBinary" Association="AivModel.FK_Submit_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Submit" EntitySet="Submits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_ToEdition" Association="AivModel.FK_Class_ToEdition">
+            <End Role="Edition" EntitySet="Editions" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edition_ToCourse" Association="AivModel.FK_Edition_ToCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Edition" EntitySet="Editions" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="AivModel.Role" />
+          <EntitySet Name="Users" EntityType="AivModel.User" />
+          <AssociationSet Name="FK_User_ToClass" Association="AivModel.FK_User_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Roles1" Association="AivModel.Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Teaching" Association="AivModel.Teaching">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Lessons" EntityType="AivModel.Lesson" />
+          <AssociationSet Name="FK_Lesson_ToClass" Association="AivModel.FK_Lesson_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToUser" Association="AivModel.FK_Lesson_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="Attending" Association="AivModel.Attending">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Topics" EntityType="AivModel.Topic" />
+          <AssociationSet Name="FK_Topic_ToBinary" Association="AivModel.FK_Topic_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="CoveredTopic" Association="AivModel.CoveredTopic">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="EditionSchedule" Association="AivModel.EditionSchedule">
+            <End Role="Edition" EntitySet="Editions" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          <EntitySet Name="Exercises" EntityType="AivModel.Exercise" />
+          <EntitySet Name="ExerciseTypes" EntityType="AivModel.ExerciseType" />
+          <AssociationSet Name="FK_Assignment_ToExercise" Association="AivModel.FK_Assignment_ToExercise">
+            <End Role="Exercise" EntitySet="Exercises" />
+            <End Role="Assignment" EntitySet="Assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToBinary" Association="AivModel.FK_Exercise_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Exercise" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToCourse" Association="AivModel.FK_Exercise_ToCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Exercise" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToExerciseType" Association="AivModel.FK_Exercise_ToExerciseType">
+            <End Role="ExerciseType" EntitySet="ExerciseTypes" />
+            <End Role="Exercise" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exercise_ToUser" Association="AivModel.FK_Exercise_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Exercise" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="ExerciseTopic" Association="AivModel.ExerciseTopic">
+            <End Role="Exercise" EntitySet="Exercises" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Assignment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExcerciseId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Class" Relationship="AivModel.FK_Assignment_ToClass" FromRole="Assignment" ToRole="Class" />
+          <NavigationProperty Name="Submits" Relationship="AivModel.FK_Submit_ToAssignment" FromRole="Assignment" ToRole="Submit" />
+          <NavigationProperty Name="Exercise" Relationship="AivModel.FK_Assignment_ToExercise" FromRole="Assignment" ToRole="Exercise" />
+        </EntityType>
+        <EntityType Name="Binary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Submits" Relationship="AivModel.FK_Submit_ToBinary" FromRole="Binary" ToRole="Submit" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EditionId" Type="Int32" Nullable="false" />
+          <Property Name="Section" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Assignments" Relationship="AivModel.FK_Assignment_ToClass" FromRole="Class" ToRole="Assignment" />
+          <NavigationProperty Name="Edition" Relationship="AivModel.FK_Class_ToEdition" FromRole="Class" ToRole="Edition" />
+          <NavigationProperty Name="Students" Relationship="AivModel.FK_User_ToClass" FromRole="Class" ToRole="User" />
+          <NavigationProperty Name="Lessons" Relationship="AivModel.FK_Lesson_ToClass" FromRole="Class" ToRole="Lesson" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Editions" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Course" ToRole="Edition" />
+          <NavigationProperty Name="Teachers" Relationship="AivModel.Teaching" FromRole="Course" ToRole="User" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Course" ToRole="Exercise" />
+        </EntityType>
+        <EntityType Name="Edition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="AcademicYear" Type="Int16" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Classes" Relationship="AivModel.FK_Class_ToEdition" FromRole="Edition" ToRole="Class" />
+          <NavigationProperty Name="Course" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Edition" ToRole="Course" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.EditionSchedule" FromRole="Edition" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="Submit">
+          <Key>
+            <PropertyRef Name="AssignmentId" />
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="AssignmentId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Score" Type="Byte" />
+          <NavigationProperty Name="Assignment" Relationship="AivModel.FK_Submit_ToAssignment" FromRole="Submit" ToRole="Assignment" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Submit_ToBinary" FromRole="Submit" ToRole="Binary" />
+        </EntityType>
+        <Association Name="FK_Assignment_ToClass">
+          <End Type="AivModel.Class" Role="Class" Multiplicity="1" />
+          <End Type="AivModel.Assignment" Role="Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submit_ToAssignment">
+          <End Type="AivModel.Assignment" Role="Assignment" Multiplicity="1" />
+          <End Type="AivModel.Submit" Role="Submit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Submit">
+              <PropertyRef Name="AssignmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submit_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="1" />
+          <End Type="AivModel.Submit" Role="Submit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Submit">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_ToEdition">
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="1" />
+          <End Type="AivModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="EditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edition_ToCourse">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Edition">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="AivModel.Roles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClassId" Type="Int32" />
+          <Property Name="PictureId" Type="Int32" />
+          <NavigationProperty Name="Class" Relationship="AivModel.FK_User_ToClass" FromRole="User" ToRole="Class" />
+          <NavigationProperty Name="Roles" Relationship="AivModel.Roles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Courses" Relationship="AivModel.Teaching" FromRole="User" ToRole="Course" />
+          <NavigationProperty Name="Teacher" Relationship="AivModel.FK_Lesson_ToUser" FromRole="User" ToRole="Lesson" />
+          <NavigationProperty Name="FollowedLessons" Relationship="AivModel.Attending" FromRole="User" ToRole="Lesson" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToUser" FromRole="User" ToRole="Exercise" />
+        </EntityType>
+        <Association Name="FK_User_ToClass">
+          <End Type="AivModel.Class" Role="Class" Multiplicity="0..1" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Roles">
+          <End Type="AivModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="Teaching">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="*" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassSize" Type="Int16" />
+          <Property Name="Frequency" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="AivModel.FK_Lesson_ToClass" FromRole="Lesson" ToRole="Class" />
+          <NavigationProperty Name="Teacher" Relationship="AivModel.FK_Lesson_ToUser" FromRole="Lesson" ToRole="User" />
+          <NavigationProperty Name="Students" Relationship="AivModel.Attending" FromRole="Lesson" ToRole="User" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.CoveredTopic" FromRole="Lesson" ToRole="Topic" />
+        </EntityType>
+        <Association Name="FK_Lesson_ToClass">
+          <End Type="AivModel.Class" Role="Class" Multiplicity="1" />
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToUser">
+          <End Type="AivModel.User" Role="User" Multiplicity="1" />
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Attending">
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateDeprecated" Type="DateTime" Precision="0" />
+          <Property Name="Deprecated" Type="Boolean" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
+          <NavigationProperty Name="Lessons" Relationship="AivModel.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
+          <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
+        </EntityType>
+        <Association Name="FK_Topic_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CoveredTopic">
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+        </Association>
+        <Association Name="EditionSchedule">
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Exercise">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BinaryId" Type="Int32" />
+          <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Byte" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Assignments" Relationship="AivModel.FK_Assignment_ToExercise" FromRole="Exercise" ToRole="Assignment" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Exercise" ToRole="Binary" />
+          <NavigationProperty Name="Course" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Exercise" ToRole="Course" />
+          <NavigationProperty Name="ExerciseType" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="Exercise" ToRole="ExerciseType" />
+          <NavigationProperty Name="Author" Relationship="AivModel.FK_Exercise_ToUser" FromRole="Exercise" ToRole="User" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.ExerciseTopic" FromRole="Exercise" ToRole="Topic" />
+        </EntityType>
+        <EntityType Name="ExerciseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="ExerciseType" ToRole="Exercise" />
+        </EntityType>
+        <Association Name="FK_Assignment_ToExercise">
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="1" />
+          <End Type="AivModel.Assignment" Role="Assignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exercise">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Assignment">
+              <PropertyRef Name="ExcerciseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToCourse">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToExerciseType">
+          <End Type="AivModel.ExerciseType" Role="ExerciseType" Multiplicity="1" />
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExerciseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exercise_ToUser">
+          <End Type="AivModel.User" Role="User" Multiplicity="1" />
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="AuthorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ExerciseTopic">
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AivModelStoreContainer" CdmEntityContainer="AivEntities">
+          <EntitySetMapping Name="Assignments">
+            <EntityTypeMapping TypeName="AivModel.Assignment">
+              <MappingFragment StoreEntitySet="Assignment">
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="ExcerciseId" ColumnName="ExcerciseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Binaries">
+            <EntityTypeMapping TypeName="AivModel.Binary">
+              <MappingFragment StoreEntitySet="Binary">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="AivModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="EditionId" ColumnName="EditionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="AivModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Editions">
+            <EntityTypeMapping TypeName="AivModel.Edition">
+              <MappingFragment StoreEntitySet="Edition">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Submits">
+            <EntityTypeMapping TypeName="AivModel.Submit">
+              <MappingFragment StoreEntitySet="Submit">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="AssignmentId" ColumnName="AssignmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AivModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AivModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Roles1" TypeName="AivModel.Roles" StoreEntitySet="Roles">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Teaching" TypeName="AivModel.Teaching" StoreEntitySet="Teaching">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="TeacherId" />
+            </EndProperty>
+            <EndProperty Name="Course">
+              <ScalarProperty Name="Id" ColumnName="EditionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Lessons">
+            <EntityTypeMapping TypeName="AivModel.Lesson">
+              <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Attending" TypeName="AivModel.Attending" StoreEntitySet="Attending">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="StudentId" />
+            </EndProperty>
+            <EndProperty Name="Lesson">
+              <ScalarProperty Name="Id" ColumnName="LessonId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Topics">
+            <EntityTypeMapping TypeName="AivModel.Topic">
+              <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Deprecated" ColumnName="Deprecated" />
+                <ScalarProperty Name="DateDeprecated" ColumnName="DateDeprecated" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CoveredTopic" TypeName="AivModel.CoveredTopic" StoreEntitySet="CoveredTopic">
+            <EndProperty Name="Topic">
+              <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="Lesson">
+              <ScalarProperty Name="Id" ColumnName="LessonId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EditionSchedule" TypeName="AivModel.EditionSchedule" StoreEntitySet="EditionSchedule">
+            <EndProperty Name="Topic">
+              <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="Edition">
+              <ScalarProperty Name="Id" ColumnName="EditionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Exercises">
+            <EntityTypeMapping TypeName="AivModel.Exercise">
+              <MappingFragment StoreEntitySet="Exercise">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExerciseTypes">
+            <EntityTypeMapping TypeName="AivModel.ExerciseType">
+              <MappingFragment StoreEntitySet="ExerciseType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ExerciseTopic" TypeName="AivModel.ExerciseTopic" StoreEntitySet="ExerciseTopic">
+            <EndProperty Name="Topic">
+              <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="Exercise">
+              <ScalarProperty Name="Id" ColumnName="ExerciseId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
