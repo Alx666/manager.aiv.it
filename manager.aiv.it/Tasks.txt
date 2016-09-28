@@ -1,0 +1,23 @@
+﻿Developer				Task										Priorità
+----------------------------------------------------------------------------
+Saverio					Revisione pagine esistenti					Low
+Saverio					Implementazione Exercises\Edit				High
+Saverio					Implementazione Ricerche sugli Index		Mid	
+Sergio					Students\Details (Desc0)					Low
+Sergio					Abbellimenti vari							Low
+
+
+
+
+
+[Segnare con un asterisco i task una volta completati]
+
+
+Desc0:
+La pagina Students\Details (StudentController.Details) è visibile come profilo dello
+studente al momento del login.
+Questa pagina contiene tutte le informazioni relative all'andamento accademico.
+Serve stilizzarla in modo opportuno (senza distaccarsi eccessivamente dal resto dell'app)
+e inserire all'interno di essa l'interfacciamento con gli esercizi assegnati
+Lo sviluppo del framework per gli esercizi è ancora in stato embrionale quindi
+ti puoi limitare a pensarla x ora
