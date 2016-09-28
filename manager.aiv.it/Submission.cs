@@ -12,15 +12,19 @@ namespace manager.aiv.it
     using System;
     using System.Collections.Generic;
     
-    public partial class Submit
+    public partial class Submission
     {
         public int AssignmentId { get; set; }
         public int StudentId { get; set; }
-        public int BinaryId { get; set; }
-        public System.DateTime Date { get; set; }
+        public Nullable<int> BinaryId { get; set; }
+        public System.DateTime SubmissionDate { get; set; }
+        public Nullable<System.DateTime> RevisionDate { get; set; }
         public Nullable<byte> Score { get; set; }
+        public Nullable<int> RevisorId { get; set; }
     
         public virtual Assignment Assignment { get; set; }
         public virtual Binary Binary { get; set; }
+        public virtual User Student { get; set; }
+        public virtual User Revisor { get; set; }
     }
 }

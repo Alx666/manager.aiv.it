@@ -25,7 +25,7 @@ namespace manager.aiv.it.Controllers
                 Author = e.Author.Name + " " + e.Author.Surname,
                 Topics = e.Topics.Select(x => x.Name + ", " + x.Description).ToList(),
                 Value = e.Value,
-                Type = e.ExerciseType.Name,
+                Type = e.Type.Name,
                 Course = e.Course.Name + " " + e.Course.Grade
             };
 

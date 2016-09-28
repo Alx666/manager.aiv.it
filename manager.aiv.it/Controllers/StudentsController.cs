@@ -57,7 +57,7 @@ namespace manager.aiv.it.Controllers
                 hUser.Class = user.Class.Edition.Course.Name + " " + user.Class.Edition.Course.Grade + user.Class.Section;
 
                 int iTotalLessons   = user.Class.Lessons.Where(l => l.Date < DateTime.Now).Count();
-                int iPresences      = user.FollowedLessons.Where(l => l.Class == user.Class).Count();
+                int iPresences      = user.LessonsFollowed.Where(l => l.Class == user.Class).Count();
                 hUser.Frequency     = string.Format("{0} / {1}", iPresences, iTotalLessons);
 
 

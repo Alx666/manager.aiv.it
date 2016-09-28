@@ -250,7 +250,7 @@
     </Compile>
     <Compile Include="RoleType.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Submit.cs">
+    <Compile Include="Submission.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Topic.cs">

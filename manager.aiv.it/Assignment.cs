@@ -17,17 +17,21 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Assignment()
         {
-            this.Submits = new HashSet<Submit>();
+            this.Submissions = new HashSet<Submission>();
         }
     
         public int Id { get; set; }
-        public int ExcerciseId { get; set; }
         public int ClassId { get; set; }
-        public System.DateTime Deadline { get; set; }
+        public int ExerciseId { get; set; }
+        public Nullable<System.DateTime> Deadline { get; set; }
+        public string Description { get; set; }
+        public int TeacherId { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual Class Class { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Submit> Submits { get; set; }
         public virtual Exercise Exercise { get; set; }
+        public virtual User Teacher { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Submission> Submissions { get; set; }
     }
 }
