@@ -4,79 +4,140 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="details">
+    <div class="row">
+        <div class="col col-sm-12">
+            <h2>Student Details</h2>
+        </div>
+    </div>
 
-<div>
-    <h4>User</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>        
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Class)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Class)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Frequency)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Frequency)
-        </dd>
-
-        @if (Model.Class != null)
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.MissedTopics)
-            </dt>
-            foreach (string s in Model.MissedTopics)
+    <div class="row">
+        <div class="col col-sm-2 picture-wrapper">
+            @if (Model.Class.ToLower().Contains("graphic"))
             {
-                <dd>
-                    @s
-                </dd>
-
+                <img src="http://static.ilfoglio.it/redazione/articoli/2016/05/02/141439/picasso.jpg" alt="Pablo Picasso"
+                     onclick="(function () { alert('ALL YOUR BASE BELONG TO US'); })()" />
             }
-        }
-    </dl>
-</div>
+            else
+            {
+                <img src="http://kurld.com/images/wallpapers/random-image/random-image-13.gif" alt="Albert Einstein"
+                     onclick="(function () { alert('ALL YOUR BASE BELONG TO US'); })()" />
+            }
+        </div>
 
-@if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Secretary))
-{
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
+        <div class="col col-sm-6">
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Surname)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @Html.DisplayFor(model => model.Surname)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Email)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @if (string.IsNullOrEmpty(Model.Email))
+                    {
+                        <span>&minus;</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.Email)
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Mobile)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @if (string.IsNullOrEmpty(Model.Mobile))
+                    {
+                        <span>&minus;</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.Mobile)
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Class)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @Html.DisplayFor(model => model.Class)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.Frequency)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @Html.DisplayFor(model => model.Frequency)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-6">
+                    <span class="bold">@Html.DisplayNameFor(model => model.MissedTopics)</span>
+                </div>
+                <div class="col col-sm-6">
+                    @if (Model != null && Model.MissedTopics.Count > 0)
+                    {
+                        foreach (string topic in Model.MissedTopics)
+                        {
+                            @Html.Display(topic)
+                        }
+                    } else {
+                        <span>&minus;</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Secretary))
+        {
+        <div class="col col-sm-4">
+            <div class="text-right">
+
+                <a href="@Url.Action("Edit", new { id = Model.Id })">
+                    <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                    <span>Edit</span>
+                </a>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col col-sm-12">
+            <div class="text-right">
+
+                <a href="@Url.Action("Index")">
+                    <i class="glyphicon glyphicon-backward pull-right icon-right"></i>
+                    <span>Back to List</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
