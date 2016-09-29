@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using manager.aiv.it;
+using manager.aiv.it.Models;
 
 namespace manager.aiv.it.Controllers
 {
@@ -40,11 +41,39 @@ namespace manager.aiv.it.Controllers
 
         // GET: Assignments/Create
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create()
+        public ActionResult Create(int? exerciseid)
         {
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section");
-            ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name");
-            ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name");
+            User hUser = db.Users.Find((int)this.Session["UserId"]);
+
+            var hClasses    =   from hClass in db.Classes where hClass.Edition.DateEnd > DateTime.Now || !hClass.Edition.DateEnd.HasValue
+                                from hCourse in db.Courses where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) where hClass.Edition.Course == hCourse
+                                select new { Id = hClass.Id, Name = hClass.Edition.Course.Name + " " + hClass.Edition.Course.Grade + hClass.Section };
+
+
+            var hExercises = from hExercise in db.Exercises
+                             where hExercise.Course.Teachers.Select(t => t.Id).Contains(hUser.Id)
+                             select new
+                             {
+                                 Id         = hExercise.Id,
+                                 Name       = "(Grade " +  hExercise.Course.Grade + " " + hExercise.Value + "pts) " + hExercise.Name
+                             };
+
+            
+            ViewBag.ClassId     = new SelectList(hClasses, "Id", "Name");
+            ViewBag.ExerciseId  = new SelectList(hExercises, "Id", "Name");
+
+            ExerciseViewModels hView = new ExerciseViewModels();
+
+            if (exerciseid.HasValue)
+            {                                
+                Exercise hSelected = db.Exercises.Find(exerciseid);
+
+                hView.Author        = hSelected.Author.Name + " " + hSelected.Author.Surname;
+                hView.Type          = hSelected.Type.Name;
+                hView.Description   = hSelected.Description;
+                hView.Topics        = hSelected.Topics.Select(t => t.Name).ToList();
+            }
+
             return View();
         }
 

@@ -5,7 +5,7 @@ Saverio					Implementazione Exercises\Edit				High
 Saverio					Implementazione Ricerche sugli Index		Mid	
 Sergio					Students\Details (Desc0)					Low
 Sergio					Abbellimenti vari							Low
-
+Saverio					implementare classi parziali per EF (Desc1) Low
 
 
 
@@ -21,3 +21,5 @@ Serve stilizzarla in modo opportuno (senza distaccarsi eccessivamente dal resto 
 e inserire all'interno di essa l'interfacciamento con gli esercizi assegnati
 Lo sviluppo del framework per gli esercizi è ancora in stato embrionale quindi
 ti puoi limitare a pensarla x ora
+
+

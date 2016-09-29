@@ -238,6 +238,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AssignmentViewModels.cs" />
     <Compile Include="Models\ClassViewModels.cs" />
     <Compile Include="Models\EditionViewModels.cs" />
     <Compile Include="Models\ExerciseViewModels.cs" />
@@ -381,6 +382,7 @@
     <Content Include="Views\Assignments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
