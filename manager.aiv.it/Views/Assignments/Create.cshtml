@@ -23,6 +23,36 @@
             </div>
         </div>
 
+		
+		<!-- 
+		
+		Per Alex:
+		Bootstrap usa la struttura row -> col  dove le col devono dare una somma di "12" spazi, 
+		quindi per avere 4 colonne, devi fare una row che contiene ( col-sm-3 , col-sm-3, col-sm-3, col-sm-3 ), ti torna?
+		per cui, un esempio:
+			<div class="form-group">
+				<div class="row">
+					<div class="col-sm-3">
+						QUI LA PRIMA LABEL					
+					</div>
+					
+					<div class="col-sm-3">
+						QUI IL PRIMO INPUT			
+					</div>
+					
+					
+					<div class="col-sm-3">
+						QUI LA SECONDA LABEL					
+					</div>
+					
+					<div class="col-sm-3">
+						QUI IL SECONDO INPUT	
+					</div>
+				</div>
+			</div>
+		
+		-->
+		
         <div class="form-group">
             @Html.LabelFor(model => model.Id, "Exercise", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
