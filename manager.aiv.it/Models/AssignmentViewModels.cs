@@ -9,12 +9,13 @@ namespace manager.aiv.it.Models
     public class AssignmentViewModels : ExerciseViewModels
     {
         public string Class { get; set; }
+        public int ClassId { get; set; }
+        public int ExerciseId { get; set; }
 
-        
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime UnlockDate { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Deadline { get; set; }
 
         [DataType(DataType.MultilineText)]

@@ -26,21 +26,21 @@
         <AssociationConnector Association="AivModel.CoveredTopic" />
         <AssociationConnector Association="AivModel.EditionSchedule" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="19.875" PointY="4" />
-        <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="13.875" PointY="3.875" />
         <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="16.875" PointY="4" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToClass" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToTeacher" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToCourse" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToUser" />
         <AssociationConnector Association="AivModel.ExerciseTopic" />
         <EntityTypeShape EntityType="AivModel.Submission" Width="1.5" PointX="16.125" PointY="8.625" />
-        <AssociationConnector Association="AivModel.FK_Table_ToAssignment" />
         <AssociationConnector Association="AivModel.FK_Table_Binary" />
         <AssociationConnector Association="AivModel.FK_Table_ToStudent" />
         <AssociationConnector Association="AivModel.FK_Table_ToTeacher" />
+        <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="12.25" PointY="3" />
+        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToClass" />
+        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
+        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToTeacher" />
+        <AssociationConnector Association="AivModel.FK_Table_ToAssignment" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

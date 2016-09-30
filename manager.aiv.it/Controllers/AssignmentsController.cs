@@ -66,7 +66,8 @@ namespace manager.aiv.it.Controllers
 
             if (exerciseid.HasValue)
             {
-                hView = new AssignmentViewModels(db.Exercises.Find(exerciseid));
+                Exercise hSelected = db.Exercises.Find(exerciseid);
+                hView = new AssignmentViewModels(hSelected);
             }
             else
                 hView = new AssignmentViewModels(db.Exercises.Find(hExercises.First().Id));
@@ -74,26 +75,38 @@ namespace manager.aiv.it.Controllers
             return View(hView);
         }
 
+
         // POST: Assignments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ClassId,ExerciseId,Deadline,Description,TeacherId,Date")] Assignment assignment)
+        public ActionResult Create([Bind(Include = "ExerciseId,ClassId,Deadline,UnlockDate,Notes")] AssignmentViewModels assignment)
         {
             if (ModelState.IsValid)
             {
-                db.Assignments.Add(assignment);
+                Assignment hAssignment      = new Assignment();
+                hAssignment.Exercise        = db.Exercises.Find(assignment.ExerciseId);
+                hAssignment.Class           = db.Classes.Find(assignment.ClassId);
+                hAssignment.Deadline        = assignment.Deadline;
+                hAssignment.Date            = assignment.UnlockDate;
+                hAssignment.ExerciseValue   = hAssignment.Exercise.Value;
+                hAssignment.Teacher         = db.Users.Find(this.Session["UserId"]);
+                hAssignment.Description     = assignment.Notes;
+
+                db.Assignments.Add(hAssignment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
             ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
-            ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", assignment.TeacherId);
             return View(assignment);
         }
+
+
 
         // GET: Assignments/Edit/5
         [CustomAuthorize(RoleType.Teacher)]

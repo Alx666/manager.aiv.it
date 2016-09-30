@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Frequency)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Points)
+        </th>
         <th></th>
     </tr>
 
@@ -39,7 +42,9 @@
         </td>
         <td>
             @string.Format("{0:0.0}%", item.Frequency * 100.0)
-            @*@Html.DisplayFor(modelItem => item.Frequency)*@
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Points)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

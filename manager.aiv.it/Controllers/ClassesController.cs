@@ -21,10 +21,11 @@ namespace manager.aiv.it.Controllers
             var hClasses = from hC in db.Classes
                            select new ClassViewModels
                            {
-                               Id           = hC.Id,
-                               Name         = hC.Edition.Course.Name + " " + hC.Edition.Course.Grade + hC.Section,
-                               Students     = hC.Students.Count(),
-                               Lessons      = hC.Lessons.Count()
+                               Id       = hC.Id,
+                               Name     = hC.Edition.Course.Name + " " + hC.Edition.Course.Grade + hC.Section,
+                               Students = hC.Students.Count(),
+                               Lessons  = hC.Lessons.Count(),
+                               Points   = 0
                            };
 
             var res = from l in db.Lessons

@@ -17,8 +17,8 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Exercise()
         {
-            this.Assignments = new HashSet<Assignment>();
             this.Topics = new HashSet<Topic>();
+            this.Assignments = new HashSet<Assignment>();
         }
     
         public int Id { get; set; }
@@ -30,13 +30,13 @@ namespace manager.aiv.it
         public byte Value { get; set; }
         public int TypeId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual Binary Binary { get; set; }
         public virtual Course Course { get; set; }
         public virtual ExerciseType Type { get; set; }
         public virtual User Author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }

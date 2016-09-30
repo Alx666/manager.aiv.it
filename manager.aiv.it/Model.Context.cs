@@ -34,8 +34,8 @@ namespace manager.aiv.it
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
-        public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<Submission> Submissions { get; set; }
+        public virtual DbSet<Assignment> Assignments { get; set; }
     }
 }

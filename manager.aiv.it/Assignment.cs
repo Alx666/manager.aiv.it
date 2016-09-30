@@ -27,6 +27,7 @@ namespace manager.aiv.it
         public string Description { get; set; }
         public int TeacherId { get; set; }
         public System.DateTime Date { get; set; }
+        public byte ExerciseValue { get; set; }
     
         public virtual Class Class { get; set; }
         public virtual Exercise Exercise { get; set; }

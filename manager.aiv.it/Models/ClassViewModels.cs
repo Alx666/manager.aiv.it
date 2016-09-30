@@ -12,7 +12,6 @@ namespace manager.aiv.it.Models
         public int      Students    { get; set; }
         public int      Lessons     { get; set; }
         public double   Frequency   { get; set; }
-        public float    Temp0       { get; set; }
-        public float    Temp1       { get; set; }
+        public int      Points      { get; set; }
     }
 }

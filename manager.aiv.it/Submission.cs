@@ -22,9 +22,9 @@ namespace manager.aiv.it
         public Nullable<byte> Score { get; set; }
         public Nullable<int> RevisorId { get; set; }
     
-        public virtual Assignment Assignment { get; set; }
         public virtual Binary Binary { get; set; }
         public virtual User Student { get; set; }
         public virtual User Revisor { get; set; }
+        public virtual Assignment Assignment { get; set; }
     }
 }

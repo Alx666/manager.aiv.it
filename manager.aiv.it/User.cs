@@ -21,10 +21,10 @@ namespace manager.aiv.it
             this.Courses = new HashSet<Course>();
             this.LessonTeached = new HashSet<Lesson>();
             this.LessonsFollowed = new HashSet<Lesson>();
-            this.ExercisesAssigned = new HashSet<Assignment>();
             this.ExercisesCreated = new HashSet<Exercise>();
             this.ExercisesSubmitted = new HashSet<Submission>();
             this.ExercisesReviewed = new HashSet<Submission>();
+            this.Assignments = new HashSet<Assignment>();
         }
     
         public int Id { get; set; }
@@ -47,12 +47,12 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> LessonsFollowed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assignment> ExercisesAssigned { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exercise> ExercisesCreated { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Submission> ExercisesSubmitted { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Submission> ExercisesReviewed { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assignment> Assignments { get; set; }
     }
 }
