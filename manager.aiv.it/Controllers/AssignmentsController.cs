@@ -62,19 +62,16 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId     = new SelectList(hClasses, "Id", "Name");
             ViewBag.ExerciseId  = new SelectList(hExercises, "Id", "Name");
 
-            ExerciseViewModels hView = new ExerciseViewModels();
+            AssignmentViewModels hView;
 
             if (exerciseid.HasValue)
-            {                                
-                Exercise hSelected = db.Exercises.Find(exerciseid);
-
-                hView.Author        = hSelected.Author.Name + " " + hSelected.Author.Surname;
-                hView.Type          = hSelected.Type.Name;
-                hView.Description   = hSelected.Description;
-                hView.Topics        = hSelected.Topics.Select(t => t.Name).ToList();
+            {
+                hView = new AssignmentViewModels(db.Exercises.Find(exerciseid));
             }
+            else
+                hView = new AssignmentViewModels(db.Exercises.Find(hExercises.First().Id));
 
-            return View();
+            return View(hView);
         }
 
         // POST: Assignments/Create
