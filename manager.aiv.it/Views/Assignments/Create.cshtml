@@ -15,6 +15,7 @@
         <h4>Assignment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		
         <div class="form-group">
             @Html.LabelFor(model => model.Class, "Class", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -22,42 +23,27 @@
                 @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
             </div>
         </div>
-
-		
-		<!-- 
-		
-		Per Alex:
-		Bootstrap usa la struttura row -> col  dove le col devono dare una somma di "12" spazi, 
-		quindi per avere 4 colonne, devi fare una row che contiene ( col-sm-3 , col-sm-3, col-sm-3, col-sm-3 ), ti torna?
-		per cui, un esempio:
-			<div class="form-group">
-				<div class="row">
-					<div class="col-sm-3">
-						QUI LA PRIMA LABEL					
-					</div>
-					
-					<div class="col-sm-3">
-						QUI IL PRIMO INPUT			
-					</div>
-					
-					
-					<div class="col-sm-3">
-						QUI LA SECONDA LABEL					
-					</div>
-					
-					<div class="col-sm-3">
-						QUI IL SECONDO INPUT	
-					</div>
-				</div>
-			</div>
-		
-		-->
 		
         <div class="form-group">
             @Html.LabelFor(model => model.Id, "Exercise", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ExerciseId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Assignments/Create?exerciseid='.concat(this.value);" })
                 @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UnlockDate, "Unlock Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnlockDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deadline, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -84,25 +70,23 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Value, "Value", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Topics, "Topics", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("topics", new SelectList(Model.Topics), htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", disabled = "disabled", @readonly = "readonly" })
+            </div>   
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", style = "min-height:150px;" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnlockDate, "Unlock Date", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UnlockDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Deadline, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -113,25 +97,6 @@
                 @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @*<div class="form-group">
-            <label class="control-label col-md-2">Details</label>
-            <div class="col-md-10">
-                <p>
-                    @ViewBag.details.ToString()
-                </p>
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.TeacherId, "Teacher", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

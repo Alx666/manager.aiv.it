@@ -26,6 +26,7 @@ namespace manager.aiv.it.Models
             Type = hEx.Type.Name;
             Course = hEx.Course.Name + " " + hEx.Course.Grade;
             Description = hEx.Description;
+            Value = hEx.Value;
         }
 
         public int      Id              { get; set; }
