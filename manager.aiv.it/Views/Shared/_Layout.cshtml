@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap-switch.min.css")
+    @Styles.Render("~/Content/jasny-bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -65,6 +66,7 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript" src="~/Scripts/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jasny-bootstrap.js"></script>
     <script type="text/javascript">
         $("[switch]").bootstrapSwitch();
     </script>
