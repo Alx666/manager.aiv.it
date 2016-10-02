@@ -21,7 +21,7 @@
             </div>
             <div class="col col-xs-4 col-sm-2">
                 @if (Session["Roles"] != null && (Session["Roles"] as List<RoleType>).Contains(RoleType.Secretary))
-            {
+                {
                     <div class="text-right">
                         <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
                             <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>

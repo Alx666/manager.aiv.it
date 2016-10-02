@@ -37,12 +37,12 @@ body {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+/* Set width on the form input elements since they're 100% wide by default 
 input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 hr {
     margin-top: 10px;
@@ -132,6 +132,8 @@ button a {
     cursor: not-allowed !important;
 }
 
+
+
 /* FLEXBOX */
 
 *[flex]{
@@ -168,6 +170,19 @@ button a {
     font-weight: 500;
     line-height: 1.1;
     text-align: center;
+}
+
+form .row {
+    margin-bottom: 8px;
+}
+
+form .row input[type='submit'][type='button'] {
+    width: auto;
+    max-width: none;
+}
+
+form .row.row-submit {
+    margin-top: 24px;
 }
 
 [layout-align='center'] {
