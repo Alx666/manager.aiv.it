@@ -5,10 +5,10 @@
 }
 
 <div class="row title-margin">
-    <div class="col-xs-10">
+    <div class="col-md-10 col-xs-6">
         <span class="title">Index</span>
     </div>
-    <div class="col-xs-2 text-right">
+    <div class="col-md-2 col-xs-6 text-right">
         <button class="btn btn-primary">
             <a href="@Url.Action("Create")">
                 <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
@@ -69,11 +69,11 @@
                         </a>
                     </td>
                     <td class="text-right">
-                        <a class="btn btn-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })">
+                        <a class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })">
                             <i class="glyphicon glyphicon-pencil"></i>
                         </a>
 
-                        <a class="btn btn-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })">
+                        <a class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })">
                             <i class="glyphicon glyphicon-remove"></i>
                         </a>
                     </td>

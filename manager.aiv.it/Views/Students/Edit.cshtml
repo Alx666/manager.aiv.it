@@ -4,79 +4,218 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>User</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="edit row">
+
+        <div class="col-xs-12">
+
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            <div class="row row-title">
+                <div class="col col-xs-4 col-sm-2">
+                    <div class="text-left">
+                        <a class="btn btn-default" href="@Url.Action("Index")">
+                            <i class="glyphicon glyphicon-backward pull-right icon-right"></i>
+                            <span>Back</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col col-xs-4 col-sm-8">
+                    <span class="title">Edit Student</span>
+                </div>
+                <div class="col col-xs-4 col-sm-2">
+                    <div class="text-right">
+                        <a class="btn btn-primary disabled href="#">
+                            <i class="glyphicon glyphicon-floppy-disk pull-right icon-right"></i>
+                            <span>Save</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <div class="row">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="col col-xs-12">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="card">
+                        <div class="card-image">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClassId, "Class", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ClassId", null, "-",htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                            <div class="picture-wrapper">
+                                <img src="https://imgflip.com/s/meme/Ancient-Aliens.jpg" alt="Aliens"
+                                     onclick="(function () { alert('Image uploading is actually a feature in development. Wait for it!'); })()" />
+                            </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                            <div class="card-quote">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <span>"I like trains and naked cheetas"</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <!-- INFORMAZIONI ANAGRAFICHE -->
+                                    <section>
+                                        <h4 class="section-title">Anagrafica</h4>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Name)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Surname)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Email)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Password)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Mobile)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.ClassId)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.DropDownList("ClassId", null, "-", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- INFORMAZIONI DIDATTICHE -->
+                                    <h4 class="section-title">Esercitazioni assegnate</h4>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-striped table-responsive table-hover">
+                                                <tr>
+                                                    <th>Corso</th>
+                                                    <th>Lezione</th>
+                                                    <th>Topic</th>
+                                                    <th>Description</th>
+                                                    <th>Effettuato</th>
+                                                    <th>Voto</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Graphics 1A</td>
+                                                    <td>1</td>
+                                                    <td>Photoshop</td>
+                                                    <td>Introduzione</td>
+                                                    <td>
+                                                        <div class="checkbox disabled">
+                                                            <label>
+                                                                <input switch type="checkbox" disabled data-toggle="toggle">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>0 / 100</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Graphics 1A</td>
+                                                    <td>2</td>
+                                                    <td>Photoshop</td>
+                                                    <td>Layers</td>
+                                                    <td class="form-group">
+                                                        <div class="checkbox disabled">
+                                                            <label>
+                                                                <input switch type="checkbox" checked disabled data-toggle="toggle">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>60 / 100</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Graphics 1A</td>
+                                                    <td>3</td>
+                                                    <td>Cubismo</td>
+                                                    <td>Astrazioni</td>
+                                                    <td>
+                                                        <div class="checkbox disabled">
+                                                            <label>
+                                                                <input switch type="checkbox" checked disabled data-toggle="toggle">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>99 / 100</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+
+
+

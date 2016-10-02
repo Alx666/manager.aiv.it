@@ -158,6 +158,16 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border-color: #eeeeee;
 }
 
+.btn-default.text-primary, 
+.btn-default.text-primary * {
+    color: #428bca;
+}
+
+.btn-default.text-danger, 
+.btn-default.text-danger * {
+    color: #b94a48;
+}
+
 /* FLEXBOX */
 
 *[flex]{
