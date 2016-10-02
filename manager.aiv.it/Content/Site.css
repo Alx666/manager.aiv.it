@@ -4,16 +4,30 @@
     background-repeat: no-repeat;
 }
 
+html, body {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
     background: none;
+    
+    /* 
+    BACKGROUND AIV! 
+    background: url(http://www.aiv01.it/images/BGcorsi.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    */
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 48px;
+    overflow: hidden;
+    overflow-x: auto;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -32,6 +46,10 @@ textarea {
 
 hr {
     margin-top: 10px;
+}
+
+footer {
+    margin-top: 16px;
 }
 
 a:hover {
@@ -70,12 +88,12 @@ a:hover {
 
 .picture-wrapper {
     overflow: hidden;
+    align-items: center;
 }
 
 .picture-wrapper > img {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 4px;
+    height: 100%;
+    max-height: 256px;
 }
 
 .logo-wrapper > img {
@@ -92,20 +110,125 @@ button.btn-primary > * {
     color: #ffffff;
 }
 
-/* 
-    Sergio:
-    to define a specific style for a single menu section,
-    define a class with lowercase section name
+button a {
+    color: inherit;
+}
 
-    example:   
-    
-    .topics { background-color: #ff0000; }
-    .topics table > tr { background-color: #333333; }
-    
-    etc...
-    Note you can also create classes for actions within a section:
+.action-button {
+    margin: 2px;
+}
 
-    .topics.edit { background-color: yellow; }
-    .topics.index { background-color: white; }
+.checkbox .bootstrap-switch.bootstrap-switch-disabled,
+.checkbox .bootstrap-switch.bootstrap-switch-disabled *,
+.checkbox .bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-off, 
+.checkbox .bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-handle-on, 
+.checkbox .bootstrap-switch.bootstrap-switch-disabled .bootstrap-switch-label, 
+.checkbox .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-off, 
+.checkbox .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-handle-on, 
+.checkbox .bootstrap-switch.bootstrap-switch-indeterminate .bootstrap-switch-label, 
+.checkbox .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-off, 
+.checkbox .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-on, 
+.checkbox .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-label {
+    cursor: not-allowed !important;
+}
 
-*/
+/* FLEXBOX */
+
+*[flex]{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+}
+
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.row-title .title {
+    font-size: 30px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    text-align: center;
+}
+
+[layout-align='center'] {
+    align-items: center;
+}
+
+[layout-align='center center'] {
+    align-items: center center;
+}
+
+[layout-align='bottom'] {
+    align-items: flex-end;
+}
+
+[layout-align='center bottom'] {
+    align-items: center flex-end;
+}
+
+/* MATERIAL CARDS */
+
+.card {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  height: 100%;
+}
+
+.card-image {
+    background-color: #eeeeee;
+}
+
+.card-image .picture-wrapper {
+    height: 256px;
+}
+
+.card-image img {
+    width: 100%;
+    position: relative;
+    left: 50%;
+    top: 40%;
+    height: auto;
+    max-height: none;
+    transform: translateY(-40%) translateX(-50%);
+    -webkit-transform: translateY(-40%) translateX(-50%);
+    -moz-transform: translateY(-40%) translateX(-50%);
+    -ms-transform: translateY(-40%) translateX(-50%);
+}
+
+.card-image .card-quote {
+    background-color: #000000;
+    color: #eeeeee;
+    padding: 8px;
+}
+
+.card-content {
+  padding: 32px;
+}
+
+.card-content .section-title {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.card-content section {
+    margin-bottom: 8px;
+}

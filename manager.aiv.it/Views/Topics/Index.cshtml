@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row middle title-margin">
-    <div class="col-sm-6">
+<div class="row title-margin">
+    <div class="col-xs-10">
         <span class="title">Index</span>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-xs-2 text-right">
         <button class="btn btn-primary">
             <a href="@Url.Action("Create")">
                 <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
@@ -19,8 +19,8 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
-        <table class="table table-striped table-responsive">
+    <div class="col-xs-12">
+        <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -33,6 +33,12 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DateDeprecated)
+                </th>
+                <th>
+                    Details
+                </th>
+                <th class="text-right">
+                    Actions
                 </th>
             </tr>
 
@@ -49,9 +55,21 @@
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateDeprecated))
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-primary btn-sm" href="@Url.Action("Edit", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
                     </td>
                 </tr>
             }
