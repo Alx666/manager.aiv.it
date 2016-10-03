@@ -169,52 +169,23 @@
                                                 <th>Class</th>
                                                 <th>Name</th>
                                                 <th>Type</th>
-                                                <th>Expire Date</th>
+                                                <th>Value</th>
+                                                <th>Deadline</th>
                                                 <th>Score</th>
                                                 <th>Submit</th>
                                             </tr>
-                                            <tr>
-                                                <td>Graphics 1A</td>
-                                                <td>1</td>
-                                                <td>Photoshop</td>
-                                                <td>Introduzione</td>
-                                                <td>
-                                                    <div class="checkbox disabled">
-                                                        <label>
-                                                            <input switch type="checkbox" disabled data-toggle="toggle">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>0 / 100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Graphics 1A</td>
-                                                <td>2</td>
-                                                <td>Photoshop</td>
-                                                <td>Layers</td>
-                                                <td class="form-group">
-                                                    <div class="checkbox disabled">
-                                                        <label>
-                                                            <input switch type="checkbox" checked disabled data-toggle="toggle">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>60 / 100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Graphics 1A</td>
-                                                <td>3</td>
-                                                <td>Cubismo</td>
-                                                <td>Astrazioni</td>
-                                                <td>
-                                                    <div class="checkbox disabled">
-                                                        <label>
-                                                            <input switch type="checkbox" checked disabled data-toggle="toggle">
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>99 / 100</td>
-                                            </tr>
+                                            @foreach (var item in Model.Assignments)
+                                            {
+                                                <tr>
+                                                    <td>@item.Class</td>
+                                                    <td>@item.Name</td>
+                                                    <td>@item.Type</td>
+                                                    <td>@item.Value</td>
+                                                    <td>@item.Deadline</td>
+                                                    <td>Score</td>
+                                                    <td><input type="submit" value="Submit"/></td>
+                                                </tr>
+                                            }
                                         </table>
                                     </div>
                                 </div>

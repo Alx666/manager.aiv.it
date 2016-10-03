@@ -19,8 +19,9 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Director, RoleType.Manager)]
         public ActionResult Index()
         {
-            var assignments = db.Assignments.Include(a => a.Class).Include(a => a.Exercise).Include(a => a.Teacher);
-            return View(assignments.ToList());
+            var result = db.Assignments.ToList().Select(a => new AssignmentViewModels(a));
+
+            return View(result);
         }
 
         // GET: Assignments/Details/5
