@@ -66,7 +66,7 @@ namespace manager.aiv.it.Controllers
                                       from hT in hL.Topics
                                       select hT.Name + ", " + hT.Description).ToList();
 
-                hUser.Assignments = user.Class.Assignments.ToList().Select(a => new AssignmentViewModels(a.Date, a.Deadline, a.Description, a.Exercise));
+                hUser.Assignments  = user.Class.Assignments.Select(a => new AssignmentViewModels(a.UnlockDate, a.Deadline, a.Description, a.Exercise)).ToList();
             }
             else
             {

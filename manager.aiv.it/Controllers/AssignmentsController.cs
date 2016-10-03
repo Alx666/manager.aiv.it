@@ -90,7 +90,7 @@ namespace manager.aiv.it.Controllers
                 hAssignment.Exercise        = db.Exercises.Find(assignment.ExerciseId);
                 hAssignment.Class           = db.Classes.Find(assignment.ClassId);
                 hAssignment.Deadline        = assignment.Deadline;
-                hAssignment.Date            = assignment.UnlockDate;
+                hAssignment.UnlockDate      = assignment.UnlockDate;
                 hAssignment.ExerciseValue   = hAssignment.Exercise.Value;
                 hAssignment.Teacher         = db.Users.Find(this.Session["UserId"]);
                 hAssignment.Description     = assignment.Notes;
