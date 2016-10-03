@@ -23,6 +23,8 @@ namespace manager.aiv.it.Models
         public int TeacherId        { get; set; }
         public string Teacher       { get; set; }
 
+        public int AssignmentId { get; set; }
+
         public AssignmentViewModels(DateTime vUnlock, DateTime vDeadLine, string sNotes, Exercise hEx) : base(hEx)
         {
             UnlockDate  = vUnlock;
@@ -38,6 +40,7 @@ namespace manager.aiv.it.Models
 
         public AssignmentViewModels(Assignment a) : base(a.Exercise)
         {
+            AssignmentId = a.Id;
             Class       = a.Class.Edition.Course.Name + " " + a.Class.Edition.Course.Grade + a.Class.Section;
             UnlockDate  = a.UnlockDate;
             Deadline    = a.Deadline;

@@ -20,6 +20,7 @@ namespace manager.aiv.it.Models
 
         public ExerciseViewModels(Exercise hEx)
         {
+            Id = hEx.Id;
             Name = hEx.Name;
             Author = hEx.Author.Name + " " + hEx.Author.Surname;
             Topics = hEx.Topics.Select(t => t.Name).ToList();
