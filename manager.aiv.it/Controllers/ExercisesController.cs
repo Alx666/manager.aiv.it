@@ -108,15 +108,13 @@ namespace manager.aiv.it.Controllers
 
         // GET: Exercises/Edit/5
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int? courseid)
         {                                                
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             Exercise    exercise    = db.Exercises.Find(id);
-                        
             if (exercise == null)
             {
                 return HttpNotFound();
@@ -125,7 +123,29 @@ namespace manager.aiv.it.Controllers
             ViewBag.CourseId    = new SelectList(exercise.Author.Courses.Select(c => new { Id = c.Id, Name = c.Name + " " + c.Grade }), "Id", "Name", exercise.CourseId);
             ViewBag.value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
             ViewBag.type        = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
-            //ViewBag.topics      = new MultiSelectList(hTopics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name", exercise.Topics);
+
+
+            //------------------------------------------------------------------------------------------
+            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+
+            if (!courseid.HasValue)
+            {
+                //ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
+                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
+            }
+            else
+            {
+                Edition hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
+
+                if (hLast != null)
+                {
+                    ViewBag.topics = new MultiSelectList(hLast.Topics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name");
+                }
+                else
+                {
+                    ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
+                }
+            }
 
             return View(exercise);
         }
