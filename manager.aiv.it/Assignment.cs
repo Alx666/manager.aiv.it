@@ -23,10 +23,10 @@ namespace manager.aiv.it
         public int Id { get; set; }
         public int ClassId { get; set; }
         public int ExerciseId { get; set; }
-        public Nullable<System.DateTime> Deadline { get; set; }
+        public System.DateTime Deadline { get; set; }
         public string Description { get; set; }
         public int TeacherId { get; set; }
-        public System.DateTime Date { get; set; }
+        public System.DateTime UnlockDate { get; set; }
         public byte ExerciseValue { get; set; }
     
         public virtual Class Class { get; set; }

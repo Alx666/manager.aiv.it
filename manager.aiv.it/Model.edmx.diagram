@@ -36,7 +36,7 @@
         <AssociationConnector Association="AivModel.FK_Table_Binary" />
         <AssociationConnector Association="AivModel.FK_Table_ToStudent" />
         <AssociationConnector Association="AivModel.FK_Table_ToTeacher" />
-        <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="12.25" PointY="3" />
+        <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="19.125" PointY="6.625" />
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToClass" />
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToTeacher" />

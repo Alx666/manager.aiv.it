@@ -66,7 +66,7 @@ namespace manager.aiv.it.Controllers
                                       from hT in hL.Topics
                                       select hT.Name + ", " + hT.Description).ToList();
 
-                //hUser.MissedTopics = user.Class.Lessons.Where(l => !l.Students.Contains(user)).SelectMany(l => l.Topics).ToList()
+                hUser.Assignments = user.Class.Assignments.ToList().Select(a => new AssignmentViewModels(a.Date, a.Deadline, a.Description, a.Exercise));
             }
             else
             {

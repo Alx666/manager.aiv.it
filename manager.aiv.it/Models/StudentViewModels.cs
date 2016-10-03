@@ -15,5 +15,6 @@ namespace manager.aiv.it.Models
         public string Class              { get; set; }
         public string Frequency          { get; set; }
         public List<string> MissedTopics { get; set; }
+        public List<AssignmentViewModels>  Assignments { get; set; }
     }
 }

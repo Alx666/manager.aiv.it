@@ -21,16 +21,23 @@ namespace manager.aiv.it.Models
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
+        public AssignmentViewModels(DateTime vUnlock, DateTime vDeadLine, string sNotes, Exercise hEx) : base(hEx)
+        {
+            UnlockDate  = vUnlock;
+            Deadline    = vDeadLine;
+            Notes       = sNotes;
+        }
+
         public AssignmentViewModels(Exercise hEx) : base(hEx)
         {
-            UnlockDate = DateTime.Now;
-            Deadline = DateTime.Now.AddDays(7);
+            UnlockDate  = DateTime.Now;
+            Deadline    = DateTime.Now.AddDays(7);
         }
 
         public AssignmentViewModels() : base()
         {
-            UnlockDate = DateTime.Now;
-            Deadline = DateTime.Now.AddDays(7);
+            UnlockDate  = DateTime.Now;
+            Deadline    = DateTime.Now.AddDays(7);
         }
     }
 }

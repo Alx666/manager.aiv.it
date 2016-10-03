@@ -12,10 +12,10 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClassId" Type="int" Nullable="false" />
           <Property Name="ExerciseId" Type="int" Nullable="false" />
-          <Property Name="Deadline" Type="date" />
+          <Property Name="Deadline" Type="date" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="UnlockDate" Type="date" Nullable="false" />
           <Property Name="ExerciseValue" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Attending">
@@ -1127,10 +1127,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClassId" Type="Int32" Nullable="false" />
           <Property Name="ExerciseId" Type="Int32" Nullable="false" />
-          <Property Name="Deadline" Type="DateTime" Precision="0" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UnlockDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ExerciseValue" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Class" Relationship="AivModel.FK_ExerciseAssignment_ToClass" FromRole="Assignment" ToRole="Class" />
           <NavigationProperty Name="Exercise" Relationship="AivModel.FK_ExerciseAssignment_ToExercise" FromRole="Assignment" ToRole="Exercise" />
@@ -1370,7 +1370,7 @@
             <EntityTypeMapping TypeName="AivModel.Assignment">
               <MappingFragment StoreEntitySet="Assignment">
                 <ScalarProperty Name="ExerciseValue" ColumnName="ExerciseValue" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UnlockDate" ColumnName="UnlockDate" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Deadline" ColumnName="Deadline" />

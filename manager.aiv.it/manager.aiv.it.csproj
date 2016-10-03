@@ -238,6 +238,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AlertViewModels.cs" />
     <Compile Include="Models\AssignmentViewModels.cs" />
     <Compile Include="Models\ClassViewModels.cs" />
     <Compile Include="Models\EditionViewModels.cs" />
