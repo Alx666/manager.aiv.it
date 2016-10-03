@@ -139,24 +139,6 @@
                                             @Html.DisplayFor(model => model.Frequency)
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">@Html.DisplayNameFor(model => model.MissedTopics)</span>
-                                        </div>
-                                        <div class="col col-xs-6">
-                                            @if (Model != null && Model.MissedTopics != null && Model.MissedTopics.Count > 0)
-                                            {
-                                                foreach (string topic in Model.MissedTopics)
-                                                {
-                                                    @Html.Display(topic)
-                                                }
-                                            }
-                                            else {
-                                                <span>&minus;</span>
-                                            }
-                                        </div>
-                                    </div>
                                 </section>
 
 
@@ -196,12 +178,12 @@
                                                 <th>Teacher</th>
                                                 <th>Topics</th>
                                             </tr>
-                                            @foreach (var item in Model.MissedTopics)
+                                            @foreach (var item in Model.MissedLessons)
                                             {
                                                 <tr>
                                                     <td>@item.Date</td>
                                                     <td>@item.Teacher</td>
-                                                    <td>@item.Topics</td>
+                                                    <td>@item.Topic</td>
                                                 </tr>
                                             }
                                         </table>

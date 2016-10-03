@@ -61,12 +61,11 @@ namespace manager.aiv.it.Controllers
                 hUser.Frequency     = string.Format("{0} / {1}", iPresences, iTotalLessons);
 
 
-                hUser.MissedTopics = (from hL in user.Class.Lessons
-                                      where !hL.Students.Contains(user)
-                                      from hT in hL.Topics
-                                      select hT.Name + ", " + hT.Description).ToList();
+                hUser.MissedLessons = (from hL in user.Class.Lessons
+                                       where !hL.Students.Contains(user)
+                                       select hL).ToList().Select(l => new LessonViewModels(l)).ToList();
 
-                hUser.Assignments  = user.Class.Assignments.Where(a => a.UnlockDate >= DateTime.Now.Date).Select(a => new AssignmentViewModels(a.UnlockDate, a.Deadline, a.Description, a.Exercise)).ToList();
+                 hUser.Assignments = user.Class.Assignments.Where(a => a.UnlockDate >= DateTime.Now.Date).Select(a => new AssignmentViewModels(a.UnlockDate, a.Deadline, a.Description, a.Exercise)).ToList();
             }
             else
             {
