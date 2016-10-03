@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Models.StudentViewModels>
+﻿@model IEnumerable<manager.aiv.it.User>
 
 @{
     ViewBag.Title = "Index";
@@ -61,7 +61,7 @@
                         @Html.DisplayFor(modelItem => item.Mobile)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Class)
+                        @Html.DisplayFor(modelItem => item.DisplayClass)
                     </td>
                     <td>
                         <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })">

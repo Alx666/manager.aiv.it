@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Models.LessonViewModels>
+﻿@model IEnumerable<manager.aiv.it.Lesson>
 
 @{
     ViewBag.Title = "Index";
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Teacher)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Students)
+            @Html.DisplayNameFor(model => model.DisplayStudentsCount)
         </th>
         <th></th>
     </tr>
@@ -29,17 +29,17 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Date))            
-            @*@Html.DisplayFor(modelItem => item.Date)*@
+            @*@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Date))*@            
+            @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Class)
+            @Html.DisplayFor(modelItem => item.Class.DisplayName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Teacher)
+            @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Students)
+            @Html.DisplayFor(modelItem => item.DisplayStudentsCount)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

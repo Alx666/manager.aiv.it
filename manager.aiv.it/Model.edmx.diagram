@@ -9,9 +9,6 @@
         <EntityTypeShape EntityType="AivModel.Binary" Width="1.5" PointX="10.75" PointY="14.5" />
         <EntityTypeShape EntityType="AivModel.Class" Width="1.5" PointX="3.375" PointY="1.5" />
         <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="8" PointY="1.5" />
-        <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="5.625" PointY="1.5" />
-        <AssociationConnector Association="AivModel.FK_Class_ToEdition" />
-        <AssociationConnector Association="AivModel.FK_Edition_ToCourse" />
         <EntityTypeShape EntityType="AivModel.Role" Width="1.5" PointX="0.75" PointY="5.5" />
         <EntityTypeShape EntityType="AivModel.User" Width="2.25" PointX="9.5" PointY="6.625" />
         <AssociationConnector Association="AivModel.FK_User_ToClass" />
@@ -24,7 +21,6 @@
         <EntityTypeShape EntityType="AivModel.Topic" Width="1.5" PointX="5.875" PointY="10.75" />
         <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
         <AssociationConnector Association="AivModel.CoveredTopic" />
-        <AssociationConnector Association="AivModel.EditionSchedule" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="19.875" PointY="4" />
         <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="16.875" PointY="4" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
@@ -41,6 +37,10 @@
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToTeacher" />
         <AssociationConnector Association="AivModel.FK_Table_ToAssignment" />
+        <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="5.75" PointY="0.5" />
+        <AssociationConnector Association="AivModel.FK_Class_ToEdition" />
+        <AssociationConnector Association="AivModel.FK_Edition_ToCourse" />
+        <AssociationConnector Association="AivModel.EditionSchedule" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

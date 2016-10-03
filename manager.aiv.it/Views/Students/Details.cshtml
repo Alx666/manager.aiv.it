@@ -1,4 +1,4 @@
-﻿@model manager.aiv.it.Models.StudentViewModels
+﻿@model manager.aiv.it.User
 
 @{
     ViewBag.Title = "Details";
@@ -74,10 +74,10 @@
 
                                     <div class="row">
                                         <div class="col col-xs-6">
-                                            <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
+                                            <span class="bold">@Html.DisplayNameFor(model => model.DisplayName)</span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Name)
+                                            @Html.DisplayFor(model => model.DisplayName)
                                         </div>
                                     </div>
 

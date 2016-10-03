@@ -239,14 +239,15 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AlertViewModels.cs" />
-    <Compile Include="Models\AssignmentViewModels.cs" />
-    <Compile Include="Models\ClassViewModels.cs" />
-    <Compile Include="Models\EditionViewModels.cs" />
-    <Compile Include="Models\ExerciseViewModels.cs" />
+    <Compile Include="Models\Assignment.cs" />
+    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LessonViewModels.cs" />
+    <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\StudentViewModels.cs" />
+    <Compile Include="Models\Topic.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>Model.tt</DependentUpon>

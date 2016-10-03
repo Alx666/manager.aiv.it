@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<manager.aiv.it.Models.EditionViewModels>
+@model IEnumerable<manager.aiv.it.Edition>
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.DisplayName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AcademicYear)
@@ -31,7 +31,7 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.DisplayName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AcademicYear)

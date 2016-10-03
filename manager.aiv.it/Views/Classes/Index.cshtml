@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Models.ClassViewModels>
+﻿@model IEnumerable<manager.aiv.it.Class>
 
 @{
     ViewBag.Title = "Index";
@@ -12,19 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.DisplayName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Students)
+            @Html.DisplayNameFor(model => model.DisplayStudentsCount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lessons)
+            @Html.DisplayNameFor(model => model.DisplayLessonsCount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Frequency)
+            @Html.DisplayNameFor(model => model.DisplayFrequency)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Points)
+            @Html.DisplayNameFor(model => model.DisplayPoints)
         </th>
         <th></th>
     </tr>
@@ -32,19 +32,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.DisplayName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Students)
+            @Html.DisplayFor(modelItem => item.DisplayStudentsCount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lessons)
+            @Html.DisplayFor(modelItem => item.DisplayLessonsCount)
         </td>
         <td>
-            @string.Format("{0:0.0}%", item.Frequency * 100.0)
+            @Html.DisplayFor(modelItem => item.DisplayFrequency)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Points)
+            @Html.DisplayFor(modelItem => item.DisplayPoints)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

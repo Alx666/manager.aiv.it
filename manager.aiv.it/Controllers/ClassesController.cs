@@ -17,26 +17,8 @@ namespace manager.aiv.it.Controllers
 
         // GET: Classes
         public ActionResult Index()
-        {
-            var hClasses = from hC in db.Classes
-                           select new ClassViewModels
-                           {
-                               Id       = hC.Id,
-                               Name     = hC.Edition.Course.Name + " " + hC.Edition.Course.Grade + hC.Section,
-                               Students = hC.Students.Count(),
-                               Lessons  = hC.Lessons.Count(),
-                               Points   = 0
-                           };
-
-            var res = from l in db.Lessons
-                      where l.ClassSize.HasValue
-                      group l by l.ClassId into g
-                      select new { Id = g.Key, Frequency = g.Average(x => x.Frequency) };
-
-            var final = hClasses.ToList();
-            final.ForEach(x => x.Frequency = res.Where(k => k.Id == x.Id).Select(y => y.Frequency).FirstOrDefault());
-
-            return View(final);
+        {            
+            return View(db.Classes.Include(x => x.Edition).ToList());
         }
 
         // GET: Classes/Details/5

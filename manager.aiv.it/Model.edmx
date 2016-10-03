@@ -64,8 +64,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CourseId" Type="int" Nullable="false" />
           <Property Name="AcademicYear" Type="smallint" Nullable="false" />
-          <Property Name="DateStart" Type="date" />
-          <Property Name="DateEnd" Type="date" />
+          <Property Name="DateStart" Type="date" Nullable="false" />
+          <Property Name="DateEnd" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="EditionSchedule">
           <Key>
@@ -683,15 +683,6 @@
           <EntitySet Name="Binaries" EntityType="AivModel.Binary" />
           <EntitySet Name="Classes" EntityType="AivModel.Class" />
           <EntitySet Name="Courses" EntityType="AivModel.Course" />
-          <EntitySet Name="Editions" EntityType="AivModel.Edition" />
-          <AssociationSet Name="FK_Class_ToEdition" Association="AivModel.FK_Class_ToEdition">
-            <End Role="Edition" EntitySet="Editions" />
-            <End Role="Class" EntitySet="Classes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Edition_ToCourse" Association="AivModel.FK_Edition_ToCourse">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Edition" EntitySet="Editions" />
-          </AssociationSet>
           <EntitySet Name="Roles" EntityType="AivModel.Role" />
           <EntitySet Name="Users" EntityType="AivModel.User" />
           <AssociationSet Name="FK_User_ToClass" Association="AivModel.FK_User_ToClass">
@@ -726,10 +717,6 @@
           </AssociationSet>
           <AssociationSet Name="CoveredTopic" Association="AivModel.CoveredTopic">
             <End Role="Lesson" EntitySet="Lessons" />
-            <End Role="Topic" EntitySet="Topics" />
-          </AssociationSet>
-          <AssociationSet Name="EditionSchedule" Association="AivModel.EditionSchedule">
-            <End Role="Edition" EntitySet="Editions" />
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
           <EntitySet Name="ExerciseTypes" EntityType="AivModel.ExerciseType" />
@@ -784,6 +771,19 @@
             <End Role="Assignment" EntitySet="Assignments" />
             <End Role="Submission" EntitySet="Submissions" />
           </AssociationSet>
+          <EntitySet Name="Editions" EntityType="AivModel.Edition" />
+          <AssociationSet Name="FK_Class_ToEdition" Association="AivModel.FK_Class_ToEdition">
+            <End Role="Edition" EntitySet="Editions" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Edition_ToCourse" Association="AivModel.FK_Edition_ToCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Edition" EntitySet="Editions" />
+          </AssociationSet>
+          <AssociationSet Name="EditionSchedule" Association="AivModel.EditionSchedule">
+            <End Role="Edition" EntitySet="Editions" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Binary">
           <Key>
@@ -802,10 +802,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EditionId" Type="Int32" Nullable="false" />
           <Property Name="Section" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Edition" Relationship="AivModel.FK_Class_ToEdition" FromRole="Class" ToRole="Edition" />
           <NavigationProperty Name="Students" Relationship="AivModel.FK_User_ToClass" FromRole="Class" ToRole="User" />
           <NavigationProperty Name="Lessons" Relationship="AivModel.FK_Lesson_ToClass" FromRole="Class" ToRole="Lesson" />
           <NavigationProperty Name="Assignments" Relationship="AivModel.FK_ExerciseAssignment_ToClass" FromRole="Class" ToRole="Assignment" />
+          <NavigationProperty Name="Edition" Relationship="AivModel.FK_Class_ToEdition" FromRole="Class" ToRole="Edition" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -814,47 +814,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Grade" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Editions" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Course" ToRole="Edition" />
           <NavigationProperty Name="Teachers" Relationship="AivModel.Teaching" FromRole="Course" ToRole="User" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Course" ToRole="Exercise" />
+          <NavigationProperty Name="Editions" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Course" ToRole="Edition" />
         </EntityType>
-        <EntityType Name="Edition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CourseId" Type="Int32" Nullable="false" />
-          <Property Name="AcademicYear" Type="Int16" Nullable="false" />
-          <Property Name="DateStart" Type="DateTime" Precision="0" />
-          <Property Name="DateEnd" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Classes" Relationship="AivModel.FK_Class_ToEdition" FromRole="Edition" ToRole="Class" />
-          <NavigationProperty Name="Course" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Edition" ToRole="Course" />
-          <NavigationProperty Name="Topics" Relationship="AivModel.EditionSchedule" FromRole="Edition" ToRole="Topic" />
-        </EntityType>
-        <Association Name="FK_Class_ToEdition">
-          <End Type="AivModel.Edition" Role="Edition" Multiplicity="1" />
-          <End Type="AivModel.Class" Role="Class" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Edition">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Class">
-              <PropertyRef Name="EditionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Edition_ToCourse">
-          <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
-          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Edition">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
@@ -963,8 +926,8 @@
           <Property Name="BinaryId" Type="Int32" />
           <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
           <NavigationProperty Name="Lessons" Relationship="AivModel.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
-          <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
+          <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
         </EntityType>
         <Association Name="FK_Topic_ToBinary">
           <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
@@ -980,10 +943,6 @@
         </Association>
         <Association Name="CoveredTopic">
           <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
-          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
-        </Association>
-        <Association Name="EditionSchedule">
-          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
         </Association>
         <EntityType Name="ExerciseType">
@@ -1191,6 +1150,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Edition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="AcademicYear" Type="Int16" Nullable="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Classes" Relationship="AivModel.FK_Class_ToEdition" FromRole="Edition" ToRole="Class" />
+          <NavigationProperty Name="Course" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Edition" ToRole="Course" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.EditionSchedule" FromRole="Edition" ToRole="Topic" />
+        </EntityType>
+        <Association Name="FK_Class_ToEdition">
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="1" />
+          <End Type="AivModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edition">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="EditionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Edition_ToCourse">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Edition">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EditionSchedule">
+          <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1219,17 +1219,6 @@
               <MappingFragment StoreEntitySet="Course">
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Editions">
-            <EntityTypeMapping TypeName="AivModel.Edition">
-              <MappingFragment StoreEntitySet="Edition">
-                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1315,14 +1304,6 @@
               <ScalarProperty Name="Id" ColumnName="LessonId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="EditionSchedule" TypeName="AivModel.EditionSchedule" StoreEntitySet="EditionSchedule">
-            <EndProperty Name="Topic">
-              <ScalarProperty Name="Id" ColumnName="TopicId" />
-            </EndProperty>
-            <EndProperty Name="Edition">
-              <ScalarProperty Name="Id" ColumnName="EditionId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="ExerciseTypes">
             <EntityTypeMapping TypeName="AivModel.ExerciseType">
               <MappingFragment StoreEntitySet="ExerciseType">
@@ -1380,6 +1361,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Editions">
+            <EntityTypeMapping TypeName="AivModel.Edition">
+              <MappingFragment StoreEntitySet="Edition">
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EditionSchedule" TypeName="AivModel.EditionSchedule" StoreEntitySet="EditionSchedule">
+            <EndProperty Name="Topic">
+              <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="Edition">
+              <ScalarProperty Name="Id" ColumnName="EditionId" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

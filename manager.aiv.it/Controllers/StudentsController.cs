@@ -22,17 +22,9 @@ namespace manager.aiv.it.Controllers
             var model = from r in db.Roles
                         from s in r.Users
                         where r.Id == (int)RoleType.Student
-                        select new StudentViewModels()
-                        {
-                            Id = s.Id,
-                            Name = s.Name,
-                            Surname = s.Surname,
-                            Email = s.Email,
-                            Mobile = s.Mobile,
-                            Class = s.Class.Edition.Course.Name + " " + s.Class.Edition.Course.Grade + s.Class.Section
-                        };
+                        select s;
 
-            return View(model.ToList());
+            return View(model);
         }
 
         // GET: Students/Details/5        
@@ -45,48 +37,20 @@ namespace manager.aiv.it.Controllers
 
             User user = db.Users.Find(id);
 
-            StudentViewModels hUser = new StudentViewModels();        
-            hUser.Id                = user.Id;
-            hUser.Name              = user.Name;
-            hUser.Surname           = user.Surname;
-            hUser.Email             = user.Email;
-            hUser.Mobile            = user.Mobile;
-
-            if (user.Class != null)
-            {
-                hUser.Class = user.Class.Edition.Course.Name + " " + user.Class.Edition.Course.Grade + user.Class.Section;
-
-                int iTotalLessons   = user.Class.Lessons.Where(l => l.Date < DateTime.Now).Count();
-                int iPresences      = user.LessonsFollowed.Where(l => l.Class == user.Class).Count();
-                hUser.Frequency     = string.Format("{0} / {1}", iPresences, iTotalLessons);
-
-
-                hUser.MissedLessons = (from hL in user.Class.Lessons
-                                       where !hL.Students.Contains(user)
-                                       select hL).ToList().Select(l => new LessonViewModels(l)).ToList();
-
-                 hUser.Assignments = user.Class.Assignments.Where(a => a.UnlockDate >= DateTime.Now.Date).Select(a => new AssignmentViewModels(a.UnlockDate, a.Deadline, a.Description, a.Exercise)).ToList();
-            }
-            else
-            {
-                hUser.Class         = string.Empty;
-                hUser.Frequency     = string.Empty;
-            }
-
-
-
+   
             if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(hUser);
+
+            return View(user);
         }
 
         // GET: Students/Create
         [CustomAuthorize(RoleType.Secretary)]
         public ActionResult Create()
         {
-            ViewBag.ClassId = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name");
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "DisplayName");
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
@@ -126,7 +90,7 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClassId = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", user.ClassId);
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "DisplayName", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
             return View(user);
         }

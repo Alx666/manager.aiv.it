@@ -18,17 +18,9 @@ namespace manager.aiv.it.Controllers
         // GET: Lessons
         public ActionResult Index()
         {
-            var lessons = from hL in db.Lessons
-                          select new LessonViewModels()
-                          {
-                              Id = hL.Id,
-                              Date = hL.Date,
-                              Teacher = hL.Teacher.Name + " " + hL.Teacher.Surname,
-                              Class = hL.Class.Edition.Course.Name + " " + hL.Class.Edition.Course.Grade + hL.Class.Section,
-                              Students = hL.Students.Count() + " / " + hL.ClassSize
-                          };
+            var lessons = (from hL in db.Lessons select hL).ToList();
 
-            return View(lessons.ToList());
+            return View(lessons);
         }
 
         // GET: Lessons/Details/5
@@ -50,15 +42,16 @@ namespace manager.aiv.it.Controllers
 
 
         //Get
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? classid)
         {
             var hClasses = db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section });
 
             if (!classid.HasValue)
             {
-                ViewBag.ClassId = new SelectList(hClasses, "Id", "Name");
-                ViewBag.TeacherId = new SelectList(Enumerable.Empty<User>(), "Id", "Name");
-                ViewBag.topics = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
+                ViewBag.ClassId     = new SelectList(hClasses, "Id", "Name");
+                ViewBag.TeacherId   = new SelectList(Enumerable.Empty<User>(), "Id", "Name");
+                ViewBag.topics      = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
             }
             else
             {
@@ -77,6 +70,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson)
         {
             if (ModelState.IsValid)
@@ -94,28 +88,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Lessons/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Lesson lesson = db.Lessons.Find(id);
-        //    if (lesson == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var vClassStudents = from hU in lesson.Class.Students select new { Id = hU.Id, Name = hU.Name + " " + hU.Surname };
-        //    //var vToSelect      = from hS in lesson.Class.S where hS.c
-
-        //    ViewBag.ClassId     = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", lesson.ClassId);
-        //    ViewBag.TeacherId   = new SelectList(db.Users.Select(u => new { Id = u.Id, Name = u.Name + " " + u.Surname}), "Id", "Name", lesson.TeacherId);
-        //    ViewBag.Students    = new MultiSelectList(vClassStudents, "Id", "Name", lesson.Students.Select(s => s.Id));
-
-        //    return View(lesson);
-        //}
-
+        [CustomAuthorize(RoleType.Teacher, RoleType.Secretary)]
         public ActionResult Edit(int? id, int? classid)
         {
             if (id == null)
@@ -157,6 +130,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Secretary)]
         public ActionResult Edit([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> students, List<int> topics)
         {
             if (ModelState.IsValid)
@@ -198,6 +172,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Lessons/Delete/5
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -215,6 +190,7 @@ namespace manager.aiv.it.Controllers
         // POST: Lessons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult DeleteConfirmed(int id)
         {
             Lesson lesson = db.Lessons.Find(id);

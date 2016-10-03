@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Models.ExerciseViewModels>
+﻿@model IEnumerable<manager.aiv.it.Exercise>
 
 @{
     ViewBag.Title = "Index";
@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Author.DisplayName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Type)

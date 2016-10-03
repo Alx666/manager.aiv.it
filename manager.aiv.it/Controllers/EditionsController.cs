@@ -18,20 +18,7 @@ namespace manager.aiv.it.Controllers
         // GET: Editions
         public ActionResult Index()
         {
-            //var editions = db.Editions.Include(e => e.Course);
-
-            var model = from e in db.Editions
-                               select new EditionViewModels()
-                               {
-                                   Id = e.Id,
-                                   Name = e.Course.Name + " " + e.Course.Grade,
-                                   AcademicYear = e.AcademicYear,
-                                   DateStart = e.DateStart,
-                                   DateEnd = e.DateEnd
-                               };
-
-
-            return View(model);
+            return View(db.Editions.ToList());
         }
 
         // GET: Editions/Details/5

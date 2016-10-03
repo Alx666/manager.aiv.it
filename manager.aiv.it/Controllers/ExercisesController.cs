@@ -18,18 +18,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Manager, RoleType.Director)]
         public ActionResult Index()
         {
-            IEnumerable<ExerciseViewModels> hIndex = from e in db.Exercises select new ExerciseViewModels()
-            {
-                Id = e.Id,
-                Name = e.Name,
-                Author = e.Author.Name + " " + e.Author.Surname,
-                Topics = e.Topics.Select(x => x.Name + ", " + x.Description).ToList(),
-                Value = e.Value,
-                Type = e.Type.Name,
-                Course = e.Course.Name + " " + e.Course.Grade
-            };
-
-            return View(hIndex.ToList());
+            return View(db.Exercises.Include(e => e.Author).Include(e => e.Course).Include(e => e.Type).ToList());
         }
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Manager, RoleType.Director)]
@@ -66,7 +55,7 @@ namespace manager.aiv.it.Controllers
 
                 if (hLast != null)
                 {
-                    ViewBag.topics = new MultiSelectList(hLast.Topics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name");
+                    ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "Name");
                 }
                 else
                 {
