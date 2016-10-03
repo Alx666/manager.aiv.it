@@ -1,11 +1,12 @@
 ﻿Developer				Task										Priorità
 ----------------------------------------------------------------------------
-Saverio					Implementazione Exercises\Edit				High
+
+
 Saverio					Revisione delle date (picker)				High
 Saverio					Classes\Index => inizializzare Points		High
 Saverio					Implementazione Ricerche sugli Index		Mid	
-Saverio					Revisione pagine esistenti					Low
-Saverio					implementare classi parziali per EF (Desc1) Low
+
+
 
 Sergio					Students\Details (Desc0)					Low
 Sergio					Abbellimenti vari							Low
@@ -25,4 +26,8 @@ e inserire all'interno di essa l'interfacciamento con gli esercizi assegnati
 Lo sviluppo del framework per gli esercizi è ancora in stato embrionale quindi
 ti puoi limitare a pensarla x ora
 
+
+Saverio:
+Il nome dell'esercizio assegnato su students\details deve linkare al details dell'esercizio
+qui si troveranno i topic assegnati con il link di download del materiale didattico se presente
 

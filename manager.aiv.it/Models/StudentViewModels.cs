@@ -14,7 +14,7 @@ namespace manager.aiv.it.Models
         public string Mobile             { get; set; }
         public string Class              { get; set; }
         public string Frequency          { get; set; }
-        public List<string> MissedTopics { get; set; }
         public List<AssignmentViewModels>  Assignments { get; set; }
+        public List<LessonViewModels> MissedLessons { get; set; }
     }
 }

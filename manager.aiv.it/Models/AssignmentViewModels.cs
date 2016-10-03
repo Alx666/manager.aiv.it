@@ -16,11 +16,10 @@ namespace manager.aiv.it.Models
         public DateTime UnlockDate  { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Deadline    { get; set; }
+        public DateTime Deadline    { get; set; }        
 
         [DataType(DataType.MultilineText)]
         public string Notes         { get; set; }
-
         public int TeacherId        { get; set; }
         public string Teacher       { get; set; }
 
