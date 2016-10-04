@@ -168,6 +168,31 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     color: #b94a48;
 }
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    width: inherit;
+    display: inline;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+	cursor: pointer;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: lightcoral;
+}
+
 /* FLEXBOX */
 
 *[flex]{

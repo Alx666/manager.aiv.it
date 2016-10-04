@@ -40,7 +40,10 @@ var imageSource = String.Format("data:image/png;base64,{0}", base64);
 */
             }
             
-            @Html.ActionLink("Download", "Download", new { BinaryId = Model.BinaryId })
+            @if (Model.Binary != null && !string.IsNullOrEmpty(Model.Binary.Filename))
+            {
+                @Html.ActionLink(Model.Binary.Filename, "Download", new { BinaryId = Model.BinaryId })
+            }
         </dd>
 
         <dt>

@@ -154,13 +154,34 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId")] Exercise exercise, List<int> topics)
+        public ActionResult Edit([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId")] Exercise exercise, List<int> topics, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
                 Exercise hEdited = db.Exercises.Find(exercise.Id);
 
                 hEdited.Topics.Clear();
+
+                if (upload != null)
+                {
+                    Binary binaryFile = new Binary();
+                    byte[] fileBytes = new byte[upload.InputStream.Length];
+                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                    binaryFile.Data = fileBytes;
+                    binaryFile.Filename = upload.FileName;
+                    db.Binaries.Add(binaryFile);
+                    db.SaveChanges();
+                    /* 
+                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                    */
+                    Binary saved = db.Binaries.Find(binaryFile.Id);
+                    if (saved != null)
+                    {
+                        hEdited.Binary = saved;
+                        hEdited.BinaryId = saved.Id;
+                    }
+                }
 
                 if (topics != null)
                     topics.ForEach(t => hEdited.Topics.Add(db.Topics.Find(t)));
