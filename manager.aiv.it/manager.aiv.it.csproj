@@ -240,6 +240,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\IdentityModels.cs" />

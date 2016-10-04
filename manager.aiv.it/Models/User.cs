@@ -47,5 +47,8 @@ namespace manager.aiv.it
     {
         [DisplayFormat(NullDisplayText = "-")]
         Class Class { get; }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        string Mobile { get; }
     }
 }

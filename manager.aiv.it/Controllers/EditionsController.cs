@@ -39,9 +39,15 @@ namespace manager.aiv.it.Controllers
         // GET: Editions/Create
         public ActionResult Create()
         {
-            ViewBag.CourseId = new SelectList(db.Courses.Select(c => new { Id = c.Id, Name = c.Name + " " + c.Grade }), "Id", "Name");
-            ViewBag.topics   = new SelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue).Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name");
-            return View();
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName");
+            ViewBag.topics   = new SelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue), "Id", "DisplayName");
+
+            Edition hNew        = new Edition();
+            hNew.AcademicYear   = (short)DateTime.Now.Year;
+            hNew.DateStart      = DateTime.Now;
+            hNew.DateEnd        = DateTime.Now.AddMonths(9);
+
+            return View(hNew);
         }
 
         // POST: Editions/Create

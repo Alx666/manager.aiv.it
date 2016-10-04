@@ -11,16 +11,18 @@ namespace manager.aiv.it
     public partial class Edition : IEditionMetaData
     {
         [DisplayName("Name")]
-        public string DisplayName => $"{Course.Name} {Course.Grade}";
+        public string DisplayName => $"{Course.Name} {Course.Grade} ({AcademicYear})";
     }
 
 
     public interface IEditionMetaData
     {
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime DateStart { get; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime DateEnd { get; }
     }
 }

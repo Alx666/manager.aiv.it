@@ -39,7 +39,7 @@ namespace manager.aiv.it.Controllers
         // GET: Classes/Create
         public ActionResult Create()
         {
-            ViewBag.EditionId = new SelectList(db.Editions.Select(e => new { Id = e.Id, Name = e.Course.Name + " " + e.Course.Grade + " " + e.AcademicYear }), "Id", "Name");
+            ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now), "Id", "DisplayName");
             return View();
         }
 

@@ -53,7 +53,7 @@ namespace manager.aiv.it.Controllers
         public ActionResult Create()
         {
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section");
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.roles = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
 
@@ -63,10 +63,16 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Admin)]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,RoleId,Email,Password,Mobile,ClassId,PictureId")] User user)
+        public ActionResult Create([Bind(Include = "Id,Name,Surname,Email,Password,Mobile")] User user, List<int> roles)
         {
             if (ModelState.IsValid)
             {
+                if (roles != null)
+                {
+                    var hRoles = roles.Select(r => db.Roles.Find(r)).ToList();
+                    hRoles.ForEach(r => user.Roles.Add(r));
+                }
+
                 user.RegistrationDate = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
