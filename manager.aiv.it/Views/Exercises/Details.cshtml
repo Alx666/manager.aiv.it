@@ -27,11 +27,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Binary.Id)
+            @Html.Display("File")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Binary.Id)
+            @{ 
+/* 
+PER MOSTRARE UN'IMMAGINE IN base64 A PARTIRE DA UN byte[] 
+var base64 = Convert.ToBase64String(Model.Binary.Data);
+var imageSource = String.Format("data:image/png;base64,{0}", base64);
+<img src="@imageSource" /> 
+*/
+            }
+            
+            @Html.ActionLink("Download", "Download", new { BinaryId = Model.BinaryId })
         </dd>
 
         <dt>

@@ -70,17 +70,38 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId")] Exercise exercise, List<int> topics)
+        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId,BinaryId")] Exercise exercise, List<int> topics, HttpPostedFileBase upload)
         {
             User hAuthor = db.Users.Find((int)this.Session["UserId"]);
-
+            
             if (ModelState.IsValid && hAuthor != null)
             {
-                if(topics != null)
+                if (upload != null)
+                {
+                    Binary binaryFile = new Binary();
+                    byte[] fileBytes = new byte[upload.InputStream.Length];
+                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                    binaryFile.Data = fileBytes;
+                    binaryFile.Filename = upload.FileName;
+                    db.Binaries.Add(binaryFile);
+                    db.SaveChanges();
+                    /* 
+                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                    */
+                    Binary saved = db.Binaries.Find(binaryFile.Id);
+                    if(saved != null)
+                    {
+                        exercise.Binary = saved;
+                        exercise.BinaryId = saved.Id;
+                    }
+                }
+
+                if (topics != null)
                     topics.ForEach(t => exercise.Topics.Add(db.Topics.Find(t)));
 
                 exercise.Author = hAuthor;
-
+                
                 db.Exercises.Add(exercise);                
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -186,6 +207,15 @@ namespace manager.aiv.it.Controllers
             db.Exercises.Remove(exercise);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        
+        public FileContentResult Download(int BinaryId)
+        {
+            Binary foundFile = db.Binaries.Find(BinaryId);
+            if(foundFile != null)
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+
+            return null;
         }
 
         protected override void Dispose(bool disposing)
