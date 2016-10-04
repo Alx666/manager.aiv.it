@@ -40,20 +40,8 @@
                     <div class="card-image">
 
                         <div class="picture-wrapper">
-                            @if (Model.Class.ToLower().Contains("graphic"))
-                            {
-                                <img src="http://static.ilfoglio.it/redazione/articoli/2016/05/02/141439/picasso.jpg" alt="Pablo Picasso"
-                                     onclick="(function () { alert('Let me photoshop it.'); })()" />
-                            }
-                            else if (Model.Class.ToLower().Contains("program"))
-                            {
-                                <img src="http://it.emcelettronica.com/wp-content/uploads/files/node_images/programmers%20copia.JPG" alt="Programmer"
-                                     onclick="(function () { alert('Are you talkin\' 10 me?!?'); })()" />
-                            }
-                            else {
-                                <img src="https://imgflip.com/s/meme/Ancient-Aliens.jpg" alt="Aliens"
-                                     onclick="(function () { alert('Warning! You got an alien.'); })()" />
-                            }
+                            <img src="http://it.emcelettronica.com/wp-content/uploads/files/node_images/programmers%20copia.JPG" alt="Programmer"
+                                 onclick="(function () { alert('Are you talkin\' 10 me?!?'); })()" />
                         </div>
 
                         <div class="card-quote">
@@ -70,7 +58,7 @@
 
                                 <!-- INFORMAZIONI ANAGRAFICHE -->
                                 <section>
-                                    <h4 class="section-title">Anagrafica</h4>
+                                    <h4 class="section-title">Base Data</h4>
 
                                     <div class="row">
                                         <div class="col col-xs-6">
@@ -127,16 +115,16 @@
                                             <span class="bold">@Html.DisplayNameFor(model => model.Class)</span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Class)
+                                            @Html.DisplayFor(model => model.Class.DisplayName)
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col col-xs-6">
-                                            <span class="bold">@Html.DisplayNameFor(model => model.Frequency)</span>
+                                            <span class="bold">@Html.DisplayNameFor(model => model.DisplayFrequency)</span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Frequency)
+                                            @Html.DisplayFor(model => model.DisplayFrequency)
                                         </div>
                                     </div>
                                 </section>
@@ -156,14 +144,14 @@
                                             </tr>
                                             @foreach (var item in Model.Assignments)
                                             {
-                                                <tr>
+                                                @*<tr>
                                                     <td>@item.Name</td>
                                                     <td>@item.Type</td>
                                                     <td>@(item.UnlockDate - item.Deadline).Days</td>
                                                     <td>0</td>
                                                     <td>@item.Value</td>
                                                     <td><input type="submit" value="Submit"/></td>
-                                                </tr>
+                                                </tr>*@
                                             }
                                         </table>
                                     </div>
@@ -176,14 +164,14 @@
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Teacher</th>
-                                                <th>Topics</th>
+                                                @*<th>Topics</th>*@
                                             </tr>
                                             @foreach (var item in Model.MissedLessons)
                                             {
                                                 <tr>
                                                     <td>@item.Date</td>
                                                     <td>@item.Teacher</td>
-                                                    <td>@item.Topic</td>
+                                                    @*<td>@item.Topics</td>*@
                                                 </tr>
                                             }
                                         </table>

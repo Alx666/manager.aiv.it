@@ -90,8 +90,10 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "DisplayName", user.ClassId);
+
+            ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+
             return View(user);
         }
 

@@ -58,12 +58,14 @@
             @Html.DisplayFor(model => model.RegistrationDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Role)
+            @Html.DisplayNameFor(model => model.Roles)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role.Name)
-        </dd>
+        @foreach(var item in Model.Roles)
+        {
+            <dd>
+                @item.Name
+            </dd>
+        }
 
     </dl>
 </div>

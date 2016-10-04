@@ -25,7 +25,8 @@ namespace manager.aiv.it
         [DisplayName("Points")]
         public int      DisplayPoints           => this.Assignments.Sum(a => a.ExerciseValue);
 
-
-        public override string   ToString()     => $"{this.Edition.Course.Name} {this.Edition.Course.Grade}";
+        [DisplayName("Class")]
+        [DisplayFormat(NullDisplayText = "-")]
+        public string DisplayName               => this.Edition != null ? $"{this.Edition.Course.Name} {this.Edition.Course.Grade}{this.Section}" : null;
     }
 }

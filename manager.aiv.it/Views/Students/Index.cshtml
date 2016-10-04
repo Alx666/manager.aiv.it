@@ -61,7 +61,7 @@
                         @Html.DisplayFor(modelItem => item.Mobile)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DisplayClass)
+                        @Html.DisplayFor(modelItem => item.Class.DisplayName)
                     </td>
                     <td>
                         <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })">

@@ -7,17 +7,40 @@ namespace manager.aiv.it
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
 
     [MetadataType(typeof(IUserMetaData))]
     public partial class User
-    {                
-        public int?      DisplayTotalLessons => Class == null ? 0 : Class.Lessons.Where(l => l.Date < DateTime.Now).Count();
-        public int?      DisplayPresences    => Class == null ? 0 : LessonsFollowed.Where(l => l.Class.Id == this.Class.Id).Count();
-        public string   DisplayFrequency     => Class == null ? string.Empty : $"{DisplayPresences} / {DisplayTotalLessons}";
+    {
+        [DisplayName("Full Name")]
+        public string       DisplayName => $"{Name} {Surname}";
 
-        public override string   ToString()  => $"{Name} {Surname}";
+        [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Class Lessons")]
+        public int?         DisplayTotalLessons => Class?.Lessons.Where(l => l.Date < DateTime.Now).Count();
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Followed Lessons")]
+        public int?         DisplayPresences    => Class?.Lessons.Where(l => l.Class.Id == this.Class.Id).Count();
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Presences")]
+        public string       DisplayFrequency
+        { 
+            get
+            {
+                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue)
+                    return $"{DisplayPresences} / {DisplayTotalLessons}";
+                else
+                    return null;
+            }
+        }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Missed Lessons")]
+        public List<Lesson> MissedLessons => this.LessonsFollowed.Where(l => !l.Students.Contains(this)).ToList();
     }
 
     public interface IUserMetaData
