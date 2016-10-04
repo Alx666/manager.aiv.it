@@ -4,60 +4,83 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row title-margin">
+    <div class="col-md-10 col-xs-6">
+        <span class="title">Index</span>
+    </div>
+    <div class="col-md-2 col-xs-6 text-right">
+        <button class="btn btn-primary">
+            <a href="@Url.Action("Create")">
+                <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
+                <span>Create New</span>
+            </a>
+        </button>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
-        </th>*@
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-striped table-responsive table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class)
+                </th>
+                <th>
+                    Details
+                </th>
+                <th class="text-right">
+                    Actions
+                </th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile)
-        </td>
-        @*<td>
-            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.RegistrationDate))            
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.DisplayName)
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
 
-</table>
+                        <a class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
