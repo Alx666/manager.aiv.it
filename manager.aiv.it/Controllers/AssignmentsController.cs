@@ -39,40 +39,39 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Assignments/Create
-        //[CustomAuthorize(RoleType.Teacher)]
-        //public ActionResult Create(int? exerciseid)
-        //{
-        //    User hUser = db.Users.Find((int)this.Session["UserId"]);
+        [CustomAuthorize(RoleType.Teacher)]
+        public ActionResult Create(int? exerciseid)
+        {
+            User hUser = db.Users.Find((int)this.Session["UserId"]);
 
-        //    var hClasses    =   from hClass in db.Classes where hClass.Edition.DateEnd > DateTime.Now
-        //                        from hCourse in db.Courses where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) where hClass.Edition.Course == hCourse
-        //                        select new { Id = hClass.Id, Name = hClass.Edition.Course.Name + " " + hClass.Edition.Course.Grade + hClass.Section };
+            var hClasses    =   from hClass in db.Classes  where hClass.Edition.DateEnd > DateTime.Now
+                                from hCourse in db.Courses where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) && hClass.Edition.Course == hCourse
+                                select hClass;
 
 
-        //    var hExercises = from hExercise in db.Exercises
-        //                     where hExercise.Course.Teachers.Select(t => t.Id).Contains(hUser.Id)
-        //                     select new
-        //                     {
-        //                         Id         = hExercise.Id,
-        //                         Name       = "(Grade " +  hExercise.Course.Grade + " " + hExercise.Value + "pts) " + hExercise.Name
-        //                     };
+            var hExercises  =   from hExercise in db.Exercises
+                                where hExercise.Course.Teachers.Select(t => t.Id).Contains(hUser.Id)
+                                select hExercise;
 
+
+            ViewBag.ClassId     = new SelectList(hClasses, "Id", "DisplayName");
+            ViewBag.ExerciseId  = new SelectList(hExercises, "Id", "Name");
             
-        //    ViewBag.ClassId     = new SelectList(hClasses, "Id", "Name");
-        //    ViewBag.ExerciseId  = new SelectList(hExercises, "Id", "Name");
 
-        //    AssignmentViewModels hView;
+            Assignment hAssignment = new Assignment();
+            
 
-        //    if (exerciseid.HasValue)
-        //    {
-        //        Exercise hSelected = db.Exercises.Find(exerciseid);
-        //        hView = new AssignmentViewModels(hSelected);
-        //    }
-        //    else
-        //        hView = new AssignmentViewModels(db.Exercises.Find(hExercises.First().Id));
+            if (exerciseid.HasValue)
+            {
+                hAssignment.Exercise = db.Exercises.Find(exerciseid);
+            }
+            else
+                hAssignment.Exercise = db.Exercises.Find(hExercises.First().Id);
 
-        //    return View(hView);
-        //}
+            ViewBag.topics = new MultiSelectList(hAssignment.Exercise.Topics, "Id", "DisplayName");
+
+            return View(hAssignment);
+        }
 
 
         // POST: Assignments/Create
