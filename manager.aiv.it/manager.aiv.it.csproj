@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AssignmentsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DEBUG_ExercisesController.cs" />
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -386,6 +387,11 @@
     <Content Include="Views\Assignments\Details.cshtml" />
     <Content Include="Views\Assignments\Edit.cshtml" />
     <Content Include="Views\Assignments\Index.cshtml" />
+    <Content Include="Views\DEBUG_Exercises\Create.cshtml" />
+    <Content Include="Views\DEBUG_Exercises\Delete.cshtml" />
+    <Content Include="Views\DEBUG_Exercises\Details.cshtml" />
+    <Content Include="Views\DEBUG_Exercises\Edit.cshtml" />
+    <Content Include="Views\DEBUG_Exercises\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -45,7 +45,7 @@ namespace manager.aiv.it.Controllers
             
             ViewBag.CourseId = new SelectList(hTeacher.Courses, "Id", "DisplayName");
             ViewBag.value    = new SelectList(Enumerable.Range(1, 15));
-            ViewBag.type     = new SelectList(db.ExerciseTypes, "Id", "Name");
+            ViewBag.TypeId   = new SelectList(db.ExerciseTypes, "Id", "Name");
 
             if (courseid.HasValue)
             {
@@ -105,8 +105,8 @@ namespace manager.aiv.it.Controllers
             if (exercise == null)
                 return HttpNotFound();
 
-            ViewBag.CourseId    = new SelectList(exercise.Author.Courses.Select(c => new { Id = c.Id, Name = c.Name + " " + c.Grade }), "Id", "Name", exercise.CourseId);
-            ViewBag.value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
+            ViewBag.CourseId    = new SelectList(exercise.Author.Courses, "Id", "DisplayName", exercise.CourseId);
+            ViewBag.Value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
             ViewBag.TypeId      = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
 
             Edition hLast;
@@ -137,39 +137,21 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    Exercise hEdited = db.Exercises.Find(exercise.Id);
+                Exercise hEdited = db.Exercises.Find(exercise.Id);
 
-                    hEdited.Topics.Clear();
+                hEdited.Topics.Clear();
 
-                    if (topics != null)
-                        topics.ForEach(t => hEdited.Topics.Add(db.Topics.Find(t)));
+                if (topics != null)
+                    topics.ForEach(t => hEdited.Topics.Add(db.Topics.Find(t)));
 
-                    hEdited.Name = exercise.Name;
-                    hEdited.Description = exercise.Description;
-                    hEdited.CourseId = exercise.CourseId;
-                    hEdited.Value = exercise.Value;
+                hEdited.Name = exercise.Name;
+                hEdited.Description = exercise.Description;
+                hEdited.CourseId = exercise.CourseId;
+                hEdited.Value = exercise.Value;
 
-                    db.Entry(hEdited).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (DbEntityValidationException e)
-                {
-                    StringBuilder hSb = new StringBuilder();
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        hSb.AppendFormat("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            hSb.AppendFormat("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-
-                    string sMex = hSb.ToString();
-                    throw;
-                }
+                db.Entry(hEdited).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             //ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
