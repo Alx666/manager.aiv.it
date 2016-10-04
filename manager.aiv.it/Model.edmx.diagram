@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4e850516916146ba90ffdf53ab76f3d1" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="AivModel.Manager" Width="1.5" PointX="6.75" PointY="1.625" />
-        <EntityTypeShape EntityType="AivModel.Binary" Width="1.5" PointX="10.75" PointY="14.5" />
         <EntityTypeShape EntityType="AivModel.Class" Width="1.5" PointX="3.375" PointY="1.5" />
         <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="8" PointY="1.5" />
         <EntityTypeShape EntityType="AivModel.Role" Width="1.5" PointX="0.75" PointY="5.5" />
@@ -19,17 +18,14 @@
         <AssociationConnector Association="AivModel.FK_Lesson_ToUser" />
         <AssociationConnector Association="AivModel.Attending" />
         <EntityTypeShape EntityType="AivModel.Topic" Width="1.5" PointX="5.875" PointY="10.75" />
-        <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
         <AssociationConnector Association="AivModel.CoveredTopic" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="19.875" PointY="4" />
         <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="16.875" PointY="4" />
-        <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToCourse" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToUser" />
         <AssociationConnector Association="AivModel.ExerciseTopic" />
         <EntityTypeShape EntityType="AivModel.Submission" Width="1.5" PointX="16.125" PointY="8.625" />
-        <AssociationConnector Association="AivModel.FK_Table_Binary" />
         <AssociationConnector Association="AivModel.FK_Table_ToStudent" />
         <AssociationConnector Association="AivModel.FK_Table_ToTeacher" />
         <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="19.125" PointY="6.625" />
@@ -41,6 +37,10 @@
         <AssociationConnector Association="AivModel.FK_Class_ToEdition" />
         <AssociationConnector Association="AivModel.FK_Edition_ToCourse" />
         <AssociationConnector Association="AivModel.EditionSchedule" />
+        <EntityTypeShape EntityType="AivModel.Binary" Width="1.5" PointX="12.5" PointY="14.125" />
+        <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
+        <AssociationConnector Association="AivModel.FK_Table_Binary" />
+        <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -32,6 +32,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Filename" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -178,7 +179,9 @@
           <Property Name="PictureId" Type="int" />
         </EntityType>
         <Association Name="FK_Attending_ToLesson">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lesson">
@@ -190,7 +193,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Attending_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -202,7 +207,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Class_ToEdition">
-          <End Role="Edition" Type="Self.Edition" Multiplicity="1" />
+          <End Role="Edition" Type="Self.Edition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Class" Type="Self.Class" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Edition">
@@ -214,7 +221,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CoveredTopic_ToTable_1">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CoveredTopic" Type="Self.CoveredTopic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lesson">
@@ -226,7 +235,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CoveredTopic_ToTopic">
-          <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CoveredTopic" Type="Self.CoveredTopic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Topic">
@@ -250,7 +261,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EditionSchedule_ToEdition">
-          <End Role="Edition" Type="Self.Edition" Multiplicity="1" />
+          <End Role="Edition" Type="Self.Edition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="EditionSchedule" Type="Self.EditionSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Edition">
@@ -262,7 +275,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EditionSchedule_ToTopic">
-          <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="EditionSchedule" Type="Self.EditionSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Topic">
@@ -394,7 +409,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Lesson_ToClass">
-          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Class">
@@ -680,7 +697,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="AivModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AivEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Binaries" EntityType="AivModel.Binary" />
           <EntitySet Name="Classes" EntityType="AivModel.Class" />
           <EntitySet Name="Courses" EntityType="AivModel.Course" />
           <EntitySet Name="Roles" EntityType="AivModel.Role" />
@@ -711,20 +727,12 @@
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="Topics" EntityType="AivModel.Topic" />
-          <AssociationSet Name="FK_Topic_ToBinary" Association="AivModel.FK_Topic_ToBinary">
-            <End Role="Binary" EntitySet="Binaries" />
-            <End Role="Topic" EntitySet="Topics" />
-          </AssociationSet>
           <AssociationSet Name="CoveredTopic" Association="AivModel.CoveredTopic">
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
           <EntitySet Name="ExerciseTypes" EntityType="AivModel.ExerciseType" />
           <EntitySet Name="Exercises" EntityType="AivModel.Exercise" />
-          <AssociationSet Name="FK_Exercise_ToBinary" Association="AivModel.FK_Exercise_ToBinary">
-            <End Role="Binary" EntitySet="Binaries" />
-            <End Role="Exercise" EntitySet="Exercises" />
-          </AssociationSet>
           <AssociationSet Name="FK_Exercise_ToCourse" Association="AivModel.FK_Exercise_ToCourse">
             <End Role="Course" EntitySet="Courses" />
             <End Role="Exercise" EntitySet="Exercises" />
@@ -742,10 +750,6 @@
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
           <EntitySet Name="Submissions" EntityType="AivModel.Submission" />
-          <AssociationSet Name="FK_Table_Binary" Association="AivModel.FK_Table_Binary">
-            <End Role="Binary" EntitySet="Binaries" />
-            <End Role="Submission" EntitySet="Submissions" />
-          </AssociationSet>
           <AssociationSet Name="FK_Table_ToStudent" Association="AivModel.FK_Table_ToStudent">
             <End Role="User" EntitySet="Users" />
             <End Role="Submission" EntitySet="Submissions" />
@@ -784,17 +788,20 @@
             <End Role="Edition" EntitySet="Editions" />
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
+          <EntitySet Name="Binaries" EntityType="AivModel.Binary" />
+          <AssociationSet Name="FK_Exercise_ToBinary" Association="AivModel.FK_Exercise_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Exercise" EntitySet="Exercises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Binary" Association="AivModel.FK_Table_Binary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Submission" EntitySet="Submissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topic_ToBinary" Association="AivModel.FK_Topic_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Binary">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
-          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
-          <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
-        </EntityType>
         <EntityType Name="Class">
           <Key>
             <PropertyRef Name="Id" />
@@ -924,23 +931,11 @@
           <Property Name="DateDeprecated" Type="DateTime" Precision="0" />
           <Property Name="Deprecated" Type="Boolean" Nullable="false" />
           <Property Name="BinaryId" Type="Int32" />
-          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
           <NavigationProperty Name="Lessons" Relationship="AivModel.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
           <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
         </EntityType>
-        <Association Name="FK_Topic_ToBinary">
-          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
-          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Topic">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CoveredTopic">
           <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
@@ -965,27 +960,13 @@
           <Property Name="AuthorId" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Byte" Nullable="false" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Exercise" ToRole="Binary" />
           <NavigationProperty Name="Course" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Exercise" ToRole="Course" />
           <NavigationProperty Name="Type" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="Exercise" ToRole="ExerciseType" />
           <NavigationProperty Name="Author" Relationship="AivModel.FK_Exercise_ToUser" FromRole="Exercise" ToRole="User" />
           <NavigationProperty Name="Topics" Relationship="AivModel.ExerciseTopic" FromRole="Exercise" ToRole="Topic" />
           <NavigationProperty Name="Assignments" Relationship="AivModel.FK_ExerciseAssignment_ToExercise" FromRole="Exercise" ToRole="Assignment" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Exercise" ToRole="Binary" />
         </EntityType>
-        <Association Name="FK_Exercise_ToBinary">
-          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Exercise">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Exercise_ToCourse">
           <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
           <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
@@ -1038,23 +1019,11 @@
           <Property Name="RevisionDate" Type="DateTime" Precision="0" />
           <Property Name="Score" Type="Byte" />
           <Property Name="RevisorId" Type="Int32" />
-          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Table_Binary" FromRole="Submission" ToRole="Binary" />
           <NavigationProperty Name="Student" Relationship="AivModel.FK_Table_ToStudent" FromRole="Submission" ToRole="User" />
           <NavigationProperty Name="Revisor" Relationship="AivModel.FK_Table_ToTeacher" FromRole="Submission" ToRole="User" />
           <NavigationProperty Name="Assignment" Relationship="AivModel.FK_Table_ToAssignment" FromRole="Submission" ToRole="Assignment" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Table_Binary" FromRole="Submission" ToRole="Binary" />
         </EntityType>
-        <Association Name="FK_Table_Binary">
-          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
-          <End Type="AivModel.Submission" Role="Submission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Submission">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Table_ToStudent">
           <End Type="AivModel.User" Role="User" Multiplicity="1" />
           <End Type="AivModel.Submission" Role="Submission" Multiplicity="*" />
@@ -1191,20 +1160,61 @@
           <End Type="AivModel.Edition" Role="Edition" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
         </Association>
+        <EntityType Name="Binary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Filename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
+          <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
+        </EntityType>
+        <Association Name="FK_Exercise_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Binary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivModel.Submission" Role="Submission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Submission">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topic_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AivModelStoreContainer" CdmEntityContainer="AivEntities">
-          <EntitySetMapping Name="Binaries">
-            <EntityTypeMapping TypeName="AivModel.Binary">
-              <MappingFragment StoreEntitySet="Binary">
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Classes">
             <EntityTypeMapping TypeName="AivModel.Class">
               <MappingFragment StoreEntitySet="Class">
@@ -1380,6 +1390,15 @@
               <ScalarProperty Name="Id" ColumnName="EditionId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Binaries">
+            <EntityTypeMapping TypeName="AivModel.Binary">
+              <MappingFragment StoreEntitySet="Binary">
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
