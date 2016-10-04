@@ -43,11 +43,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Topic.Name)
+           Topics
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Topic.Name)
+            @foreach (var topic in Model.Topics)
+            {
+                @Html.Display(topic.Name)
+            }
         </dd>
 
     </dl>
