@@ -11,7 +11,7 @@ namespace manager.aiv.it
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(ILessonMetadata))]
-    public partial class Lesson : ILessonMetadata
+    public partial class Lesson
     {
         [DisplayName("Students")]
         public string DisplayStudentsCount => $"{this.Students.Count()} / {this.ClassSize}";
@@ -21,5 +21,8 @@ namespace manager.aiv.it
     {
         [DataType(DataType.Date)]        
         DateTime Date { get; }
+
+        [DataType(DataType.MultilineText)]
+        string Notes { get; }
     }
 }

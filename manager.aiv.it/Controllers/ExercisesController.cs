@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using manager.aiv.it;
 using manager.aiv.it.Models;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace manager.aiv.it.Controllers
 {
@@ -41,28 +43,24 @@ namespace manager.aiv.it.Controllers
         {
             User hTeacher = db.Users.Find((int)this.Session["UserId"]);
             
-            ViewBag.CourseId = new SelectList(hTeacher.Courses.Select(c => new { Id = c.Id, Name = c.Name + " " + c.Grade }), "Id", "Name");
+            ViewBag.CourseId = new SelectList(hTeacher.Courses, "Id", "DisplayName");
             ViewBag.value    = new SelectList(Enumerable.Range(1, 15));
             ViewBag.type     = new SelectList(db.ExerciseTypes, "Id", "Name");
 
-            if (!courseid.HasValue)
-            {
-                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
-            }
-            else
+            if (courseid.HasValue)
             {
                 Edition hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
 
                 if (hLast != null)
-                {
-                    ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "Name");
-                }
+                    ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "DisplayName");
                 else
-                {
-                    ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
-                }                                
+                    ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "DisplayName");
             }
-
+            else
+            {
+                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "DisplayName");
+            }
+            
             return View();
         }
 
@@ -72,7 +70,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value")] Exercise exercise, List<int> topics)
+        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId")] Exercise exercise, List<int> topics)
         {
             User hAuthor = db.Users.Find((int)this.Session["UserId"]);
 
@@ -88,9 +86,8 @@ namespace manager.aiv.it.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
-            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", exercise.CourseId);
-            //ViewBag.TopicId = new SelectList(db.Topics, "Id", "Name", exercise.TopicId);
+            ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", exercise.CourseId);
 
             return View(exercise);
         }
@@ -98,43 +95,34 @@ namespace manager.aiv.it.Controllers
         // GET: Exercises/Edit/5
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Edit(int? id, int? courseid)
-        {                                                
-            if (id == null)
-            {
+        {
+            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+
+            if (id == null || hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Exercise    exercise    = db.Exercises.Find(id);
+
+            Exercise exercise = db.Exercises.Find(id);
             if (exercise == null)
-            {
                 return HttpNotFound();
-            }
 
             ViewBag.CourseId    = new SelectList(exercise.Author.Courses.Select(c => new { Id = c.Id, Name = c.Name + " " + c.Grade }), "Id", "Name", exercise.CourseId);
             ViewBag.value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
-            ViewBag.type        = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
+            ViewBag.TypeId      = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
 
-
-            //------------------------------------------------------------------------------------------
-            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
-
-            if (!courseid.HasValue)
+            Edition hLast;
+            List<int> hSelected;
+            if (courseid.HasValue)
             {
-                //ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
-                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
+                hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
+                hSelected = new List<int>();
             }
             else
             {
-                Edition hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
-
-                if (hLast != null)
-                {
-                    ViewBag.topics = new MultiSelectList(hLast.Topics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name");
-                }
-                else
-                {
-                    ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
-                }
+                hLast = (from e in exercise.Course.Editions orderby e.DateStart descending select e).FirstOrDefault();
+                hSelected = exercise.Topics.Select(t => t.Id).ToList();
             }
+
+            ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "DisplayName", hSelected);
 
             return View(exercise);
         }
@@ -145,16 +133,47 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,CourseId,TopicId,Name,Description")] Exercise exercise)
+        public ActionResult Edit([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId")] Exercise exercise, List<int> topics)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(exercise).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    Exercise hEdited = db.Exercises.Find(exercise.Id);
+
+                    hEdited.Topics.Clear();
+
+                    if (topics != null)
+                        topics.ForEach(t => hEdited.Topics.Add(db.Topics.Find(t)));
+
+                    hEdited.Name = exercise.Name;
+                    hEdited.Description = exercise.Description;
+                    hEdited.CourseId = exercise.CourseId;
+                    hEdited.Value = exercise.Value;
+
+                    db.Entry(hEdited).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbEntityValidationException e)
+                {
+                    StringBuilder hSb = new StringBuilder();
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        hSb.AppendFormat("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            hSb.AppendFormat("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+
+                    string sMex = hSb.ToString();
+                    throw;
+                }
             }
-            ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", exercise.CourseId);
+
+            //ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
+            //ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", exercise.CourseId);
             //ViewBag.TopicId = new SelectList(db.Topics, "Id", "Name", exercise.TopicId);
             return View(exercise);
         }

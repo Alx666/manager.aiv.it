@@ -19,29 +19,52 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Notes)
+            @Html.DisplayNameFor(model => model.Teacher.DisplayName)
         </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Teacher.DisplayName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Class.DisplayName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class.DisplayName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Students)
+        </dt>
+        @foreach(var item in Model.Students)
+        {
+            <dd>
+                @item.DisplayName
+            </dd>
+        }
+        <dt>
+            Class Size
+        </dt>
+
+        <dd>
+            @string.Format("{0} / {1}", Model.Students.Count(), Model.ClassSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Topics)
+        </dt>
+        @foreach (var item in Model.Topics)
+        {
+            <dd>
+                @item.DisplayName
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
         <dd>
             @Html.DisplayFor(model => model.Notes)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Class.Section)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Class.Section)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Name)
-        </dd>
-
     </dl>
 </div>
 <p>

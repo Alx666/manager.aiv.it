@@ -45,23 +45,36 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? classid)
         {
-            var hClasses = db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section });
+            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+            if(hTeacher == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) select c;
 
             if (!classid.HasValue)
             {
-                ViewBag.ClassId     = new SelectList(hClasses, "Id", "Name");
+                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName");
                 ViewBag.TeacherId   = new SelectList(Enumerable.Empty<User>(), "Id", "Name");
-                ViewBag.topics      = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
+                ViewBag.topics      = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
+                ViewBag.Students    = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
             }
             else
             {
-                Class hClass = db.Classes.Find(classid);
-                var hTeachers = hClass.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
-                ViewBag.ClassId = new SelectList(hClasses, "Id", "Name", classid.Value);
-                ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", hTeachers.Select(t => t.Id));
-                ViewBag.topics = new MultiSelectList(hClass.Edition.Topics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name");
-            }
+                Class selected      = db.Classes.Find(classid);
 
+                if(selected == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (!selected.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id))
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+               
+                var hTeachers       = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
+                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
+                ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
+                ViewBag.topics      = new MultiSelectList(selected.Edition.Topics, "Id", "DisplayName");
+                ViewBag.students    = new MultiSelectList(selected.Students, "Id", "DisplayName");
+            }
+           
             return View();
         }
 
@@ -71,11 +84,19 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson)
+        public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students)
         {
             if (ModelState.IsValid)
-            {
-                lesson.Frequency = 0f;
+            {                
+                topics?.ForEach(t => lesson.Topics.Add(db.Topics.Find(t)));
+
+                if (students != null)
+                {
+                    students.ForEach(s => lesson.Students.Add(db.Users.Find(s)));
+                    lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
+                }
+                
+
                 db.Lessons.Add(lesson);
                 db.SaveChanges();
                 return RedirectToAction("Index");
