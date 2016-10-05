@@ -193,6 +193,24 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     background-color: lightcoral;
 }
 
+.row-title.yscrolling {
+    position: fixed;
+    z-index: 9000;
+    display: block;
+    top: 50px;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 4px;
+    background: white;
+    background-color: #ffffff;
+}
+
+.yscrolling-next-sibling {
+    margin-top: 60px;
+}
+
+
 /* FLEXBOX */
 
 *[flex]{

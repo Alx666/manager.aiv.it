@@ -70,5 +70,27 @@
     <script type="text/javascript">
         $("[switch]").bootstrapSwitch();
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var header = $(".navbar");
+            $(document).bind('scroll', function () {
+                var y = $(document).scrollTop();
+                
+                var headerHeight = header.height();
+                var rowTitle = $(".row-title");
+                if (headerHeight <= y) {
+                    if (!rowTitle.hasClass("yscrolling")) 
+                        $(".row-title").addClass("yscrolling");
+                    if (!rowTitle.next().hasClass("yscrolling-next-sibling"))
+                        rowTitle.next().addClass("yscrolling-next-sibling");
+                       
+                } else {
+                    rowTitle.removeClass("yscrolling");
+                    rowTitle.next().removeClass("yscrolling-next-sibling");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
