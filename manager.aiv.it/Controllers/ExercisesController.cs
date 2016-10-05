@@ -126,9 +126,9 @@ namespace manager.aiv.it.Controllers
             if (exercise == null)
                 return HttpNotFound();
 
-            ViewBag.CourseId    = new SelectList(exercise.Author.Courses, "Id", "DisplayName", exercise.CourseId);
-            ViewBag.Value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
-            ViewBag.TypeId      = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
+            ViewBag.CourseId     = new SelectList(exercise.Author.Courses, "Id", "DisplayName", exercise.CourseId);
+            ViewBag.Value        = new SelectList(Enumerable.Range(1, 15), (int)exercise.Value);
+            ViewBag.TypeId       = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
 
             Edition hLast;
             List<int> hSelected;
