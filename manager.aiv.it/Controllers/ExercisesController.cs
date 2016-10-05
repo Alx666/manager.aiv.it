@@ -139,8 +139,9 @@ namespace manager.aiv.it.Controllers
             }
             else
             {
-                hLast = (from e in exercise.Course.Editions orderby e.DateStart descending select e).FirstOrDefault();
+                hLast = (from e in exercise.Course.Editions /*orderby e.DateStart descending*/ select e).FirstOrDefault();
                 hSelected = exercise.Topics.Select(t => t.Id).ToList();
+                //hSelected = hLast.Topics.Select(t => t.Id).ToList();
             }
 
             ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "DisplayName", hSelected);
