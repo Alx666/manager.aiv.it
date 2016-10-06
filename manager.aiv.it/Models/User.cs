@@ -9,7 +9,7 @@ namespace manager.aiv.it
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-
+    using System.Web.Mvc;
 
     [MetadataType(typeof(IUserMetaData))]
     public partial class User
@@ -48,6 +48,19 @@ namespace manager.aiv.it
         [DisplayFormat(NullDisplayText = "-")]
         Class Class { get; }
 
+        [Required]
+        string Name { get; }
+
+        [Required]
+        string Surname { get; }
+
+        [Required]
+        string Email { get; }
+
+        [Required]
+        string Password { get; }
+
+        [Required]
         [DisplayFormat(NullDisplayText = "-")]
         string Mobile { get; }
     }
