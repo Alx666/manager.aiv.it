@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace manager.aiv.it
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
-
     [MetadataType(typeof(IUserMetaData))]
     public partial class User
     {
@@ -49,19 +45,24 @@ namespace manager.aiv.it
         Class Class { get; }
 
         [Required]
+        [StringLength(50)]
         string Name { get; }
 
         [Required]
+        [StringLength(50)]
         string Surname { get; }
 
         [Required]
+        [StringLength(50)]
         string Email { get; }
 
         [Required]
+        [StringLength(50)]
         string Password { get; }
 
         [Required]
         [DisplayFormat(NullDisplayText = "-")]
+        [StringLength(50)]
         string Mobile { get; }
     }
 }
