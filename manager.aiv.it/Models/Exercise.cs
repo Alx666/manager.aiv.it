@@ -14,6 +14,10 @@ namespace manager.aiv.it
     public interface IExerciseMetaData
     {
         [Required]
+        [StringLength(50)]
+        string Name { get; }
+
+        [Required]
         [StringLength(1000)]
         string Description { get; }
     }

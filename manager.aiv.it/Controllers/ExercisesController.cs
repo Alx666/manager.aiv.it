@@ -58,7 +58,7 @@ namespace manager.aiv.it.Controllers
             }
             else
             {
-                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "DisplayName");
+                ViewBag.topics = new MultiSelectList(hTeacher.Courses.First().Editions.First().Topics, "Id", "DisplayName");
             }
             
             return View();
