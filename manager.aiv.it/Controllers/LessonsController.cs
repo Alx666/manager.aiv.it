@@ -54,9 +54,9 @@ namespace manager.aiv.it.Controllers
             if (!classid.HasValue)
             {
                 ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName");
-                ViewBag.TeacherId   = new SelectList(classes.First().Edition.Course.Teachers, "Id", "Name");
-                ViewBag.topics      = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
-                ViewBag.Students    = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
+                ViewBag.TeacherId   = new SelectList(classes.First().Edition.Course.Teachers, "Id", "DisplayName");
+                ViewBag.topics      = new MultiSelectList(classes.First().Edition.Topics, "Id", "DisplayName");
+                ViewBag.Students    = new MultiSelectList(classes.First().Students, "Id", "DisplayName");
             }
             else
             {
