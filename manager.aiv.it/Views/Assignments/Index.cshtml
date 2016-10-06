@@ -21,10 +21,13 @@
             @Html.DisplayNameFor(model => model.Class)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Exercise.Type.Name)
+            @Html.DisplayNameFor(model => model.Exercise.Type)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Exercise.Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnlockDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Deadline)
@@ -35,19 +38,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Teacher)
+            @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Exercise.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Class)
+            @Html.DisplayFor(modelItem => item.Class.DisplayName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Exercise.Type.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Exercise.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnlockDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Deadline)
