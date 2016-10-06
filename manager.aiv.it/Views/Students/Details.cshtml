@@ -135,15 +135,15 @@
                                                 <th>Value</th>
                                                 <th>Submit</th>
                                             </tr>
-                                            @foreach (var item in Model.Assignments)
+                                            @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
                                             {
                                                 <tr>
                                                     <td>@item.Exercise.Name</td>
                                                     <td>@item.Exercise.Type.Name</td>
-                                                    <td>@(item.UnlockDate - item.Deadline).Days</td>
+                                                    <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
                                                     <td>0</td>
                                                     <td>@item.ExerciseValue</td>
-                                                    <td><input type="submit" value="Submit" /></td>
+                                                    <td><a class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("NotImplemented", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a></td>
                                                 </tr>
                                             }
                                         </table>
@@ -178,7 +178,7 @@
                                                         @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.DisplayMissedTopics)
+                                                        @Html.DisplayFor(modelItem => item.DisplayTopics)
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })">
@@ -198,3 +198,4 @@
             </div>
         </div>
     </div>
+</div>

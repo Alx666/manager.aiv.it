@@ -54,7 +54,7 @@ namespace manager.aiv.it.Controllers
             if (!classid.HasValue)
             {
                 ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName");
-                ViewBag.TeacherId   = new SelectList(Enumerable.Empty<User>(), "Id", "Name");
+                ViewBag.TeacherId   = new SelectList(classes.First().Edition.Course.Teachers, "Id", "Name");
                 ViewBag.topics      = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "Name");
                 ViewBag.Students    = new MultiSelectList(Enumerable.Empty<User>(), "Id", "Name");
             }
@@ -69,6 +69,7 @@ namespace manager.aiv.it.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                
                 var hTeachers       = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
+
                 ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
                 ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
                 ViewBag.topics      = new MultiSelectList(selected.Edition.Topics, "Id", "DisplayName");

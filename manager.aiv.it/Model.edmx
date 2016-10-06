@@ -854,7 +854,7 @@
           <NavigationProperty Name="ExercisesCreated" Relationship="AivModel.FK_Exercise_ToUser" FromRole="User" ToRole="Exercise" />
           <NavigationProperty Name="ExercisesSubmitted" Relationship="AivModel.FK_Table_ToStudent" FromRole="User" ToRole="Submission" />
           <NavigationProperty Name="ExercisesReviewed" Relationship="AivModel.FK_Table_ToTeacher" FromRole="User" ToRole="Submission" />
-          <NavigationProperty Name="Assignments" Relationship="AivModel.FK_ExerciseAssignment_ToTeacher" FromRole="User" ToRole="Assignment" />
+          <NavigationProperty Name="ExercisesAssigned" Relationship="AivModel.FK_ExerciseAssignment_ToTeacher" FromRole="User" ToRole="Assignment" />
           </EntityType>
         <Association Name="FK_User_ToClass">
           <End Type="AivModel.Class" Role="Class" Multiplicity="0..1" />
