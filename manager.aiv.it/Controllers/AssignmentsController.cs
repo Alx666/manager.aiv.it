@@ -39,6 +39,10 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Assignments/Create
+        //TODO: gli esercizi proposti vengono selezionati in base ad alcuni criteri
+        //1) esercizi non già assegnati alla classe
+        //2) tutti gli esercizi per il corso della classe (ma di tutti i livelli, per esempio programmazione 3 può fare gli esercizi di programmazione 1 e 2 ma non il contrario, discriminare in base al Course.Name e Course.Grade)
+        //3) il docente deve essere abilitato all'assegnazione degli esercizi di un corso
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? exerciseid)
         {
@@ -80,7 +84,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "ExerciseId,ClassId,Deadline,UnlockDate,Notes")] Assignment assignment)
+        public ActionResult Create([Bind(Include = "ExerciseId,ClassId,Deadline,UnlockDate,Description")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
@@ -149,14 +153,17 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,ClassId,ExerciseId,Deadline,Description,TeacherId,Date")] Assignment assignment)
+        public ActionResult Edit([Bind(Include = "Id,ClassId,ExerciseId,UnlockDate,Deadline,Description,TeacherId")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
+                assignment.Teacher = db.Users.Find((int)this.Session["UserId"]);
+
                 db.Entry(assignment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
             ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
             ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", assignment.TeacherId);
