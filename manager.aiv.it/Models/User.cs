@@ -23,7 +23,7 @@ namespace manager.aiv.it
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Followed Lessons")]
-        public int?         DisplayPresences    => Class?.Lessons.Where(l => l.Class.Id == this.Class.Id).Count();
+        public int?         DisplayPresences    => Class?.Lessons.Where(l => l.Students.Contains(this)).Count();
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Presences")]
@@ -40,7 +40,7 @@ namespace manager.aiv.it
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Missed Lessons")]
-        public List<Lesson> MissedLessons => this.LessonsFollowed.Where(l => !l.Students.Contains(this)).ToList();
+        public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
     }
 
     public interface IUserMetaData
