@@ -14,10 +14,12 @@ namespace manager.aiv.it
 
     public interface IAssignmentMetaData
     {
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime UnlockDate { get; }
 
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime Deadline { get; }

@@ -18,7 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ClassId, "Class", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ClassId", null, "-", htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Create?classid='.concat(this.value);", required = "required" })
+                @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Create?classid='.concat(this.value);", required = "required" })
                 @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TeacherId, "Teacher", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TeacherId", null, "-", htmlAttributes: new { @class = "form-control", required = "required" })
+                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control", required = "required" })
                 @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
             </div>
         </div>

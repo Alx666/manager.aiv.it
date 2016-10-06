@@ -17,10 +17,12 @@ namespace manager.aiv.it
 
     public interface IEditionMetaData
     {
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime DateStart { get; }
 
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true)]
         DateTime DateEnd { get; }
