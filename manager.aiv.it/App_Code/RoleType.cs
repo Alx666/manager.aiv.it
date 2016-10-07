@@ -16,5 +16,11 @@ namespace manager.aiv.it
         Manager = 64,
         Admin = 128,
     }
+
+
+    public class AivManagerEnvironment
+    {
+        public const string DateFormat = "{0:MM/dd/yyyy}";
+    }
 }
 
