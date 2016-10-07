@@ -44,8 +44,21 @@ namespace manager.aiv.it.Controllers
         {
             try
             {
-                User        hUser       = db.Users.Find((int)this.Session["UserId"]);                    
-                Submission  hSubmission = db.Submissions.Find(AssignmentId, hUser.Id) ?? new Submission();
+                User        hUser       = db.Users.Find((int)this.Session["UserId"]);
+                bool        bAdd;
+                Submission  hSubmission = db.Submissions.Find(AssignmentId, hUser.Id);
+
+                if (hSubmission == null)
+                {
+                    hSubmission             = new Submission();
+                    hSubmission.Student     = hUser;
+                    hSubmission.Assignment  = db.Assignments.Find(AssignmentId);
+                    bAdd = true;
+                }
+                else
+                {                    
+                    bAdd = false;
+                }
 
                 if (hSubmission.Binary != null)
                     db.Binaries.Remove(hSubmission.Binary);
@@ -59,6 +72,10 @@ namespace manager.aiv.it.Controllers
                 hBinaryData.Data        = fileBytes;
                 hBinaryData.Filename    = upload.FileName;
                 hSubmission.Binary      = hBinaryData;
+
+                if(bAdd)
+                    db.Submissions.Add(hSubmission);
+
                 db.SaveChanges();
 
                 return View();
