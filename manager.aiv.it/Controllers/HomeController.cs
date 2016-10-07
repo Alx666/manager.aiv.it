@@ -13,7 +13,7 @@ namespace manager.aiv.it.Controllers
         // GET: Submissions
         public ActionResult Index()
         {
-            var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline.Date).ToList();
+            var submissions = db.Submissions.ToList();
             return View(submissions);
         }
 
