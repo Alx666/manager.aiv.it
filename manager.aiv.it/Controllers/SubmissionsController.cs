@@ -36,16 +36,6 @@ namespace manager.aiv.it.Controllers
             return View(submission);
         }
 
-        // GET: Submissions/Create
-        public ActionResult Create()
-        {
-            ViewBag.StudentId = new SelectList(db.Users, "Id", "Name");
-            ViewBag.RevisorId = new SelectList(db.Users, "Id", "Name");
-            ViewBag.AssignmentId = new SelectList(db.Assignments, "Id", "Description");
-            ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Filename");
-            return View();
-        }
-
         // POST: Submissions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -54,13 +44,22 @@ namespace manager.aiv.it.Controllers
         {
             try
             {
-                User hUser = db.Users.Find((int)this.Session["UserId"]);
-                    
-                if (ModelState.IsValid)
-                {
-                    //db.Submissions.Add(submission);
-                    //db.SaveChanges();
-                }
+                User        hUser       = db.Users.Find((int)this.Session["UserId"]);                    
+                Submission  hSubmission = db.Submissions.Find(AssignmentId, hUser.Id) ?? new Submission();
+
+                if (hSubmission.Binary != null)
+                    db.Binaries.Remove(hSubmission.Binary);
+
+                hSubmission.SubmissionDate = DateTime.Now;
+                
+
+                Binary hBinaryData      = new Binary();
+                byte[] fileBytes        = new byte[upload.InputStream.Length];
+                upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                hBinaryData.Data        = fileBytes;
+                hBinaryData.Filename    = upload.FileName;
+                hSubmission.Binary      = hBinaryData;
+                db.SaveChanges();
 
                 return View();
             }
