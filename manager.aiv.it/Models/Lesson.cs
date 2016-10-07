@@ -23,7 +23,7 @@ namespace manager.aiv.it
     public interface ILessonMetadata
     {
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM-dd-yyyy}")]
         DateTime Date { get; }
 
         [DataType(DataType.MultilineText)]
