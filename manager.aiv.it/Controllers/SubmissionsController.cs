@@ -65,7 +65,6 @@ namespace manager.aiv.it.Controllers
 
                 hSubmission.SubmissionDate = DateTime.Now;
                 
-
                 Binary hBinaryData      = new Binary();
                 byte[] fileBytes        = new byte[upload.InputStream.Length];
                 upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
