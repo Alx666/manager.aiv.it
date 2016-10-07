@@ -137,7 +137,17 @@
                                                     <td>@item.Exercise.Type.Name</td>
                                                     <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
                                                     <td>@item.ExerciseValue</td>
-                                                    <td><a class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("NotImplemented", new { id = item.Id })"><i class="glyphicon glyphicon-cloud-upload"></i></a></td>
+                                                    <td>
+                                                        @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name="form" + item.Id }))
+                                                        {
+                                                            string sInputId  = $"Input{item.Id}";
+                                                            string sOnChange = $"document.form{item.Id}.submit();";
+
+                                                            <input type="hidden" name="assignmentId" value=@item.Id />
+                                                            <input type="file" id=sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                            <label for=sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon glyphicon-cloud-upload"></i></label>
+                                                        }
+                                                    </td>
                                                 </tr>
                                             }
                                         </table>
