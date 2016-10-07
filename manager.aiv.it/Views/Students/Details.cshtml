@@ -140,12 +140,16 @@
                                                     <td>
                                                         @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name="form" + item.Id }))
                                                         {
+                                                            bool   bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == 9 select s).FirstOrDefault() != null;
+
                                                             string sInputId  = $"Input{item.Id}";
                                                             string sOnChange = $"document.form{item.Id}.submit();";
+                                                            string sColor    = bUploaded ? "green" : "red" ;
+                                                            string sIcon     = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
 
                                                             <input type="hidden" name="assignmentId" value=@item.Id />
                                                             <input type="file" id=sInputId name="upload" class="inputfile" onchange=@sOnChange />
-                                                            <label for=sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon glyphicon-cloud-upload"></i></label>
+                                                            <label for=sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon @sIcon" style="color:@sColor;"></i></label>
                                                         }
                                                     </td>
                                                 </tr>

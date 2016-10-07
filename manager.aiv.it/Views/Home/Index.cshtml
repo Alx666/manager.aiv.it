@@ -40,32 +40,30 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <th>
+                    <td>
                         @Html.DisplayFor(model => item.SubmissionDate)
-                    </th>
-                    <th>
-                        @Html.DisplayFor(model => item.Student)
-                    </th>
-                    <th>
-                        @Html.DisplayFor(model => item.Student.Class)
-                    </th>
-                    <th>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Student.DisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Student.Class.DisplayName)
+                    </td>
+                    <td>
                         @Html.DisplayFor(model => item.Assignment.Exercise.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayFor(model => item.Assignment.Exercise.Type)
-                    </th>
-                    <th>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Assignment.Exercise.Type.Name)
+                    </td>
+                    <td>
                         @Html.DisplayFor(model => item.Assignment.Exercise.Value)
-                    </th>
-                    <th>
-                        Not Implemented
-                    </th>
-                    @*<td>
-                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.id })">
+                    </td>
+                    <td>
+                        NOT IMPLEMENTED
+                        @*<a class="btn btn-default btn-sm action-button" href="@Url.Action("Submissions", "Details", new { id = item.AssignmentId })">
                             <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>
-                    </td>*@
+                        </a>*@
+                    </td>
                 </tr>
             }
 
