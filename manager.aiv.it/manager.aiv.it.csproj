@@ -392,6 +392,7 @@
     <Content Include="Views\Submissions\Details.cshtml" />
     <Content Include="Views\Submissions\Edit.cshtml" />
     <Content Include="Views\Submissions\Index.cshtml" />
+    <Content Include="Views\Submissions\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

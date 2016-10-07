@@ -28,6 +28,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Students/Details/5        
+        [CustomAuthorize(RoleType.Student, RoleType.Teacher, RoleType.Admin, RoleType.Secretary, RoleType.Manager, RoleType.Director, RoleType.Bursar)]
         public ActionResult Details(int? id)
         {
             if (id == null)

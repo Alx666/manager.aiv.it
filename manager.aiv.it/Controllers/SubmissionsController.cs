@@ -52,17 +52,22 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         public ActionResult Upload(int AssignmentId, HttpPostedFileBase upload)
         {
-            User hUser = db.Users.Find((int)this.Session["UserId"]);
-            if(hUser == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            if (ModelState.IsValid)
+            try
             {
-                //db.Submissions.Add(submission);
-                //db.SaveChanges();
-            }
+                User hUser = db.Users.Find((int)this.Session["UserId"]);
+                    
+                if (ModelState.IsValid)
+                {
+                    //db.Submissions.Add(submission);
+                    //db.SaveChanges();
+                }
 
-            return View();
+                return View();
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }            
         }
 
         // GET: Submissions/Delete/5
