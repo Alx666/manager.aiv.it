@@ -178,14 +178,14 @@
                                                         @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.DisplayTopics)
+                                                        @foreach (var topic in item.Topics)
+                                                        {                                                          
+                                                            @Html.ActionLink(topic.DisplayName, "Details", "Topics" , new { Id = topic.Id }, null)
+                                                        }
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })">
-                                                            <i class="glyphicon glyphicon-chevron-right"></i>
-                                                        </a>
+                                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
                                                     </td>
-
                                                 </tr>
                                             }
                                         </table>
