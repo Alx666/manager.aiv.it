@@ -8,9 +8,13 @@ namespace manager.aiv.it.Controllers
 {
     public class HomeController : Controller
     {
+        private AivEntities db = new AivEntities();
+
+        // GET: Submissions
         public ActionResult Index()
         {
-            return View();
+            var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline.Date).ToList();
+            return View(submissions);
         }
 
         public ActionResult About()
