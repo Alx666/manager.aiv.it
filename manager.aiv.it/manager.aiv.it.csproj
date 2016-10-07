@@ -207,7 +207,7 @@
     <Compile Include="Course.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\CustomAuthorizeAttribute.cs" />
+    <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="Edition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -253,7 +253,7 @@
     <Compile Include="Role.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\RoleType.cs" />
+    <Compile Include="RoleType.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Submission.cs">
       <DependentUpon>Model.tt</DependentUpon>
