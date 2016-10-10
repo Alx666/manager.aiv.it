@@ -41,6 +41,9 @@
         <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Table_Binary" />
         <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
+        <EntityTypeShape EntityType="AivModel.Note" Width="1.5" PointX="12.5" PointY="7.875" />
+        <AssociationConnector Association="AivModel.FK_Note_Staff" />
+        <AssociationConnector Association="AivModel.FK_Note_Student" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

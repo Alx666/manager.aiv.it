@@ -116,6 +116,16 @@
           <Property Name="ClassSize" Type="smallint" />
           <Property Name="Frequency" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
@@ -434,6 +444,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Note_Staff">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Student">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Roles_ToRole">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
@@ -569,6 +603,7 @@
           <EntitySet Name="ExerciseTopic" EntityType="Self.ExerciseTopic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExerciseType" EntityType="Self.ExerciseType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Submission" EntityType="Self.Submission" Schema="dbo" store:Type="Tables" />
@@ -650,6 +685,14 @@
           <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Staff" Association="Self.FK_Note_Staff">
+            <End Role="User" EntitySet="User" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Student" Association="Self.FK_Note_Student">
+            <End Role="User" EntitySet="User" />
+            <End Role="Note" EntitySet="Note" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_ToRole" Association="Self.FK_Roles_ToRole">
             <End Role="Role" EntitySet="Role" />
@@ -801,6 +844,15 @@
             <End Role="Binary" EntitySet="Binaries" />
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
+          <EntitySet Name="Notes" EntityType="AivModel.Note" />
+          <AssociationSet Name="FK_Note_Staff" Association="AivModel.FK_Note_Staff">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Student" Association="AivModel.FK_Note_Student">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Class">
           <Key>
@@ -855,6 +907,8 @@
           <NavigationProperty Name="ExercisesSubmitted" Relationship="AivModel.FK_Table_ToStudent" FromRole="User" ToRole="Submission" />
           <NavigationProperty Name="ExercisesReviewed" Relationship="AivModel.FK_Table_ToTeacher" FromRole="User" ToRole="Submission" />
           <NavigationProperty Name="ExercisesAssigned" Relationship="AivModel.FK_ExerciseAssignment_ToTeacher" FromRole="User" ToRole="Assignment" />
+          <NavigationProperty Name="Notes" Relationship="AivModel.FK_Note_Staff" FromRole="User" ToRole="Note" />
+          <NavigationProperty Name="Notes1" Relationship="AivModel.FK_Note_Student" FromRole="User" ToRole="Note" />
           </EntityType>
         <Association Name="FK_User_ToClass">
           <End Type="AivModel.Class" Role="Class" Multiplicity="0..1" />
@@ -1209,6 +1263,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="StaffId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Author" Relationship="AivModel.FK_Note_Staff" FromRole="Note" ToRole="User" />
+          <NavigationProperty Name="Subject" Relationship="AivModel.FK_Note_Student" FromRole="Note" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Note_Staff">
+          <End Type="AivModel.User" Role="User" Multiplicity="1" />
+          <End Type="AivModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Student">
+          <End Type="AivModel.User" Role="User" Multiplicity="1" />
+          <End Type="AivModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1395,6 +1485,17 @@
               <MappingFragment StoreEntitySet="Binary">
                 <ScalarProperty Name="Filename" ColumnName="Filename" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="AivModel.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
