@@ -193,6 +193,24 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     background-color: lightcoral;
 }
 
+.row-title.yscrolling {
+    position: fixed;
+    z-index: 9000;
+    display: block;
+    top: 50px;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 4px;
+    background: white;
+    background-color: #ffffff;
+}
+
+.yscrolling-next-sibling {
+    margin-top: 60px;
+}
+
+
 /* FLEXBOX */
 
 *[flex]{
@@ -231,6 +249,40 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     text-align: center;
 }
 
+.table-left-indicator {
+    background: white;
+    color: #666;
+    font-weight: bold;
+    padding: 6px 8px;
+    position: absolute;
+    top: 8px;
+    left: 22px;
+    z-index: 9000;
+    border: 2px solid #666;
+    box-shadow: 0px 0px 8px #666;
+    border-radius: 18px;
+    opacity: 0;
+}
+
+.table-right-indicator {
+    background: white;
+    color: #666;
+    font-weight: bold;
+    padding: 6px 8px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 9000;
+    border: 2px solid #666;
+    box-shadow: 0px 0px 8px #666;
+    border-radius: 18px;
+    opacity: 0;
+}
+
+.index .row-title .title {
+    text-align: left;
+}
+
 form .row {
     margin-bottom: 8px;
 }
@@ -265,6 +317,11 @@ form .row.row-submit {
 .card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   height: 100%;
+  margin: 12px;
+  border-radius: 12px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  overflow: hidden;
 }
 
 .card-image {
@@ -277,10 +334,10 @@ form .row.row-submit {
 
 .card-image img {
     width: 100%;
+    height: auto;
     position: relative;
     left: 50%;
     top: 40%;
-    height: auto;
     max-height: none;
     transform: translateY(-40%) translateX(-50%);
     -webkit-transform: translateY(-40%) translateX(-50%);
@@ -318,12 +375,22 @@ form .row.row-submit {
         .row {
             margin-right: 2px !important;
         }
+
+        .card-image img {
+            width: auto;
+            height: 100%;
+        }
     }
  
     /* Extra Small Devices, Phones */ 
     @media only screen and (min-width : 480px) {
         .row {
             margin-right: 2px !important;
+        }
+
+        .card-image img {
+            width: auto;
+            height: 100%;
         }
     }
  
@@ -332,6 +399,11 @@ form .row.row-submit {
         .row {
             margin-right: 2px !important;
         }
+
+        .card-image img {
+            width: 100%;
+            height: auto;
+        }
     }
  
     /* Medium Devices, Desktops */
@@ -339,12 +411,22 @@ form .row.row-submit {
         .row {
             margin-right: 2px !important;
         }
+
+        .card-image img {
+            width: 100%;
+            height: auto;
+        }
      }
  
     /* Large Devices, Wide Screens */
     @media only screen and (min-width : 1200px) {
         .row {
             margin-right: 2px !important;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: auto;
         }
      }
 

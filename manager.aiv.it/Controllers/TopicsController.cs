@@ -20,7 +20,7 @@ namespace manager.aiv.it.Controllers
             return View(db.Topics.ToList());
         }
 
-        // GET: Topics/Details/5
+        // GET: Topics/Details/5        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +36,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Topics/Create
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Create([Bind(Include = "Id,Name,Description")] Topic topic)
         {
             if (ModelState.IsValid)
@@ -60,6 +62,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Topics/Edit/5
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,6 +82,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,DateAdded,Deprecated")] Topic topic)
         {
             if (ModelState.IsValid)

@@ -4,17 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row title-margin">
-    <div class="col-xs-10">
+<div class="row row-title title-margin">
+    <div class="col-md-10 col-xs-6">
         <span class="title">Index</span>
     </div>
-    <div class="col-xs-2 text-right">
-        <button class="btn btn-primary">
-            <a href="@Url.Action("Create")">
-                <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
-                <span>Create New</span>
-            </a>
-        </button>
+    <div class="col-md-2 col-xs-6 text-right">
+        <a class="btn btn-primary" href="@Url.Action("Create")">
+            <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
+            <span>Create New</span>
+        </a>
     </div>
 </div>
 

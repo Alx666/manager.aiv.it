@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Aiv Management", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -47,7 +47,7 @@
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Exercises" ? "active" : "")">@Html.ActionLink("Exercises", "Index", "Exercises")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
-
+                        @*<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Notes" ? "active" : "")">@Html.ActionLink("Notes", "Index", "Notes")</li>*@
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -67,8 +67,51 @@
 
     <script type="text/javascript" src="~/Scripts/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jasny-bootstrap.js"></script>
+
     <script type="text/javascript">
-        $("[switch]").bootstrapSwitch();
+        $(document).ready(function () {
+
+            var switches = $("[switch]");
+            if (switches && switches.bootstrapSwitch) {
+                switches.bootstrapSwitch();
+            }
+
+            var pickers = $(".datepicker");
+            if (pickers && pickers.datepicker) {
+                pickers.datepicker();
+            }
+
+            var tableContainers = $(".table-container");
+            var tables = tableContainers.find("table");
+            function updateTableIndicators() {
+                tables.each(function (table) {
+
+                });
+            }
+
+            updateTableIndicators();
+            
+
+            var header = $(".navbar");
+            $(document).bind('scroll', function () {
+                var y = $(document).scrollTop();
+                
+                var headerHeight = header.height();
+                var rowTitle = $(".row-title");
+                if (headerHeight <= y) {
+                    if (!rowTitle.hasClass("yscrolling")) 
+                        $(".row-title").addClass("yscrolling");
+                    if (!rowTitle.next().hasClass("yscrolling-next-sibling"))
+                        rowTitle.next().addClass("yscrolling-next-sibling");
+                       
+                } else {
+                    rowTitle.removeClass("yscrolling");
+                    rowTitle.next().removeClass("yscrolling-next-sibling");
+                }
+
+                updateTableIndicators();
+            });
+        });
     </script>
 </body>
 </html>

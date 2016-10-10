@@ -49,7 +49,7 @@ namespace manager.aiv.it.Controllers
 
             if (courseid.HasValue)
             {
-                Edition hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
+                Edition hLast = (from e in db.Editions where e.CourseId == courseid.Value /*orderby e.DateStart descending*/ select e).FirstOrDefault();
 
                 if (hLast != null)
                     ViewBag.topics = new MultiSelectList(hLast.Topics, "Id", "DisplayName");
@@ -58,7 +58,7 @@ namespace manager.aiv.it.Controllers
             }
             else
             {
-                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>(), "Id", "DisplayName");
+                ViewBag.topics = new MultiSelectList(hTeacher.Courses.First().Editions.First().Topics, "Id", "DisplayName");
             }
             
             return View();
@@ -126,20 +126,20 @@ namespace manager.aiv.it.Controllers
             if (exercise == null)
                 return HttpNotFound();
 
-            ViewBag.CourseId    = new SelectList(exercise.Author.Courses, "Id", "DisplayName", exercise.CourseId);
-            ViewBag.Value       = new SelectList(Enumerable.Range(1, 15), exercise.Value);
-            ViewBag.TypeId      = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
+            ViewBag.CourseId     = new SelectList(exercise.Author.Courses, "Id", "DisplayName", exercise.CourseId);
+            ViewBag.Value        = new SelectList(Enumerable.Range(1, 15), (int)exercise.Value);
+            ViewBag.TypeId       = new SelectList(db.ExerciseTypes, "Id", "Name", exercise.TypeId);
 
             Edition hLast;
             List<int> hSelected;
             if (courseid.HasValue)
             {
-                hLast = (from e in db.Editions where e.CourseId == courseid.Value orderby e.DateStart descending select e).FirstOrDefault();
+                hLast = (from e in db.Editions where e.CourseId == courseid.Value /*orderby e.DateStart descending*/ select e).FirstOrDefault();
                 hSelected = new List<int>();
             }
             else
             {
-                hLast = (from e in exercise.Course.Editions orderby e.DateStart descending select e).FirstOrDefault();
+                hLast = (from e in exercise.Course.Editions /*orderby e.DateStart descending*/ select e).FirstOrDefault();
                 hSelected = exercise.Topics.Select(t => t.Id).ToList();
             }
 

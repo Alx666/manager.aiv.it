@@ -10,6 +10,7 @@ namespace manager.aiv.it
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    [MetadataType(typeof(IClassMetaData))]
     public partial class Class
     {        
         [DisplayName("Students")]
@@ -28,5 +29,12 @@ namespace manager.aiv.it
         [DisplayName("Class")]
         [DisplayFormat(NullDisplayText = "-")]
         public string DisplayName               => this.Edition != null ? $"{this.Edition.Course.Name} {this.Edition.Course.Grade}{this.Section}" : null;
+    }
+
+    public interface IClassMetaData
+    {
+        [Required]
+        [StringLength(1)]
+        string Section { get; }
     }
 }

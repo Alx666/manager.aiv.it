@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,9 +9,14 @@ namespace manager.aiv.it.Controllers
 {
     public class HomeController : Controller
     {
+        private AivEntities db = new AivEntities();
+
+        // GET: Submissions
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Index()
         {
-            return View();
+            var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);
+            return View(submissions.ToList());
         }
 
         public ActionResult About()

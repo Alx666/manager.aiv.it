@@ -37,5 +37,6 @@ namespace manager.aiv.it
         public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
         public virtual DbSet<Binary> Binaries { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
     }
 }

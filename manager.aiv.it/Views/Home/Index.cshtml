@@ -1,47 +1,59 @@
-﻿@*@model IEnumerable<manager.aiv.it.Models.AlertViewModels>
+﻿@model IEnumerable<manager.aiv.it.Submission>
 
 @{
     ViewBag.Title = "Home";
-}*@
+}
 
-@*<div class="row title-margin">
+<div class="row row-title title-margin">
     <div class="col-md-10 col-xs-6">
         <span class="title">Index</span>
-    </div>
-    <div class="col-md-2 col-xs-6 text-right">
-        <button class="btn btn-primary">
-            <a href="@Url.Action("Create")">
-                <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
-                <span>Create New</span>
-            </a>
-        </button>
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-12">
+
+        <ul>
+            <li>Stilizzare Notes/Index</li>
+            <li>Stilizzare Courses/Details</li>
+            <li>Stilizzare Submission/Details</li>
+            <li>Stilizzare Edition/Details</li>
+            <li>Stilizzare Classes/Details</li>
+            <li>Stilizzare Topics/Index (togliere DateDeprecated)</li>
+            <li>Stilizzare Topics/Details</li>
+            <li>Stilizzare Exercises/Details</li>
+            <li>Stilizzare Assignments/Tutto</li>
+            <li>STUDENT DETAILS non funziona tasto submit</li>
+            <li>Incolonnare le index in modo omogeneo (no spostamenti dei controlli tra pagine)</li>
+
+            <li>Montare nuovo sistema controllo ruoli</li>
+            <li>_Layout => monta Session.GetUser()</li>
+
+        </ul>
+
+
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    @Html.DisplayNameFor(model => model.SubmissionDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Surname)
+                    @Html.DisplayNameFor(model => model.Student)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.Student.Class)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Mobile)
+                    @Html.DisplayNameFor(model => model.Assignment.Exercise)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Class)
+                    @Html.DisplayNameFor(model => model.Assignment.Exercise.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Assignment.Exercise.Value)
                 </th>
                 <th>
                     Details
-                </th>
-                <th class="text-right">
-                    Actions
                 </th>
             </tr>
 
@@ -49,32 +61,26 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(model => item.SubmissionDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Surname)
+                        @Html.DisplayFor(model => item.Student.DisplayName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Email)
+                        @Html.DisplayFor(model => item.Student.Class.DisplayName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Mobile)
+                        @Html.DisplayFor(model => item.Assignment.Exercise.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Class)
+                        @Html.DisplayFor(model => item.Assignment.Exercise.Type.Name)
                     </td>
                     <td>
-                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })">
+                        @Html.DisplayFor(model => item.Assignment.Exercise.Value)
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Submissions", new { AssignmentId = item.AssignmentId, StudentId = item.StudentId  })">
                             <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>
-                    </td>
-                    <td class="text-right">
-                        <a class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </a>
-
-                        <a class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-remove"></i>
                         </a>
                     </td>
                 </tr>
@@ -83,4 +89,4 @@
         </table>
 
     </div>
-</div>*@
+</div>

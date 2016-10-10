@@ -103,7 +103,7 @@
 
         <div class="row" layout-align="center">
             <div class="col-md-1 col-xs-12 col-sm-12">
-                @Html.LabelFor(model => model.Exercise.Type, "Submit Type")
+                @Html.LabelFor(model => model.Exercise.Type, "Type")
             </div>
 
             <div class="col-md-5 col-xs-12 col-sm-12">
@@ -111,11 +111,11 @@
             </div>
 
             <div class="col-md-1 col-xs-12 col-sm-12">
-                @Html.LabelFor(model => model.ExerciseValue, "Value")
+                @Html.LabelFor(model => model.Exercise.Value, "Value")
             </div>
 
             <div class="col-md-5 col-xs-12 col-sm-12">
-                @Html.EditorFor(model => model.ExerciseValue, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.Exercise.Value, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
             </div>
         </div>
 

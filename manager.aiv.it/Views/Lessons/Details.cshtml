@@ -56,7 +56,7 @@
         @foreach (var item in Model.Topics)
         {
             <dd>
-                @item.DisplayName
+                @Html.ActionLink(item.DisplayName, "Details", "Topics", new { Id = item.Id }, null)
             </dd>
         }
         <dt>

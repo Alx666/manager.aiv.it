@@ -14,15 +14,19 @@ namespace manager.aiv.it
     public partial class Lesson
     {
         [DisplayName("Students")]
-        public string DisplayStudentsCount => $"{this.Students.Count()} / {this.ClassSize}";
+        public string DisplayStudentsCount  => $"{this.Students.Count()} / {this.ClassSize}";
+
+        [DisplayName("Missed Topics")]
+        public string DisplayTopics         => this.Topics.Select(t => t.DisplayName).Aggregate((x, y) => x + ", " + y);
     }
 
     public interface ILessonMetadata
     {
-        [DataType(DataType.Date)]        
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = AivManagerEnvironment.DateFormat)]
         DateTime Date { get; }
 
         [DataType(DataType.MultilineText)]
-        string Notes { get; }
+        string Notes { get; }        
     }
 }
