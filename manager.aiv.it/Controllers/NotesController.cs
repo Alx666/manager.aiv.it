@@ -53,23 +53,27 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
         public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note)
         {
-            User hAuthor = db.Users.Find((int)Session["UserId"]);
-            if(hAuthor == null)
+            User hAuthor  = db.Users.Find((int)Session["UserId"]);
+            User hStudent = db.Users.Find(note.StudentId);
+
+            if(hAuthor == null || hStudent == null)
                 return HttpNotFound();
 
 
             if (ModelState.IsValid)
             {
-                note.Date = DateTime.Now;
-                note.StaffId = hAuthor.Id;
+                Note hNew = new Note();
+                hNew.Date = DateTime.Now;
+                hNew.Author = hAuthor;
+                hNew.Subject = hStudent;
+                hNew.Text = note.Text;
 
-                db.Notes.Add(note);
+
+                db.Notes.Add(hNew);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Students");
             }
 
-            ViewBag.StaffId = new SelectList(db.Users, "Id", "Name", note.StaffId);
-            ViewBag.StudentId = new SelectList(db.Users, "Id", "Name", note.StudentId);
             return View(note);
         }
 
