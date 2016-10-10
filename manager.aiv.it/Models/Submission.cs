@@ -8,7 +8,7 @@ using System.Web;
 namespace manager.aiv.it
 {
     [MetadataType(typeof(ISubmissionMetaData))]
-    public partial class Submission
+    public partial class Submission : ISubmissionMetaData
     {
         [DisplayName("Name")]
         public string DisplayName => $"Submission";

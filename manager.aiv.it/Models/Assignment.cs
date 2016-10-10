@@ -11,7 +11,8 @@ namespace manager.aiv.it
     [MetadataType(typeof(IAssignmentMetaData))]
     public partial class Assignment : IAssignmentMetaData
     {
-
+        [DisplayName("Name")]
+        public string DisplayName => $"Assignment";
     }
 
     public interface IAssignmentMetaData
