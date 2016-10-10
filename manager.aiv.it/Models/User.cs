@@ -87,4 +87,12 @@ namespace manager.aiv.it
         [StringLength(50)]
         string Mobile { get; }
     }
+
+    public static class SessionExtensions
+    {
+        public static User GetUser(this HttpSessionStateBase session)
+        {
+            return session["User"] as User;
+        }
+    }
 }

@@ -140,7 +140,7 @@
                                                     <td>
                                                         @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name="form" + item.Id }))
                                                         {
-                                                            bool   bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == 9 select s).FirstOrDefault() != null;
+                                                            bool   bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).FirstOrDefault() != null;
 
                                                             string sInputId  = $"Input{item.Id}";
                                                             string sOnChange = $"document.form{item.Id}.submit();";

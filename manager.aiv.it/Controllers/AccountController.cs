@@ -30,11 +30,11 @@ namespace manager.aiv.it.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            this.Session["UserId"] = 0;
-            this.Session["Roles"] = new List<RoleType>() { RoleType.Student, RoleType.Teacher, RoleType.Secretary, RoleType.Manager, RoleType.Director, RoleType.Bursar, RoleType.Admin };
-            return RedirectToLocal(returnUrl);
+            //this.Session["UserId"] = 0;
+            //this.Session["Roles"] = new List<RoleType>() { RoleType.Student, RoleType.Teacher, RoleType.Secretary, RoleType.Manager, RoleType.Director, RoleType.Bursar, RoleType.Admin };
+            //return RedirectToLocal(returnUrl);
 
-            //return View();
+            return View();
         }
 
 
