@@ -13,6 +13,9 @@ namespace manager.aiv.it
     [MetadataType(typeof(ILessonMetadata))]
     public partial class Lesson
     {
+        [DisplayName("Name")]
+        public string DisplayName => $"Lesson";
+
         [DisplayName("Students")]
         public string DisplayStudentsCount  => $"{this.Students.Count()} / {this.ClassSize}";
 
