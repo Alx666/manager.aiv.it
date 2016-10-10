@@ -71,7 +71,25 @@
                 </div>
             }
         </dd>
+        <dt>
+            Anteprima
+        </dt>
+        <dd>
+            @{
+                if (Model.Binary.Filename.EndsWith("png"))
+                {
+                    var base64 = Convert.ToBase64String(Model.Binary.Data);
+                    var imageSource = String.Format("data:image/png;base64,{0}", base64);
+                    <img src="@imageSource" />
+                }
+                else if (Model.Binary.Filename.EndsWith("txt"))
+                {
+                    //scrivi cose
+                }
 
+            }
+        </dd>
+      
     </dl>
 </div>
 <p>
