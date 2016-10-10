@@ -37,6 +37,28 @@ namespace manager.aiv.it
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Missed Lessons")]
         public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
+
+
+        public bool IsSecretarty    { get; private set; }
+        public bool IsAdmin         { get; private set; }
+        public bool IsBursar        { get; private set; }
+        public bool IsTeacher       { get; private set; }
+        public bool IsDirector      { get; private set; }
+        public bool IsManager       { get; private set; }
+        public bool IsStudent       { get; private set; }
+
+
+        public void LoadRoles(List<RoleType> hRoles)
+        {
+            IsSecretarty = hRoles.Contains(RoleType.Secretary);
+            IsAdmin = hRoles.Contains(RoleType.Admin);
+            IsBursar = hRoles.Contains(RoleType.Bursar);
+            IsTeacher = hRoles.Contains(RoleType.Teacher);
+            IsDirector = hRoles.Contains(RoleType.Director);
+            IsManager = hRoles.Contains(RoleType.Manager);
+            IsStudent = hRoles.Contains(RoleType.Student);
+        }
+
     }
 
     public interface IUserMetaData

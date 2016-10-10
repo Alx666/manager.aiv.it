@@ -15,10 +15,21 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
-        public ActionResult Index()
+        public ActionResult Index(int? studentId)
         {
-            var notes = db.Notes.Include(n => n.Author).Include(n => n.Subject);
-            return View(notes.ToList());
+            IEnumerable<Note> hNotes;
+
+            if (studentId.HasValue)
+            {
+                hNotes = from hN in db.Notes where hN.Subject.Id == studentId select hN;
+            }
+            else
+            {
+                hNotes = from hN in db.Notes select hN;
+            }
+
+            
+            return View(hNotes.ToList());
         }
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]

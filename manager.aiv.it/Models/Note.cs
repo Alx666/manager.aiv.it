@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace manager.aiv.it
+{
+    [MetadataType(typeof(INoteMetaData))]
+    public partial class Note
+    {
+    }
+
+    public interface INoteMetaData
+    {
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = AivManagerEnvironment.DateFormat)]
+        DateTime Date { get; }
+    }
+}
