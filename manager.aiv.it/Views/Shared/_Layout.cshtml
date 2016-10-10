@@ -67,6 +67,14 @@
 
     <script type="text/javascript" src="~/Scripts/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jasny-bootstrap.js"></script>
+    
+    <div class="zoom-panel">
+        <img class="image-to-unzoom" src="" alt="Image unavailable" />
+        <div class="image-to-unzoom-description">
+            <h4 class="text-center"></h4>
+            <h6 class="text-center">(Click the image again to close)</h6>
+        </div>
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -110,6 +118,19 @@
                 }
 
                 updateTableIndicators();
+            });
+
+            $(".image-to-zoom").click(function () {
+                var name = $(this).attr("name");
+                $(".image-to-unzoom-description h4").text(name);
+                $(".zoom-panel").fadeTo(300, 1, function () { $(this).css({ pointerEvents: "all" }); });
+                $(".image-to-unzoom").attr("src", $(".image-to-zoom").attr("src"));
+            });
+
+            $(".image-to-unzoom").click(function () {
+                $(".image-to-unzoom-description h4").text("");
+                $(".zoom-panel").fadeTo(300, 0, function () { $(this).css({ pointerEvents: "none" }); });
+                $(".image-to-unzoom").attr("src", "");
             });
         });
     </script>

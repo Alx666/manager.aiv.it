@@ -4,95 +4,140 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="details row">
 
-<div>
-    <h4>Submission</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SubmissionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubmissionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RevisionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RevisionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Score)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Score)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Student.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Student.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Revisor.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Revisor.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Assignment.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Assignment.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Binary.Filename)
-        </dt>
-
-        <dd>
-            @if (Model.Binary != null && Model.BinaryId != null)
-            {
-                <div class="row">
-                    <strong>Current file &nbsp;</strong>
-                    @Html.ActionLink(Model.Binary.Filename, "Download", new { BinaryId = Model.BinaryId })
+    <div class="col-xs-12">
+        <div class="row row-title">
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-left">
+                    <a class="btn btn-default" href="@Url.Action("Index")">
+                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                        <span>Back</span>
+                    </a>
                 </div>
-            }
-        </dd>
-        <dt>
-            Anteprima
-        </dt>
-        <dd>
-            @{
-                if (Model.Binary.Filename.EndsWith("png"))
-                {
-                    var base64 = Convert.ToBase64String(Model.Binary.Data);
-                    var imageSource = String.Format("data:image/png;base64,{0}", base64);
-                    <img src="@imageSource" />
-                }
-                else if (Model.Binary.Filename.EndsWith("txt"))
-                {
-                    //scrivi cose
-                }
+            </div>
+            <div class="col col-xs-4 col-sm-8">
+                <span class="title">Submission</span>
+            </div>
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-right">
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { assignmentId = Model.AssignmentId, studentId = Model.StudentId })">
+                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                        <span>Edit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-            }
-        </dd>
-      
-    </dl>
+        <div class="row">
+
+            <div class="col col-xs-12">
+
+                <div class="card">
+                    <div class="card-image">
+
+                        <div class="picture-wrapper">
+                            @{
+                                if (Model.Binary.Filename.EndsWith("png"))
+                                {
+                                    var base64 = Convert.ToBase64String(Model.Binary.Data);
+                                    var imageSource = String.Format("data:image/png;base64,{0}", base64);
+                                    <img name="@Path.GetFileName(Model.Binary.Filename)" class="image-to-zoom" src="@imageSource" />
+                                }
+                                else if (Model.Binary.Filename.EndsWith("txt"))
+                                {
+                                    //scrivi cose
+                                }
+
+                            }
+                        </div>
+
+                        <div class="card-quote text-center">
+                            <a class="btn btn-primary btn-sm" href="@Url.Action("Download", new { BinaryId = Model.BinaryId })">
+                                <i class="glyphicon glyphicon-floppy-save"></i>
+                                <span><strong>File: </strong>@Path.GetFileName(Model.Binary.Filename)</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <!-- INFORMAZIONI ANAGRAFICHE -->
+                                <section>
+                                    <h4 class="section-title">Base Data</h4>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Submission Date
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.SubmissionDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Revision Date
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.RevisionDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Score
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Score)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Student Name
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Student.Name)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                               Revisor Name
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Revisor.Name)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Description
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Assignment.Description)
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

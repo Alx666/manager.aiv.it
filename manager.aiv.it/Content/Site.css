@@ -380,6 +380,18 @@ form .row.row-submit {
             width: auto;
             height: 100%;
         }
+
+        .row-title  {
+            align-items: center;
+        }
+
+        .row-title .title {
+            font-size: 18px;
+        }
+
+        .card {
+            margin: 4px;
+        }
     }
  
     /* Extra Small Devices, Phones */ 
@@ -391,6 +403,14 @@ form .row.row-submit {
         .card-image img {
             width: auto;
             height: 100%;
+        }
+
+        .row-title  {
+            align-items: center;
+        }
+
+        .row-title .title {
+            font-size: 18px;
         }
     }
  
@@ -404,6 +424,14 @@ form .row.row-submit {
             width: 100%;
             height: auto;
         }
+
+        .row-title  {
+            align-items: center;
+        }
+
+        .row-title .title {
+            font-size: 18px;
+        }
     }
  
     /* Medium Devices, Desktops */
@@ -416,6 +444,10 @@ form .row.row-submit {
             width: 100%;
             height: auto;
         }
+
+        .row-title .title {
+            font-size: 30px;
+        }
      }
  
     /* Large Devices, Wide Screens */
@@ -427,6 +459,10 @@ form .row.row-submit {
         .card-image img {
             width: 100%;
             height: auto;
+        }
+
+        .row-title .title {
+            font-size: 30px;
         }
      }
 
@@ -457,3 +493,40 @@ form .row.row-submit {
         padding-bottom: 10px;
     }
     */
+
+
+    /* ZOOMING IMAGES */
+
+    .zoom-panel {
+        width:100%;
+        height: 100%;
+        background-color: #000000;
+        background: url(http://www.aiv01.it/images/BGcorsi.jpg);
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        z-index: 9000;
+
+        /* properties to be toggled */
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .image-to-unzoom {
+        width:100%;
+        height: 100%;
+        padding:32px 32px 64px 32px;
+        object-fit:scale-down;
+        margin: 8px auto;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .image-to-unzoom-description {
+        width:100%;
+        height: auto;
+        background: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        bottom:0;
+        left:0;
+        color: #eeeeee;
+    }

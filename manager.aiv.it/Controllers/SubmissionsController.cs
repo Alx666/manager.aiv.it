@@ -114,7 +114,7 @@ namespace manager.aiv.it.Controllers
         {
             Binary foundFile = db.Binaries.Find(BinaryId);
             if (foundFile != null)
-                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, System.IO.Path.GetFileName(foundFile.Filename));
 
             return null;
         }
