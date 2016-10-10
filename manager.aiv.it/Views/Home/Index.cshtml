@@ -53,7 +53,7 @@
                     @Html.DisplayNameFor(model => model.Assignment.Exercise.Value)
                 </th>
                 <th>
-                    Details
+                    Actions
                 </th>
             </tr>
 
@@ -79,11 +79,9 @@
                         @Html.DisplayFor(model => item.Assignment.Exercise.Value)
                     </td>
                     <td>
-                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Submissions", new { AssignmentId = item.AssignmentId, StudentId = item.StudentId  })">
-                            <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>
-                    </td>
-                </tr>
+                        <a title="View @item.DisplayName"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Submissions", new { AssignmentId = item.AssignmentId, StudentId = item.StudentId  })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                    </td>  
+                </tr>           
             }
 
         </table>

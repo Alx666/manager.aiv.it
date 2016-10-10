@@ -30,15 +30,6 @@
                     @Html.DisplayNameFor(model => model.DateAdded)
                 </th>
 
-                <!-- 
-                <th>
-                    @Html.DisplayNameFor(model => model.DateDeprecated)
-                </th> 
-                -->
-
-                <th>
-                    Details
-                </th>
                 <th class="text-right">
                     Actions
                 </th>
@@ -57,25 +48,19 @@
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
                     </td>
 
-                    <!-- 
-                    <td>
-                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateDeprecated))
-                    </td>
-                    -->
-
-                    <td>
-                        <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>
-                    </td>
                     <td class="text-right">
-                        <a class="btn btn-default text-primary btn-sm" href="@Url.Action("Edit", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </a>
+                        <a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a title="View @item.DisplayName"   class="btn btn-default btn-sm" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                    </td>
+                </tr>
+            }
 
-                        <a class="btn btn-default text-danger btn-sm" href="@Url.Action("Delete", new { id = item.Id })">
-                            <i class="glyphicon glyphicon-remove"></i>
-                        </a>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <a class="btn btn-block" href="@Url.Action("Create")">No results found. Click here to create a new record.</a>
                     </td>
                 </tr>
             }
