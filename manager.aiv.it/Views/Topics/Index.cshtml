@@ -29,9 +29,13 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DateAdded)
                 </th>
+
+                <!-- 
                 <th>
                     @Html.DisplayNameFor(model => model.DateDeprecated)
-                </th>
+                </th> 
+                -->
+
                 <th>
                     Details
                 </th>
@@ -52,9 +56,13 @@
                     <td>
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
                     </td>
+
+                    <!-- 
                     <td>
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateDeprecated))
                     </td>
+                    -->
+
                     <td>
                         <a class="btn btn-default btn-sm" href="@Url.Action("Details", new { id = item.Id })">
                             <i class="glyphicon glyphicon-chevron-right"></i>

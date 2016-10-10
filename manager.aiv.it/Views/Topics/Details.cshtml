@@ -4,64 +4,81 @@
     ViewBag.Title = "Details";
 }
 
-<div class="details">
-    <div class="row">
-        <div class="col-xs-12">
-            <h2>Details</h2>
-        </div>
-    </div>
+<div class="details row">
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h4>Topic</h4>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="row">
-                <div class="col-xs-6">
-                    <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
-                </div>
-                <div class="col-xs-6">
-                    @Html.DisplayFor(model => model.Name)
+    <div class="col-xs-12">
+        <div class="row row-title">
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-left">
+                    <a class="btn btn-default" href="@Url.Action("Index")">
+                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                        <span>Back</span>
+                    </a>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-xs-6">
-                    <span class="bold">@Html.DisplayNameFor(model => model.Description)</span>
-                </div>
-                <div class="col-xs-6">
-                    @Html.DisplayFor(model => model.Description)
-                </div>
+            <div class="col col-xs-4 col-sm-8">
+                <span class="title">@Model.DisplayName</span>
             </div>
-
-            <div class="row">
-                <div class="col-xs-6">
-                    <span class="bold">@Html.DisplayNameFor(model => model.DateAdded)</span>
-                </div>
-                <div class="col-xs-6">
-                    @Html.DisplayFor(model => model.DateAdded)
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-6">
-                    <span class="bold">@Html.DisplayNameFor(model => model.DateDeprecated)</span>
-                </div>
-                <div class="col-xs-6">
-                    @Html.DisplayFor(model => model.DateDeprecated)
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-right">
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
+                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                        <span>Edit</span>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-xs-6">
-            <div class="text-right">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                @Html.ActionLink("Back to List", "Index")
+        <div class="row">
+
+            <div class="col col-xs-12">
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <!-- INFORMAZIONI ANAGRAFICHE -->
+                                <section>
+                                    <h4 class="section-title">Base Data</h4>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Name
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Name)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Description
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Description)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Date Added
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.DateAdded)
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
