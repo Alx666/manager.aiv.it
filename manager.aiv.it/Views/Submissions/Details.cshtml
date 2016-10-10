@@ -63,7 +63,13 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Binary.Filename)
+            @if (Model.Binary != null && Model.BinaryId != null)
+            {
+                <div class="row">
+                    <strong>Current file &nbsp;</strong>
+                    @Html.ActionLink(Model.Binary.Filename, "Download", new { BinaryId = Model.BinaryId })
+                </div>
+            }
         </dd>
 
     </dl>

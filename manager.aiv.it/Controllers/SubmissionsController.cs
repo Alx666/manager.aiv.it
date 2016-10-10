@@ -22,13 +22,13 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Submissions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? assignmentId, int? studentId)
         {
-            if (id == null)
+            if (assignmentId == null || studentId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Submission submission = db.Submissions.Find(id);
+            Submission submission = db.Submissions.Find(assignmentId, studentId);
             if (submission == null)
             {
                 return HttpNotFound();
@@ -110,7 +110,14 @@ namespace manager.aiv.it.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public FileContentResult Download(int BinaryId)
+        {
+            Binary foundFile = db.Binaries.Find(BinaryId);
+            if (foundFile != null)
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
 
+            return null;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

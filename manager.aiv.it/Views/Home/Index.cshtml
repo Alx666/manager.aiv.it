@@ -59,10 +59,9 @@
                         @Html.DisplayFor(model => item.Assignment.Exercise.Value)
                     </td>
                     <td>
-                        NOT IMPLEMENTED
-                        @*<a class="btn btn-default btn-sm action-button" href="@Url.Action("Submissions", "Details", new { id = item.AssignmentId })">
+                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Submissions", new { AssignmentId = item.AssignmentId, StudentId = item.StudentId  })">
                             <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>*@
+                        </a>
                     </td>
                 </tr>
             }
