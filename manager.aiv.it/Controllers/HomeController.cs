@@ -12,6 +12,7 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Submissions
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Index()
         {
             var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);

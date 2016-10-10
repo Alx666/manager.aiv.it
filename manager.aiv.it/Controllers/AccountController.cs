@@ -58,7 +58,7 @@ namespace manager.aiv.it.Controllers
                 this.Session["UserId"]  = hLogin.Id;
                 this.Session["Roles"]   = hRoles;
 
-                if (hRoles.Contains(RoleType.Student))
+                if (hRoles.Contains(RoleType.Student) && !hRoles.Contains(RoleType.Teacher))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
                 else
                     return RedirectToLocal(returnUrl);
