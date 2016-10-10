@@ -4,31 +4,66 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="details row">
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="col-xs-12">
+        <div class="row row-title">
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-left">
+                    <a class="btn btn-default" href="@Url.Action("Index")">
+                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                        <span>Back</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col col-xs-4 col-sm-8">
+                <span class="title">Course</span>
+            </div>
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-right">
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
+                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                        <span>Edit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <div class="row">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
+            <div class="col col-xs-12">
 
-        <dd>
-            @Html.DisplayFor(model => model.Grade)
-        </dd>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-12">
 
-    </dl>
+                                <section>
+                                    <h4 class="section-title">Base Data</h4>
+
+                                    <div class="row">
+                                        <div class="col col-xs-3">
+                                            <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
+                                        </div>
+                                        <div class="col col-xs-3">
+                                            @Html.DisplayFor(model => model.Name)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-3">
+                                            <span class="bold">@Html.DisplayNameFor(model => model.Grade)</span>
+                                        </div>
+                                        <div class="col col-xs-3">
+                                            @Html.DisplayFor(model => model.Grade)
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
