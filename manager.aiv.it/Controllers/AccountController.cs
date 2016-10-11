@@ -53,10 +53,11 @@ namespace manager.aiv.it.Controllers
 
             if (hLogin != null)
             {
-                List<RoleType> hRoles = hLogin.Roles.Select(r => (RoleType)r.Id).ToList();
 
-                hLogin.LoadRoles(hRoles);
+                //List<RoleType> hRoles = hLogin.Roles.Select(r => (RoleType)r.Id).ToList();
 
+                Session.LoadUser(hLogin);
+                
                 //this.Session["UserId"]  = hLogin.Id;
                 //this.Session["Roles"]   = hRoles;
                 //this.Session["User"]    = hLogin;
