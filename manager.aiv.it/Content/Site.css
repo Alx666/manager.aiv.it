@@ -529,10 +529,13 @@ form .row.row-submit {
           display: none;
         }
         .navbar-collapse.collapse {
-          display: block!important;
+          display: block !important;
         }
         .navbar-nav {
-          float: left!important;
+          float: left !important;
+        }
+        .navbar-right {
+          float: right !important;
         }
         .navbar-nav>li {
           float: left;

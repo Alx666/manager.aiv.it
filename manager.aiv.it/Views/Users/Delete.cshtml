@@ -4,84 +4,140 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<div class="details row">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PictureId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PictureId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Class.Section)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Class.Section)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <div class="col-xs-12">
+        <div class="row row-title">
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-left">
+                    <a class="btn btn-default" href="@Url.Action("Index")">
+                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                        <span>Back</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col col-xs-4 col-sm-8">
+                <span class="title">@Model.DisplayName</span>
+            </div>
+            <div class="col col-xs-4 col-sm-2">
+                <div class="text-right">
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
+                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                        <span>Edit</span>
+                    </a>
+                </div>
+            </div>
         </div>
-    }
+
+        <div class="row">
+
+            <div class="col col-xs-12">
+
+                <div class="card">                    
+                    <!-- Aggiungere Picture -->
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <!-- INFORMAZIONI ANAGRAFICHE -->
+                                <section>
+                                    <h4 class="section-title">Base Data</h4>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Name
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Name)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Surname
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Surname)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Email
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Email)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Password
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Password)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Mobile
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Mobile)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Registration Date
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.RegistrationDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Section
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Class.Section)
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color text-right">
+                                <span class="margin-right-10 text-danger">Are you sure you want to delete this?</span>
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-remove pull-right icon-right"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
