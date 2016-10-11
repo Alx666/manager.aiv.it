@@ -94,10 +94,6 @@ namespace manager.aiv.it
         {
             return session["User"] as User;
         }
-        public static List<RoleType> GetRoles(this HttpSessionStateBase session)
-        {
-            return session["Roles"] as List<RoleType>;
-        }
         public static void LoadUser(this HttpSessionStateBase session, User user)
         {
             List<RoleType> hRoles = user.Roles.Select(r => (RoleType)r.Id).ToList();
