@@ -199,7 +199,7 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
 
 .row-title.yscrolling {
     position: fixed;
-    z-index: 9000;
+    z-index: 1029;
     display: block;
     top: 50px;
     width: 100%;
@@ -396,6 +396,10 @@ form .row.row-submit {
         .card {
             margin: 4px;
         }
+
+        .navbar-collapse {
+            padding-bottom: 80px;
+        }
     }
  
     /* Extra Small Devices, Phones */ 
@@ -415,6 +419,10 @@ form .row.row-submit {
 
         .row-title .title {
             font-size: 18px;
+        }
+
+        .navbar-collapse {
+            padding-bottom: 80px;
         }
     }
  
@@ -436,6 +444,29 @@ form .row.row-submit {
         .row-title .title {
             font-size: 18px;
         }
+
+        .navbar-header {
+          float: none;
+        }
+        .navbar-toggle {
+          display: block;
+        }
+        .navbar-collapse.collapse {
+          display: none!important;
+        }
+        .navbar-nav {
+          float: none!important;
+        }
+        .navbar-nav>li {
+          float: none;
+        }
+        .navbar-collapse.collapse.in{
+          display:block !important;
+        }
+        .navbar-collapse {
+            max-height: none;
+            padding-bottom: 100px;
+        }
     }
  
     /* Medium Devices, Desktops */
@@ -452,6 +483,28 @@ form .row.row-submit {
         .row-title .title {
             font-size: 30px;
         }
+
+        .navbar-header {
+          float: none;
+        }
+        .navbar-toggle {
+          display: block;
+        }
+        .navbar-collapse.collapse {
+          display: none!important;
+        }
+        .navbar-nav {
+          float: none!important;
+        }
+        .navbar-nav>li {
+          float: none;
+        }
+        .navbar-collapse.collapse.in{
+          display:block !important;
+        }
+        .navbar-collapse {
+            max-height: none;
+        }
      }
  
     /* Large Devices, Wide Screens */
@@ -467,6 +520,25 @@ form .row.row-submit {
 
         .row-title .title {
             font-size: 30px;
+        }
+
+        .navbar-header {
+          float: left;
+        }
+        .navbar-toggle {
+          display: none;
+        }
+        .navbar-collapse.collapse {
+          display: block!important;
+        }
+        .navbar-nav {
+          float: left!important;
+        }
+        .navbar-nav>li {
+          float: left;
+        }
+        .navbar-collapse.collapse.in{
+          display:none !important;
         }
      }
 
