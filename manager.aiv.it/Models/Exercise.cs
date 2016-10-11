@@ -20,6 +20,7 @@ namespace manager.aiv.it
         string Name { get; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         [StringLength(1000)]
         string Description { get; }
     }

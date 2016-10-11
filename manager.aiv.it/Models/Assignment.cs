@@ -26,5 +26,8 @@ namespace manager.aiv.it
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = AivManagerEnvironment.DateFormat)]
         DateTime Deadline { get; }
+
+        [DataType(DataType.MultilineText)]
+        string Description { get; }
     }
 }
