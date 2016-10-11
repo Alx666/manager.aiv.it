@@ -41,7 +41,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? courseid)
         {
-            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+            User hTeacher = db.Users.Find(Session.GetUser().Id);
             
             ViewBag.CourseId = new SelectList(hTeacher.Courses, "Id", "DisplayName");
             ViewBag.value    = new SelectList(Enumerable.Range(1, 15));
@@ -72,7 +72,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId,BinaryId")] Exercise exercise, List<int> topics, HttpPostedFileBase upload)
         {
-            User hAuthor = db.Users.Find((int)this.Session["UserId"]);
+            User hAuthor = db.Users.Find(Session.GetUser().Id);
             
             if (ModelState.IsValid && hAuthor != null)
             {
@@ -117,7 +117,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Edit(int? id, int? courseid)
         {
-            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+            User hTeacher = db.Users.Find(Session.GetUser().Id);
 
             if (id == null || hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

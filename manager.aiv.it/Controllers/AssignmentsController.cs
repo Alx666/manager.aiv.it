@@ -46,7 +46,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? exerciseid)
         {
-            User hUser = db.Users.Find((int)this.Session["UserId"]);
+            User hUser = db.Users.Find(Session.GetUser().Id);
 
             var hClasses    =   from hClass in db.Classes  where hClass.Edition.DateEnd > DateTime.Now
                                 from hCourse in db.Courses where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) && hClass.Edition.Course == hCourse
@@ -94,7 +94,7 @@ namespace manager.aiv.it.Controllers
                 hAssignment.Deadline        = assignment.Deadline;
                 hAssignment.UnlockDate      = assignment.UnlockDate;
                 hAssignment.ExerciseValue   = hAssignment.Exercise.Value;
-                hAssignment.Teacher         = db.Users.Find(this.Session["UserId"]);
+                hAssignment.Teacher         = db.Users.Find(Session.GetUser().Id);
                 hAssignment.Description     = assignment.Description;
 
                 db.Assignments.Add(hAssignment);
@@ -114,7 +114,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Edit(int? id, int? exerciseid)
         {
-            User hUser = db.Users.Find((int)this.Session["UserId"]);
+            User hUser = db.Users.Find(Session.GetUser().Id);
 
             var hClasses = from hClass in db.Classes
                            where hClass.Edition.DateEnd > DateTime.Now
@@ -157,7 +157,7 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
-                assignment.Teacher = db.Users.Find((int)this.Session["UserId"]);
+                assignment.Teacher = db.Users.Find(Session.GetUser().Id);
 
                 db.Entry(assignment).State = EntityState.Modified;
                 db.SaveChanges();

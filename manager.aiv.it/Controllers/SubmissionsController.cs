@@ -40,19 +40,19 @@ namespace manager.aiv.it.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Upload(int AssignmentId, HttpPostedFileBase upload)
+        public ActionResult Upload(int assignmentId, HttpPostedFileBase upload)
         {
             try
             {
-                User        hUser       = db.Users.Find((int)this.Session["UserId"]);
+                User        hUser       = db.Users.Find(Session.GetUser().Id);
                 bool        bAdd;
-                Submission  hSubmission = db.Submissions.Find(AssignmentId, hUser.Id);
+                Submission  hSubmission = db.Submissions.Find(assignmentId, hUser.Id);
 
                 if (hSubmission == null)
                 {
                     hSubmission             = new Submission();
                     hSubmission.Student     = hUser;
-                    hSubmission.Assignment  = db.Assignments.Find(AssignmentId);
+                    hSubmission.Assignment  = db.Assignments.Find(assignmentId);
                     bAdd = true;
                 }
                 else

@@ -64,7 +64,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
         public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note)
         {
-            User hAuthor  = db.Users.Find((int)Session["UserId"]);
+            User hAuthor  = db.Users.Find(Session.GetUser().Id);
             User hStudent = db.Users.Find(note.StudentId);
 
             if(hAuthor == null || hStudent == null)

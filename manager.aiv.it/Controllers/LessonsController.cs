@@ -45,7 +45,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? classid)
         {
-            User hTeacher = db.Users.Find((int)this.Session["UserId"]);
+            User hTeacher = db.Users.Find(Session.GetUser().Id);
             if(hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
