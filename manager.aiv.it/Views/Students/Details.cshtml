@@ -138,9 +138,21 @@
                                                     <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
                                                     <td>@item.ExerciseValue</td>
                                                     <td>
-                                                        @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name="form" + item.Id }))
+                                                        @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name = "form" + item.Id }))
                                                         {
-                                                            bool   bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).FirstOrDefault() != null;
+                                                            bool bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).FirstOrDefault() != null;
+
+                                                            foreach (var s in Model.ExercisesSubmitted)
+                                                            {
+                                                                <div><strong>Query params:</strong></div>
+                                                                <div>assignment id = @s.Assignment.Id    VS    item id = @item.Id </div>
+                                                                <div>student id = @s.StudentId     VS      Sessio user id = @Session.GetUser().Id</div>
+                                                            }
+
+                                                            foreach (var stocazzo in (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).ToList())
+                                                            {
+                                                                <div>@stocazzo.DisplayName</div>
+                                                            }
 
                                                             string sInputId  = $"Input{item.Id}";
                                                             string sOnChange = $"document.form{item.Id}.submit();";
