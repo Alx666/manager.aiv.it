@@ -62,7 +62,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Secretary)]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId")] User user)
+        public ActionResult Create([Bind(Include = "Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,MissedLessons")] User user)
         {
             if (ModelState.IsValid)
             {

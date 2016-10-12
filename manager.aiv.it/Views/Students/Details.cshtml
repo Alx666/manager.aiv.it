@@ -138,31 +138,24 @@
                                                     <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
                                                     <td>@item.ExerciseValue</td>
                                                     <td>
-                                                        @using (Html.BeginForm("Upload", "Submissions", null, FormMethod.Post, new { enctype = "multipart/form-data", name = "form" + item.Id }))
-                                                        {
-                                                            bool bUploaded = (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).FirstOrDefault() != null;
+                                                        <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
+                                                            @{
+                                                                bool bUploaded = (
+                                                                    from s in Model.ExercisesSubmitted
+                                                                    where s.AssignmentId == item.Id &&
+                                                                          (s.StudentId == Session.GetUser().Id || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin)
+                                                                    select s).FirstOrDefault() != null;
 
-                                                            foreach (var s in Model.ExercisesSubmitted)
-                                                            {
-                                                                <div><strong>Query params:</strong></div>
-                                                                <div>assignment id = @s.Assignment.Id    VS    item id = @item.Id </div>
-                                                                <div>student id = @s.StudentId     VS      Sessio user id = @Session.GetUser().Id</div>
+                                                                string sInputId = $"Input{@item.Id}";
+                                                                string sOnChange = $"document.form_{@item.Id}.submit();";
+                                                                string sColor = bUploaded ? "green" : "red";
+                                                                string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
+
+                                                                <input type="hidden" name="assignmentId" value=@item.Id />
+                                                                <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                                <label for=@sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon @sIcon" style="color:@sColor;"></i></label>
                                                             }
-
-                                                            foreach (var stocazzo in (from s in Model.ExercisesSubmitted where s.Assignment.Id == item.Id && s.StudentId == Session.GetUser().Id select s).ToList())
-                                                            {
-                                                                <div>@stocazzo.DisplayName</div>
-                                                            }
-
-                                                            string sInputId  = $"Input{item.Id}";
-                                                            string sOnChange = $"document.form{item.Id}.submit();";
-                                                            string sColor    = bUploaded ? "green" : "red" ;
-                                                            string sIcon     = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
-
-                                                            <input type="hidden" name="assignmentId" value=@item.Id />
-                                                            <input type="file" id=sInputId name="upload" class="inputfile" onchange=@sOnChange />
-                                                            <label for=sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon @sIcon" style="color:@sColor;"></i></label>
-                                                        }
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             }
@@ -212,3 +205,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var formSubmit = function () { };
+
+    $(document).ready(function () {
+        formSubmit = function (id) {
+            $("[name=form_" + id + "]").submit();
+        };
+    });
+</script>

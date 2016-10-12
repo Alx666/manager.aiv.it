@@ -36,8 +36,21 @@ namespace manager.aiv.it
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Missed Lessons")]
-        public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
+        //public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
+        public List<Lesson> MissedLessons
+        {
+            get
+            {
+                if (this.Class == null || this.Class.Lessons == null)
+                    return new List<Lesson>();
 
+                IEnumerable<Lesson> dbResults = this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now);
+                if(dbResults == null)
+                    return new List<Lesson>();
+
+                return dbResults.ToList();
+            }
+        }
 
         public bool IsSecretarty    { get; private set; }
         public bool IsAdmin         { get; private set; }
