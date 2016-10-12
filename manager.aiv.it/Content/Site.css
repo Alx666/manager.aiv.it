@@ -197,6 +197,30 @@ body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     background-color: lightcoral;
 }
 
+.input-file-uploaded, .input-file-uploaded:hover, .inputfile + label.input-file-uploaded:hover {
+    cursor: pointer;
+    background-color: white;
+}
+.input-file-uploaded i, .input-file-uploaded i:hover {
+    color: green;
+}
+
+.input-file-not-uploaded, .input-file-not-uploaded:hover, .inputfile + label.input-file-not-uploaded:hover {
+    cursor: pointer;
+    background-color: white;
+}
+.input-file-not-uploaded i, .input-file-not-uploaded i:hover {
+    color: red;
+}
+
+.input-file-disabled, .input-file-disabled:hover, .inputfile + label.input-file-disabled:hover {
+    cursor: not-allowed;
+    background-color: ghostwhite;
+}
+.input-file-disabled i, .input-file-disabled i:hover {
+    color: #cccccc;
+}
+
 .row-title.yscrolling {
     position: fixed;
     z-index: 1029;
@@ -609,3 +633,4 @@ form .row.row-submit {
         left:0;
         color: #eeeeee;
     }
+

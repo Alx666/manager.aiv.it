@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;
 using manager.aiv.it;
 using manager.aiv.it.Models;
 
@@ -42,6 +44,12 @@ namespace manager.aiv.it.Controllers
             if (user == null)
             {
                 return HttpNotFound();
+            }
+
+            if(user.PictureId != null)
+            {
+                Binary picture = db.Binaries.Find(user.PictureId);
+                user.Picture = picture; // TODO: potrebbe essere null?
             }
 
             return View(user);
@@ -115,6 +123,39 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePicture(int userId, HttpPostedFileBase picture)
+        {
+            User user = db.Users.Find(userId);
+
+            if (user != null && picture != null)
+            {
+                Binary binaryFile = new Binary();
+                byte[] fileBytes = new byte[picture.InputStream.Length];
+                picture.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                binaryFile.Data = fileBytes;
+                binaryFile.Filename = picture.FileName;
+                db.Binaries.Add(binaryFile);
+                db.SaveChanges();
+                /* 
+                Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                */
+                Binary saved = db.Binaries.Find(binaryFile.Id);
+                if (saved != null)
+                {
+                    user.PictureId = saved.Id;
+                    user.Picture = saved;
+                    db.Entry(user).State = EntityState.Modified;
+                }
+            }
+
+            db.SaveChanges();
+
+            return View("Details", user);
         }
 
         // GET: Students/Delete/5

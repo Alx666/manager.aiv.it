@@ -52,6 +52,8 @@ namespace manager.aiv.it
             }
         }
 
+        public Binary Picture { get; set; }
+
         public bool IsSecretarty    { get; private set; }
         public bool IsAdmin         { get; private set; }
         public bool IsBursar        { get; private set; }

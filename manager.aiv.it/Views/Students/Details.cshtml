@@ -36,17 +36,59 @@
                 <div class="card">
                     <div class="card-image">
 
-                        <div class="picture-wrapper">
-                            <img src="http://it.emcelettronica.com/wp-content/uploads/files/node_images/programmers%20copia.JPG" alt="Programmer"
-                                 name="programmers%20copia.JPG" class="image-to-zoom" />
-                        </div>
+                        @{
+                            if (Model.Picture != null && Model.Picture.Filename.EndsWith("png"))
+                            {
+                                var base64 = Convert.ToBase64String(Model.Picture.Data);
+                                var imageSource = String.Format("data:image/png;base64,{0}", base64);
+                                <div class="picture-wrapper">
+                                    <img id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
+                                </div>
+                            }
+                        }
 
                         <div class="card-quote">
                             <div class="row">
-                                <div class="col-xs-12 text-center">
-                                    <span>"I like trains and naked cheetas"</span>
+                                <div class="col-md-4 col-md-offset-4 text-center" layout-align="center">
+                                    <script type="text/javascript">
+                                        var updatePreview = function (file) {
+                                            var reader = new FileReader();
+                                            reader.onload = function () {
+                                                window.AIV.arrayBufferToImageSrc(this.result, "#preview");
+                                            };
+                                            reader.readAsArrayBuffer(file);
+                                        };
+
+                                        var updateFilename = function (file) {
+                                            document.getElementById("uploadLabel").innerHTML = file.name;
+                                        };
+
+                                        var uploadNewPicture = function (file) {
+                                            document.form_picture.submit();
+                                        };
+
+                                        var fileChanged = function (input) {
+                                            if (input.files && input.files[0]) {
+                                                var file = input.files[0];
+                                                updatePreview(file);
+                                                updateFilename(file);
+                                                uploadNewPicture(file);
+                                            }
+                                        };
+                                    </script>
+
+                                    @using (Html.BeginForm("ChangePicture", "Students", null, FormMethod.Post, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="userId" value="@Model.Id" />
+                                        <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
+                                        <label style="width:100%;"  id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
+                                        @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                    }
                                 </div>
+
                             </div>
+
                         </div>
                     </div>
                     <div class="card-content">
@@ -139,21 +181,30 @@
                                                     <td>@item.ExerciseValue</td>
                                                     <td>
                                                         <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
+                                                            
                                                             @{
-                                                                bool bUploaded = (
-                                                                    from s in Model.ExercisesSubmitted
-                                                                    where s.AssignmentId == item.Id &&
-                                                                          (s.StudentId == Session.GetUser().Id || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin)
-                                                                    select s).FirstOrDefault() != null;
+                                                                //  s.StudentId == Session.GetUser().Id
+                                                                Submission anySubmitted = (from s in Model.ExercisesSubmitted
+                                                                                           where s.AssignmentId == item.Id
+                                                                                           select s).FirstOrDefault();
+                                                                bool bUploaded = anySubmitted != null;
+                                                                bool canUpload = ((Model.Id == Session.GetUser().Id) || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin);
 
                                                                 string sInputId = $"Input{@item.Id}";
                                                                 string sOnChange = $"document.form_{@item.Id}.submit();";
-                                                                string sColor = bUploaded ? "green" : "red";
+                                                                string sClass = (canUpload) ? (bUploaded ? "input-file-uploaded" : "input-file-not-uploaded") : "input-file-disabled";
                                                                 string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
 
                                                                 <input type="hidden" name="assignmentId" value=@item.Id />
-                                                                <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
-                                                                <label for=@sInputId class="btn btn-default text-primary btn-sm action-button"><i class="glyphicon @sIcon" style="color:@sColor;"></i></label>
+                                                                if (canUpload)
+                                                                {
+                                                                    <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
+                                                                }
+                                                                <label for=@sInputId class="btn btn-default btn-sm action-button @sClass"><i class="glyphicon @sIcon"></i></label>
                                                             }
                                                         </form>
                                                     </td>
@@ -205,13 +256,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    var formSubmit = function () { };
-
-    $(document).ready(function () {
-        formSubmit = function (id) {
-            $("[name=form_" + id + "]").submit();
-        };
-    });
-</script>
