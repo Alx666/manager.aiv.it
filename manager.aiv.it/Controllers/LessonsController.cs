@@ -16,6 +16,7 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Lessons
+        [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
         public ActionResult Index()
         {
             var lessons = (from hL in db.Lessons select hL).ToList();
@@ -24,6 +25,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Lessons/Details/5
+        [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
         public ActionResult Details(int? id)
         {
             if (id == null)

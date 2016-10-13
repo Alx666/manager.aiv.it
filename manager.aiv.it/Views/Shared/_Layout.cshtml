@@ -13,14 +13,17 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
+        @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
+        {
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" });
             </div>
+         }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
@@ -33,7 +36,7 @@
                                 <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
                             }
 
-                            if (hUser.IsSecretarty || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher || hUser.IsBursar)
+                            if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
                             {
                                 <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")">@Html.ActionLink("Students", "Index", "Students")</li>
                             }
@@ -46,7 +49,10 @@
                                 <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
                             }
 
-                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
+                            if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
+                            {
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
+                            }
 
                             if (hUser.IsTeacher)
                             {

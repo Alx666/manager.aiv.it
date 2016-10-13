@@ -8,7 +8,7 @@
     <div class="col-md-10 col-xs-6">
         <span class="title">Index</span>
     </div>
-    @if (Session.GetUser().IsSecretarty)
+    @if (Session.GetUser().IsSecretary)
     {
         <div class="col-md-2 col-xs-6 text-right">
             <a class="btn btn-primary" href="@Url.Action("Create")">
@@ -74,7 +74,7 @@
                         }
                     </td>
                     <td class="text-right">    
-                        @if (Session.GetUser().IsSecretarty)
+                        @if (Session.GetUser().IsSecretary)
                         {
                             <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
                             <a title="Delete Student"       class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>

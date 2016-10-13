@@ -30,7 +30,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Students/Details/5        
-        [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher, RoleType.Student)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,10 +42,15 @@ namespace manager.aiv.it.Controllers
             User hLogged    = Session.GetUser();
 
    
-            if (user == null || hLogged == null || (hLogged.IsStudent && hLogged.Id != user.Id))
+            if (user == null)
             {
                 return HttpNotFound();
             }
+            else if ((hLogged.IsStudent && hLogged.Id != user.Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+           
 
             if(user.PictureId != null)
             {
