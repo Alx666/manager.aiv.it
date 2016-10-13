@@ -167,93 +167,96 @@
                                     </div>
                                 </section>
 
-                                <h4 class="section-title">Homeworks</h4>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-striped table-responsive table-hover">                 
-                                            <tr>
-                                                <th style="width:50%">Name</th>
-                                                <th style="width:20%">Type</th>
-                                                <th style="width:10%">Deadline</th>
-                                                <th style="width:10%">Value</th>
-                                                <th style="width:10%">Submit</th>
-                                            </tr>
-                                            @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
-                                            {
+                                @if(Model.Class != null)
+                                {
+                                    <h4 class="section-title">Homeworks</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-striped table-responsive table-hover">                 
                                                 <tr>
-                                                    <td>@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</td>
-                                                    <td>@item.Exercise.Type.Name</td>
-                                                    <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
-                                                    <td>@item.ExerciseValue</td>
-                                                    <td>
-                                                        <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
+                                                    <th style="width:50%">Name</th>
+                                                    <th style="width:20%">Type</th>
+                                                    <th style="width:10%">Deadline</th>
+                                                    <th style="width:10%">Value</th>
+                                                    <th style="width:10%">Submit</th>
+                                                </tr>
+                                                @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
+                                                {
+                                                    <tr>
+                                                        <td>@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</td>
+                                                        <td>@item.Exercise.Type.Name</td>
+                                                        <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
+                                                        <td>@item.ExerciseValue</td>
+                                                        <td>
+                                                            <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
                                                             
-                                                            @{
-                                                                //  s.StudentId == Session.GetUser().Id
-                                                                Submission anySubmitted = (from s in Model.ExercisesSubmitted
-                                                                                           where s.AssignmentId == item.Id
-                                                                                           select s).FirstOrDefault();
-                                                                bool bUploaded = anySubmitted != null;
-                                                                bool canUpload = ((Model.Id == Session.GetUser().Id) || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin);
+                                                                @{
+                                                                    //  s.StudentId == Session.GetUser().Id
+                                                                    Submission anySubmitted = (from s in Model.ExercisesSubmitted
+                                                                                               where s.AssignmentId == item.Id
+                                                                                               select s).FirstOrDefault();
+                                                                    bool bUploaded = anySubmitted != null;
+                                                                    bool canUpload = ((Model.Id == Session.GetUser().Id) || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin);
 
-                                                                string sInputId = $"Input{@item.Id}";
-                                                                string sOnChange = $"document.form_{@item.Id}.submit();";
-                                                                string sClass = (canUpload) ? (bUploaded ? "input-file-uploaded" : "input-file-not-uploaded") : "input-file-disabled";
-                                                                string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
+                                                                    string sInputId = $"Input{@item.Id}";
+                                                                    string sOnChange = $"document.form_{@item.Id}.submit();";
+                                                                    string sClass = (canUpload) ? (bUploaded ? "input-file-uploaded" : "input-file-not-uploaded") : "input-file-disabled";
+                                                                    string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
 
-                                                                <input type="hidden" name="assignmentId" value=@item.Id />
-                                                                if (canUpload)
-                                                                {
-                                                                    <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                                    <input type="hidden" name="assignmentId" value=@item.Id />
+                                                                    if (canUpload)
+                                                                    {
+                                                                        <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
+                                                                    }
+                                                                    <label for=@sInputId class="btn btn-default btn-sm action-button @sClass"><i class="glyphicon @sIcon"></i></label>
                                                                 }
-                                                                else
-                                                                {
-                                                                    <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
-                                                                }
-                                                                <label for=@sInputId class="btn btn-default btn-sm action-button @sClass"><i class="glyphicon @sIcon"></i></label>
-                                                            }
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </table>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <h4 class="section-title">Missed Lessons</h4>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <table class="table table-striped table-responsive table-hover">
-                                            <tr>
-                                                <th style="width:50%">Date</th>
-                                                <th style="width:20%">Teacher</th>
-                                                <th style="width:20%">Topics</th>
-                                                <th style="width:10%">Details</th>
-                                            </tr>
-                                            @foreach (var item in Model.MissedLessons)
-                                            {
+                                    <h4 class="section-title">Missed Lessons</h4>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <table class="table table-striped table-responsive table-hover">
                                                 <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Date)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
-                                                    </td>
-                                                    <td>
-                                                        @foreach (var topic in item.Topics)
-                                                        {
-                                                            @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
-                                                            <br />
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
-                                                    </td>
+                                                    <th style="width:50%">Date</th>
+                                                    <th style="width:20%">Teacher</th>
+                                                    <th style="width:20%">Topics</th>
+                                                    <th style="width:10%">Details</th>
                                                 </tr>
-                                            }
-                                        </table>
+                                                @foreach (var item in Model.MissedLessons)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Date)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
+                                                        </td>
+                                                        <td>
+                                                            @foreach (var topic in item.Topics)
+                                                            {
+                                                                @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
+                                                                <br />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
