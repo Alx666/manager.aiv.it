@@ -52,6 +52,20 @@ namespace manager.aiv.it
             }
         }
 
+        public List<Assignment> ClassAssignments
+        {
+            get
+            {
+                if (this.Class == null || this.Class.Assignments == null)
+                    return new List<Assignment>();
+
+                IEnumerable<Assignment> dbResults = this.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date);
+                if (dbResults == null)
+                    return new List<Assignment>();
+
+                return dbResults.ToList();
+            }
+        }
         public Binary Picture { get; set; }
 
         public bool IsSecretarty    { get; private set; }

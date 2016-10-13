@@ -68,7 +68,10 @@
                     </td>
                     <td>
                         <a title="Create a note for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Create", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-bookmark"></i></a>
-                        <a title="List all notes for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Index", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-book"></i></a>
+                        @if(item.Notes1.Count != 0)
+                        {
+                            <a title="List all notes for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Index", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-book"></i></a>
+                        }
                     </td>
                     <td class="text-right">    
                         @if (Session.GetUser().IsSecretarty)
@@ -81,14 +84,14 @@
                 </tr>
             }
 
-            @if (Model.Count() == 0)
+            @*@if (Model.Count() == 0)
             {
                 <tr>
                     <td colspan="6" class="text-center">
                         <a class="btn btn-block" href="@Url.Action("Create")">No results found. Click here to create a new record.</a>
                     </td>
                 </tr>
-            }
+            }*@
 
         </table>
 
