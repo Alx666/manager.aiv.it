@@ -18,7 +18,7 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Students
-        [CustomAuthorize(RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
         public ActionResult Index()
         {
             var model = from r in db.Roles
@@ -30,7 +30,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Students/Details/5        
-        [CustomAuthorize(RoleType.Student, RoleType.Teacher, RoleType.Admin, RoleType.Secretary, RoleType.Manager, RoleType.Director, RoleType.Bursar)]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,10 +38,11 @@ namespace manager.aiv.it.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = db.Users.Find(id);
+            User user       = db.Users.Find(id);
+            User hLogged    = Session.GetUser();
 
    
-            if (user == null)
+            if (user == null || hLogged == null || (hLogged.IsStudent && hLogged.Id != user.Id))
             {
                 return HttpNotFound();
             }
@@ -127,9 +128,14 @@ namespace manager.aiv.it.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
         public ActionResult ChangePicture(int userId, HttpPostedFileBase picture)
         {
             User user = db.Users.Find(userId);
+            User hLogged = Session.GetUser();
+
+            if(hLogged.Id != user.Id)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
             if (user != null && picture != null)
             {
