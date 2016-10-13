@@ -11,26 +11,12 @@ namespace manager.aiv.it.Controllers
     {
         private AivEntities db = new AivEntities();
 
-        // GET: Submissions
-        [CustomAuthorize(RoleType.Teacher)]
+                
+        [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Teacher, RoleType.Secretary, RoleType.Bursar)]
         public ActionResult Index()
         {
             var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);
             return View(submissions.ToList());
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

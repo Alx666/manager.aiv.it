@@ -14,7 +14,7 @@ namespace manager.aiv.it.Controllers
     {
         private AivEntities db = new AivEntities();
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Index(int? studentId)
         {
             IEnumerable<Note> hNotes;
@@ -32,7 +32,7 @@ namespace manager.aiv.it.Controllers
             return View(hNotes.ToList());
         }
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director,RoleType.Manager)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -47,7 +47,7 @@ namespace manager.aiv.it.Controllers
             return View(note);
         }
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Create(int? studentId)
         {
             if (!studentId.HasValue)
@@ -61,7 +61,7 @@ namespace manager.aiv.it.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note)
         {
             User hAuthor  = db.Users.Find(Session.GetUser().Id);
@@ -88,42 +88,7 @@ namespace manager.aiv.it.Controllers
             return View(note);
         }
 
-        //[CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Note note = db.Notes.Find(id);
-        //    if (note == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.StaffId = new SelectList(db.Users, "Id", "Name", note.StaffId);
-        //    ViewBag.StudentId = new SelectList(db.Users, "Id", "Name", note.StudentId);
-        //    return View(note);
-        //}
-
-
-        
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
-        //public ActionResult Edit([Bind(Include = "Id,StudentId,StaffId,Text,Date")] Note note)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(note).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.StaffId = new SelectList(db.Users, "Id", "Name", note.StaffId);
-        //    ViewBag.StudentId = new SelectList(db.Users, "Id", "Name", note.StudentId);
-        //    return View(note);
-        //}
-
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -141,7 +106,7 @@ namespace manager.aiv.it.Controllers
         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult DeleteConfirmed(int id)
         {
             Note note = db.Notes.Find(id);
@@ -150,7 +115,7 @@ namespace manager.aiv.it.Controllers
             return RedirectToAction("Index");
         }
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         protected override void Dispose(bool disposing)
         {
             if (disposing)
