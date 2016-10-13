@@ -264,6 +264,7 @@
     <Compile Include="Submission.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubmitType.cs" />
     <Compile Include="Topic.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
