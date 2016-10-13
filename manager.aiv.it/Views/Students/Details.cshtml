@@ -19,14 +19,17 @@
             <div class="col col-xs-4 col-sm-8">
                 <span class="title">@Model.DisplayName</span>
             </div>
-            <div class="col col-xs-4 col-sm-2">
-                <div class="text-right">
-                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
-                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
-                        <span>Edit</span>
-                    </a>
+            @if (Session.GetUser().IsSecretarty)
+            {
+                <div class="col col-xs-4 col-sm-2">
+                    <div class="text-right">
+                        <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
+                            <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                            <span>Edit</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div class="row">
@@ -77,13 +80,16 @@
                                         };
                                     </script>
 
-                                    @using (Html.BeginForm("ChangePicture", "Students", null, FormMethod.Post, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                    @if (Session.GetUser().Id == Model.Id)
                                     {
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="userId" value="@Model.Id" />
-                                        <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
-                                        <label style="width:100%;"  id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
-                                        @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                        using (Html.BeginForm("ChangePicture", "Students", null, FormMethod.Post, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="userId" value="@Model.Id" />
+                                            <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
+                                            <label style="width:100%;"  id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
+                                            @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                        }
                                     }
                                 </div>
 
