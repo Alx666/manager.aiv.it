@@ -72,7 +72,7 @@
             </div>
 
             <div class="col-md-5 col-xs-12 col-sm-12">
-                @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control", @value = Model.UnlockDate.ToString("yyyy-MM-dd") } })
                 @Html.ValidationMessageFor(model => model.UnlockDate, "", new { @class = "text-danger" })
             </div>
 
@@ -81,7 +81,7 @@
             </div>
 
             <div class="col-md-5 col-xs-12 col-sm-12">
-                @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control", @value = Model.Deadline.ToString("yyyy-MM-dd") } })
                 @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
             </div>
         </div>
