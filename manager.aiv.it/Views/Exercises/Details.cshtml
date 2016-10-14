@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="card-image">
 
-                            @{
+                        @*@{
                                 if (Model.Binary.Filename.EndsWith("png"))
                                 {
                                     var base64 = Convert.ToBase64String(Model.Binary.Data);
@@ -50,92 +50,101 @@
                                     //scrivi cose
                                 }
 
-                            }
+                            }*@
 
-                        <div class="card-quote text-center">
-                            <a class="btn btn-primary btn-sm" href="@Url.Action("Download", new { BinaryId = Model.BinaryId })">
-                                <i class="glyphicon glyphicon-floppy-save"></i>
-                                <span><strong>File: </strong>@Path.GetFileName(Model.Binary.Filename)</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-12">
+                        @if (Model.Binary != null)
+                        {
+                            <div class="card-quote text-center">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("Download", new { BinaryId = Model.BinaryId })">
+                                    <i class="glyphicon glyphicon-floppy-save"></i>
+                                    <span><strong>File: </strong>@Path.GetFileName(Model.Binary.Filename)</span>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-quote text-center">
+                                No Available Download
+                            </div>
+                        }
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xs-12">
 
-                                <!-- INFORMAZIONI ANAGRAFICHE -->
-                                <section>
-                                    <h4 class="section-title">Base Data</h4>
+                                    <!-- INFORMAZIONI ANAGRAFICHE -->
+                                    <section>
+                                        <h4 class="section-title">Base Data</h4>
 
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">
-                                                Name
-                                            </span>
+                                        <div class="row">
+                                            <div class="col col-xs-6">
+                                                <span class="bold">
+                                                    Name
+                                                </span>
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                @Html.DisplayFor(model => model.Name)
+                                            </div>
                                         </div>
-                                        <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Name)
-                                        </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">
-                                                Description
-                                            </span>
+                                        <div class="row">
+                                            <div class="col col-xs-6">
+                                                <span class="bold">
+                                                    Description
+                                                </span>
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                @Html.DisplayFor(model => model.Description)
+                                            </div>
                                         </div>
-                                        <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Description)
-                                        </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">
-                                                Course Name
-                                            </span>
+                                        <div class="row">
+                                            <div class="col col-xs-6">
+                                                <span class="bold">
+                                                    Course Name
+                                                </span>
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                @Html.DisplayFor(model => model.Course.Name)
+                                            </div>
                                         </div>
-                                        <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Course.Name)
-                                        </div>
-                                    </div>
 
-                                    <h4 class="section-title">Topics</h4>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <table class="table table-striped table-responsive table-hover">
-                                                <tr>
-                                                    <th>
-                                                        Name
-                                                    </th>
-                                                    <th>
-                                                        Description
-                                                    </th>
-                                                    <th>
-                                                        Date Added
-                                                    </th>
-                                                </tr>
-
-                                                @foreach (var item in Model.Topics.ToList())
-                                                {
+                                        <h4 class="section-title">Topics</h4>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-striped table-responsive table-hover">
                                                     <tr>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Name)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Description)
-                                                        </td>
-                                                        <td>
-                                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
-                                                        </td>
+                                                        <th>
+                                                            Name
+                                                        </th>
+                                                        <th>
+                                                            Description
+                                                        </th>
+                                                        <th>
+                                                            Date Added
+                                                        </th>
                                                     </tr>
-                                                }
 
-                                            </table>
+                                                    @foreach (var item in Model.Topics.ToList())
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Description)
+                                                            </td>
+                                                            <td>
+                                                                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
+                                                            </td>
+                                                        </tr>
+                                                    }
 
+                                                </table>
+
+                                            </div>
                                         </div>
-                                    </div>
-                                </section>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>

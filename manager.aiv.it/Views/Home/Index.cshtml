@@ -10,8 +10,6 @@
     <li>Home/Index          => alla segretaria devono apparire lezioni</li>
     <li>Students/Details    => Fixare Upload Immagine</li>
     <li>Assignments/Index   => Mostrare assignments relativi alle proprie classi</li>
-    <li>Exercises/Index     => Aggiungere campo per il docente che ha assegnato l'esercizio</li>
-    <li>Exercises/Details   => Togliere anteprima</li>
     <li>Submissions/Details </li>
     <li>1) Migliorare anteprima</li>
     <li>2) Dropdown Score</li>
@@ -33,6 +31,9 @@
             <tr>
                 <th>
                     Submission Date
+                </th>
+                <th>
+                    Author
                 </th>
                 <th>
                     Student
@@ -59,6 +60,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(model => item.SubmissionDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Assignment.Exercise.Author.DisplayName)
                     </td>
                     <td>
                         @Html.DisplayFor(model => item.Student.DisplayName)
