@@ -8,7 +8,6 @@
     @Styles.Render("~/Content/bootstrap-switch.min.css")
     @Styles.Render("~/Content/jasny-bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,12 +20,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                    @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" });
+                    @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
          }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
                     @{ 
                         User hUser = Session.GetUser();
                         if(hUser != null)
