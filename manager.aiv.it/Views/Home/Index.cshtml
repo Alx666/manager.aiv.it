@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Submission>
+﻿@model HomeViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -32,29 +32,29 @@
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SubmissionDate)
+                    Submission Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Student)
+                    Student
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Student.Class)
+                    Class 
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Assignment.Exercise)
+                    Exercise
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Assignment.Exercise.Type)
+                    Type
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Assignment.Exercise.Value)
+                    Value
                 </th>
                 <th>
                     Actions
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Submissions)
             {
                 <tr>
                     <td>
@@ -80,9 +80,53 @@
                     </td>  
                 </tr>           
             }
-
         </table>
-
     </div>
 </div>
+}
+
+@if (Session.GetUser().IsSecretary)
+{
+    <div class="row row-title title-margin">
+        <div class="col-md-10 col-xs-6">
+            <span class="title">Lessons Presence</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped table-responsive table-hover">
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Teacher
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+                @foreach (var item in Model.Lessons)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Class.DisplayName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Teacher.DisplayName)
+                        </td>
+                        <td>
+                            <a title="View @item.DisplayName" class="btn btn-default btn-sm action-button" href="@Url.Action("Edit", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 }

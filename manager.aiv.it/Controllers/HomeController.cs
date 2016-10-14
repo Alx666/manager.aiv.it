@@ -15,8 +15,15 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Teacher, RoleType.Secretary, RoleType.Bursar)]
         public ActionResult Index()
         {
-            var submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);
-            return View(submissions.ToList());
+            HomeViewModel hModel = new HomeViewModel();
+
+            if(Session.GetUser().IsTeacher)
+                hModel.Submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);
+
+            if(Session.GetUser().IsSecretary)
+                hModel.Lessons     = from l in db.Lessons where !l.ClassSize.HasValue select l;
+
+            return View(hModel);
         }
     }
 }

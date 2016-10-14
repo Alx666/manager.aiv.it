@@ -245,6 +245,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
