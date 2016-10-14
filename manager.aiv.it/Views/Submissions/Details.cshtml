@@ -19,14 +19,14 @@
             <div class="col col-xs-4 col-sm-8">
                 <span class="title">@Model.DisplayName</span>
             </div>
-            <div class="col col-xs-4 col-sm-2">
+            @*<div class="col col-xs-4 col-sm-2">
                 <div class="text-right">
                     <a class="btn btn-primary" href="@Url.Action("Edit", new { assignmentId = Model.AssignmentId, studentId = Model.StudentId })">
                         <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
                         <span>Edit</span>
                     </a>
                 </div>
-            </div>
+            </div>*@
         </div>
 
         <div class="row">
@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="card-image">
 
-                            @{
+                            @*@{
                                 if (Model.Binary.Filename.EndsWith("png"))
                                 {
                                     var base64 = Convert.ToBase64String(Model.Binary.Data);
@@ -50,14 +50,17 @@
                                     //scrivi cose
                                 }
 
-                            }
+                            }*@
 
+                        @if (Model.Binary != null)
+                        {
                         <div class="card-quote text-center">
                             <a class="btn btn-primary btn-sm" href="@Url.Action("Download", new { BinaryId = Model.BinaryId })">
                                 <i class="glyphicon glyphicon-floppy-save"></i>
                                 <span><strong>File: </strong>@Path.GetFileName(Model.Binary.Filename)</span>
                             </a>
                         </div>
+                        }
                     </div>
                     <div class="card-content">
                         <div class="row">
