@@ -63,7 +63,8 @@ namespace manager.aiv.it.Controllers
             
 
             Assignment hAssignment = new Assignment();
-            
+            hAssignment.UnlockDate = DateTime.Now;
+            hAssignment.Deadline = DateTime.Now;
 
             if (exerciseid.HasValue)
             {
@@ -132,8 +133,7 @@ namespace manager.aiv.it.Controllers
             ViewBag.ExerciseId = new SelectList(hExercises, "Id", "Name");
 
 
-            Assignment hAssignment = new Assignment();
-
+            Assignment hAssignment = db.Assignments.Find(id);
 
             if (exerciseid.HasValue)
             {
