@@ -93,7 +93,7 @@
                                             <span class="bold">@Html.DisplayNameFor(model => model.RegistrationDate)</span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.RegistrationDate)
+                                            @Model.RegistrationDate.ToShortDateString()
                                         </div>
                                     </div>
 
