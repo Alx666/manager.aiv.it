@@ -77,8 +77,11 @@ namespace manager.aiv.it.Controllers
                 ViewBag.topics      = new MultiSelectList(selected.Edition.Topics, "Id", "DisplayName");
                 ViewBag.students    = new MultiSelectList(selected.Students, "Id", "DisplayName");
             }
+
+            Lesson hLesson = new Lesson();
+            hLesson.Date = DateTime.Now;
            
-            return View();
+            return View(hLesson);
         }
 
         // POST: Lessons/Create

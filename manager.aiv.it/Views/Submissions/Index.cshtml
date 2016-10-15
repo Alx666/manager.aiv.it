@@ -50,9 +50,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SubmissionDate)
+                        @item.SubmissionDate.ToShortDateString()
                     </td>
                     <td>
+                        @if(item.RevisionDate != null && item.RevisionDate is System.DateTime)
+                        {
+                            <span>((System.DateTime) item.RevisionDate).ToShortDateString()</span>
+                        }
                         @Html.DisplayFor(modelItem => item.RevisionDate)
                     </td>
                     <td>

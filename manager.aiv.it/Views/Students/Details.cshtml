@@ -94,6 +94,10 @@
                                             @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
                                         }
                                     }
+                                    else if (Model.Picture == null || Model.Picture.Filename.EndsWith("png"))
+                                    {
+                                        <span>No picture</span>
+                                    }
                                 </div>
 
                             </div>
@@ -239,7 +243,7 @@
                                                 {
                                                     <tr>
                                                         <td>
-                                                            @Html.DisplayFor(modelItem => item.Date)
+                                                            @item.Date.ToShortDateString()
                                                         </td>
                                                         <td>
                                                             @Html.DisplayFor(modelItem => item.Teacher.DisplayName)

@@ -44,8 +44,7 @@
             {
                 <tr>
                     <td>
-                        @*@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Date))*@
-                        @Html.DisplayFor(modelItem => item.Date)
+                        @item.Date.ToShortDateString()
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Class.DisplayName)
