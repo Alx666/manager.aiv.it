@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ClassId, "Class", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Edit?id=" + Model.Id + "&classid='.concat(this.value);" })
+                @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Edit?id=" + Model.Id + "&classid='.concat(this.value);", @readonly = (Session.GetUser().IsSecretary), @disabled = (Session.GetUser().IsSecretary) })
                 @*@Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
             </div>
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TeacherId, "Teacher", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control", @readonly = (Session.GetUser().IsSecretary), @disabled = (Session.GetUser().IsSecretary) })
                 @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = Model.Date.ToString("yyyy-MM-dd") } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = Model.Date.ToString("yyyy-MM-dd"), @readonly = (Session.GetUser().IsSecretary), @disabled = (Session.GetUser().IsSecretary) } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control", @readonly = (Session.GetUser().IsSecretary), @disabled = (Session.GetUser().IsSecretary) } })
                 @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -75,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Topics, "Topics", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;" })
+                @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", @readonly = (Session.GetUser().IsSecretary), @disabled = (Session.GetUser().IsSecretary) })
                 @Html.ValidationMessageFor(model => model.Topics, "", new { @class = "text-danger" })
             </div>
         </div>
