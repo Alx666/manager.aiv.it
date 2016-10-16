@@ -43,10 +43,10 @@
                     <div class="card-image">
 
                         @{
-                            if (Model.Picture != null && Model.Picture.Filename.EndsWith("png"))
+                            if (Model.Picture != null)
                             {
                                 var base64 = Convert.ToBase64String(Model.Picture.Data);
-                                var imageSource = String.Format("data:image/png;base64,{0}", base64);
+                                var imageSource = String.Format("data:image/*;base64,{0}", base64);
                                 <div class="picture-wrapper">
                                     <img title="Click to zoom" id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
                                 </div>
@@ -57,30 +57,32 @@
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-4 text-center" layout-align="center">
                                     <script type="text/javascript">
-                                        var updatePreview = function (file) {
-                                            var reader = new FileReader();
-                                            reader.onload = function () {
-                                                window.AIV.arrayBufferToImageSrc(this.result, "#preview");
+                                        $(document).ready(function () {
+                                            window.AIV.updatePreview = function (file) {
+                                                var reader = new FileReader();
+                                                reader.onload = function () {
+                                                    window.AIV.arrayBufferToImageSrc(this.result, "#preview");
+                                                };
+                                                reader.readAsArrayBuffer(file);
                                             };
-                                            reader.readAsArrayBuffer(file);
-                                        };
 
-                                        var updateFilename = function (file) {
-                                            document.getElementById("uploadLabel").innerHTML = file.name;
-                                        };
+                                            window.AIV.updateFilename = function (file) {
+                                                document.getElementById("uploadLabel").innerHTML = file.name;
+                                            };
 
-                                        var uploadNewPicture = function (file) {
-                                            document.form_picture.submit();
-                                        };
+                                            window.AIV.uploadNewPicture = function (file) {
+                                                document.form_picture.submit();
+                                            };
 
-                                        var fileChanged = function (input) {
-                                            if (input.files && input.files[0]) {
-                                                var file = input.files[0];
-                                                updatePreview(file);
-                                                updateFilename(file);
-                                                uploadNewPicture(file);
-                                            }
-                                        };
+                                            window.AIV.fileChanged = function (input) {
+                                                if (input.files && input.files[0]) {
+                                                    var file = input.files[0];
+                                                    window.AIV.updatePreview(file);
+                                                    window.AIV.updateFilename(file);
+                                                    window.AIV.uploadNewPicture(file);
+                                                }
+                                            };
+                                        });
                                     </script>
 
                                     @if (Session.GetUser().Id == Model.Id)
@@ -89,7 +91,7 @@
                                         {
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="userId" value="@Model.Id" />
-                                            <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
+                                            <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="window.AIV.fileChanged(this)" />
                                             <label style="width:100%;"  id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
                                             @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
                                         }
