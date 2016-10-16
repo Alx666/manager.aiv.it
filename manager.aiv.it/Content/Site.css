@@ -379,6 +379,12 @@ form .row.row-submit {
     padding: 8px;
 }
 
+.card-image pre {
+    margin-bottom: 0px;
+    border: none;
+    border-radius: 0px;
+}
+
 .card-content {
   padding: 32px;
 }

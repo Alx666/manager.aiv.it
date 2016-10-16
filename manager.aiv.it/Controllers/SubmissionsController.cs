@@ -34,9 +34,27 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
+
+            SelectList scores = new SelectList(Enumerable.Range(1, 15), submission.Score);
+            ViewBag.scores = scores;
+
             return View(submission);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,AssignmentId,StudentId,BinaryId,SubmissionDate,RevisionDate,Score,RevisorId")] Submission submission, int assignmentId, int studentId)
+        {
+            if (ModelState.IsValid)
+            {
+                Submission existing = db.Submissions.Find(assignmentId, studentId);
+                existing.Score = submission.Score;
+                db.Entry(existing).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
 
         // FALLBACK for Create action
         [HttpPost]
@@ -44,7 +62,6 @@ namespace manager.aiv.it.Controllers
         {
             return Upload(assignmentId, upload);
         }
-
 
         // POST: Submissions/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
