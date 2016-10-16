@@ -4,15 +4,17 @@
     ViewBag.Title = "Index";
 }
 
-<div class="row row-title title-margin">
-    <div class="col-md-10 col-xs-6">
+<!-- aggiungere classe row-title per effettuare follow scroll -->
+<div class="row title-margin">
+    <div class="col-md-9 col-xs-6">
         <span class="title">Index</span>
     </div>
-    <div class="col-md-2 col-xs-6 text-right">
-        <a class="btn btn-primary" href="@Url.Action("Create")">
+    <div class="col-md-3 col-xs-6 text-right">
+        <!--<a class="btn btn-primary" href="@Url.Action("Create")">
             <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
             <span>Create New</span>
-        </a>
+        </a>-->
+        <span>Students can create submissions.</span>
     </div>
 </div>
 
@@ -86,7 +88,8 @@
             {
                 <tr>
                     <td colspan="6" class="text-center">
-                        <a class="btn btn-block" href="@Url.Action("Create")">No results found. Click here to create a new record.</a>
+                        <span>No results found.</span>
+                        <!--<a class="btn btn-block" href="@Url.Action("Create")">No results found. Click here to create a new record.</a>-->
                     </td>
                 </tr>
             }
