@@ -48,7 +48,7 @@
                                 var base64 = Convert.ToBase64String(Model.Picture.Data);
                                 var imageSource = String.Format("data:image/png;base64,{0}", base64);
                                 <div class="picture-wrapper">
-                                    <img id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
+                                    <img title="Click to zoom" id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
                                 </div>
                             }
                         }

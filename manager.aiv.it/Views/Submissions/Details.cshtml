@@ -51,7 +51,7 @@
                                     var base64 = Convert.ToBase64String(Model.Binary.Data);
                                     var imageSource = String.Format("data:image/png;base64,{0}", base64);
                                     <div class="picture-wrapper">
-                                        <img name="@Path.GetFileName(Model.Binary.Filename)" class="image-to-zoom" src="@imageSource" />
+                                        <img title="Click to zoom" name="@Path.GetFileName(Model.Binary.Filename)" class="image-to-zoom" src="@imageSource" />
                                     </div>
                                 }
                                 else if (Model.Binary.Filename.EndsWith("txt"))
