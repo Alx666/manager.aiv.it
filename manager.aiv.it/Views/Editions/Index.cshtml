@@ -48,10 +48,10 @@
                         @Html.DisplayFor(modelItem => item.AcademicYear)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateStart)
+                        @item.DateStart.ToShortDateString()
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateEnd)
+                        @item.DateEnd.ToShortDateString()
                     </td>
                     <td class="text-right">
                         <a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>

@@ -44,7 +44,6 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateEnd, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.DateEnd, new { htmlAttributes = new { @class = "form-control", @Value = Model.DateEnd.Value.ToString("dd/MM/yyyy") } })*@
                 @Html.EditorFor(model => model.DateEnd, new { htmlAttributes = new { @class = "form-control", @Value = Model.DateEnd.ToString("yyyy-MM-dd") } })
                 @Html.ValidationMessageFor(model => model.DateEnd, "", new { @class = "text-danger" })
             </div>

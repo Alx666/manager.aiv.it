@@ -60,7 +60,7 @@
                                             </span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.DateStart)
+                                            @Model.DateStart.ToShortDateString()
                                         </div>
                                     </div>
 
@@ -71,7 +71,7 @@
                                             </span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.DateEnd)
+                                            @Model.DateEnd.ToShortDateString()
                                         </div>
                                     </div>
 

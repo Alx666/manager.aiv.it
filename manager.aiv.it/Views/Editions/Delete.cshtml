@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateStart)
+            @Model.DateStart.ToShortDateString()
         </dd>
 
         <dt>
@@ -32,7 +32,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateEnd)
+            @Model.DateEnd.ToShortDateString()
         </dd>
 
         <dt>
