@@ -204,6 +204,15 @@ namespace manager.aiv.it.Controllers
             return View("Details", user);
         }
 
+        public FileContentResult DownloadPicture(int PictureId)
+        {
+            Binary foundFile = db.Binaries.Find(PictureId);
+            if (foundFile != null)
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+
+            return null;
+        }
+
         // GET: Students/Delete/5
         [CustomAuthorize(RoleType.Secretary)]
         public ActionResult Delete(int? id)
