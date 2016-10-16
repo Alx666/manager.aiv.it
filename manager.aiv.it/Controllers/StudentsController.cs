@@ -130,15 +130,8 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId")] User user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
             User hLogged = Session.GetUser();
             if ((hLogged.IsStudent && hLogged.Id != user.Id))
             {
@@ -147,7 +140,10 @@ namespace manager.aiv.it.Controllers
 
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
-            return View(user);
+
+            db.SaveChanges();
+
+            return Redirect("/Students/Details/" + user.Id);
         }
 
         [HttpPost]
