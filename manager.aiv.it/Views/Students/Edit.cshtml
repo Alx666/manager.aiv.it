@@ -47,16 +47,67 @@
 
                     <div class="card">
                         <div class="card-image">
-                            <div class="picture-wrapper">
-                                <img src="https://imgflip.com/s/meme/Ancient-Aliens.jpg" alt="Aliens"
-                                     onclick="(function () { alert('Image uploading is actually a feature in development. Wait for it!'); })()" />
-                            </div>
+
+                            @{
+                                if (Model.Picture != null && Model.Picture.Filename.EndsWith("png"))
+                                {
+                                    var base64 = Convert.ToBase64String(Model.Picture.Data);
+                                    var imageSource = String.Format("data:image/png;base64,{0}", base64);
+                                    <div class="picture-wrapper">
+                                        <img id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
+                                    </div>
+                                }
+                            }
+
                             <div class="card-quote">
                                 <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <span>"I like trains and naked cheetas"</span>
+                                    <div class="col-md-4 col-md-offset-4 text-center" layout-align="center">
+                                        <script type="text/javascript">
+                                        var updatePreview = function (file) {
+                                            var reader = new FileReader();
+                                            reader.onload = function () {
+                                                window.AIV.arrayBufferToImageSrc(this.result, "#preview");
+                                            };
+                                            reader.readAsArrayBuffer(file);
+                                        };
+
+                                        var updateFilename = function (file) {
+                                            document.getElementById("uploadLabel").innerHTML = file.name;
+                                        };
+
+                                        var uploadNewPicture = function (file) {
+                                            document.form_picture.submit();
+                                        };
+
+                                        var fileChanged = function (input) {
+                                            if (input.files && input.files[0]) {
+                                                var file = input.files[0];
+                                                updatePreview(file);
+                                                updateFilename(file);
+                                                uploadNewPicture(file);
+                                            }
+                                        };
+                                        </script>
+
+                                        @if (Session.GetUser().Id == Model.Id)
+                                        {
+                                            using (Html.BeginForm("ChangePicture", "Students", null, FormMethod.Post, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="userId" value="@Model.Id" />
+                                                <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
+                                                <label style="width:100%;" id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
+                                                @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                            }
+                                        }
+                                        else if (Model.Picture == null || Model.Picture.Filename.EndsWith("png"))
+                                        {
+                                            <span>No picture</span>
+                                        }
                                     </div>
+
                                 </div>
+
                             </div>
                         </div>
                         <div class="card-content">

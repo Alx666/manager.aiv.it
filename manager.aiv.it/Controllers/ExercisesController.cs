@@ -10,6 +10,7 @@ using manager.aiv.it;
 using manager.aiv.it.Models;
 using System.Data.Entity.Validation;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace manager.aiv.it.Controllers
 {
@@ -82,7 +83,12 @@ namespace manager.aiv.it.Controllers
                     byte[] fileBytes = new byte[upload.InputStream.Length];
                     upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
                     binaryFile.Data = fileBytes;
-                    binaryFile.Filename = upload.FileName;
+                   
+                    string binaryPath = upload.FileName;
+                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                    string filename = pathParts[pathParts.Length - 1];
+                    binaryFile.Filename = filename;
+
                     db.Binaries.Add(binaryFile);
                     db.SaveChanges();
                     /* 
@@ -168,7 +174,12 @@ namespace manager.aiv.it.Controllers
                     byte[] fileBytes = new byte[upload.InputStream.Length];
                     upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
                     binaryFile.Data = fileBytes;
-                    binaryFile.Filename = upload.FileName;
+
+                    string binaryPath = upload.FileName;
+                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                    string filename = pathParts[pathParts.Length - 1];
+                    binaryFile.Filename = filename;
+
                     db.Binaries.Add(binaryFile);
                     db.SaveChanges();
                     /* 

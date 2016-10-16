@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using manager.aiv.it;
 using manager.aiv.it.Models;
 
@@ -91,7 +92,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Students/Edit/5
-        [CustomAuthorize(RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,14 +101,25 @@ namespace manager.aiv.it.Controllers
             }
 
             User user = db.Users.Find(id);
+            User hLogged = Session.GetUser();
 
             if (user == null)
             {
                 return HttpNotFound();
             }
+            else if ((hLogged.IsStudent && hLogged.Id != user.Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
 
             ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+
+            if (user.PictureId != null)
+            {
+                Binary picture = db.Binaries.Find(user.PictureId);
+                user.Picture = picture; // TODO: potrebbe essere null?
+            }
 
             return View(user);
         }
@@ -117,7 +129,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Secretary)]
+        [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId")] User user)
         {
             if (ModelState.IsValid)
@@ -126,6 +138,13 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            User hLogged = Session.GetUser();
+            if ((hLogged.IsStudent && hLogged.Id != user.Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View(user);
@@ -148,7 +167,12 @@ namespace manager.aiv.it.Controllers
                 byte[] fileBytes = new byte[picture.InputStream.Length];
                 picture.InputStream.Read(fileBytes, 0, fileBytes.Length);
                 binaryFile.Data = fileBytes;
-                binaryFile.Filename = picture.FileName;
+
+                string picturePath = picture.FileName;
+                string[] pathParts = Regex.Split(picturePath, @"(/)|(\\)");
+                string filename = pathParts[pathParts.Length - 1];
+
+                binaryFile.Filename = filename;
                 db.Binaries.Add(binaryFile);
                 db.SaveChanges();
                 /* 

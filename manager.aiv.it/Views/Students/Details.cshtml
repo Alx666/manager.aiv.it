@@ -22,7 +22,7 @@
             <div class="col col-xs-4 col-sm-8">
                 <span class="title">@Model.DisplayName</span>
             </div>
-            @if (Session.GetUser().IsSecretary)
+            @if (Session.GetUser().IsSecretary || (Session.GetUser().IsStudent && Model.Id == Session.GetUser().Id))
             {
                 <div class="col col-xs-4 col-sm-2">
                     <div class="text-right">

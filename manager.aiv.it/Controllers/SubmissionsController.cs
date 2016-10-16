@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using manager.aiv.it;
+using System.Text.RegularExpressions;
 
 namespace manager.aiv.it.Controllers
 {
@@ -78,7 +79,12 @@ namespace manager.aiv.it.Controllers
                 byte[] fileBytes        = new byte[upload.InputStream.Length];
                 upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
                 hBinaryData.Data        = fileBytes;
-                hBinaryData.Filename    = upload.FileName;
+
+                string binaryPath = upload.FileName;
+                string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                string filename = pathParts[pathParts.Length - 1];
+                hBinaryData.Filename = filename;
+
                 hSubmission.Binary      = hBinaryData;
 
                 if(bAdd)
