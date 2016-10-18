@@ -12,18 +12,20 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-        @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
-        {
-            <div class="navbar-header">
+         
+            <div class="navbar-header pull-right">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
+                {
                     @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                }
             </div>
-         }
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse pull-right">
                 <ul class="nav navbar-nav">
                     @{ 
                         User hUser = Session.GetUser();

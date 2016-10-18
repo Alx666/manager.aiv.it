@@ -153,13 +153,21 @@ body .navbar-inverse .navbar-nav a:focus {
 body .navbar.navbar-inverse.navbar-fixed-top > .container {
     background: url(http://www.aiv01.it/images/LogoAIV.png);
     background-repeat: no-repeat;
-    background-size: 10%;
-    background-position: 2% 50%;
-    padding-left: 150px;
+    background-size: 20%;
+    background-position: 1% 50%;
+    padding-left: 10%;
+}
+
+body .navbar .navbar-header {
+    padding-left: 20px;
 }
 
 body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border-color: #eeeeee;
+}
+
+body .navbar .navbar-nav {
+    padding: 10%;
 }
 
 .btn-default.text-primary, 
@@ -553,25 +561,25 @@ form .row.row-submit {
         }
 
         .navbar-header {
-          float: left;
+          float: none;
         }
         .navbar-toggle {
-          display: none;
+          display: block;
         }
         .navbar-collapse.collapse {
-          display: block !important;
+          display: none!important;
         }
         .navbar-nav {
-          float: left !important;
-        }
-        .navbar-right {
-          float: right !important;
+          float: none!important;
         }
         .navbar-nav>li {
-          float: left;
+          float: none;
         }
         .navbar-collapse.collapse.in{
-          display:none !important;
+          display:block !important;
+        }
+        .navbar-collapse {
+            max-height: none;
         }
      }
 
