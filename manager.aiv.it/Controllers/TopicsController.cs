@@ -17,7 +17,7 @@ namespace manager.aiv.it.Controllers
         // GET: Topics
         public ActionResult Index()
         {
-            return View(db.Topics.ToList());
+            return View(db.Topics.OrderBy(t => t.Name));
         }
 
         // GET: Topics/Details/5        
@@ -83,14 +83,14 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Director)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,DateAdded,Deprecated")] Topic topic)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Deprecated")] Topic topic)
         {
             if (ModelState.IsValid)
             {
                 Topic hTopic = db.Topics.Find(topic.Id);
                 hTopic.Name = topic.Name;
                 hTopic.Description = topic.Description;
-                hTopic.DateAdded = topic.DateAdded;
+                hTopic.DateAdded = DateTime.Now.Date;
 
                 if (topic.Deprecated)
                 {
