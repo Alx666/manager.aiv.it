@@ -10,9 +10,70 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    <div class="navbar-inverse navbar-collapse collapse navbar-right pull-right">
+        <ul class="nav navbar-nav">
+            @{
+                User hUser = Session.GetUser();
+                if (hUser != null)
+                {
+                    if (hUser.IsAdmin)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
+                    }
+
+                    if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")">@Html.ActionLink("Students", "Index", "Students")</li>
+                    }
+
+                    if (hUser.IsDirector)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")">@Html.ActionLink("Courses", "Index", "Courses")</li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
+                    }
+
+                    if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
+                    }
+
+                    if (hUser.IsTeacher)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Exercises" ? "active" : "")">@Html.ActionLink("Exercises", "Index", "Exercises")</li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
+                    }
+
+
+                }
+            }
+        </ul>
+        @Html.Partial("_LoginPartial")
+    </div>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-         
+            @if (Session.GetUser() != null)
+            {
+                <!--
+                <div class="navbar-header pull-right profile-navbar-section">
+                    <div class="row" layout-align="center">
+                        <div class="profile-navbar-avatar">
+                            <img src="https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png" />
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <span class="username">
+                                @Session.GetUser().DisplayName
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                -->
+            }
+
+
             <div class="navbar-header pull-right">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -24,48 +85,6 @@
                     @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
                 }
-            </div>
-            <div class="navbar-collapse collapse pull-right">
-                <ul class="nav navbar-nav">
-                    @{ 
-                        User hUser = Session.GetUser();
-                        if(hUser != null)
-                        {
-                            if(hUser.IsAdmin)
-                            {
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
-                            }
-
-                            if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
-                            {
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Students" ? "active" : "")">@Html.ActionLink("Students", "Index", "Students")</li>
-                            }
-
-                            if (hUser.IsDirector)
-                            {
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")">@Html.ActionLink("Courses", "Index", "Courses")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
-                            }
-
-                            if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
-                            {
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
-                            }
-
-                            if (hUser.IsTeacher)
-                            {
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Exercises" ? "active" : "")">@Html.ActionLink("Exercises", "Index", "Exercises")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
-                            }
-
-                            
-                        }
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>

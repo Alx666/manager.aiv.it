@@ -30,13 +30,16 @@
                 var headerHeight = header.height();
                 var rowTitle = $(".row-title");
                 if (headerHeight <= y) {
-                    if (!rowTitle.hasClass("yscrolling"))
+                    if (!rowTitle.hasClass("yscrolling")) {
                         $(".row-title").addClass("yscrolling");
+                        $(".navbar-collapse").css({ 'position': 'fixed' });
+                    }
                     if (!rowTitle.next().hasClass("yscrolling-next-sibling"))
                         rowTitle.next().addClass("yscrolling-next-sibling");
 
                 } else {
                     rowTitle.removeClass("yscrolling");
+                    $(".navbar-collapse").css({ 'position': 'relative' });
                     rowTitle.next().removeClass("yscrolling-next-sibling");
                 }
 

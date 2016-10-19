@@ -39,7 +39,7 @@
 
             <div class="col col-xs-12">
 
-                <div class="card">
+                <div class="thumbnail">
                     <div class="card-image">
 
                         @{
@@ -182,30 +182,62 @@
                                         </div>
                                     </div>
                                 </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                @if(Model.Class != null)
-                                {
-                                    <h4 class="section-title">Homeworks</h4>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table class="table table-striped table-responsive table-hover">                 
-                                                <tr>
-                                                    <th style="width:50%">Name</th>
-                                                    <th style="width:20%">Type</th>
-                                                    <th style="width:10%">Deadline</th>
-                                                    <th style="width:10%">Value</th>
-                                                    <th style="width:10%">Submit</th>
-                                                </tr>
-                                                @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
-                                                {
-                                                    <tr>
-                                                        <td>@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</td>
-                                                        <td>@item.Exercise.Type.Name</td>
-                                                        <td>@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</td>
-                                                        <td>@item.ExerciseValue</td>
-                                                        <td>
+                @if(Model.Class != null) { 
+
+                <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
+                    <!-- Accordion panel for Homeworks data -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingHomeworks">
+
+
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#studentDetailPanels" href="#collapseHomeworks" aria-expanded="true" aria-controls="collapseHomeworks">
+                                    Homeworks
+                                </a>
+                            </h4>
+
+
+
+                        </div>
+                        <div id="collapseHomeworks" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingHomeworks">
+                            <div class="panel-body">
+                                <div class="row">
+                                    @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
+                                    {
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <div class="card-content">
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Name</label></div>
+                                                        <div class="col-sm-9 text-right">@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Type</label></div>
+                                                        <div class="col-sm-9 text-right">@item.Exercise.Type.Name</div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Deadline</label></div>
+                                                        <div class="col-sm-9 text-right">@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Value</label></div>
+                                                        <div class="col-sm-9 text-right">@item.ExerciseValue</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-center">
                                                             <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
-                                                            
+
                                                                 @{
                                                                     //  s.StudentId == Session.GetUser().Id
                                                                     Submission anySubmitted = (from s in Model.ExercisesSubmitted
@@ -228,55 +260,85 @@
                                                                     {
                                                                         <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
                                                                     }
-                                                                    <label for=@sInputId class="btn btn-default btn-sm action-button @sClass"><i class="glyphicon @sIcon"></i></label>
+                                                                    <label for=@sInputId class="btn btn-default action-button @sClass"><i class="glyphicon @sIcon"></i>Submit</label>
                                                                 }
                                                             </form>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
 
-                                    <h4 class="section-title">Missed Lessons</h4>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <table class="table table-striped table-responsive table-hover">
-                                                <tr>
-                                                    <th style="width:50%">Date</th>
-                                                    <th style="width:20%">Teacher</th>
-                                                    <th style="width:20%">Topics</th>
-                                                    <th style="width:10%">Details</th>
-                                                </tr>
-                                                @foreach (var item in Model.MissedLessons)
-                                                {
-                                                    <tr>
-                                                        <td>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion panel for Missed Lessons data -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingMissedLessons">
+
+
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#studentDetailPanels" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
+                                    Missed Lessons
+                                </a>
+                            </h4>
+
+
+
+                        </div>
+                        <div id="collapseMissedLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMissedLessons">
+                            <div class="panel-body">
+                                <div class="row">
+                                    @foreach (var item in Model.MissedLessons)
+                                    {
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <div class="card-content">
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Date</label></div>
+                                                        <div class="col-sm-9 text-right">
                                                             @item.Date.ToShortDateString()
-                                                        </td>
-                                                        <td>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Teacher</label></div>
+                                                        <div class="col-sm-9 text-right">
                                                             @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
-                                                        </td>
-                                                        <td>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Topics</label></div>
+                                                        <div class="col-sm-9 text-right">
                                                             @foreach (var topic in item.Topics)
                                                             {
                                                                 @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
                                                                 <br />
                                                             }
-                                                        </td>
-                                                        <td>
-                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-center">
+                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                }
             </div>
         </div>
     </div>

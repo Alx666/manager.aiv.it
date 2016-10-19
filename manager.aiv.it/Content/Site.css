@@ -136,11 +136,61 @@ button a {
     cursor: not-allowed !important;
 }
 
-.navbar {
+.navbar, .navbar-collapse {
     background: url(http://www.aiv01.it/images/BGcorsi.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: 50% 50%;
+}
+
+.navbar-collapse {
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    position: fixed;
+    right: 0px;
+    top: 46px;
+    z-index: 1029;
+    border-top: 0px;
+    padding:20px;
+    box-shadow: none;
+}
+
+.profile-navbar-section {
+    min-width: 240px;
+    height: 50px;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.profile-navbar-section .row {
+    padding: 0;
+    margin: 0;
+    height:100%;
+}
+
+.profile-navbar-section *[class*='col-']  {
+    padding: 0;
+    margin: 0;
+}
+
+.fill-height {
+    height: 100%;
+}
+
+.profile-navbar-section .username  {
+    color: #eeeeee;
+    padding-right: 8px;
+}
+
+.profile-navbar-avatar {
+
+}
+
+.profile-navbar-avatar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
 }
 
 body .navbar-inverse .navbar-nav > .active > a, 
@@ -231,15 +281,18 @@ body .navbar .navbar-nav {
 
 .row-title.yscrolling {
     position: fixed;
-    z-index: 1029;
+    z-index: 1028;
     display: block;
     top: 50px;
     width: 100%;
     left: 0;
     margin: 0;
-    padding: 4px;
     background: white;
     background-color: #ffffff;
+    
+    padding-top: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eeeeee;
 }
 
 .yscrolling-next-sibling {
@@ -360,6 +413,19 @@ form .row.row-submit {
   overflow: hidden;
 }
 
+.thumbnail {
+  
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+}
+
+.panel .thumbnail {
+  box-shadow: none;
+}
+
 .card-image {
     background-color: #eeeeee;
 }
@@ -406,6 +472,56 @@ form .row.row-submit {
     margin-bottom: 8px;
 }
 
+.card-footer {
+    border-top: 1px solid #eeeeee;
+    padding: 12px;
+}
+
+.panel-collapse .card .card-content,
+.panel-collapse .thumbnail .card-content,
+.panel-collapse .card .card-footer,
+.panel-collapse .thumbnail .card-footer {
+    padding: 12px;
+}
+
+.panel-collapse .card .card-content .btn i,
+.panel-collapse .thumbnail .card-content .btn i,
+.panel-collapse .card .card-footer .btn i,
+.panel-collapse .thumbnail .card-footer .btn i {
+    margin-right: 4px;
+}
+
+.panel-collapse .card .card-content .btn i.icon-right,
+.panel-collapse .thumbnail .card-content .btn i.icon-right,
+.panel-collapse .card .card-footer .btn i.icon-right,
+.panel-collapse .thumbnail .card-footer .btn i.icon-right {
+    margin-left: 4px;
+}
+
+.panel-heading a[data-toggle]{
+    display: inline-block;
+    width: 100%;
+}
+
+.panel-heading *[data-toggle].collapsed:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+
+.panel-heading *[data-toggle]:after {
+    /* symbol for "collapsed" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e113";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+
+.panel-group {
+    margin-bottom: 20px;
+}
 
 /* MEDIA QUERIES */
 
@@ -414,9 +530,6 @@ form .row.row-submit {
 ==================================================*/
 /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
-        .row {
-            margin-right: 2px !important;
-        }
 
         .card-image img {
             width: auto;
@@ -442,9 +555,6 @@ form .row.row-submit {
  
     /* Extra Small Devices, Phones */ 
     @media only screen and (min-width : 480px) {
-        .row {
-            margin-right: 2px !important;
-        }
 
         .card-image img {
             width: auto;
@@ -466,9 +576,6 @@ form .row.row-submit {
  
     /* Small Devices, Tablets */
     @media only screen and (min-width : 768px) {
-        .row {
-            margin-right: 2px !important;
-        }
 
         .card-image img {
             width: 100%;
@@ -509,9 +616,6 @@ form .row.row-submit {
  
     /* Medium Devices, Desktops */
     @media only screen and (min-width : 992px) {
-        .row {
-            margin-right: 2px !important;
-        }
 
         .card-image img {
             width: 100%;
@@ -547,9 +651,6 @@ form .row.row-submit {
  
     /* Large Devices, Wide Screens */
     @media only screen and (min-width : 1200px) {
-        .row {
-            margin-right: 2px !important;
-        }
 
         .card-image img {
             width: 100%;
