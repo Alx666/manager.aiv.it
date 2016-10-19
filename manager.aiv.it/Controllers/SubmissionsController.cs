@@ -35,7 +35,7 @@ namespace manager.aiv.it.Controllers
                 return HttpNotFound();
             }
 
-            SelectList scores = new SelectList(Enumerable.Range(1, 15), submission.Score);
+            SelectList scores = new SelectList(Enumerable.Range(0, (int)submission.Assignment.ExerciseValue + 1), submission.Score);
             ViewBag.scores = scores;
 
             return View(submission);
