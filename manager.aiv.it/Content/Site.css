@@ -148,12 +148,23 @@ button a {
     min-height: 100%;
     max-height: 100%;
     position: fixed;
-    right: 0px;
+    right: -256px;
     top: 46px;
     z-index: 1029;
     border-top: 0px;
     padding:20px;
     box-shadow: none;
+    width: 256px;
+    opacity: 0;
+
+    transition-property: right;
+    transition-duration: .5s;
+    transition-delay: 0;
+}
+
+.navbar-collapse.in {
+    right: 0;
+    opacity: 1;
 }
 
 .profile-navbar-section {
