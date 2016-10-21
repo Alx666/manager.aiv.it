@@ -157,10 +157,11 @@ button a {
 }
 
 .profile-navbar-section {
-    min-width: 240px;
+    margin-left: 0 !important;
     height: 50px;
     min-height: 50px;
     background: rgba(255, 255, 255, 0.3);
+    overflow-x: hidden;
 }
 
 .profile-navbar-section .row {
@@ -181,15 +182,18 @@ button a {
 .profile-navbar-section .username  {
     color: #eeeeee;
     padding-right: 8px;
-}
-
-.profile-navbar-avatar {
-
+    padding-left: 8px;
 }
 
 .profile-navbar-avatar img {
     height: 40px;
     width: 40px;
+    border-radius: 20px;
+}
+
+.profile-navbar-avatar.logout-btn img{
+    height: 24px;
+    width: 24px;
     border-radius: 20px;
 }
 
@@ -209,7 +213,8 @@ body .navbar.navbar-inverse.navbar-fixed-top > .container {
 }
 
 body .navbar .navbar-header {
-    padding-left: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 body .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
@@ -536,6 +541,10 @@ form .row.row-submit {
             height: 100%;
         }
 
+        .navbar-brand, .username {
+            font-size: 10px;
+        }
+
         .row-title  {
             align-items: center;
         }
@@ -561,6 +570,10 @@ form .row.row-submit {
             height: 100%;
         }
 
+        .navbar-brand, .username {
+            font-size: 10px;
+        }
+
         .row-title  {
             align-items: center;
         }
@@ -580,6 +593,10 @@ form .row.row-submit {
         .card-image img {
             width: 100%;
             height: auto;
+        }
+
+        .navbar-brand, .username {
+            font-size: 18px;
         }
 
         .row-title  {
@@ -622,6 +639,10 @@ form .row.row-submit {
             height: auto;
         }
 
+        .navbar-brand, .username {
+            font-size: 18px;
+        }
+
         .row-title .title {
             font-size: 30px;
         }
@@ -655,6 +676,10 @@ form .row.row-submit {
         .card-image img {
             width: 100%;
             height: auto;
+        }
+
+        .navbar-brand, .username {
+            font-size: 18px;
         }
 
         .row-title .title {

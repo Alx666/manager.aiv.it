@@ -54,6 +54,11 @@ namespace manager.aiv.it.Controllers
             if (hLogin != null)
             {
 
+                if(hLogin.PictureId != null)
+                {
+                    hLogin.Picture = db.Binaries.Find(hLogin.PictureId);
+                }
+
                 //List<RoleType> hRoles = hLogin.Roles.Select(r => (RoleType)r.Id).ToList();
 
                 Session.LoadUser(hLogin);
