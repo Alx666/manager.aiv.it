@@ -162,6 +162,7 @@ button a {
     min-height: 50px;
     background: rgba(255, 255, 255, 0.3);
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .profile-navbar-section .row {
