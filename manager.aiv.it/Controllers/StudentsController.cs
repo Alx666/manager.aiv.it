@@ -133,17 +133,27 @@ namespace manager.aiv.it.Controllers
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId")] User user)
         {
             User hLogged = Session.GetUser();
-            if ((hLogged.IsStudent && hLogged.Id != user.Id))
-            {
+
+            if(hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
+
+            User hToEdit = db.Users.Find(user.Id);
+            if(hToEdit ==  null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            hToEdit.Name = user.Name;
+            hToEdit.Surname = user.Surname;
+            hToEdit.Email = user.Email;
+            hToEdit.Password = user.Password;
+            hToEdit.Mobile = user.Mobile;
+            hToEdit.Class = db.Classes.Find(user.ClassId);
 
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
 
             db.SaveChanges();
 
-            return Redirect("/Students/Details/" + user.Id);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

@@ -59,13 +59,9 @@ namespace manager.aiv.it.Controllers
                     hLogin.Picture = db.Binaries.Find(hLogin.PictureId);
                 }
 
-                //List<RoleType> hRoles = hLogin.Roles.Select(r => (RoleType)r.Id).ToList();
 
                 Session.LoadUser(hLogin);
                 
-                //this.Session["UserId"]  = hLogin.Id;
-                //this.Session["Roles"]   = hRoles;
-                //this.Session["User"]    = hLogin;
 
                 //if (hRoles.Contains(RoleType.Student) && !hRoles.Contains(RoleType.Teacher))
                 if(hLogin.IsOnly(RoleType.Student))
