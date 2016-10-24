@@ -211,8 +211,7 @@ body .navbar.navbar-inverse.navbar-fixed-top > .container {
     background: url(http://www.aiv01.it/images/LogoAIV.png);
     background-repeat: no-repeat;
     background-size: 20%;
-    background-position: 1% 50%;
-    padding-left: 10%;
+    background-position: 50% 50%;
 }
 
 body .navbar .navbar-header {
@@ -251,6 +250,38 @@ body .navbar .navbar-nav {
     border-radius: 11px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.btn-dark {
+  background-color: #181c1f;
+  border-color: #181c1f;
+  color: #dddddd;
+}
+.btn-dark:hover,
+.btn-dark:focus,
+.btn-dark:active,
+.btn-dark.active {
+  background-color: #0d0f11;
+  border-color: #020202;
+  color: #eeeeee;
+}
+.btn-dark.disabled:hover,
+.btn-dark.disabled:focus,
+.btn-dark.disabled:active,
+.btn-dark.disabled.active,
+.btn-dark[disabled]:hover,
+.btn-dark[disabled]:focus,
+.btn-dark[disabled]:active,
+.btn-dark[disabled].active,
+fieldset[disabled] .btn-dark:hover,
+fieldset[disabled] .btn-dark:focus,
+fieldset[disabled] .btn-dark:active,
+fieldset[disabled] .btn-dark.active {
+  background-color: #181c1f;
+  border-color: #181c1f;
+}
+.logout-btn .glyphicon {
+    font-size:1.4em;
 }
 
 
@@ -578,6 +609,13 @@ form .row.row-submit {
         .navbar-collapse {
             padding-bottom: 80px;
         }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: none;
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
+        }
     }
  
     /* Extra Small Devices, Phones */ 
@@ -602,6 +640,13 @@ form .row.row-submit {
 
         .navbar-collapse {
             padding-bottom: 80px;
+        }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: none;
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
         }
     }
  
@@ -647,6 +692,13 @@ form .row.row-submit {
             max-height: none;
             padding-bottom: 100px;
         }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
+        }
     }
  
     /* Medium Devices, Desktops */
@@ -686,6 +738,13 @@ form .row.row-submit {
         .navbar-collapse {
             max-height: none;
         }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
+        }
      }
  
     /* Large Devices, Wide Screens */
@@ -724,6 +783,13 @@ form .row.row-submit {
         }
         .navbar-collapse {
             max-height: none;
+        }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
         }
      }
 
