@@ -644,7 +644,7 @@ form .row.row-submit {
         }
 
         body .navbar.navbar-inverse.navbar-fixed-top > .container {
-            background: none;
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
             background-repeat: no-repeat;
             background-size: 20%;
             background-position: 50% 50%;
