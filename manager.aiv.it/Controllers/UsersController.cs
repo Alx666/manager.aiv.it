@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 using manager.aiv.it;
 
 namespace manager.aiv.it.Controllers
@@ -155,6 +156,50 @@ namespace manager.aiv.it.Controllers
                 return HttpNotFound();
             }
             return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePicture(int userId, HttpPostedFileBase picture)
+        {
+            User user = db.Users.Find(userId);
+            User hLogged = Session.GetUser();
+
+            if (hLogged.Id != user.Id)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            if (user != null && picture != null)
+            {
+                Binary binaryFile = new Binary();
+                byte[] fileBytes = new byte[picture.InputStream.Length];
+                picture.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                binaryFile.Data = fileBytes;
+
+                string picturePath = picture.FileName;
+                string[] pathParts = Regex.Split(picturePath, @"(/)|(\\)");
+                string filename = pathParts[pathParts.Length - 1];
+
+                binaryFile.Filename = filename;
+                db.Binaries.Add(binaryFile);
+                db.SaveChanges();
+                /* 
+                Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                */
+                Binary saved = db.Binaries.Find(binaryFile.Id);
+                if (saved != null)
+                {
+                    user.PictureId = saved.Id;
+                    user.Picture = saved;
+
+                    db.Entry(user).State = EntityState.Modified;
+                }
+            }
+
+            db.SaveChanges();
+            Session.LoadUser(user);
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         // POST: Users/Delete/5

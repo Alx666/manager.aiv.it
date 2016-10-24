@@ -1,0 +1,39 @@
+﻿<div class="navbar-header pull-right profile-navbar-section">
+    <div class="row" layout-align="center">
+        <div class="profile-navbar-avatar">
+            @{
+                var imageSource = "https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png";
+                if (Session.GetUser().Picture != null)
+                {
+                    var base64 = Convert.ToBase64String(Session.GetUser().Picture.Data);
+                    imageSource = String.Format("data:image/*;base64,{0}", base64);
+                }
+            }
+            <a href="#" onclick="window.AIV.click('#navbar-picture-upload')">
+                <img id="navbar-profile-preview" src="@imageSource" />
+            </a>
+
+            @using (Html.BeginForm("ChangePicture", "Users", null, FormMethod.Post, new { name = "navbar_form_picture", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input name="userId" type="hidden" value="@Session.GetUser().Id" />
+                <input name="picture" id="navbar-picture-upload" type="file" style="display: none;" 
+                       onchange="window.AIV.previewAndSubmitOnFileChange(this, 'navbar_form_picture', '#navbar-profile-preview')" />
+            }
+        </div>
+        <div class="text-left">
+            <a href="/Users/Details/@Session.GetUser().Id">
+                <h5 class="username">
+                    @Session.GetUser().Name
+                </h5>
+            </a>
+        </div>
+        <div class="text-right profile-navbar-avatar logout-btn btn-round-sm">
+            <a href="/Account/LogOff" class="btn btn-danger btn-sm ">
+                <i class="glyphicon glyphicon-log-out">
+                    <!--<img src="https://cdn4.iconfinder.com/data/icons/basic-ui-elements/700/012_power-512.png" />-->
+                </i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -64,6 +64,32 @@
         var uintArray = new Uint8Array(buffer);
         var base64 = StringView.bytesToBase64(uintArray);
         $(domElementQueryString).attr("src", "data:image/png;base64," + base64);
+    },
+    updateImagePreview: function (file, imageTagID) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            window.AIV.arrayBufferToImageSrc(this.result, imageTagID);
+        };
+        reader.readAsArrayBuffer(file);
+    },
+    submitForm: function (formName) {
+        if(formName && document[formName])
+            document[formName].submit();
+    },
+    onFileInputChange: function (input, callback) {
+        if (input.files && input.files[0]) {
+            var file = input.files[0];
+            callback(file);
+        }
+    },
+    click : function (query) {
+        $(query).click();
+    },
+    previewAndSubmitOnFileChange: function (input, formName, imagePreviewTagID) {
+        window.AIV.onFileInputChange(input, function (file) {
+            window.AIV.updateImagePreview(file, "#navbar-profile-preview");
+            window.AIV.submitForm("navbar_form_picture");
+        });
     }
 };
 

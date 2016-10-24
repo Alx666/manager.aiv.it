@@ -188,7 +188,10 @@ button a {
 .profile-navbar-avatar img {
     height: 40px;
     width: 40px;
-    border-radius: 20px;
+    border-radius: 22px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    margin:4px;
+    border: 1px solid lightslategray;
 }
 
 .profile-navbar-avatar.logout-btn img{
@@ -234,6 +237,22 @@ body .navbar .navbar-nav {
 .btn-default.text-danger * {
     color: #b94a48;
 }
+
+.btn-round-lg{
+    border-radius: 22.5px;
+}
+.btn-round{
+    border-radius: 17px;
+}
+.btn-round-sm{
+    border-radius: 15px;
+}
+.btn-round-xs{
+    border-radius: 11px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 
 .inputfile {
 	width: 0.1px;
