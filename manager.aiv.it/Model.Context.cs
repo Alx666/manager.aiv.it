@@ -25,18 +25,18 @@ namespace manager.aiv.it
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Assignment> Assignments { get; set; }
+        public virtual DbSet<Binary> Binaries { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Lesson> Lessons { get; set; }
-        public virtual DbSet<Topic> Topics { get; set; }
-        public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
-        public virtual DbSet<Exercise> Exercises { get; set; }
-        public virtual DbSet<Submission> Submissions { get; set; }
-        public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
-        public virtual DbSet<Binary> Binaries { get; set; }
+        public virtual DbSet<Exercise> Exercises { get; set; }
+        public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Submission> Submissions { get; set; }
+        public virtual DbSet<Topic> Topics { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

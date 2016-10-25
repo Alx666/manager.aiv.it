@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Assignment.cs" />
+    <Compile Include="Models\Binary.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Edition.cs" />
@@ -262,6 +263,7 @@
     </Compile>
     <Compile Include="RoleType.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="StringExtensions.cs" />
     <Compile Include="Submission.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -409,6 +411,7 @@
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Students\ChangePicture.cshtml" />
+    <Content Include="Views\Shared\_NavbarProfilePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

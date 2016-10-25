@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using manager.aiv.it;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace manager.aiv.it.Controllers
 {
@@ -170,30 +172,13 @@ namespace manager.aiv.it.Controllers
 
             if (user != null && picture != null)
             {
-                Binary binaryFile = new Binary();
-                byte[] fileBytes = new byte[picture.InputStream.Length];
-                picture.InputStream.Read(fileBytes, 0, fileBytes.Length);
-                binaryFile.Data = fileBytes;
+                Binary hBin = Binary.CreateFrom(picture);
 
-                string picturePath = picture.FileName;
-                string[] pathParts = Regex.Split(picturePath, @"(/)|(\\)");
-                string filename = pathParts[pathParts.Length - 1];
+                //user.Picture
+                if (user.Picture != null)
+                    db.Binaries.Remove(user.Picture);
 
-                binaryFile.Filename = filename;
-                db.Binaries.Add(binaryFile);
-                db.SaveChanges();
-                /* 
-                Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
-                per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
-                */
-                Binary saved = db.Binaries.Find(binaryFile.Id);
-                if (saved != null)
-                {
-                    user.PictureId = saved.Id;
-                    user.Picture = saved;
-
-                    db.Entry(user).State = EntityState.Modified;
-                }
+                user.Picture = hBin;
             }
 
             db.SaveChanges();

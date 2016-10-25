@@ -50,20 +50,14 @@ namespace manager.aiv.it.Controllers
             }
 
             User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).FirstOrDefault();
+            hLogin.Picture = new Binary(hLogin.Picture);
+
+
 
             if (hLogin != null)
             {
-
-                if(hLogin.PictureId != null)
-                {
-                    hLogin.Picture = db.Binaries.Find(hLogin.PictureId);
-                }
-
-
                 Session.LoadUser(hLogin);
                 
-
-                //if (hRoles.Contains(RoleType.Student) && !hRoles.Contains(RoleType.Teacher))
                 if(hLogin.IsOnly(RoleType.Student))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
                 else

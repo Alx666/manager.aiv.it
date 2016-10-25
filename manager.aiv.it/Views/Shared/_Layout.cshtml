@@ -29,9 +29,9 @@
                     if (hUser.IsDirector)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")">@Html.ActionLink("Courses", "Index", "Courses")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
                     }
 
                     if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
@@ -42,11 +42,9 @@
                     if (hUser.IsTeacher)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Exercises" ? "active" : "")">@Html.ActionLink("Exercises", "Index", "Exercises")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
-                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
                     }
-
-
                 }
             }
         </ul>

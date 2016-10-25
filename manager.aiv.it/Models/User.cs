@@ -66,10 +66,9 @@ namespace manager.aiv.it
                 return dbResults.ToList();
             }
         }
-        public Binary Picture { get; set; }
 
         private List<RoleType> m_hRoles;
-        public bool IsSecretary    { get; private set; }
+        public bool IsSecretary     { get; private set; }
         public bool IsAdmin         { get; private set; }
         public bool IsBursar        { get; private set; }
         public bool IsTeacher       { get; private set; }
@@ -81,15 +80,16 @@ namespace manager.aiv.it
         {
             return (Roles.Count == 1 && m_hRoles.Contains(eType));
         }
+
         public void LoadRoles(List<RoleType> hRoles)
         {
             IsSecretary = hRoles.Contains(RoleType.Secretary);
-            IsAdmin = hRoles.Contains(RoleType.Admin);
-            IsBursar = hRoles.Contains(RoleType.Bursar);
-            IsTeacher = hRoles.Contains(RoleType.Teacher);
-            IsDirector = hRoles.Contains(RoleType.Director);
-            IsManager = hRoles.Contains(RoleType.Manager);
-            IsStudent = hRoles.Contains(RoleType.Student);
+            IsAdmin     = hRoles.Contains(RoleType.Admin);
+            IsBursar    = hRoles.Contains(RoleType.Bursar);
+            IsTeacher   = hRoles.Contains(RoleType.Teacher);
+            IsDirector  = hRoles.Contains(RoleType.Director);
+            IsManager   = hRoles.Contains(RoleType.Manager);
+            IsStudent   = hRoles.Contains(RoleType.Student);
 
             m_hRoles = hRoles;
         }
