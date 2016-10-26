@@ -186,7 +186,8 @@ button a {
     padding-left: 8px;
 }
 
-.profile-navbar-avatar img {
+.profile-navbar-avatar img,
+img.table-list-avatar {
     height: 40px;
     width: 40px;
     border-radius: 22px;

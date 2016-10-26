@@ -22,10 +22,10 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
         public ActionResult Index()
         {
-            var model = from r in db.Roles
-                        from s in r.Users
-                        where r.Id == (int)RoleType.Student
-                        select s;
+            var model = (from r in db.Roles
+                         from s in r.Users
+                         where r.Id == (int)RoleType.Student
+                         select s).Include(s => s.Picture);
 
             return View(model);
         }

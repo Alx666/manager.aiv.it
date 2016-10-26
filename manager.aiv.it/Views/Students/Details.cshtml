@@ -46,7 +46,7 @@
                             if (Model.Picture != null)
                             {
                                 var base64 = Convert.ToBase64String(Model.Picture.Data);
-                                var imageSource = String.Format("data:image/*;base64,{0}", base64);
+                                var imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
                                 <div class="picture-wrapper">
                                     <img title="Click to zoom" id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
                                 </div>
@@ -187,26 +187,32 @@
                     </div>
                 </div>
 
-                @if(Model.Class != null) { 
+                @if(Model.Class != null) {
 
                 <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
                     <!-- Accordion panel for Homeworks data -->
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingHomeworks">
-
-
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#studentDetailPanels" href="#collapseHomeworks" aria-expanded="true" aria-controls="collapseHomeworks">
+                                <a role="button" data-toggle="collapse" href="#collapseHomeworks" aria-expanded="true" aria-controls="collapseHomeworks">
                                     Homeworks
                                 </a>
                             </h4>
-
-
-
                         </div>
                         <div id="collapseHomeworks" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingHomeworks">
                             <div class="panel-body">
                                 <div class="row">
+                                    @{ 
+                                        var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date);
+                                    }
+
+                                    @if (assignments.Count() == 0)
+                                    {
+                                        <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                                            <h5>No results found.</h5>
+                                        </div>
+                                    }
+
                                     @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
                                     {
                                         <div class="col-xs-12 col-sm-6 col-md-4">
@@ -281,7 +287,7 @@
 
 
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#studentDetailPanels" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
+                                <a role="button" data-toggle="collapse" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
                                     Missed Lessons
                                 </a>
                             </h4>
