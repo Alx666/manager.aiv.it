@@ -3,7 +3,7 @@
         <div class="profile-navbar-avatar">
             @{
                 var imageSource = "https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png";
-                if (Session.GetUser().Picture != null)
+                if (Session.GetUser().Picture != null && Session.GetUser().Picture.Data != null)
                 {
                     var base64 = Convert.ToBase64String(Session.GetUser().Picture.Data);
                     imageSource = String.Format("data:image/*;base64,{0}", base64);

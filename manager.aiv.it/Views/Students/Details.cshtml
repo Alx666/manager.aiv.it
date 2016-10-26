@@ -240,7 +240,7 @@
 
                                                                 @{
                                                                     //  s.StudentId == Session.GetUser().Id
-                                                                    Submission anySubmitted = (from s in Model.ExercisesSubmitted
+                                                                    Submission anySubmitted = (from s in Model.SubmissionCreated
                                                                                                where s.AssignmentId == item.Id
                                                                                                select s).FirstOrDefault();
                                                                     bool bUploaded = anySubmitted != null;

@@ -10,9 +10,12 @@ namespace manager.aiv.it
     {
         public Binary(Binary hToCopy)
         {
-            this.Data = hToCopy.Data;
-            this.Filename = hToCopy.Filename;
-            this.Id = hToCopy.Id;
+            if(hToCopy != null)
+            {
+                this.Data = hToCopy.Data;
+                this.Filename = hToCopy.Filename;
+                this.Id = hToCopy.Id;
+            }
         }
 
         public static Binary CreateFrom(HttpPostedFileBase hFile)
