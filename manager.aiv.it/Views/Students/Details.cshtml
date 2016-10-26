@@ -284,20 +284,22 @@
                     <!-- Accordion panel for Missed Lessons data -->
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingMissedLessons">
-
-
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
                                     Missed Lessons
                                 </a>
                             </h4>
-
-
-
                         </div>
                         <div id="collapseMissedLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMissedLessons">
                             <div class="panel-body">
                                 <div class="row">
+                                    @if (Model.MissedLessons.Count() == 0)
+                                    {
+                                        <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                                            <h5>No results found.</h5>
+                                        </div>
+                                    }
+
                                     @foreach (var item in Model.MissedLessons)
                                     {
                                         <div class="col-xs-12 col-sm-6 col-md-4">

@@ -32,8 +32,13 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             Lesson lesson = db.Lessons.Find(id);
+            foreach(var student in lesson.Students)
+            {
+                if (student.PictureId != null)
+                    student.Picture = db.Binaries.Find(student.PictureId);
+            }
 
             if (lesson == null)
             {

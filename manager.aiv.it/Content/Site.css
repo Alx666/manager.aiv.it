@@ -196,6 +196,11 @@ img.table-list-avatar {
     border: 1px solid lightslategray;
 }
 
+img.table-list-avatar.small {
+    margin: 4px 0px;
+    box-shadow: none;
+}
+
 .profile-navbar-avatar.logout-btn img{
     height: 24px;
     width: 24px;
@@ -476,6 +481,10 @@ form .row.row-submit {
   overflow: hidden;
   margin-bottom: 20px;
   border: 1px solid #dddddd;
+}
+
+.thumbnail .row > *[class*='col-']{
+    overflow-x: hidden;
 }
 
 .panel .thumbnail {

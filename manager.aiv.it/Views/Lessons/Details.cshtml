@@ -33,7 +33,7 @@
 
             <div class="col col-xs-12">
 
-                <div class="card">
+                <div class="thumbnail">
                     <div class="card-content">
                         <div class="row">
                             <div class="col-xs-12">
@@ -85,56 +85,145 @@
                                             @Html.DisplayFor(model => model.Notes)
                                         </div>
                                     </div>
-
-
-                                    <h4 class="section-title">Students</h4>
-                                    <h5>Total students: @string.Format("{0} / {1}", Model.Students.Count(), Model.ClassSize)</h5>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table class="table table-striped table-responsive table-hover">
-                                                <tr>
-                                                    <th style="width:50%">Name</th>
-                                                    <th style="width:50%">Email</th>
-                                                </tr>
-                                                @foreach (var item in Model.Students)
-                                                {
-                                                    <tr>
-                                                        <td>@if(item.Name != null) { @item.DisplayName }</td>
-                                                        <td>@if(item.Email != null) { @item.Email }</td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
-
-
-                                    <h4 class="section-title">Topics</h4>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <table class="table table-striped table-responsive table-hover">
-                                                <tr>
-                                                    <th style="width:30%">Name</th>
-                                                    <th style="width:30%">Description</th>
-                                                    <th style="width:30%" class="text-right">Actions</th>
-                                                </tr>
-                                                @foreach (var item in Model.Topics)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.Description</td>
-                                                        <td class="text-right">
-                                                            <a title="View @item.DisplayName" class="btn btn-default btn-sm" href="@Url.Action("Details", "Topics", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                    </div>
                                 </section>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+                <div class="panel-group" id="detailPanels" role="tablist" aria-multiselectable="true">
+                    <!-- Accordion panel for Topics data -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingStudents">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" href="#collapseStudents" aria-expanded="true" aria-controls="collapseStudents">
+                                    Students ( @string.Format("{0} / {1}", Model.Students.Count(), Model.ClassSize) )
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseStudents" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingStudents">
+                            <div class="panel-body">
+                                <div class="row">
+                                    @{
+                                        var students = Model.Students.ToList();
+                                    }
+
+                                    @if (students.Count() == 0)
+                                    {
+                                        <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                                            <h5>No results found.</h5>
+                                        </div>
+                                    }
+
+                                    @foreach (var item in students)
+                                    {
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <div class="card-content">
+                                                    <div class="row" layout-align="center">
+                                                        <div class="col-sm-3 col-md-3 col-xs-3">
+
+                                                            @{
+                                                                var imageSource = "https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png";
+                                                                if (item.Picture != null && item.Picture.Data != null)
+                                                                {
+                                                                    var base64 = Convert.ToBase64String(item.Picture.Data);
+                                                                    imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
+                                                                }
+                                                            }
+                                                            <img class="table-list-avatar small" src="@imageSource" />
+
+                                                        </div>
+                                                        <div class="col-sm-9 col-md-9 col-xs-9">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 text-right"><strong>@item.DisplayName</strong></div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12 text-right">@item.Email</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-center">
+                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Students", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion panel for Topics data -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTopics">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" href="#collapseTopics" aria-expanded="true" aria-controls="collapseTopics">
+                                    Topics
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTopics" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTopics">
+                            <div class="panel-body">
+                                <div class="row">
+                                    @{
+                                        var topics = Model.Topics.ToList();
+                                    }
+
+                                    @if (topics.Count() == 0)
+                                    {
+                                        <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                                            <h5>No results found.</h5>
+                                        </div>
+                                    }
+
+                                    @foreach (var item in topics)
+                                    {
+                                        <div class="col-xs-12 col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <div class="card-content">
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Name</label></div>
+                                                        <div class="col-sm-9 text-right">@item.Name</div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Description</label></div>
+                                                        <div class="col-sm-9 text-right">@item.Description</div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-3"><label>Date Added</label></div>
+                                                        <div class="col-sm-9 text-right">@Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-center">
+                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Topics", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
