@@ -50,9 +50,7 @@ namespace manager.aiv.it.Controllers
             }
 
             User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).FirstOrDefault();
-            hLogin.Picture = new Binary(hLogin.Picture);
-
-
+            hLogin.Picture = hLogin.Picture != null ? new Binary(hLogin.Picture) : null; //Hax
 
             if (hLogin != null)
             {
