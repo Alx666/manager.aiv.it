@@ -117,7 +117,7 @@ namespace manager.aiv.it
         [StringLength(50)]
         string Password { get; }
 
-        [Required]
+        //[Required]
         [DisplayFormat(NullDisplayText = "-")]
         [StringLength(50)]
         string Mobile { get; }

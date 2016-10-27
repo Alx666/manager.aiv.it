@@ -81,7 +81,11 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
+                Role hRole = (from r in db.Roles where r.Id == (int)RoleType.Student select r).First();
+
+                user.Roles.Add(hRole);
                 db.Users.Add(user);
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
