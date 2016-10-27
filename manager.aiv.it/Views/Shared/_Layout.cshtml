@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/jasny-bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="@(ViewContext.RouteData.Values["controller"].ToString().ToLower()) @(ViewContext.RouteData.Values["action"].ToString().ToLower())">
     <div class="navbar-inverse navbar-collapse collapse navbar-right pull-right">
         <ul class="nav navbar-nav">
             @{
@@ -71,6 +71,7 @@
             </div>
         </div>
     </div>
+
     <div class="container body-content @(ViewContext.RouteData.Values["controller"].ToString().ToLower()) @(ViewContext.RouteData.Values["action"].ToString().ToLower())">
         @RenderBody()
         
