@@ -1,4 +1,9 @@
 ﻿
+*{
+    outline: 0 !important;
+    outline: none !important;
+}
+
 .logobg {
     background-image: url(http://www.aiv01.it/images/LogoAIV.png);
     background-repeat: no-repeat;
@@ -160,6 +165,7 @@ button a {
     margin-left: 0 !important;
     height: 50px;
     min-height: 50px;
+    min-width:18%;
     background: rgba(255, 255, 255, 0.3);
     overflow-x: hidden;
     overflow-y: hidden;
@@ -287,6 +293,16 @@ fieldset[disabled] .btn-dark.active {
   background-color: #181c1f;
   border-color: #181c1f;
 }
+
+.logout-btn .btn-sm {
+    max-width: 50%;
+    padding: 6px;
+    padding-right: 20px;
+    height: 40px;
+    line-height: 30px;
+    margin: 4px;
+}
+
 .logout-btn .glyphicon {
     font-size:1.4em;
 }
@@ -848,6 +864,7 @@ form .row.row-submit {
         /* properties to be toggled */
         opacity: 0;
         pointer-events: none;
+        display: none;
     }
 
     .image-to-unzoom {

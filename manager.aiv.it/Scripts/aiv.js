@@ -49,13 +49,13 @@
             $(".image-to-zoom").click(function () {
                 var name = $(this).attr("name");
                 $(".image-to-unzoom-description h4").text(name);
-                $(".zoom-panel").fadeTo(300, 1, function () { $(this).css({ pointerEvents: "all" }); });
+                $(".zoom-panel").fadeTo(300, 1, function () { $(this).css({ pointerEvents: "all", display : "block" }); });
                 $(".image-to-unzoom").attr("src", $(".image-to-zoom").attr("src"));
             });
 
             $(".image-to-unzoom").click(function () {
                 $(".image-to-unzoom-description h4").text("");
-                $(".zoom-panel").fadeTo(300, 0, function () { $(this).css({ pointerEvents: "none" }); });
+                $(".zoom-panel").fadeTo(300, 0, function () { $(this).css({ pointerEvents: "none", display: "none" }); });
                 $(".image-to-unzoom").attr("src", "");
             });
         });

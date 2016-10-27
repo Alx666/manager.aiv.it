@@ -1,6 +1,6 @@
 ﻿<div class="navbar-header pull-left profile-navbar-section">
     <div class="row" layout-align="center">
-        <div class="profile-navbar-avatar">
+        <div class="profile-navbar-avatar col-md-4">
             @{
                 var imageSource = "https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png";
                 var logged = Session.GetUser();
@@ -22,15 +22,15 @@
                        onchange="window.AIV.previewAndSubmitOnFileChange(this, 'navbar_form_picture', '#navbar-profile-preview')" />
             }
         </div>
-        <div class="text-left">
+        <div class="text-left col-md-4">
             <a href="/Users/Details/@Session.GetUser().Id">
                 <h5 class="username">
                     @Session.GetUser().Name
                 </h5>
             </a>
         </div>
-        <div class="text-right profile-navbar-avatar logout-btn">
-            <a href="/Account/LogOff" class="btn btn-dark btn-sm btn-round-lg">
+        <div class="profile-navbar-avatar logout-btn col-md-4" layout-align="bottom">
+            <a href="/Account/LogOff" class="btn btn-dark btn-sm btn-round-lg pull-right">
                 <i class="glyphicon glyphicon-log-out">
                     <!--<img src="https://cdn4.iconfinder.com/data/icons/basic-ui-elements/700/012_power-512.png" />-->
                 </i>
