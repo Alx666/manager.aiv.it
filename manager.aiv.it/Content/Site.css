@@ -9,6 +9,13 @@
     background-repeat: no-repeat;
 }
 
+html {
+    background: url(http://www.aiv01.it/galleries/10.jpg);
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    background-size: 130%;
+}
+
 html, body {
     padding: 0px;
     margin: 0px;
@@ -16,7 +23,7 @@ html, body {
 }
 
 body {
-    background: none;
+    background: white;
     
     /* 
     BACKGROUND AIV! 
@@ -26,6 +33,13 @@ body {
     */
 }
 
+body.login {
+    background: url(http://www.aiv01.it/galleries/10.jpg);
+    background-position: 0% 50%;
+    background-repeat: no-repeat;
+    background-size: 130%;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -33,6 +47,36 @@ body {
     padding-top: 48px;
     overflow: hidden;
     overflow-x: auto;
+}
+
+.body-content.login {
+    height: 100%;
+}
+
+.login-panel {
+    padding: 32px;
+    border: 1px solid #eee;
+    box-shadow: 0px 0px 16px #eee;
+    border-radius: 22px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-left: 16px;
+    color: silver;
+}
+
+.login-panel h2, 
+.login-panel h4, 
+.login-panel label {
+    text-shadow: 0px 0px 8px #000;
+}
+
+.login-panel input, 
+.login-panel hr {
+    box-shadow: 0px 0px 8px #111;
+}
+
+.body-content.login > .row {
+    height: 100%;
+    align-items: center;
 }
 
 .margin-right-10{
