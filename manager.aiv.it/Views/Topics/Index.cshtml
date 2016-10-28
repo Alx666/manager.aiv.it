@@ -20,11 +20,15 @@
     <div class="col-xs-12">
         <table class="table table-striped table-responsive table-hover">
             <tr>
+
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Course)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DateAdded)
@@ -38,6 +42,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -45,9 +50,11 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Course.DisplayName)
+                    </td>
+                    <td>
                         @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.DateAdded))
                     </td>
-
                     <td class="text-right">
                         <a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>

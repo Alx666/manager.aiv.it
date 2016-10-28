@@ -109,11 +109,11 @@ namespace manager.aiv.it
         [StringLength(50)]
         string Surname { get; }
 
-        [Required]
+        
         [StringLength(50)]
         string Email { get; }
 
-        [Required]
+        
         [StringLength(50)]
         string Password { get; }
 

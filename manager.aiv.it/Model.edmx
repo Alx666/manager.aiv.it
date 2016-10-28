@@ -173,6 +173,7 @@
           <Property Name="DateDeprecated" Type="date" />
           <Property Name="Deprecated" Type="bit" Nullable="false" />
           <Property Name="BinaryId" Type="int" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -182,7 +183,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="RegistrationDate" Type="date" Nullable="false" />
           <Property Name="ClassId" Type="int" />
@@ -262,7 +263,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Edition_ToCourse">
-          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Edition" Type="Self.Edition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
@@ -581,6 +584,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Topic_ToCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_ToBinary">
           <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -745,6 +760,10 @@
             <End Role="Binary" EntitySet="Binary" />
             <End Role="Topic" EntitySet="Topic" />
           </AssociationSet>
+          <AssociationSet Name="FK_Topic_ToCourse" Association="Self.FK_Topic_ToCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Topic" EntitySet="Topic" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_ToBinary" Association="Self.FK_User_ToBinary">
             <End Role="Binary" EntitySet="Binary" />
             <End Role="User" EntitySet="User" />
@@ -770,7 +789,6 @@
           <EntitySet Name="Notes" EntityType="AivModel.Note" />
           <EntitySet Name="Roles" EntityType="AivModel.Role" />
           <EntitySet Name="Submissions" EntityType="AivModel.Submission" />
-          <EntitySet Name="Topics" EntityType="AivModel.Topic" />
           <EntitySet Name="Users" EntityType="AivModel.User" />
           <AssociationSet Name="FK_ExerciseAssignment_ToClass" Association="AivModel.FK_ExerciseAssignment_ToClass">
             <End Role="Class" EntitySet="Classes" />
@@ -795,10 +813,6 @@
           <AssociationSet Name="FK_Table_Binary" Association="AivModel.FK_Table_Binary">
             <End Role="Binary" EntitySet="Binaries" />
             <End Role="Submission" EntitySet="Submissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Topic_ToBinary" Association="AivModel.FK_Topic_ToBinary">
-            <End Role="Binary" EntitySet="Binaries" />
-            <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
           <AssociationSet Name="FK_User_ToBinary" Association="AivModel.FK_User_ToBinary">
             <End Role="Binary" EntitySet="Binaries" />
@@ -856,6 +870,23 @@
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="Roles1" Association="AivModel.Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Teaching" Association="AivModel.Teaching">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Topics" EntityType="AivModel.Topic" />
+          <AssociationSet Name="FK_Topic_ToBinary" Association="AivModel.FK_Topic_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Topic_ToCourse" Association="AivModel.FK_Topic_ToCourse">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Topic" EntitySet="Topics" />
+          </AssociationSet>
           <AssociationSet Name="CoveredTopic" Association="AivModel.CoveredTopic">
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="Topic" EntitySet="Topics" />
@@ -867,14 +898,6 @@
           <AssociationSet Name="ExerciseTopic" Association="AivModel.ExerciseTopic">
             <End Role="Exercise" EntitySet="Exercises" />
             <End Role="Topic" EntitySet="Topics" />
-          </AssociationSet>
-          <AssociationSet Name="Roles1" Association="AivModel.Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="Teaching" Association="AivModel.Teaching">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Assignment">
@@ -903,8 +926,8 @@
           <Property Name="Filename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
           <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
-          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
           <NavigationProperty Name="Users" Relationship="AivModel.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -928,6 +951,7 @@
           <NavigationProperty Name="Editions" Relationship="AivModel.FK_Edition_ToCourse" FromRole="Course" ToRole="Edition" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Course" ToRole="Exercise" />
           <NavigationProperty Name="Teachers" Relationship="AivModel.Teaching" FromRole="Course" ToRole="User" />
+          <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToCourse" FromRole="Course" ToRole="Topic" />
         </EntityType>
         <EntityType Name="Edition">
           <Key>
@@ -1022,22 +1046,6 @@
           <NavigationProperty Name="Student" Relationship="AivModel.FK_Table_ToStudent" FromRole="Submission" ToRole="User" />
           <NavigationProperty Name="Revisor" Relationship="AivModel.FK_Table_ToTeacher" FromRole="Submission" ToRole="User" />
         </EntityType>
-        <EntityType Name="Topic">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateDeprecated" Type="DateTime" Precision="0" />
-          <Property Name="Deprecated" Type="Boolean" Nullable="false" />
-          <Property Name="BinaryId" Type="Int32" />
-          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
-          <NavigationProperty Name="Lessons" Relationship="AivModel.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
-          <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
-          <NavigationProperty Name="Exercises" Relationship="AivModel.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -1046,7 +1054,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ClassId" Type="Int32" />
@@ -1143,18 +1151,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Submission">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Topic_ToBinary">
-          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
-          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Topic">
               <PropertyRef Name="BinaryId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1323,6 +1319,56 @@
           <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
           <End Type="AivModel.User" Role="User" Multiplicity="*" />
         </Association>
+        <Association Name="Roles">
+          <End Type="AivModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="Teaching">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="*" />
+          <End Type="AivModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateDeprecated" Type="DateTime" Precision="0" />
+          <Property Name="Deprecated" Type="Boolean" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
+          <NavigationProperty Name="Course" Relationship="AivModel.FK_Topic_ToCourse" FromRole="Topic" ToRole="Course" />
+          <NavigationProperty Name="Lessons" Relationship="AivModel.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
+          <NavigationProperty Name="Editions" Relationship="AivModel.EditionSchedule" FromRole="Topic" ToRole="Edition" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
+        </EntityType>
+        <Association Name="FK_Topic_ToBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Topic_ToCourse">
+          <End Type="AivModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Topic">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CoveredTopic">
           <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
@@ -1334,14 +1380,6 @@
         <Association Name="ExerciseTopic">
           <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
-        </Association>
-        <Association Name="Roles">
-          <End Type="AivModel.Role" Role="Role" Multiplicity="*" />
-          <End Type="AivModel.User" Role="User" Multiplicity="*" />
-        </Association>
-        <Association Name="Teaching">
-          <End Type="AivModel.Course" Role="Course" Multiplicity="*" />
-          <End Type="AivModel.User" Role="User" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1468,19 +1506,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Topics">
-            <EntityTypeMapping TypeName="AivModel.Topic">
-              <MappingFragment StoreEntitySet="Topic">
-                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
-                <ScalarProperty Name="Deprecated" ColumnName="Deprecated" />
-                <ScalarProperty Name="DateDeprecated" ColumnName="DateDeprecated" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AivModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -1507,6 +1532,36 @@
               <ScalarProperty Name="Id" ColumnName="LessonId" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="Roles1" TypeName="AivModel.Roles" StoreEntitySet="Roles">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Teaching" TypeName="AivModel.Teaching" StoreEntitySet="Teaching">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="TeacherId" />
+            </EndProperty>
+            <EndProperty Name="Course">
+              <ScalarProperty Name="Id" ColumnName="EditionId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Topics">
+            <EntityTypeMapping TypeName="AivModel.Topic">
+              <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Deprecated" ColumnName="Deprecated" />
+                <ScalarProperty Name="DateDeprecated" ColumnName="DateDeprecated" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="CoveredTopic" TypeName="AivModel.CoveredTopic" StoreEntitySet="CoveredTopic">
             <EndProperty Name="Topic">
               <ScalarProperty Name="Id" ColumnName="TopicId" />
@@ -1529,22 +1584,6 @@
             </EndProperty>
             <EndProperty Name="Exercise">
               <ScalarProperty Name="Id" ColumnName="ExerciseId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Roles1" TypeName="AivModel.Roles" StoreEntitySet="Roles">
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Role">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Teaching" TypeName="AivModel.Teaching" StoreEntitySet="Teaching">
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="TeacherId" />
-            </EndProperty>
-            <EndProperty Name="Course">
-              <ScalarProperty Name="Id" ColumnName="EditionId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

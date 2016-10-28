@@ -38,7 +38,8 @@ namespace manager.aiv.it.Controllers
         // GET: Topics/Create
         [CustomAuthorize(RoleType.Director)]
         public ActionResult Create()
-        {
+        {            
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Director)]
-        public ActionResult Create([Bind(Include = "Id,Name,Description")] Topic topic)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,CourseId")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +70,10 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Topic topic = db.Topics.Find(id);
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName", topic.CourseId);
+
             if (topic == null)
             {
                 return HttpNotFound();
@@ -83,7 +87,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Director)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Deprecated")] Topic topic)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Deprecated,CourseId")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +95,7 @@ namespace manager.aiv.it.Controllers
                 hTopic.Name = topic.Name;
                 hTopic.Description = topic.Description;
                 hTopic.DateAdded = DateTime.Now.Date;
+                hTopic.CourseId = topic.CourseId;
 
                 if (topic.Deprecated)
                 {
@@ -107,6 +112,8 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName", topic.CourseId);
             return View(topic);
         }
 

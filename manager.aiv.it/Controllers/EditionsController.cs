@@ -37,10 +37,14 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Editions/Create
-        public ActionResult Create()
+        public ActionResult Create(int? courseid)
         {
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName");
-            ViewBag.topics   = new SelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue), "Id", "DisplayName");
+
+            if (courseid.HasValue)
+                ViewBag.topics = new MultiSelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue && t.CourseId == courseid), "Id", "DisplayName");
+            else
+                ViewBag.topics = new MultiSelectList(Enumerable.Empty<Topic>());
 
             Edition hNew        = new Edition();
             hNew.AcademicYear   = (short)DateTime.Now.Year;
@@ -79,19 +83,26 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Editions/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int? courseid)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Edition edition = db.Editions.Find(id);
+
+            if (courseid == null)
+                courseid = edition.CourseId;
+
             if (edition == null)
             {
                 return HttpNotFound();
             }
+
+
             ViewBag.CourseId  = new SelectList(db.Courses.Select(c => new { Id = c.Id, Name = c.Name + " "  + c.Grade }), "Id", "Name", edition.Course.Id);
-            ViewBag.topics    = new MultiSelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue).Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name", edition.Topics.Select(x => x.Id));
+            ViewBag.topics    = new MultiSelectList(db.Topics.Where(t => !t.DateDeprecated.HasValue && t.CourseId == courseid), "Id", "DisplayName");
 
             return View(edition);
         }

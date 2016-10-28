@@ -81,17 +81,26 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrEmpty(user.Email))
+                {
+                    User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+
+                    if (hAlreadyPresent != null)
+                        throw new HttpException("User Already Present");
+                }
+
+
                 Role hRole = (from r in db.Roles where r.Id == (int)RoleType.Student select r).First();
 
                 user.Roles.Add(hRole);
                 db.Users.Add(user);
-                
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
-            ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View(user);
         }
 
@@ -136,6 +145,15 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId")] User user)
         {
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+
+                if (hAlreadyPresent != null)
+                    throw new HttpException("User Already Present");
+            }
+
+
             User hLogged = Session.GetUser();
 
             if(hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)

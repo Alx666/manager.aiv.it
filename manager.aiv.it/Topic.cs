@@ -29,8 +29,10 @@ namespace manager.aiv.it
         public Nullable<System.DateTime> DateDeprecated { get; set; }
         public bool Deprecated { get; set; }
         public Nullable<int> BinaryId { get; set; }
+        public int CourseId { get; set; }
     
         public virtual Binary Binary { get; set; }
+        public virtual Course Course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> Lessons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

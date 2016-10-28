@@ -20,6 +20,5 @@ namespace manager.aiv.it
         [Required]
         [StringLength(50)]
         string Description { get; }
-
     }
 }
