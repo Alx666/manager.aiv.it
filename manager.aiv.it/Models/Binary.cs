@@ -18,7 +18,7 @@ namespace manager.aiv.it
             }
         }
 
-        public static Binary CreateFrom(HttpPostedFileBase hFile)
+        public static Binary CreateFrom(HttpPostedFileBase hFile, bool bKeepFileName = false)
         {
             byte[] hBytes = new byte[hFile.InputStream.Length];
             hFile.InputStream.Read(hBytes, 0, hBytes.Length);
@@ -27,7 +27,11 @@ namespace manager.aiv.it
 
             Binary hBin     = new Binary();
             hBin.Data       = hBytes;
-            hBin.Filename   = $"{StringExtensions.Random(15)}{hFInfo.Extension}";
+
+            if(!bKeepFileName)
+                hBin.Filename = $"{StringExtensions.Random(15)}{hFInfo.Extension}";
+            else
+                hBin.Filename = hFInfo.Name;
 
             return hBin;          
         }

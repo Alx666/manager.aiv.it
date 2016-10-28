@@ -55,7 +55,7 @@ namespace manager.aiv.it.Controllers
             {
                 topic.DateAdded = DateTime.Now;                
                 db.Topics.Add(topic);
-                db.SaveChanges();
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
