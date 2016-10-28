@@ -22,6 +22,7 @@ namespace manager.aiv.it.Controllers
             if (studentId.HasValue)
             {
                 hNotes = from hN in db.Notes where hN.Subject.Id == studentId select hN;
+                Session["NoteStudentId"] = studentId;
             }
             else
             {
@@ -112,7 +113,13 @@ namespace manager.aiv.it.Controllers
             Note note = db.Notes.Find(id);
             db.Notes.Remove(note);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            User hSubject = db.Users.Find(Session["NoteStudentId"]);
+
+            if(hSubject.NotesReceived.Count() == 0)
+                return RedirectToAction("Index", "Students");
+            else
+                return RedirectToAction("Index", "Notes", new { studentid = hSubject.Id });
         }
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]

@@ -83,7 +83,7 @@ namespace manager.aiv.it.Controllers
             {
                 if (!string.IsNullOrEmpty(user.Email))
                 {
-                    User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+                    User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email && u.Id != user.Id).FirstOrDefault();
 
                     if (hAlreadyPresent != null)
                         throw new HttpException("User Already Present");
@@ -147,7 +147,7 @@ namespace manager.aiv.it.Controllers
         {
             if (!string.IsNullOrEmpty(user.Email))
             {
-                User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+                User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email && u.Id != user.Id).FirstOrDefault();
 
                 if (hAlreadyPresent != null)
                     throw new HttpException("User Already Present");
