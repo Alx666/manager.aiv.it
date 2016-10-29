@@ -188,7 +188,7 @@ button a {
 
 .navbar navbar-inverse navbar-fixed-top > .container,
 .container.body-content {
-    max-width:100%;
+    max-width: 80%;
 }
 
 .navbar, .navbar-collapse {
