@@ -71,7 +71,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,CourseId,Name,Description,Value,TypeId,BinaryId")] Exercise exercise, List<int> topics, HttpPostedFileBase upload)
+        public ActionResult Create([Bind(Include = "CourseId,Name,Description,Value,TypeId,BinaryId")] Exercise exercise, IEnumerable<int> topics, HttpPostedFileBase upload)
         {
             User hAuthor = db.Users.Find(Session.GetUser().Id);
             
@@ -104,14 +104,14 @@ namespace manager.aiv.it.Controllers
                 }
 
                 if (topics != null)
-                    topics.ForEach(t => exercise.Topics.Add(db.Topics.Find(t)));
+                    topics.ToList().ForEach(t => exercise.Topics.Add(db.Topics.Find(t)));
 
                 exercise.Author = hAuthor;
                 
                 db.Exercises.Add(exercise);                
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
+            } 
 
             ViewBag.BinaryId = new SelectList(db.Binaries, "Id", "Id", exercise.BinaryId);
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", exercise.CourseId);

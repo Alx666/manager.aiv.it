@@ -23,5 +23,8 @@ namespace manager.aiv.it
         [DataType(DataType.MultilineText)]
         [StringLength(1000)]
         string Description { get; }
+
+        [Required]
+        ICollection<Topic> Topics { get; }
     }
 }
