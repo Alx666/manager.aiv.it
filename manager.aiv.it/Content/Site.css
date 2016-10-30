@@ -54,6 +54,20 @@ body.login {
     height: 100%;
 }
 
+.validation-summary-errors {
+    text-align: right;
+    border-radius: 16px;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .login-panel {
     padding: 32px;
     border: 1px solid #eee;
@@ -62,6 +76,11 @@ body.login {
     margin-left: 16px;
     color: white;
     width: 560px;
+}
+
+.login-panel hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .login-panel h2, 
