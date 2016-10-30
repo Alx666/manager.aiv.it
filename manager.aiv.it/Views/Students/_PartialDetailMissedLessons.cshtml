@@ -1,0 +1,73 @@
+﻿@model manager.aiv.it.User
+
+<!-- Accordion panel for Missed Lessons data -->
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingMissedLessons">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
+                Missed Lessons
+            </a>
+        </h4>
+    </div>
+    <div id="collapseMissedLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMissedLessons">
+        <div class="panel-body">
+            <div class="row">
+                @if (Model.MissedLessons.Count() == 0)
+                {
+                    <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                        <h5>No results found.</h5>
+                    </div>
+                }
+
+                @foreach (var item in Model.MissedLessons)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col-sm-3"><label>Date</label></div>
+                                    <div class="col-sm-9 text-right">
+                                        @item.Date.ToShortDateString()
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><label>Teacher</label></div>
+                                    <div class="col-sm-9 text-right">
+                                        @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><label>Topics</label></div>
+                                    <div class="col-sm-9 text-right">
+                                        @foreach (var topic in item.Topics)
+                                        {
+                                            @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
+                                            <br />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        @if (!Session.GetUser().IsOnly(RoleType.Student))
+                                        {
+                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })">
+                                                <i class="glyphicon glyphicon-chevron-right"></i>
+                                                Details
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
