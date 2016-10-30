@@ -54,6 +54,10 @@ body.login {
     height: 100%;
 }
 
+.table-actions {
+    min-width : 138px;
+}
+
 .table thead > tr > th, 
 .table tbody > tr > th, 
 .table tfoot > tr > th, 

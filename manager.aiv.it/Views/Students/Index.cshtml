@@ -44,9 +44,9 @@
                     @Html.DisplayNameFor(model => model.Class)
                 </th>
                 <th>
-                    Note actions
+                    Notes
                 </th>
-                <th class="text-right">
+                <th class="text-right table-actions">
                     Actions
                 </th>
             </tr>
@@ -89,7 +89,7 @@
                             <a title="List all notes for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Index", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-book"></i></a>
                         }
                     </td>
-                    <td class="text-right">    
+                    <td class="text-right table-actions">    
                         @if (Session.GetUser().IsSecretary)
                         {
                             <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
