@@ -25,6 +25,9 @@
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
+                    Attachment
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
@@ -45,6 +48,14 @@
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if (item.BinaryId != null)
+                        {
+                            <a href="@Url.Action("Download", "Topics", new { BinaryId = item.BinaryId })">
+                                <i class="glyphicon glyphicon-paperclip"></i>
+                            </a>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
