@@ -32,6 +32,10 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (topic.BinaryId != null)
+                topic.Binary = db.Binaries.Find(topic.BinaryId);
+
             return View(topic);
         }
 
@@ -49,13 +53,21 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Director)]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,CourseId")] Topic topic)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,CourseId")] Topic topic, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
                 topic.DateAdded = DateTime.Now;                
+                if(upload != null)
+                {
+                    Binary binary = Binary.CreateFrom(upload, true);
+                    db.Binaries.Add(binary);
+                    db.SaveChanges();
+
+                    topic.BinaryId = binary.Id;
+                }
                 db.Topics.Add(topic);
-                //db.SaveChanges();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -87,7 +99,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Director)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Deprecated,CourseId")] Topic topic)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Deprecated,CourseId")] Topic topic, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
@@ -108,6 +120,15 @@ namespace manager.aiv.it.Controllers
                     hTopic.Deprecated = false;
                 }
 
+                if (upload != null)
+                {
+                    Binary binary = Binary.CreateFrom(upload, true);
+                    db.Binaries.Add(binary);
+                    db.SaveChanges();
+
+                    hTopic.BinaryId = binary.Id;
+                }
+
                 db.Entry(hTopic).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,6 +136,15 @@ namespace manager.aiv.it.Controllers
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "DisplayName", topic.CourseId);
             return View(topic);
+        }
+
+        public FileContentResult Download(int BinaryId)
+        {
+            Binary foundFile = db.Binaries.Find(BinaryId);
+            if (foundFile != null)
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+
+            return null;
         }
 
         // GET: Topics/Delete/5
