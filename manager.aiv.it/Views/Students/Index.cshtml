@@ -89,13 +89,29 @@
                             <a title="List all notes for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Index", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-book"></i></a>
                         }
                     </td>
-                    <td class="text-right">    
+                    <td class="text-right">  
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </button>
+                            <div class="dropdown-menu">
+                                @if (Session.GetUser().IsSecretary)
+                                {
+                                    <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    <a title="Delete Student" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                                }
+                                <a title="View Student profile" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <!--  
                         @if (Session.GetUser().IsSecretary)
                         {
                             <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
                             <a title="Delete Student"       class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
                         }
                         <a title="View Student profile" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                        -->
                     </td>
                 </tr>
             }

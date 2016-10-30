@@ -10,6 +10,18 @@
     background-repeat: no-repeat;
 }
 
+.dropdown-menu {
+    right: 0;
+    left: inherit;
+    z-index: 2000;
+    min-width: 134px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background: #ebebeb;
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
 html {
     background: url(http://www.aiv01.it/galleries/10.jpg);
     background-position: 50%;
