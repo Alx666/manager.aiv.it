@@ -47,9 +47,9 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
-            else if ((hLogged.IsStudent && hLogged.Id != user.Id))
+            else if ((hLogged.IsOnly(RoleType.Student) && hLogged.Id != user.Id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return Redirect(Request.UrlReferrer.ToString());
             }
            
 
