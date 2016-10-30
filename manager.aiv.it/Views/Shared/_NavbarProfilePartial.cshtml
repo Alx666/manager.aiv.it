@@ -2,7 +2,7 @@
     <div class="row" layout-align="center">
         <div class="profile-navbar-avatar col-md-4">
             @{
-                var imageSource = "Content/default_avatar.png";
+                var imageSource = "/Content/default_avatar.png";
                 var logged = Session.GetUser();
                 if (logged.Picture != null && logged.Picture.Data != null)
                 {

@@ -78,7 +78,7 @@ namespace manager.aiv.it
 
         public bool IsOnly(RoleType eType)
         {
-            return (Roles.Count == 1 && m_hRoles.Contains(eType));
+            return (Roles.Count == 1 && m_hRoles != null && m_hRoles.Contains(eType));
         }
 
         public void LoadRoles(List<RoleType> hRoles)

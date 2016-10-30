@@ -50,13 +50,14 @@ namespace manager.aiv.it.Controllers
             }
 
             User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).FirstOrDefault();
-            hLogin.Picture = hLogin.Picture != null ? new Binary(hLogin.Picture) : null; //Hax
 
             if (hLogin != null)
             {
                 Session.LoadUser(hLogin);
-                
-                if(hLogin.IsOnly(RoleType.Student))
+
+                hLogin.Picture = (hLogin != null && hLogin.Picture != null) ? new Binary(hLogin.Picture) : null; //Hax
+
+                if (hLogin.IsOnly(RoleType.Student))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
                 else
                     return RedirectToLocal(returnUrl);

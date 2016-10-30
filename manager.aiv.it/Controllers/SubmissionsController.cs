@@ -109,9 +109,12 @@ namespace manager.aiv.it.Controllers
 
                 db.SaveChanges();
 
-                return View();
+                if (hUser.IsOnly(RoleType.Student))
+                    return View("Details", "Students", new { id = hUser.Id });
+                else
+                    return Redirect(Request.UrlReferrer.ToString());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }            

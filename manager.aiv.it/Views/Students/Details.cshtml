@@ -220,7 +220,16 @@
                                                 <div class="card-content">
                                                     <div class="row">
                                                         <div class="col-sm-3"><label>Name</label></div>
-                                                        <div class="col-sm-9 text-right">@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</div>
+                                                        <div class="col-sm-9 text-right">
+                                                            @if (Session.GetUser().IsOnly(RoleType.Student))
+                                                            {
+                                                                @Html.Display(item.Exercise.Name)
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)
+                                                            }
+                                                        </div>
                                                     </div>
 
                                                     <div class="row">
