@@ -412,6 +412,8 @@
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Students\ChangePicture.cshtml" />
     <Content Include="Views\Shared\_NavbarProfilePartial.cshtml" />
+    <Content Include="Views\Students\_PartialDetailHomeworks.cshtml" />
+    <Content Include="Views\Students\_PartialDetailMissedLessons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
