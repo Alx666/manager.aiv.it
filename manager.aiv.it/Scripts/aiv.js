@@ -112,7 +112,7 @@
             window.AIV.submitForm("navbar_form_picture");
         });
     },
-    d3PieChart: function (query, data) {
+    d3PieChart: function (query, data, hasShadow) {
         var margin = 16;
         var width = 200;
         var height = 200;
@@ -125,6 +125,7 @@
 
         var svg = d3.select(query)
           .append('svg')
+          .attr('fill-content', '')
           .attr('width', width)
           .attr('height', height)
           .append('g')
@@ -160,7 +161,13 @@
           .data(pie(data))
           .enter()
           .append('path')
-          .attr('d', arc)
+          .attr('d', function (d) {
+              if(d.value > 0)
+                return arc(d);
+          })
+          .style('stroke', function (d) {
+              return window.AIV.shadeColor(d.data.color, -0.5);
+          })
           .attr('fill', function (d, i) {
               return d.data.color;
           });
@@ -172,7 +179,7 @@
             .attr("class", "description")
             .style("text-anchor", "middle")
             .style("font-size", "22px")
-            .style("font-wweight", "bold")
+            .style("font-weight", "bold")
             .style("fill", function (d) {
                 return d.data.textColor || "silver";
             })
@@ -202,10 +209,10 @@
         });                                                           
 
         path.on('mousemove', function (d) {
-            var mouse = d3.mouse(this);
-            console.log(d3.event);
-            tooltip.style('top', (d3.event.clientY) + 'px')
-                 .style('left', (d3.event.clientX) + 'px');
+            if (d3.event.clientX && d3.event.clientY) {
+                tooltip.style('top', (d3.event.clientY + 10) + 'px')
+                 .style('left', (d3.event.clientX + 10) + 'px');
+            }
         });                
 
         var legend = svg.selectAll('.legend')
@@ -235,6 +242,44 @@
           .attr('x', legendRectSize + legendSpacing)
           .attr('y', legendRectSize - legendSpacing)
           .text(function (d) { return d.label; });
+
+
+
+        if (hasShadow) {
+            path.attr('filter', 'url(#dropshadow)');
+
+            /* For the drop shadow filter... */
+            var defs = svg.append("defs");
+
+            var filter = defs.append("filter")
+                .attr("id", "dropshadow")
+
+            filter.append("feGaussianBlur")
+                .attr("in", "SourceAlpha")
+                .attr("stdDeviation", 2)
+                .attr("result", "blur");
+            filter.append("feOffset")
+                .attr("in", "blur")
+                .attr("dx", 1)
+                .attr("dy", 1)
+                .attr("result", "offsetBlur");
+
+            var feMerge = filter.append("feMerge");
+
+            feMerge.append("feMergeNode")
+                .attr("in", "offsetBlur")
+            feMerge.append("feMergeNode")
+                .attr("in", "SourceGraphic");
+        }
+
+    },
+    shadeColor : function(color, percent) {
+        var f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+        return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+    },
+    blendColors : function(c0, c1, p) {
+        var f = parseInt(c0.slice(1), 16), t = parseInt(c1.slice(1), 16), R1 = f >> 16, G1 = f >> 8 & 0x00FF, B1 = f & 0x0000FF, R2 = t >> 16, G2 = t >> 8 & 0x00FF, B2 = t & 0x0000FF;
+        return "#" + (0x1000000 + (Math.round((R2 - R1) * p) + R1) * 0x10000 + (Math.round((G2 - G1) * p) + G1) * 0x100 + (Math.round((B2 - B1) * p) + B1)).toString(16).slice(1);
     }
 };
 

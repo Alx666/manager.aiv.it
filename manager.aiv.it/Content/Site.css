@@ -9,6 +9,10 @@
     position: relative;
 }
 
+.graph svg {
+    padding:16px;
+}
+
 .graph .legend > * {
     background-color: none;
 }
@@ -582,6 +586,15 @@ form .row.row-submit {
     margin-top: 24px;
 }
 
+[fill-content]{
+    width:100%;
+    height:100%;
+}
+
+[justify-content='center']{
+    justify-content: center;
+}
+
 [layout-align='center'] {
     align-items: center;
 }
@@ -627,7 +640,7 @@ form .row.row-submit {
 }
 
 .card-image {
-    background-color: #eeeeee;
+    background-color: #000000;
 }
 
 .card-image .picture-wrapper {
@@ -665,7 +678,6 @@ form .row.row-submit {
 }
 
 .card-content section {
-    margin-bottom: 8px;
     padding: 16px;
 }
 

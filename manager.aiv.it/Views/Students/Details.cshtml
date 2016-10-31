@@ -42,7 +42,7 @@
                 <div class="thumbnail">
                     
                     <div class="card-content">
-                        <div class="row" layout-align="center">
+                        <div class="row">
 
                             @{ 
                                 var hasPicture = (Model.Picture != null);
@@ -123,7 +123,7 @@
                                 </div>
 
                             }
-                            <div class="@nextElementClass col-sm-12 col-xs-12">
+                            <div class="@nextElementClass col-sm-12 col-xs-12" justify-content="center">
 
                                 <!-- INFORMAZIONI ANAGRAFICHE -->
                                 <section>
@@ -183,10 +183,8 @@
                                 </section>
                             </div>
 
-                            <div class="col-md-3 col-sm-12 col-xs-12 text-center">
-                                <section>
-                                    <div id="graph" class="graph"></div>
-                                </section>
+                            <div class="col-md-3 col-sm-12 col-xs-12 text-center" justify-content="center">
+                                <div id="graph" class="graph"></div>
                             </div>
                         </div>
                     </div>
@@ -214,7 +212,7 @@
                 { label : "Absence", count : (@Model.DisplayTotalLessons - @Model.DisplayPresences), color : window.AIV.colors.muted, textColor : "#000000" }
             ];
 
-            window.AIV.d3PieChart("#graph", data);
+            window.AIV.d3PieChart("#graph", data, true);
 
             clearInterval(ready);
         }
