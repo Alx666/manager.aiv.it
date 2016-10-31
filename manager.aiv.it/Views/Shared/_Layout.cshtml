@@ -91,6 +91,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
+    <!-- ofi.js -->
+    <script type="text/javascript" src="~/Scripts/ofi.browser.js"></script>
+    <script type="text/javascript">objectFitImages('img', { watchMQ: true });</script>
 
     <script type="text/javascript" src="~/Scripts/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jasny-bootstrap.js"></script>

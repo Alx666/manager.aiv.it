@@ -149,6 +149,9 @@ a:hover {
 
 .middle {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
 }
@@ -474,6 +477,9 @@ fieldset[disabled] .btn-dark.active {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
 }
 
 .row {
@@ -481,12 +487,16 @@ fieldset[disabled] .btn-dark.active {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   overflow-x: auto;
 }
 
 .row > [class*='col-'] {
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   flex-direction: column;
 }
 
@@ -728,6 +738,7 @@ form .row.row-submit {
             width: auto;
             height: 100%;
             object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -777,6 +788,7 @@ form .row.row-submit {
             width: 100%;
             height: auto;
             object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -822,6 +834,7 @@ form .row.row-submit {
             width: 100%;
             height: auto;
             object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -879,6 +892,7 @@ form .row.row-submit {
             width: 100%;
             height: auto;
             object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -931,6 +945,7 @@ form .row.row-submit {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1019,6 +1034,7 @@ form .row.row-submit {
         height: 100%;
         padding:32px 32px 64px 32px;
         object-fit:scale-down;
+        font-family: 'object-fit: contain;' /* OFI.js */
         margin: 8px auto;
         background: rgba(0, 0, 0, 0.3);
     }
