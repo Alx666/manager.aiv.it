@@ -19,7 +19,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
         public ActionResult Index()
         {
-            var lessons = (from hL in db.Lessons select hL).ToList();
+            var lessons = (from hL in db.Lessons select hL).ToList().OrderByDescending(l => l.Date).ToList();
 
             return View(lessons);
         }
@@ -105,6 +105,7 @@ namespace manager.aiv.it.Controllers
                 {
                     students.ForEach(s => lesson.Students.Add(db.Users.Find(s)));
                     lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
+                    lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
                 
 
