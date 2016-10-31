@@ -646,6 +646,20 @@ form .row.row-submit {
     padding: 12px;
 }
 
+.panel-collapse {
+    background: url(http://www.aiv01.it/images/BGcorsi.jpg) 50% center / cover no-repeat fixed;
+    color: silver;
+}
+
+.panel-collapse .panel-body {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.panel-collapse .card,
+.panel-collapse .thumbnail {
+    color: #333333;
+}
+
 .panel-collapse .card .card-content,
 .panel-collapse .thumbnail .card-content,
 .panel-collapse .card .card-footer,
