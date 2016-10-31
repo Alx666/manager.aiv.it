@@ -45,35 +45,76 @@
                                     <div class="row">
                                         <div class="col col-xs-6">
                                             <span class="bold">
-                                                Name
+                                                Class
                                             </span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.DisplayName)
+                                            @Html.DisplayFor(model => model.Edition.DisplayName)
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col col-xs-6">
                                             <span class="bold">
-                                                Section
+                                                Size
                                             </span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Section)
+                                            @Html.DisplayFor(model => model.Students.ToList().Count)
+                                        </div>
+                                    </div>
+
+ 
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Lessons
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.DisplayLessonsCount)
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col col-xs-6">
                                             <span class="bold">
-                                                Edition ID
+                                                Student Frequency
                                             </span>
                                         </div>
                                         <div class="col col-xs-6">
-                                            @Html.DisplayFor(model => model.Edition.Id)
+                                            @Html.DisplayFor(model => model.DisplayFrequency)
                                         </div>
                                     </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Students
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @foreach (var item in Model.Students)
+                                            {
+                                                @Html.ActionLink(item.DisplayName, "Details", "Students", new { id = item.Id }, null);                                               
+                                            }                                            
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Lessons
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @foreach (var item in Model.Lessons.OrderByDescending(l => l.Date))
+                                            {
+                                                @Html.ActionLink($"{item.Date.ToShortDateString()}", "Details", "Lessons", new { id = item.Id }, null);
+                                            }
+                                        </div>
+                                    </div>
+
                                 </section>
                             </div>
                         </div>
