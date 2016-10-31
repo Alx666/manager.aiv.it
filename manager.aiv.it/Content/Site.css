@@ -4,6 +4,37 @@
     outline: none !important;
 }
 
+.graph {
+    min-height: 200px;
+    position: relative;
+}
+
+.graph .legend > * {
+    background-color: none;
+}
+
+.graph .tooltip {            
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 5px #999999;
+    color: #eee;                                              
+    display: none;                                                 
+    font-size: 14px;                                               
+    left: 130px;                                                   
+    padding: 10px;                                                 
+    position: fixed;                                            
+    text-align: center;                                            
+    top: 95px;                                                     
+    width: 80px;                                                   
+    z-index: 10;       
+    opacity: 1;                                            
+}                                                                
+.legend {
+    font-size: 12px;
+}
+rect {
+    stroke-width: 2;
+}
+
 .logobg {
     background-image: url(http://www.aiv01.it/images/LogoAIV.png);
     background-size: contain;
@@ -604,8 +635,8 @@ form .row.row-submit {
 }
 
 .card-image img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
     position: relative;
     left: 50%;
     top: 40%;
@@ -628,10 +659,6 @@ form .row.row-submit {
     border-radius: 0px;
 }
 
-.card-content {
-  padding: 32px;
-}
-
 .card-content .section-title {
     padding-bottom: 8px;
     border-bottom: 1px solid #eeeeee;
@@ -639,11 +666,26 @@ form .row.row-submit {
 
 .card-content section {
     margin-bottom: 8px;
+    padding: 16px;
 }
 
 .card-footer {
     border-top: 1px solid #eeeeee;
     padding: 12px;
+}
+
+.panel-collapse {
+    background: url(http://www.aiv01.it/images/BGcorsi.jpg) 50% center / cover no-repeat fixed;
+    color: silver;
+}
+
+.panel-collapse .panel-body {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.panel-collapse .card,
+.panel-collapse .thumbnail {
+    color: #333333;
 }
 
 .panel-collapse .card .card-content,
@@ -700,9 +742,22 @@ form .row.row-submit {
 /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
 
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+        }
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 100%;
+        }
+
         .card-image img {
             width: auto;
             height: 100%;
+            object-fit: cover;
         }
 
         .navbar-brand, .username {
@@ -736,9 +791,22 @@ form .row.row-submit {
     /* Extra Small Devices, Phones */ 
     @media only screen and (min-width : 480px) {
 
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+        }
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 100%;
+        }
+
         .card-image img {
-            width: auto;
-            height: 100%;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
         }
 
         .navbar-brand, .username {
@@ -768,9 +836,22 @@ form .row.row-submit {
     /* Small Devices, Tablets */
     @media only screen and (min-width : 768px) {
 
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+        }
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 100%;
+        }
+
         .card-image img {
             width: 100%;
             height: auto;
+            object-fit: cover;
         }
 
         .navbar-brand, .username {
@@ -807,6 +888,10 @@ form .row.row-submit {
             max-height: none;
             padding-bottom: 100px;
         }
+    }
+ 
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
 
         body .navbar.navbar-inverse.navbar-fixed-top > .container {
             background: url(http://www.aiv01.it/images/LogoAIV.png);
@@ -814,14 +899,16 @@ form .row.row-submit {
             background-size: contain;
             background-position: 50% 50%;
         }
-    }
- 
-    /* Medium Devices, Desktops */
-    @media only screen and (min-width : 992px) {
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 80%;
+        }
 
         .card-image img {
             width: 100%;
             height: auto;
+            object-fit: cover;
         }
 
         .navbar-brand, .username {
@@ -852,22 +939,28 @@ form .row.row-submit {
         }
         .navbar-collapse {
             max-height: none;
-        }
-
-        body .navbar.navbar-inverse.navbar-fixed-top > .container {
-            background: url(http://www.aiv01.it/images/LogoAIV.png);
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: 50% 50%;
         }
      }
  
     /* Large Devices, Wide Screens */
     @media only screen and (min-width : 1200px) {
 
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+        }
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 80%;
+        }
+
         .card-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
         }
 
         .navbar-brand, .username {
@@ -898,13 +991,6 @@ form .row.row-submit {
         }
         .navbar-collapse {
             max-height: none;
-        }
-
-        body .navbar.navbar-inverse.navbar-fixed-top > .container {
-            background: url(http://www.aiv01.it/images/LogoAIV.png);
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: 50% 50%;
         }
      }
 
@@ -948,6 +1034,9 @@ form .row.row-submit {
         top: 0px;
         left: 0px;
         z-index: 9000;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
 
         /* properties to be toggled */
         opacity: 0;

@@ -35,6 +35,29 @@ namespace manager.aiv.it
         }
 
         [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("MaxEvaluationPossible")]
+        public float DisplayMaxEvaluationPossible
+        {
+            get
+            {
+                int maxValue = 15;
+                return (this.Exercises.Count * maxValue);
+            }
+        }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Evaluation")]
+        public string DisplayEvaluation
+        {
+            get
+            {
+                float max = DisplayMaxEvaluationPossible;
+                float percentEvaluation = (max > 0) ? ((this.Exercises.Sum(s => s.Value) / max) * 100) : 0;
+                return $"{percentEvaluation}%";
+            }
+        }
+
+        [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Missed Lessons")]
         //public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
         public List<Lesson> MissedLessons
