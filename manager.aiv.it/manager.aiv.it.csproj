@@ -279,6 +279,7 @@
     <Content Include="Content\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\default_avatar.png" />
     <Content Include="Content\jasny-bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -305,7 +306,15 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <Content Include="Content\jasny-bootstrap.css.map" />
+    <Content Include="Scripts\d3\API.md" />
+    <Content Include="Scripts\d3\CHANGES.md" />
+    <Content Include="Scripts\d3\LICENSE" />
+    <Content Include="Scripts\d3\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\d3\d3.js" />
+    <Content Include="Scripts\d3\d3.min.js" />
+    <Content Include="Scripts\excanvas.js" />
+    <Content Include="Scripts\excanvas.min.js" />
     <Content Include="Scripts\jasny-bootstrap.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -316,11 +325,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mozilla-string-view.js" />
+    <Content Include="Scripts\ofi.browser.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Tasks.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -412,6 +424,8 @@
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Students\ChangePicture.cshtml" />
     <Content Include="Views\Shared\_NavbarProfilePartial.cshtml" />
+    <Content Include="Views\Students\_PartialDetailHomeworks.cshtml" />
+    <Content Include="Views\Students\_PartialDetailMissedLessons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -443,9 +457,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1731</DevelopmentServerPort>
+          <DevelopmentServerPort>1999</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1731/</IISUrl>
+          <IISUrl>http://localhost:1999/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
