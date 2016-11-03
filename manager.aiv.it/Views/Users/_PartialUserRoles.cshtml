@@ -1,0 +1,41 @@
+﻿@model manager.aiv.it.User
+
+<!-- Accordion panel for Roles data -->
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingRoles">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" href="#collapseRoles" aria-expanded="true" aria-controls="collapseRoles">
+                Roles
+            </a>
+        </h4>
+    </div>
+    <div id="collapseRoles" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRoles">
+        <div class="panel-body">
+            <div class="row">
+                @{
+                    var roles = Model.Roles;
+                }
+
+                @if (roles.Count() == 0)
+                {
+                    <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                        <h5>User has no roles.</h5>
+                    </div>
+                }
+
+                @foreach (var item in roles)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="card-content">
+                                <span>@item.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -512,6 +512,12 @@ fieldset[disabled] .btn-dark.active {
     margin-bottom: 8px;
 }
 
+.thumbnail .row > .col-xs-12:not(:last-child),
+.thumbnail .row > .col-sm-12:not(:last-child),
+.thumbnail .row > .col-md-12:not(:last-child)  {
+    margin-bottom: 0;
+}
+
 .row-title {
     margin-top: 20px;
     margin-bottom: 10px;

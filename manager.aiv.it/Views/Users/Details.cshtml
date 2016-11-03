@@ -36,38 +36,120 @@
 
             <div class="col col-xs-12">
 
+
                 <div class="thumbnail">
+
                     <div class="card-content">
-                        <div class="row">
-                            <div class="col-xs-12">
+                        <div class="row" layout-align="center">
+
+                            @{
+                                var hasPicture = (Model.Picture != null);
+                                var nextElementClass = "col-md-9";
+                            }
+
+                            @if (hasPicture)
+                            {
+                                var base64 = Convert.ToBase64String(Model.Picture.Data);
+                                var imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
+
+                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                    <div class="card-image">
+                                        <div class="picture-wrapper">
+                                            <img title="Click to zoom" id="preview" name="@Path.GetFileName(Model.Picture.Filename)" class="image-to-zoom" src="@imageSource" />
+                                        </div>
+
+                                        <div class="card-quote">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 text-center" layout-align="center">
+                                                    <script type="text/javascript">
+                                                        var updatePreview = function (file) {
+                                                            var reader = new FileReader();
+                                                            reader.onload = function () {
+                                                                window.AIV.arrayBufferToImageSrc(this.result, "#preview");
+                                                            };
+                                                            reader.readAsArrayBuffer(file);
+                                                        };
+
+                                                        var updateFilename = function (file) {
+                                                            document.getElementById("uploadLabel").innerHTML = file.name;
+                                                        };
+
+                                                        var uploadNewPicture = function (file) {
+                                                            document.form_picture.submit();
+                                                        };
+
+                                                        var fileChanged = function (input) {
+                                                            if (input.files && input.files[0]) {
+                                                                var file = input.files[0];
+                                                                updatePreview(file);
+                                                                updateFilename(file);
+                                                                uploadNewPicture(file);
+                                                            }
+                                                        };
+                                                    </script>
+
+                                                    @if (Session.GetUser().Id == Model.Id)
+                                                    {
+                                                        using (Html.BeginForm("ChangePicture", "Students", null, FormMethod.Post, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                                        {
+                                                            @Html.AntiForgeryToken()
+                                                            <input type="hidden" name="userId" value="@Model.Id" />
+                                                            <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
+                                                            <label style="width:100%;" id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
+                                                            @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                                        }
+                                                    }
+                                                    else if (Model.Picture != null)
+                                                    {
+                                                        <div class="card-quote text-center">
+                                                            <a class="btn btn-primary btn-sm" href="@Url.Action("DownloadPicture", new { PictureId = Model.PictureId })">
+                                                                <i class="glyphicon glyphicon-floppy-save"></i>
+                                                                <span><strong>Download</strong></span>
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>No picture</span>
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                            <div class="@nextElementClass col-sm-12 col-xs-12">
 
                                 <!-- INFORMAZIONI ANAGRAFICHE -->
                                 <section>
                                     <h4 class="section-title">Base Data</h4>
 
                                     <div class="row">
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
                                             <span class="bold">@Html.DisplayNameFor(model => model.Name)</span>
                                         </div>
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-9 col-sm-9 col-md-6 text-right">
                                             @Html.DisplayFor(model => model.Name)
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
                                             <span class="bold">@Html.DisplayNameFor(model => model.Surname)</span>
                                         </div>
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-9 col-sm-9 col-md-6 text-right">
                                             @Html.DisplayFor(model => model.Surname)
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
                                             <span class="bold">@Html.DisplayNameFor(model => model.Email)</span>
                                         </div>
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-9 col-sm-9 col-md-6 text-right">
                                             @if (string.IsNullOrEmpty(Model.Email))
                                             {
                                                 <span>&minus;</span>
@@ -80,44 +162,31 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
                                             <span class="bold">@Html.DisplayNameFor(model => model.Mobile)</span>
                                         </div>
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-9 col-sm-9 col-md-6 text-right">
                                             @Html.DisplayFor(model => model.Mobile)
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
                                             <span class="bold">@Html.DisplayNameFor(model => model.RegistrationDate)</span>
                                         </div>
-                                        <div class="col col-xs-6">
+                                        <div class="col-xs-9 col-sm-9 col-md-6 text-right">
                                             @Model.RegistrationDate.ToShortDateString()
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">@Html.DisplayNameFor(model => model.Roles)</span>
-                                        </div>
-                                        <div class="col col-xs-6">
-                                            @{ 
-                                                string rolesString = "";
-                                                foreach (var role in Model.Roles)
-                                                {
-                                                    rolesString += role.Name + "; ";
-                                                }
-                                            }
-
-                                            <span>@rolesString</span>
-                                        </div>
-                                    </div>
                                 </section>
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="panel-group" id="userDetailPanels" role="tablist" aria-multiselectable="true">
+                    @Html.Partial("_PartialUserRoles", Model)
                 </div>
 
             </div>

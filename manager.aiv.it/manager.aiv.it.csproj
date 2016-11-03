@@ -429,6 +429,7 @@
     <Content Include="Views\Students\_PartialDetailMissedLessons.cshtml" />
     <Content Include="Views\Classes\_PartialDetailStudents.cshtml" />
     <Content Include="Views\Classes\_PartialDetailLessons.cshtml" />
+    <Content Include="Views\Users\_PartialUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
