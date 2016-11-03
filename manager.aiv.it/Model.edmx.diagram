@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="AivModel.Class" Width="1.5" PointX="8.5" PointY="2.5" />
         <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="4.125" PointY="2.5" />
         <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="6.375" PointY="2.5" />
-        <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="12.25" PointY="8.125" />
+        <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="10.5" PointY="8.125" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="19" PointY="9" />
         <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="7.75" PointY="8.875" />
         <EntityTypeShape EntityType="AivModel.Note" Width="1.5" PointX="0.5" PointY="7.25" />

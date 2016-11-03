@@ -235,8 +235,27 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Director)]
         public ActionResult DeleteConfirmed(int id)
         {
-            Exercise exercise = db.Exercises.Find(id);
+            Exercise exercise = db.Exercises.Include(x => x.Assignments).Where(x => x.Id == id).Single();
+            var hAssignments = db.Assignments.Where(a => a.ExerciseId == exercise.Id);
+
+            //Delete binary data for the exercise
+            if (exercise.Binary != null)
+                db.Binaries.Remove(exercise.Binary);
+
+            //Delete binary data from submissions
+            var hBinariesToRemove = hAssignments.SelectMany(a => a.Submissions).Select(b => b.Binary);
+            db.Binaries.RemoveRange(hBinariesToRemove);
+
+            //Delete all related submissions
+            var hSubmissionsToRemove = hAssignments.SelectMany(a => a.Submissions);
+            db.Submissions.RemoveRange(hSubmissionsToRemove);
+
+            //Delete all assignments
+            db.Assignments.RemoveRange(hAssignments);
+
+            //delete the exercise
             db.Exercises.Remove(exercise);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

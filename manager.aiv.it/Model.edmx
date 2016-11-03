@@ -926,7 +926,7 @@
           <Property Name="Filename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
           <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
-          <NavigationProperty Name="Users" Relationship="AivModel.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
+          <NavigationProperty Name="Pictures" Relationship="AivModel.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
           <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
         </EntityType>
         <EntityType Name="Class">

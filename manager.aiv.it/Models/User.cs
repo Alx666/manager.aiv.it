@@ -59,7 +59,7 @@ namespace manager.aiv.it
                 if (this.Class == null || this.Class.Assignments == null)
                     return new List<Assignment>();
 
-                IEnumerable<Assignment> dbResults = this.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date);
+                IEnumerable<Assignment> dbResults = this.Class.Assignments.Where(a => a.UnlockDate <= DateTime.Now.Date && a.Deadline >= DateTime.Now.Date );
                 if (dbResults == null)
                     return new List<Assignment>();
 

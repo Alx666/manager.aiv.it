@@ -13,7 +13,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date);
+                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date);
                 }
 
                 @if (assignments.Count() == 0)
@@ -23,7 +23,7 @@
                     </div>
                 }
 
-                @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date <= a.Deadline.Date))
+                @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date))
                 {
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="thumbnail">
