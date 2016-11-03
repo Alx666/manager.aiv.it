@@ -212,6 +212,7 @@
     <Compile Include="Edition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Emailer.cs" />
     <Compile Include="Exercise.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

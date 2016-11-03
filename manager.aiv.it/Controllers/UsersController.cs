@@ -135,6 +135,8 @@ namespace manager.aiv.it.Controllers
                 hUser.Mobile = user.Mobile;
                 hUser.Password = user.Password;
 
+                //Emailer.Send("info@aiv01.it", hUser.Email, "Password Change", "your password has been changed into" + hUser.Password);
+
                 db.Entry(hUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
