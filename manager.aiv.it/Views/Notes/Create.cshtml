@@ -33,12 +33,35 @@
             </div>
         </div>
 
+
+
+
+
+        @*<div class="form-group">
+            <label></label>
+            @Html.LabelFor(model => model.Text, "Notify", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.CheckBox("notify")                
+            </div>
+        </div>*@
+
+        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-primary">
                     <i class="glyphicon glyphicon-floppy-disk pull-right icon-right"></i>
                     <span>Save</span>
                 </button>
+                @{
+
+                    User hLuca = ViewBag.Luca as User;
+                    string imageSource = String.Format("data:image/jpg+png;base64,{0}", Convert.ToBase64String(hLuca.Picture.Data));
+
+                    @Html.CheckBox("notify")
+                    <img class="table-list-avatar" src="@imageSource" style="height:64px; width:64px; " />
+                }
             </div>
         </div>
     </div>

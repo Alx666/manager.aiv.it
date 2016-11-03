@@ -56,6 +56,14 @@ namespace manager.aiv.it.Controllers
 
             ViewBag.StudentId = new SelectList(db.Users, "Id", "DisplayName", db.Users.Find(studentId).Id);
 
+
+            var users = (from r in db.Roles
+                         from u in r.Users
+                         where r.Id > (int)RoleType.Student
+                         select u).Include(x => x.Picture).Distinct();
+
+            
+            ViewBag.Luca = db.Users.Where(u => u.Name == "Luca" && u.Surname == "De Dominicis").First();
             return View();
         }
 
@@ -63,7 +71,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
-        public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note)
+        public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note, bool notify)
         {
             User hAuthor  = db.Users.Find(Session.GetUser().Id);
             User hStudent = db.Users.Find(note.StudentId);
@@ -83,6 +91,20 @@ namespace manager.aiv.it.Controllers
 
                 db.Notes.Add(hNew);
                 db.SaveChanges();
+
+                try
+                {
+                    string sMessage = $"{hAuthor.DisplayName} wrote something about {hStudent.DisplayName}:{Environment.NewLine}{note.Text}";
+                    Emailer.Send("didattica@aiv01.it", db.Users.Where(u => u.Name == "Luca" && u.Surname == "De Dominicis").First().Email, "Something need your attention!", sMessage);
+                }
+                catch (Exception)
+                {
+                    //if send fails for now do nothing
+                    
+                }
+
+
+
                 return RedirectToAction("Index", "Students");
             }
 
