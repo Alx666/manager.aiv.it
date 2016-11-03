@@ -40,114 +40,125 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            </div>
 
 
+            <div class="thumbnail">
+                <div class="card-content">
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Class, "Class")
-                </div>
+                    <section>
+                        <h4 class="section-title">Base Data</h4>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
-                </div>
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Id, "Exercise")
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Class, "Class")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.DropDownList("ExerciseId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Assignments/Edit?id=" + Model.Id + "&exerciseid='.concat(this.value);" })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+                                </div>
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.UnlockDate, "Unlock Date")
-                </div>
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Id, "Exercise")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control", @Value = Model.UnlockDate.ToString("yyyy-MM-dd") } })
-                    @Html.ValidationMessageFor(model => model.UnlockDate, "", new { @class = "text-danger" })
-                </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.DropDownList("ExerciseId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Assignments/Edit?id=" + Model.Id + "&exerciseid='.concat(this.value);" })
+                                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Deadline)
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.UnlockDate, "Unlock Date")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control", @Value = Model.Deadline.ToString("yyyy-MM-dd") } })
-                    @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.UnlockDate, new { htmlAttributes = new { @class = "form-control", @Value = Model.UnlockDate.ToString("yyyy-MM-dd") } })
+                                    @Html.ValidationMessageFor(model => model.UnlockDate, "", new { @class = "text-danger" })
+                                </div>
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Name, "Name")
-                </div>
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Deadline)
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Exercise.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-                </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Deadline, new { htmlAttributes = new { @class = "form-control", @Value = Model.Deadline.ToString("yyyy-MM-dd") } })
+                                    @Html.ValidationMessageFor(model => model.Deadline, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Author.DisplayName, "Author")
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Name, "Name")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Exercise.Author.DisplayName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-                </div>
-            </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Exercise.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                                </div>
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Type, "Type")
-                </div>
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Author.DisplayName, "Author")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Exercise.Type.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-                </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Exercise.Author.DisplayName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                                </div>
+                            </div>
 
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Value, "Value")
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Type, "Type")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Exercise.Value, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-                </div>
-            </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Exercise.Type.Name, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                                </div>
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Topics, "Topics")
-                </div>
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Value, "Value")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", disabled = "disabled", @readonly = "readonly" })
-                </div>
+                                <div class="col-md-5 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Exercise.Value, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                                </div>
+                            </div>
 
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Exercise.Description, "Description")
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Topics, "Topics")
+                                </div>
 
-                <div class="col-md-5 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Exercise.Description, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", style = "min-height:150px;" } })
-                </div>
-            </div>
+                                <div class="col-md-11 col-xs-12 col-sm-12">
+                                    @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", disabled = "disabled", @readonly = "readonly" })
+                                </div>
+                            </div>
 
-            <div class="row" layout-align="center">
-                <div class="col-md-1 col-xs-12 col-sm-12">
-                    @Html.LabelFor(model => model.Description, "Notes")
-                </div>
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Exercise.Description, "Description")
+                                </div>
 
-                <div class="col-md-11 col-xs-12 col-sm-12">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "min-height:150px;" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                <div class="col-md-11 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Exercise.Description, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", style = "min-height:150px;" } })
+                                </div>
+                            </div>
+
+                            <div class="row" layout-align="center">
+                                <div class="col-md-1 col-xs-12 col-sm-12">
+                                    @Html.LabelFor(model => model.Description, "Notes")
+                                </div>
+
+                                <div class="col-md-11 col-xs-12 col-sm-12">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style = "min-height:150px;" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
