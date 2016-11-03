@@ -16,6 +16,13 @@
     </div>
 </div>
 
+@using (Html.BeginForm("Index", "Topics", FormMethod.Get))
+{
+    <b>Search Options:</b>
+            @Html.TextBox("search")
+            <input type="submit" name="submit" , value="Search" style="shape-margin:10px" />
+}
+
 <div class="row">
     <div class="col-xs-12">
         <table class="table table-striped table-responsive table-hover">

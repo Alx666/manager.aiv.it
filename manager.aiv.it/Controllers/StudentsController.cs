@@ -35,7 +35,7 @@ namespace manager.aiv.it.Controllers
 
             if (!string.IsNullOrEmpty(search))
             {
-                model = from s in model where s.Name == search || s.Surname == search select s;
+                model = from s in model where s.Name.Contains(search) || s.Surname.Contains(search) select s;
             }
 
             return View(model);

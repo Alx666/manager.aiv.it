@@ -15,9 +15,16 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Topics
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            return View(db.Topics.OrderBy(t => t.Name));
+            var model = db.Topics.OrderBy(t => t.Name);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                model = from t in model where t.Name.Contains(search) || t.Description.Contains(search) orderby t.Name select t;
+            }
+
+            return View(model);
         }
 
         // GET: Topics/Details/5        
