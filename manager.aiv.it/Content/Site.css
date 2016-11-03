@@ -693,11 +693,17 @@ form .row.row-submit {
 }
 
 form.filters {
+    /*
     border: 1px solid #cccccc;
     background-color: #eeeeee;
     padding: 16px;
     margin-bottom: 8px;
     border-radius: 12px;
+    */
+}
+
+form.filters > .row{
+    margin-bottom: 0px;
 }
 
 .panel-collapse {
