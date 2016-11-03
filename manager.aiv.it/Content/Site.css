@@ -34,6 +34,10 @@ body {
     */
 }
 
+.nomargin {
+    margin: 0 !important;
+}
+
 body.login {
     background: url(http://www.aiv01.it/galleries/10.jpg);
     background-position: 50%;
@@ -502,6 +506,12 @@ fieldset[disabled] .btn-dark.active {
   flex-direction: column;
 }
 
+.row > .col-xs-12:not(:last-child),
+.row > .col-sm-12:not(:last-child),
+.row > .col-md-12:not(:last-child) {
+    margin-bottom: 8px;
+}
+
 .row-title {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -674,8 +684,12 @@ form .row.row-submit {
 
 .activable-group .activable-label.active{
     color: #ffffff;
-    background-color: #428bca;
-    border-color: #357ebd;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.row.row-title form.filters {
+    margin-top: 8px !important;
 }
 
 form.filters {
