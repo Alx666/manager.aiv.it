@@ -1,0 +1,72 @@
+﻿@model manager.aiv.it.Class
+<!-- Accordion panel for Students data -->
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingStudents">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" href="#collapseStudents" aria-expanded="true" aria-controls="collapseStudents">
+                Students
+            </a>
+        </h4>
+    </div>
+    <div id="collapseStudents" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingStudents">
+        <div class="panel-body">
+            <div class="row">
+                @{
+                    var students = Model.Students.ToList();
+                }
+
+                @if (students.Count() == 0)
+                {
+                    <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                        <h5>No results found.</h5>
+                    </div>
+                }
+
+                @foreach (var item in students)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="card-content">
+                                <div class="row" layout-align="center">
+                                    <div class="col-sm-3 col-md-3 col-xs-3">
+
+                                        @{
+                                            var imageSource = "/Content/default_avatar.png";
+                                            if (item.Picture != null && item.Picture.Data != null)
+                                            {
+                                                var base64 = Convert.ToBase64String(item.Picture.Data);
+                                                imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
+                                            }
+                                        }
+                                        <img class="table-list-avatar small" src="@imageSource" />
+
+                                    </div>
+                                    <div class="col-sm-9 col-md-9 col-xs-9">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right"><strong>@item.DisplayName</strong></div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">@item.Email</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-sm-12 text-center">
+                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Students", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                            }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

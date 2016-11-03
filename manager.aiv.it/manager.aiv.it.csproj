@@ -426,6 +426,8 @@
     <Content Include="Views\Shared\_NavbarProfilePartial.cshtml" />
     <Content Include="Views\Students\_PartialDetailHomeworks.cshtml" />
     <Content Include="Views\Students\_PartialDetailMissedLessons.cshtml" />
+    <Content Include="Views\Classes\_PartialDetailStudents.cshtml" />
+    <Content Include="Views\Classes\_PartialDetailLessons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

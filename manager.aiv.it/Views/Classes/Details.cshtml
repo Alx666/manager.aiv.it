@@ -86,39 +86,16 @@
                                             @Html.DisplayFor(model => model.DisplayFrequency)
                                         </div>
                                     </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">
-                                                Students
-                                            </span>
-                                        </div>
-                                        <div class="col col-xs-6">
-                                            @foreach (var item in Model.Students)
-                                            {
-                                                @Html.ActionLink(item.DisplayName, "Details", "Students", new { id = item.Id }, null);                                               
-                                            }                                            
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col col-xs-6">
-                                            <span class="bold">
-                                                Lessons
-                                            </span>
-                                        </div>
-                                        <div class="col col-xs-6">
-                                            @foreach (var item in Model.Lessons.OrderByDescending(l => l.Date))
-                                            {
-                                                @Html.ActionLink($"{item.Date.ToShortDateString()}", "Details", "Lessons", new { id = item.Id }, null);
-                                            }
-                                        </div>
-                                    </div>
 
                                 </section>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="panel-group" id="classDetailPanels" role="tablist" aria-multiselectable="true">
+                    @Html.Partial("_PartialDetailStudents", Model)
+                    @Html.Partial("_PartialDetailLessons", Model)
                 </div>
             </div>
         </div>

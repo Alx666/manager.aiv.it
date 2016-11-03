@@ -292,6 +292,8 @@ img.table-list-avatar {
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
     margin:4px;
     border: 1px solid lightslategray;
+    object-fit: cover;
+    font-family: 'object-fit: contain;' /* OFI.js */
 }
 
 img.table-list-avatar.small {
