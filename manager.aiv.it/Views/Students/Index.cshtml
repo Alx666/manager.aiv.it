@@ -19,10 +19,22 @@
     }
 </div>
 
+
+
 <div class="row">
     <div class="col-xs-12 table-container">
         <div class="table-left-indicator"> << </div>
-        <div class="table-right-indicator"> >> </div>
+        <div class="table-right-indicator"> >> </div>        
+
+        @using (Html.BeginForm("Index", "Students", FormMethod.Get))
+        {
+            <b>Search Options:</b>
+            @Html.RadioButton("option", "enlisted", new { @checked = true })<text>Enlisted</text>
+            @Html.RadioButton("option", "all")<text>All</text>
+            @Html.TextBox("search")
+            <input type="submit" name="submit" , value="Search" style="shape-margin:10px" />
+        }
+
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>

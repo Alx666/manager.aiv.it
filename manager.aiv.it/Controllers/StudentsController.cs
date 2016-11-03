@@ -20,12 +20,23 @@ namespace manager.aiv.it.Controllers
 
         // GET: Students
         [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
-        public ActionResult Index()
+        public ActionResult Index(string search, string option = "enlisted")
         {
+            //Main query
             var model = (from r in db.Roles
                          from s in r.Users
                          where r.Id == (int)RoleType.Student
                          select s).Include(s => s.Picture);
+
+            if (option == "enlisted")
+            {
+                model = from s in model where s.ClassId != null select s;
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                model = from s in model where s.Name == search || s.Surname == search select s;
+            }
 
             return View(model);
         }
