@@ -564,8 +564,24 @@ form .row.row-submit {
     margin-top: 24px;
 }
 
-[layout-align='center'] {
+[layout-align='start'], [layout-align='start start']{
+    align-items: flex-start;
+}
+
+[layout-align='end'], [layout-align='end end']{
+    align-items: flex-end;
+}
+
+[layout-align='center'], [layout-align='center center'] {
     align-items: center;
+}
+
+[layout-align='start end']{
+    align-items: flex-start flex-end;
+}
+
+[layout-align='end start']{
+    align-items: flex-end flex-start;
 }
 
 [layout-align='center center'] {
@@ -656,6 +672,20 @@ form .row.row-submit {
     padding: 12px;
 }
 
+.activable-group .activable-label.active{
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+
+form.filters {
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    padding: 16px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+}
+
 .panel-collapse {
     background: url(http://www.aiv01.it/images/BGcorsi.jpg) 50% center / cover no-repeat fixed;
     color: silver;
@@ -710,6 +740,14 @@ form .row.row-submit {
     content: "\e113";    /* adjust as needed, taken from bootstrap.css */
     float: right;        /* adjust as needed */
     color: grey;         /* adjust as needed */
+}
+
+.panel-filters .panel-heading *[data-toggle]:after{
+    content:"\e138";
+}
+
+.panel-filters .panel-body {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .panel-group {

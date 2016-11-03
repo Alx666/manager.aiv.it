@@ -58,6 +58,17 @@
                 $(".zoom-panel").fadeTo(300, 0, function () { $(this).css({ pointerEvents: "none", display: "none" }); });
                 $(".image-to-unzoom").attr("src", "");
             });
+
+
+            var activator = function () {
+                var group = $(this).parents(".activable-group").find(".active").each(function () {
+                    $(this).removeClass("active");
+                });
+
+                $(this).parent().toggleClass("active");
+            };
+
+            $(".activable").click(activator);
         });
     },
     arrayBufferToImageSrc: function (buffer, domElementQueryString) {
