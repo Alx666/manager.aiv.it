@@ -17,7 +17,11 @@
                 User hUser = Session.GetUser();
                 if (hUser != null)
                 {
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Aiv Management", "Index", "Home")</li>
+                    if (!hUser.IsOnly(RoleType.Student))
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Aiv Management", "Index", "Home")</li>
+                    }
+
                     if (hUser.IsAdmin)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
