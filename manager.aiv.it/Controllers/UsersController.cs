@@ -36,7 +36,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Users/Details/5
-        [CustomAuthorize(RoleType.Admin)]
+        [CustomAuthorize(RoleType.Admin, RoleType.Student)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +48,13 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+
+            if(Session.GetUser().Id == user.Id)
+            {
+                return View(user);
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         // GET: Users/Create

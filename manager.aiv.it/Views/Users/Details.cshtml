@@ -44,7 +44,7 @@
 
                             @{
                                 var hasPicture = (Model.Picture != null);
-                                var nextElementClass = "col-md-9";
+                                var nextElementClass = (hasPicture) ? "col-md-9" : "col-md-12";
                             }
 
                             @if (hasPicture)
