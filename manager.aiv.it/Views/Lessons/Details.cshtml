@@ -194,12 +194,11 @@
                                                 <div class="card-content">
                                                     <div class="row">
                                                         <div class="col-sm-3"><label>Name</label></div>
-                                                        <div class="col-sm-9 text-right">@item.Name</div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-sm-3"><label>Description</label></div>
-                                                        <div class="col-sm-9 text-right">@item.Description</div>
+                                                        <div class="col-sm-9 text-right">
+                                                            <a href="@Url.Action("Details", "Topics", new { id = item.Id })">
+                                                                @item.Name, @item.Description
+                                                            </a>
+                                                        </div>
                                                     </div>
 
                                                     <div class="row">
