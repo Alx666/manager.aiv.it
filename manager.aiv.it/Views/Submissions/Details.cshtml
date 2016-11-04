@@ -54,10 +54,10 @@
                                         <img title="Click to zoom" name="@Path.GetFileName(Model.Binary.Filename)" class="image-to-zoom" src="@imageSource" />
                                     </div>
                                 }
-                                else if (Model.Binary.Filename.EndsWith("txt"))
+                                else if (Model.Binary.Filename.EndsWith("txt") || Model.Binary.Filename.EndsWith("cs") || Model.Binary.Filename.EndsWith("h") || Model.Binary.Filename.EndsWith("cpp") || Model.Binary.Filename.EndsWith("hpp"))
                                 {
                                     //scrivi cose
-                                    var text = System.Text.Encoding.ASCII.GetString(Model.Binary.Data);
+                                    var text = System.Text.Encoding.UTF8.GetString(Model.Binary.Data);
     
                                     <pre class="text-file-content-wrapper">@text</pre>
                                 }

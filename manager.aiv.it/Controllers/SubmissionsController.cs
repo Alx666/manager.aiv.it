@@ -16,6 +16,7 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Submissions
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Index()
         {
             var submissions = db.Submissions.Include(s => s.Student).Include(s => s.Revisor).Include(s => s.Assignment).Include(s => s.Binary);
@@ -23,12 +24,17 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Submissions/Details/5
+        [CustomAuthorize(RoleType.Teacher, RoleType.Student)]
         public ActionResult Details(int? assignmentId, int? studentId)
         {
+            if(Session.GetUser().IsOnly(RoleType.Student) && Session.GetUser().Id != studentId)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             if (assignmentId == null || studentId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Submission submission = db.Submissions.Find(assignmentId, studentId);
             if (submission == null)
             {
@@ -43,11 +49,13 @@ namespace manager.aiv.it.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Edit([Bind(Include = "Id,AssignmentId,StudentId,BinaryId,SubmissionDate,RevisionDate,Score,RevisorId")] Submission submission, int assignmentId, int studentId)
         {
             if (ModelState.IsValid)
             {
                 Submission existing = db.Submissions.Find(assignmentId, studentId);
+                existing.Revisor = db.Users.Find(Session.GetUser().Id);
                 existing.Score = submission.Score;
                 db.Entry(existing).State = EntityState.Modified;
                 db.SaveChanges();
@@ -58,6 +66,7 @@ namespace manager.aiv.it.Controllers
 
         // FALLBACK for Create action
         [HttpPost]
+        [CustomAuthorize(RoleType.Student)]
         public ActionResult Create(int assignmentId, HttpPostedFileBase upload)
         {
             return Upload(assignmentId, upload);
@@ -138,13 +147,19 @@ namespace manager.aiv.it.Controllers
         // POST: Submissions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Student)]
         public ActionResult DeleteConfirmed(int id)
         {
             Submission submission = db.Submissions.Find(id);
+
+            Binary hBinToDelete = db.Binaries.Find(submission.BinaryId);
+            db.Binaries.Remove(hBinToDelete);
             db.Submissions.Remove(submission);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         public FileContentResult Download(int BinaryId)
         {
             Binary foundFile = db.Binaries.Find(BinaryId);

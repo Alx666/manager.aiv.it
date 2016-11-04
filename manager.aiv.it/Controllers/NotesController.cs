@@ -95,15 +95,13 @@ namespace manager.aiv.it.Controllers
                 try
                 {
                     string sMessage = $"{hAuthor.DisplayName} wrote something about {hStudent.DisplayName}:{Environment.NewLine}{note.Text}";
-                    Emailer.Send("didattica@aiv01.it", db.Users.Where(u => u.Name == "Luca" && u.Surname == "De Dominicis").First().Email, "Something need your attention!", sMessage);
+                    Emailer.Send(db.Users.Where(u => u.Name == "Luca" && u.Surname == "De Dominicis").First().Email, "Something need your attention!", sMessage);
                 }
                 catch (Exception)
                 {
                     //if send fails for now do nothing
                     
                 }
-
-
 
                 return RedirectToAction("Index", "Students");
             }

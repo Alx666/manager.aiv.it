@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using manager.aiv.it;
 using manager.aiv.it.Models;
+using System.Text;
 
 namespace manager.aiv.it.Controllers
 {
@@ -105,10 +106,14 @@ namespace manager.aiv.it.Controllers
 
                 db.Assignments.Add(hAssignment);
                 db.SaveChanges();
+
+                //Send Email to all the users for this class
+                List<User> hUsers = db.Classes.Find(assignment.ClassId).Students.ToList();
+                Emailer.Send(hUsers, "New Homework starting on " + assignment.UnlockDate.ToShortDateString(), string.Empty);
+
                 return RedirectToAction("Index");
             }
-
-
+                                    
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
             ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
             return View(assignment);
