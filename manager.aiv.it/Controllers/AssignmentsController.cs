@@ -71,7 +71,12 @@ namespace manager.aiv.it.Controllers
                 hAssignment.Exercise = db.Exercises.Find(exerciseid);
             }
             else
-                hAssignment.Exercise = db.Exercises.Find(hExercises.First().Id);
+            {
+                if(hExercises.First() != null)
+                {
+                    hAssignment.Exercise = db.Exercises.Find(hExercises.First().Id);
+                }
+            }
 
             ViewBag.topics = new MultiSelectList(hAssignment.Exercise.Topics, "Id", "DisplayName");
 

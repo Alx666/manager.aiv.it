@@ -31,14 +31,7 @@
                                 <div class="row">
                                     <div class="col-sm-3"><label>Name</label></div>
                                     <div class="col-sm-9 text-right">
-                                        @if (Session.GetUser().IsOnly(RoleType.Student))
-                                        {
-                                            @Html.Display(item.Exercise.Name)
-                                        }
-                                        else
-                                        {
-                                            @Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)
-                                        }
+                                        @Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)
                                     </div>
                                 </div>
 

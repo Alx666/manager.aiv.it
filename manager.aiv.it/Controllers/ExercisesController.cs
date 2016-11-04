@@ -24,7 +24,7 @@ namespace manager.aiv.it.Controllers
             return View(db.Exercises.Include(e => e.Author).Include(e => e.Course).Include(e => e.Type).ToList());
         }
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Manager, RoleType.Director)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Manager, RoleType.Director, RoleType.Student)]
         public ActionResult Details(int? id)
         {
             if (id == null)

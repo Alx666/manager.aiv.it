@@ -751,7 +751,7 @@ form.filters > .row{
     background: rgba(255, 255, 255, 0.2);
     overflow-x: hidden;
     margin-right: -2px;
-    padding: 0 0 0 15px;
+    padding: 0 15px 0 15px;
 }
 
 .panel-collapse .panel-body > .row {
