@@ -632,6 +632,24 @@ form .row.row-submit {
   border: 1px solid #dddddd;
 }
 
+.thumbnail[flex] {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+}
+
+.thumbnail[flex] .card-content {
+    display: flex;
+    flex-direction:column;
+    flex-grow: 1;
+    flex: 1;
+}
+
+.thumbnail[flex] .card-content .row[flex] {
+    display: flex;
+    flex: 1;
+}
+
 .thumbnail .row > *[class*='col-']{
     overflow-x: hidden;
 }
@@ -665,6 +683,18 @@ form .row.row-submit {
     background-color: #000000;
     color: #eeeeee;
     padding: 8px;
+}
+
+.card-image .card-quote.lesson-follow-alert.followed {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.card-image .card-quote.lesson-follow-alert.not-followed {
+    color: #ffffff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
 }
 
 .card-image pre {
@@ -719,6 +749,15 @@ form.filters > .row{
 
 .panel-collapse .panel-body {
     background: rgba(255, 255, 255, 0.2);
+    overflow-x: hidden;
+    margin-right: -2px;
+    padding: 0 0 0 15px;
+}
+
+.panel-collapse .panel-body > .row {
+    min-width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .panel-collapse .card,

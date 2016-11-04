@@ -426,7 +426,7 @@
     <Content Include="Views\Students\ChangePicture.cshtml" />
     <Content Include="Views\Shared\_NavbarProfilePartial.cshtml" />
     <Content Include="Views\Students\_PartialDetailHomeworks.cshtml" />
-    <Content Include="Views\Students\_PartialDetailMissedLessons.cshtml" />
+    <Content Include="Views\Students\_PartialDetailLessons.cshtml" />
     <Content Include="Views\Classes\_PartialDetailStudents.cshtml" />
     <Content Include="Views\Classes\_PartialDetailLessons.cshtml" />
     <Content Include="Views\Users\_PartialUserRoles.cshtml" />

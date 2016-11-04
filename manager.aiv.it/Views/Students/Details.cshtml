@@ -46,7 +46,7 @@
 
                             @{
                                 var hasPicture = (Model.Picture != null);
-                                var nextElementClass = "col-md-9";
+                                var nextElementClass = hasPicture ? "col-md-9" : "col-md-12";
                             }
 
                             @if (hasPicture)
@@ -200,7 +200,7 @@
 
                 <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
                     @Html.Partial("_PartialDetailHomeworks", Model)
-                    @Html.Partial("_PartialDetailMissedLessons", Model)
+                    @Html.Partial("_PartialDetailLessons", Model)
                 </div>
                 }
             </div>

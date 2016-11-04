@@ -2,27 +2,41 @@
 
 <!-- Accordion panel for Missed Lessons data -->
 <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingMissedLessons">
+    <div class="panel-heading" role="tab" id="headingLessons">
         <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" href="#collapseMissedLessons" aria-expanded="true" aria-controls="collapseMissedLessons">
-                Missed Lessons
+            <a role="button" data-toggle="collapse" href="#collapseLessons" aria-expanded="true" aria-controls="collapseLessons">
+                Lessons
             </a>
         </h4>
     </div>
-    <div id="collapseMissedLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMissedLessons">
+    <div id="collapseLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLessons">
         <div class="panel-body">
             <div class="row">
-                @if (Model.MissedLessons.Count() == 0)
+                @{ 
+                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons).OrderByDescending(L => L.Date);
+                }
+
+                @if (allLessons.Count() == 0)
                 {
                     <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
                         <h5>No results found.</h5>
                     </div>
                 }
 
-                @foreach (var item in Model.MissedLessons)
+                @foreach (var item in allLessons)
                 {
+                    var followedClass = Model.LessonsFollowed.Contains(item) ? "followed" : "not-followed";
+                    var icon = Model.LessonsFollowed.Contains(item) ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                    var message = Model.LessonsFollowed.Contains(item) ? "Followed" : "Missed";
+
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="thumbnail">
+                        <div class="thumbnail" flex>
+                            <div class="card-image">
+                                <div class="card-quote lesson-follow-alert @followedClass">
+                                    <i class="@icon pull-right"></i>
+                                    <span>@message</span>
+                                </div>
+                            </div>
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col-sm-3"><label>Date</label></div>
@@ -38,13 +52,12 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" flex>
                                     <div class="col-sm-3"><label>Topics</label></div>
                                     <div class="col-sm-9 text-right">
                                         @foreach (var topic in item.Topics)
                                         {
                                             @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
-                                            <br />
                                         }
                                     </div>
                                 </div>
