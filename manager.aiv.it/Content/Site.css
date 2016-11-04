@@ -23,6 +23,10 @@ html, body {
     height: 100%;
 }
 
+img {
+    background-color: #000000;
+}
+
 body {
     background: white;
     
@@ -483,9 +487,6 @@ fieldset[disabled] .btn-dark.active {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
 }
 
 .row {
@@ -634,12 +635,17 @@ form .row.row-submit {
 
 .thumbnail[flex] {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
     min-height: 100%;
+    height: 100%;
     flex-direction: column;
 }
 
 .thumbnail[flex] .card-content {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
     flex-direction:column;
     flex-grow: 1;
     flex: 1;
@@ -647,6 +653,8 @@ form .row.row-submit {
 
 .thumbnail[flex] .card-content .row[flex] {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
     flex: 1;
 }
 
