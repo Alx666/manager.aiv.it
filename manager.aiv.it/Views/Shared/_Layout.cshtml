@@ -17,6 +17,7 @@
                 User hUser = Session.GetUser();
                 if (hUser != null)
                 {
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Aiv Management", "Index", "Home")</li>
                     if (hUser.IsAdmin)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Staff" ? "active" : "")">@Html.ActionLink("Staff", "Index", "Users")</li>
@@ -63,11 +64,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <!--
                 @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
                 {
                     @Html.ActionLink("Aiv Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
                 }
+                -->
             </div>
         </div>
     </div>

@@ -824,6 +824,61 @@ form.filters > .row{
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
+/* From zero to zero :D */ 
+    @media only screen and (min-width : 0px) {
+
+        .navbar-brand {
+            display: none;
+        }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: url(http://www.aiv01.it/images/LogoAIV.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+        }
+
+        .navbar.navbar-inverse.navbar-fixed-top > .container,
+        .container.body-content {
+            max-width: 100%;
+        }
+
+        .card-image img {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+            font-family: 'object-fit: contain;' /* OFI.js */
+        }
+
+        .navbar-brand, .username {
+            font-size: 10px;
+        }
+
+        .row-title  {
+            align-items: center;
+        }
+
+        .row-title .title {
+            font-size: 18px;
+        }
+
+        .card {
+            margin: 4px;
+        }
+
+        .navbar-collapse {
+            padding-bottom: 80px;
+        }
+
+        body .navbar.navbar-inverse.navbar-fixed-top > .container {
+            background: none;
+            background-repeat: no-repeat;
+            background-size: 20%;
+            background-position: 50% 50%;
+        }
+    }
+
+
 /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
 
