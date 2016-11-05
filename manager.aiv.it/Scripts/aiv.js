@@ -2,6 +2,10 @@
     init: function () {
         $(document).ready(function () {
 
+            document.createElementSVG = function (tag) {
+                return document.createElementNS("http://www.w3.org/2000/svg", tag);
+            };
+
             var switches = $("[switch]");
             if (switches && switches.bootstrapSwitch) {
                 switches.bootstrapSwitch();
@@ -21,7 +25,6 @@
             }
 
             updateTableIndicators();
-
 
             var header = $(".navbar");
             $(document).bind('scroll', function () {
@@ -69,7 +72,68 @@
             };
 
             $(".activable").click(activator);
+
+            // window.AIV.closeLoading();
+            // FOR TESTING: 
+            // ------------
+            //window.AIV.openLoading();
+            $(window).on('hashchange', function (e) {
+                window.AIV.openLoading();
+            });
+
+            // close loading on landing after 500 ms
+            setTimeout(function () {
+                window.AIV.closeLoading();
+            }, 500);
         });
+    },
+    openLoading: function () {
+        window.AIV.initGameboy();
+        $("#loading-overlay").addClass('open');
+        $(".gameboy .screen").focus();
+    },
+    closeLoading: function () {
+        $("#loading-overlay").removeClass('open');
+        $(".gameboy .screen").blur();
+    },
+    initGameboy : function(){
+        var svg = $("#gameboy-screen-canvas");
+        var main = document.createElementSVG("g");
+        svg.append(main);
+        var spawnX = 300; // valore x nascita oggetti off-screen
+        var ground = 240; // valore y terreno in game
+        var unit = 2;
+        var pixelColor = "#222222";
+        var gameFullWidth = 5000 * unit;
+
+        var groundRect = document.createElementSVG("rect");
+        $(groundRect).attr("class", "gameboy-static-object")
+                     .attr("fill", pixelColor)
+                     .attr("width", gameFullWidth)
+                     .attr("height", unit * 40)
+                     .attr("x", -unit)
+                     .attr("y", ground);
+        main.append(groundRect);
+
+        var gameLoop = setInterval(function () {
+            var staticObjects = $(".gameboy-static-object");
+            staticObjects.each(function (index, staticObject) {
+                var target = $(staticObject);
+                var x = parseInt(target.attr("x"));
+                var w = parseInt(target.attr("width"));
+                if (!isNaN(x) && !isNaN(w)) {
+                    if(x < - (unit + w)){
+                        target.remove();
+                    } else {
+                        target.attr("x", x - 10);
+                    }
+                }
+            });
+        }, 100); // 60 fps = (1000 ms / 60)
+
+        var loadingMessageBlinker = setInterval(function () {
+            $("#loading-overlay .gameboy .loading-message").toggleClass("hidden");
+        }, 500); // ogni mezzo secondo
     },
     arrayBufferToImageSrc: function (buffer, domElementQueryString) {
         var uintArray = new Uint8Array(buffer);

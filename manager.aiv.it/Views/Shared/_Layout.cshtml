@@ -94,6 +94,28 @@
         </div>
     </div>
 
+    <div id="loading-overlay" class="">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="gameboy">
+                    <div class="screen-wrapper">
+                        <div class="screen-wrapper-header">
+                            <div class="spanner left"></div>
+                            <div class="header-message">DOT MATRIX WITH STEREO SOUND</div>
+                            <div class="spanner right"></div>
+                        </div>
+                        <div class="battery-led"><label>BATTERY</label></div>
+                        <div class="screen">
+                            <svg id="gameboy-screen-canvas" width="284" height="316"></svg>
+                        </div>
+                    </div>
+
+                    <div class="loading-message hidden">Loading</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
