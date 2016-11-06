@@ -2,7 +2,10 @@
     init: function () {
         $(document).ready(function () {
             document.createElementSVG = function (tag) {
-                return document.createElementNS("http://www.w3.org/2000/svg", tag);
+                var svgtag = document.createElementNS("http://www.w3.org/2000/svg", tag);
+                if (!svgtag.append)
+                    svgtag.append = svgtag.appendChild;
+                return svgtag;
             };
 
             window.AIV.openLoading();
