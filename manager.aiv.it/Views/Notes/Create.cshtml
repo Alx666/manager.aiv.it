@@ -4,72 +4,101 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Note</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StudentId, "Student", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StudentId", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.StudentId, "", new { @class = "text-danger" })
+    <div class="row row-title">
+        <div class="col col-xs-4 col-sm-2">
+            <div class="text-left">
+                <a class="btn btn-default" href="javascript:window.history.back()">
+                    <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                    <span>Back</span>
+                </a>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-            </div>
+        <div class="col col-xs-4 col-sm-8">
+            <span class="title">Create Note</span>
         </div>
+        <div class="col col-xs-4 col-sm-2">
+            <div class="text-right">
 
-
-
-
-
-        @*<div class="form-group">
-            <label></label>
-            @Html.LabelFor(model => model.Text, "Notify", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-
-                @Html.CheckBox("notify")                
-            </div>
-        </div>*@
-
-        
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-primary">
                     <i class="glyphicon glyphicon-floppy-disk pull-right icon-right"></i>
                     <span>Save</span>
                 </button>
-                @{
 
-                    User hLuca = ViewBag.Luca as User;
-                    string imageSource = String.Format("data:image/jpg+png;base64,{0}", Convert.ToBase64String(hLuca.Picture.Data));
-
-                    @Html.CheckBox("notify")
-                    <img class="table-list-avatar" src="@imageSource" style="height:4.6em; width:4.6em; " />
-                }
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { studentId = Request.QueryString["studentId"] })
-</div>
+    <div class="thumbnail">
+        <div class="card-content">
+            <section>
+                <h4 class="section-title">Note</h4>
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12" layout-align="end">
+                            <div class="row" layout-align="center">
+                                <div>
+                                    @{
+
+                                        User hLuca = ViewBag.Luca as User;
+                                        string imageSource = String.Format("data:image/jpg+png;base64,{0}", Convert.ToBase64String(hLuca.Picture.Data));
+                                        /*<img class="avatar" src="@imageSource" />*/
+                                    }
+                                    
+                                    @Html.CheckBox("notify", false, new { @class= "image-checkbox" })
+
+                                    <label for="notify" image="@imageSource"></label>
+                                </div>
+                                <div class="padding-8">
+                                    <span class="image-checkbox-description">Dillo a Luca!</span>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.StudentId, "Student", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("StudentId", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.StudentId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                          <label></label>
+                          @Html.LabelFor(model => model.Text, "Notify", htmlAttributes: new { @class = "control-label col-md-2" })
+                          <div class="col-md-10">
+
+                              @Html.CheckBox("notify")
+                          </div>
+                      </div>*@
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

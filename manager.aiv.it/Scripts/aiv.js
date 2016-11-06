@@ -66,6 +66,7 @@
                 $(".image-to-unzoom").attr("src", "");
             });
 
+            /* ACTIVATION on checkbox inputs */
 
             var activator = function () {
                 var group = $(this).parents(".activable-group").find(".active").each(function () {
@@ -76,6 +77,14 @@
             };
 
             $(".activable").click(activator);
+
+
+            /* IMAGE tags as checkboxes */
+            var imgCh = $(".image-checkbox ~ label");
+            imgCh.css('background-image', 'url(' + imgCh.attr("image") + ')');
+            $(".image-checkbox").change(function () {
+                console.log($(this).is(":checked"));
+            });
 
             var openLoadingModal = function () {
                 var loadingOverlay = $("#loading-overlay");

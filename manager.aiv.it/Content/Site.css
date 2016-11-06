@@ -42,6 +42,10 @@ body {
     margin: 0 !important;
 }
 
+.padding-8 {
+    padding: 8px;
+}
+
 body.login {
     background: url(http://www.aiv01.it/galleries/10.jpg);
     background-position: 50%;
@@ -881,6 +885,49 @@ form .row.row-submit {
 .card-footer {
     border-top: 1px solid #eeeeee;
     padding: 12px;
+}
+
+input.image-checkbox[type=checkbox] {
+    display:none;
+}
+input.image-checkbox[type=checkbox] ~ label
+{
+    position:relative;
+    background-size:100%;
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+input.image-checkbox[type=checkbox]:checked ~ label:after
+{
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: '\e013';
+    color: aquamarine;
+    position:absolute;
+    background: rgba(0, 0, 0, 0.3);
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    padding-left: 8px;
+    padding-top: 6px;
+}
+.image-checkbox-description {
+
+}
+
+
+
+label.dillo-a-luca {
+    padding: 0px;
+    padding-right: 8px;
+}
+
+label.dillo-a-luca .avatar {
+    width: 48px;
+    max-width: 48px;
+    min-width: 48px;
 }
 
 .activable-group .activable-label.active{
