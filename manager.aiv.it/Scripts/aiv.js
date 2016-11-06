@@ -199,7 +199,7 @@
 
         var pleaseWaitMessage = document.createElementSVG("image");
         $(pleaseWaitMessage).attr("x", 12)
-                            .attr("y", 12)
+                            .attr("y", 0)
                             .attr("width", width - 24)
                             .attr("height", height - 24)
                             .attr("href", "/Content/alienbig.png")
