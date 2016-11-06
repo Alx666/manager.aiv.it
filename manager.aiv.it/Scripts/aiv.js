@@ -77,13 +77,24 @@
             // window.AIV.closeLoading();
             // FOR TESTING: 
             // ------------
-            $(window).on('hashchange', function (e) {
-                window.AIV.openLoading();
-            });
+            //$("*[href]").click(window.AIV.openLoading);
+            //$(window).on('hashchange', window.AIV.openLoading);
+            window.onbeforeunload = window.AIV.openLoading;
+            $(window).unload(window.AIV.openLoading);
+
+            // INTERCEPT ALL AJAX REQUESTS
+            var originalXHROpening = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function () {
+                var loadingOverlay = $("#loading-overlay");
+                if (!loadingOverlay.hasClass("open")) {
+                    loadingOverlay.addClass("open");
+                }
+                originalXHROpening.apply(this, arguments);
+            };
 
             // close loading on landing after 500 ms
             setTimeout(function () {
-                //window.AIV.closeLoading();
+                window.AIV.closeLoading();
             }, 1000);
         });
     },
@@ -98,7 +109,11 @@
     },
     initGameboy : function(){
         var svg = $("#gameboy-screen-canvas");
+        svg.attr("xmlns", "http://www.w3.org/2000/svg");
+        svg.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
+
         var width = parseInt(svg.attr("width"));
+        var height = parseInt(svg.attr("height"));
         var main = document.createElementSVG("g");
         svg.append(main);
         var spawnX = 300; // valore x nascita oggetti off-screen
@@ -114,7 +129,7 @@
                      .attr("height", unit * 40)
                      .attr("x", -unit)
                      .attr("y", ground);
-        main.append(groundRect);
+        //main.append(groundRect);
 
         var gameboyUIRect = document.createElementSVG("rect");
         $(gameboyUIRect).attr("x", 156)
@@ -124,6 +139,15 @@
                         .attr("stroke", pixelColor)
                         .attr("fill", "none");
         main.append(gameboyUIRect);
+
+        var gameboyUIWaitMessageRect = document.createElementSVG("rect");
+        $(gameboyUIWaitMessageRect).attr("x", 20)
+                                   .attr("y", 220)
+                                   .attr("width", 240)
+                                   .attr("height", 86)
+                                   .attr("stroke", pixelColor)
+                                   .attr("fill", "none");
+        main.append(gameboyUIWaitMessageRect);
 
         var gameboyUI = document.createElementSVG("text");
         $(gameboyUI).attr("x", 160)
@@ -137,6 +161,30 @@
                     .text("POINTS");
         main.append(gameboyUI);
 
+        var gameboyGameTitle = document.createElementSVG("text");
+        $(gameboyGameTitle).attr("x", 10)
+                    .attr("y", 24)
+                    .css({
+                        fontFamily: "VT323",
+                        fontSize: "18px",
+                        textTransform: 'uppercase',
+                        color: pixelColor
+                    })
+                    .text("AIV MANAGER");
+        main.append(gameboyGameTitle);
+
+        var gameboyUIWaitMessage = document.createElementSVG("text");
+        $(gameboyUIWaitMessage).attr("x", 72)
+                               .attr("y", 268)
+                               .css({
+                                   fontFamily: "VT323",
+                                   fontSize: "28px",
+                                   textTransform: 'uppercase',
+                                   color: pixelColor
+                               })
+                               .text("PLEASE WAIT");
+        main.append(gameboyUIWaitMessage);
+
         var pointsUICounter = document.createElementSVG("text");
         $(pointsUICounter).attr("x", 240)
                           .attr("y", 24)
@@ -146,8 +194,17 @@
                               textTransform: 'uppercase',
                               color: pixelColor
                           })
-                          .text(0);
+                          .text("100");
         main.append(pointsUICounter);
+
+        var pleaseWaitMessage = document.createElementSVG("image");
+        $(pleaseWaitMessage).attr("x", 12)
+                            .attr("y", 12)
+                            .attr("width", width - 24)
+                            .attr("height", height - 24)
+                            .attr("href", "/Content/alienbig.png")
+                            .attr("xlink:href", "/Content/alienbig.png");
+        main.append(pleaseWaitMessage);
 
         var gameLoop = setInterval(function () {
             var staticObjects = $(".gameboy-static-object");
