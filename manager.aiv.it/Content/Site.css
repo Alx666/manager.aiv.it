@@ -64,6 +64,15 @@ body.login {
 
 /* LOADING GAMEBOY SCREEN :) */
 
+/* latin */
+@font-face {
+  font-family: 'VT323';
+  font-style: normal;
+  font-weight: 400;
+  src: local('VT323'), local('VT323-Regular'), url('VT323-Regular.ttf') format('truetype');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
 #loading-overlay {
     display: none;
     width: 100%;
@@ -71,7 +80,7 @@ body.login {
     position: fixed;
     top:0;
     left:0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 1999;
     color: white;
 }
@@ -97,13 +106,13 @@ body.login {
 
 .gameboy {
     position: relative;
-    background-color: #b9b9c5;
-    padding: 64px 32px;
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5);
-    font-family: Courier New, Courier, monospace;
+    /*background-color: #b9b9c5;                           */
+    /*padding: 64px 32px;                                  */
+    /*border-radius: 8px;                                  */
+    /*-webkit-border-radius: 8px;                          */
+    /*-moz-border-radius: 8px;                             */
+    /*box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5);    */
+    /*font-family: Courier New, Courier, monospace;        */
 }
 
 .gameboy .screen-wrapper {
@@ -195,15 +204,13 @@ body.login {
 .gameboy .loading-message {
     position: absolute;
     width: 100%;
-    bottom: 0;
-    left:0px;
-    padding: 12px;
+    bottom: 2px;
+    left: 0;
     color: #333333;
     text-transform: uppercase;
     text-align: center;
     font-size: 2em;
-    font-family: monospace;
-    font-weight: bold;
+    font-family: VT323;
 }
 
 .gameboy .loading-message .hidden {

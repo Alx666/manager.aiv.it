@@ -1,10 +1,11 @@
 ﻿window.AIV = {
     init: function () {
         $(document).ready(function () {
-
             document.createElementSVG = function (tag) {
                 return document.createElementNS("http://www.w3.org/2000/svg", tag);
             };
+
+            window.AIV.openLoading();
 
             var switches = $("[switch]");
             if (switches && switches.bootstrapSwitch) {
@@ -76,15 +77,14 @@
             // window.AIV.closeLoading();
             // FOR TESTING: 
             // ------------
-            //window.AIV.openLoading();
             $(window).on('hashchange', function (e) {
                 window.AIV.openLoading();
             });
 
             // close loading on landing after 500 ms
             setTimeout(function () {
-                window.AIV.closeLoading();
-            }, 500);
+                //window.AIV.closeLoading();
+            }, 1000);
         });
     },
     openLoading: function () {
@@ -98,6 +98,7 @@
     },
     initGameboy : function(){
         var svg = $("#gameboy-screen-canvas");
+        var width = parseInt(svg.attr("width"));
         var main = document.createElementSVG("g");
         svg.append(main);
         var spawnX = 300; // valore x nascita oggetti off-screen
@@ -107,13 +108,46 @@
         var gameFullWidth = 5000 * unit;
 
         var groundRect = document.createElementSVG("rect");
-        $(groundRect).attr("class", "gameboy-static-object")
+        $(groundRect).attr("class", "gameboy-static-object ground")
                      .attr("fill", pixelColor)
                      .attr("width", gameFullWidth)
                      .attr("height", unit * 40)
                      .attr("x", -unit)
                      .attr("y", ground);
         main.append(groundRect);
+
+        var gameboyUIRect = document.createElementSVG("rect");
+        $(gameboyUIRect).attr("x", 156)
+                        .attr("y", 10)
+                        .attr("width", 120)
+                        .attr("height", 20)
+                        .attr("stroke", pixelColor)
+                        .attr("fill", "none");
+        main.append(gameboyUIRect);
+
+        var gameboyUI = document.createElementSVG("text");
+        $(gameboyUI).attr("x", 160)
+                    .attr("y", 24)
+                    .css({
+                        fontFamily    : "VT323",
+                        fontSize      : "18px",
+                        textTransform : 'uppercase',
+                        color         : pixelColor
+                    })
+                    .text("POINTS");
+        main.append(gameboyUI);
+
+        var pointsUICounter = document.createElementSVG("text");
+        $(pointsUICounter).attr("x", 240)
+                          .attr("y", 24)
+                          .css({
+                              fontFamily: "VT323",
+                              fontSize: "18px",
+                              textTransform: 'uppercase',
+                              color: pixelColor
+                          })
+                          .text(0);
+        main.append(pointsUICounter);
 
         var gameLoop = setInterval(function () {
             var staticObjects = $(".gameboy-static-object");
@@ -122,18 +156,24 @@
                 var x = parseInt(target.attr("x"));
                 var w = parseInt(target.attr("width"));
                 if (!isNaN(x) && !isNaN(w)) {
-                    if(x < - (unit + w)){
+                    if(x < - (unit + w) && !target.hasClass("ground")){
                         target.remove();
                     } else {
                         target.attr("x", x - 10);
                     }
                 }
             });
+
+            var groundX = parseInt($(groundRect).attr("x"));
+            if (!isNaN(groundX) && (groundX + gameFullWidth < spawnX)) {
+                $(groundRect).attr("x", -unit);
+            }
         }, 100); // 60 fps = (1000 ms / 60)
 
         var loadingMessageBlinker = setInterval(function () {
             $("#loading-overlay .gameboy .loading-message").toggleClass("hidden");
         }, 500); // ogni mezzo secondo
+
     },
     arrayBufferToImageSrc: function (buffer, domElementQueryString) {
         var uintArray = new Uint8Array(buffer);
