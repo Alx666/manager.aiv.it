@@ -74,21 +74,25 @@
 
             $(".activable").click(activator);
 
+            var openLoadingModal = function () {
+                var loadingOverlay = $("#loading-overlay");
+                if (!loadingOverlay.hasClass("open")) {
+                    window.AIV.openLoading();
+                }
+            };
+
             // window.AIV.closeLoading();
             // FOR TESTING: 
             // ------------
             //$("*[href]").click(window.AIV.openLoading);
             //$(window).on('hashchange', window.AIV.openLoading);
-            window.onbeforeunload = window.AIV.openLoading;
-            $(window).unload(window.AIV.openLoading);
+            window.onbeforeunload = openLoadingModal;
+            $(window).unload(openLoadingModal);
 
             // INTERCEPT ALL AJAX REQUESTS
             var originalXHROpening = XMLHttpRequest.prototype.open;
             XMLHttpRequest.prototype.open = function () {
-                var loadingOverlay = $("#loading-overlay");
-                if (!loadingOverlay.hasClass("open")) {
-                    loadingOverlay.addClass("open");
-                }
+                openLoadingModal();
                 originalXHROpening.apply(this, arguments);
             };
 
