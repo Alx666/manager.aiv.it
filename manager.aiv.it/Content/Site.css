@@ -457,8 +457,8 @@ img.table-list-avatar {
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
     margin:4px;
     border: 1px solid lightslategray;
-    object-fit: cover;
-    font-family: 'object-fit: contain;' /* OFI.js */
+    object-fit: contain;
+    font-family: 'object-fit: contain'; /* OFI.js */
 }
 
 img.table-list-avatar.small {
@@ -1011,8 +1011,8 @@ form.filters > .row{
         .card-image img {
             width: auto;
             height: 100%;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1062,8 +1062,8 @@ form.filters > .row{
         .card-image img {
             width: auto;
             height: 100%;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1112,8 +1112,8 @@ form.filters > .row{
         .card-image img {
             width: 100%;
             height: auto;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1158,8 +1158,8 @@ form.filters > .row{
         .card-image img {
             width: 100%;
             height: auto;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1216,8 +1216,8 @@ form.filters > .row{
         .card-image img {
             width: 100%;
             height: auto;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1269,8 +1269,8 @@ form.filters > .row{
         .card-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            font-family: 'object-fit: contain;' /* OFI.js */
+            object-fit: contain;
+            font-family: 'object-fit: contain'; /* OFI.js */
         }
 
         .navbar-brand, .username {
@@ -1358,8 +1358,8 @@ form.filters > .row{
         width:100%;
         height: 100%;
         padding:32px 32px 64px 32px;
-        object-fit:scale-down;
-        font-family: 'object-fit: contain;' /* OFI.js */
+        object-fit: contain;
+        font-family: 'object-fit: contain'; /* OFI.js */
         margin: 8px auto;
         background: rgba(0, 0, 0, 0.3);
     }
