@@ -32,6 +32,11 @@ namespace manager.aiv.it.Controllers
             {
                 model = from s in model where s.ClassId != null select s;
             }
+            else if (option == "notes")
+            {
+                model = (from n in db.Notes select n.Subject).Distinct();
+            }
+            
 
             if (!string.IsNullOrEmpty(search))
             {
