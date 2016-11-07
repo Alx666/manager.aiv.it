@@ -99,7 +99,6 @@
             //$("*[href]").click(window.AIV.openLoading);
             //$(window).on('hashchange', window.AIV.openLoading);
             window.onbeforeunload = openLoadingModal;
-            $(window).unload(openLoadingModal);
 
             // INTERCEPT ALL AJAX REQUESTS
             var originalXHROpening = XMLHttpRequest.prototype.open;
@@ -115,13 +114,13 @@
         });
     },
     openLoading: function () {
-        window.AIV.initGameboy();
-        $("#loading-overlay").addClass('open');
-        $(".gameboy .screen").focus();
+        //window.AIV.initGameboy();
+        //$("#loading-overlay").addClass('open');
+        //$(".gameboy .screen").focus();
     },
     closeLoading: function () {
-        $("#loading-overlay").removeClass('open');
-        $(".gameboy .screen").blur();
+        //$("#loading-overlay").removeClass('open');
+        //$(".gameboy .screen").blur();
     },
     initGameboy : function(){
         var svg = $("#gameboy-screen-canvas");
