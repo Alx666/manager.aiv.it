@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
                     <div class="input-group">
-                        <input id="search" type="text" name="search" placeholder="" class="form-control" />
+                        <input id="search" type="text" name="search" placeholder="" class="form-control" value='@Request.QueryString["search"]' />
                         <span class="input-group-btn">
                             <button class="btn btn-info" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -37,18 +37,51 @@
 
                 <div class="col-xs-6 col-sm-6 col-md-6" layout-align="end">
                     <div class="btn-group activable-group">
-                        <label class="btn btn-default activable-label active">
-                            <input class="activable" type="radio" name="option" value="enlisted" checked />
-                            Enlisted
-                        </label>
-                        <label class="btn btn-default activable-label">
-                            <input class="activable" type="radio" name="option" value="notes" />
-                            With Notes
-                        </label>
-                        <label class="btn btn-default activable-label">
-                            <input class="activable" type="radio" name="option" value="all" />
-                            All
-                        </label>
+                        @if (@Request.QueryString["option"] == "enlisted")
+                        {
+                            <label class="btn btn-default activable-label active">
+                                <input class="activable" type="radio" name="option" value="enlisted" checked />
+                                Enlisted
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-default activable-label">
+                                <input class="activable" type="radio" name="option" value="enlisted" />
+                                Enlisted
+                            </label>
+                        }
+
+                        @if (@Request.QueryString["option"] == "notes")
+                        {
+                            <label class="btn btn-default activable-label active">
+                                <input class="activable" type="radio" name="option" value="notes" checked />
+                                With Notes
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-default activable-label">
+                                <input class="activable" type="radio" name="option" value="notes" />
+                                With Notes
+                            </label>
+                        }
+
+
+                        @if (@Request.QueryString["option"] == "all")
+                        {
+                            <label class="btn btn-default activable-label active">
+                                <input class="activable" type="radio" name="option" value="all" checked />
+                                All
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-default activable-label">
+                                <input class="activable" type="radio" name="option" value="all" />
+                                All
+                            </label>
+                        }
 
                     </div>
                 </div>
