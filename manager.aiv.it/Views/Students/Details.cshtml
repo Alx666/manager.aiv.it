@@ -12,7 +12,7 @@
                 @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
                 { 
                     <div class="text-left">
-                        <a class="btn btn-default" href="javascript:window.history.back();">
+                        <a class="btn btn-default" href='@Url.Action("Index")'>
                             <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
                             <span>Back</span>
                         </a>
