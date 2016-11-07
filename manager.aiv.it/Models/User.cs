@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace manager.aiv.it
 {
@@ -141,7 +142,7 @@ namespace manager.aiv.it
     public static class SessionExtensions
     {
         public static User GetUser(this HttpSessionStateBase session)
-        {
+        {            
             return session["User"] as User;
         }
         public static void LoadUser(this HttpSessionStateBase session, User user)

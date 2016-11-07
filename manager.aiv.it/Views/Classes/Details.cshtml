@@ -19,6 +19,7 @@
             <div class="col col-xs-4 col-sm-8">
                 <span class="title">Class</span>
             </div>
+
             <div class="col col-xs-4 col-sm-2">
                 <div class="text-right">
                     <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
@@ -27,6 +28,8 @@
                     </a>
                 </div>
             </div>
+
+
         </div>
 
         <div class="row">
@@ -87,11 +90,26 @@
                                         </div>
                                     </div>
 
+
+                 
+
                                 </section>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                @if (Session.GetUser().IsDirector)
+                {
+                    <div class="col col-xs-4 col-sm-2">
+                        <div class="text-right">
+                            <a class="btn btn-primary" href="@Url.Action("ResetCredentials", new { id = Model.Id })">
+                                <span>Reset Credentials</span>
+                            </a>
+                        </div>
+                    </div>
+                }
+
 
                 <div class="panel-group" id="classDetailPanels" role="tablist" aria-multiselectable="true">
                     @Html.Partial("_PartialDetailStudents", Model)
