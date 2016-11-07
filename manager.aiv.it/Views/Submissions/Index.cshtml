@@ -31,13 +31,16 @@
                     @Html.DisplayNameFor(model => model.Score)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Student.Name)
+                    @Html.DisplayNameFor(model => model.Student)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Revisor.Name)
+                    @Html.DisplayNameFor(model => model.Revisor)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Assignment.Description)
+                </th>
+                <th>
+                    Revisor's Note
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Binary.Filename)
@@ -54,7 +57,7 @@
                         @item.SubmissionDate.ToShortDateString()
                     </td>
                     <td>
-                        @if(item.RevisionDate != null && item.RevisionDate is System.DateTime)
+                        @if (item.RevisionDate != null && item.RevisionDate is System.DateTime)
                         {
                             <span>((System.DateTime) item.RevisionDate).ToShortDateString()</span>
                         }
@@ -73,12 +76,15 @@
                         @Html.DisplayFor(modelItem => item.Assignment.Description)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.RevisorNote)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Binary.Filename)
                     </td>
                     <td class="text-right">
                         @*<a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-pencil"></i></a>*@
                         @*<a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-remove"></i></a>*@
-                        <a title="View @item.DisplayName"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                        <a title="View @item.DisplayName" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-chevron-right"></i></a>
                     </td>
                 </tr>
             }

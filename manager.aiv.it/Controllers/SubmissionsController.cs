@@ -19,7 +19,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Index()
         {
-            var submissions = db.Submissions.Include(s => s.Student).Include(s => s.Revisor).Include(s => s.Assignment).Include(s => s.Binary);
+            var submissions = db.Submissions.Include(s => s.Student).Include(s => s.Revisor).Include(s => s.Assignment);
             return View(submissions.ToList());
         }
 
@@ -50,13 +50,14 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Edit([Bind(Include = "Id,AssignmentId,StudentId,BinaryId,SubmissionDate,RevisionDate,Score,RevisorId")] Submission submission, int assignmentId, int studentId)
+        public ActionResult Edit([Bind(Include = "Id,AssignmentId,StudentId,BinaryId,SubmissionDate,RevisionDate,Score,RevisorId, RevisorNote")] Submission submission, int assignmentId, int studentId)
         {
             if (ModelState.IsValid)
             {
                 Submission existing = db.Submissions.Find(assignmentId, studentId);
                 existing.Revisor = db.Users.Find(Session.GetUser().Id);
                 existing.Score = submission.Score;
+                existing.RevisorNote = submission.RevisorNote;
                 db.Entry(existing).State = EntityState.Modified;
                 db.SaveChanges();
             }
