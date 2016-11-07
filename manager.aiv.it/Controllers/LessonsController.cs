@@ -190,6 +190,7 @@ namespace manager.aiv.it.Controllers
                 hLesson.Class = db.Classes.Find(lesson.ClassId);
                 hLesson.ClassSize = (short)hLesson.Class.Students.Count();
                 hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
+                hLesson.Date = lesson.Date;
 
                 if (double.IsNaN(hLesson.Frequency))
                     hLesson.Frequency = 0.0;

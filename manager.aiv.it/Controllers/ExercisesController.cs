@@ -166,6 +166,7 @@ namespace manager.aiv.it.Controllers
             {
                 Exercise hEdited = db.Exercises.Find(exercise.Id);
 
+
                 hEdited.Topics.Clear();
 
                 if (upload != null)
@@ -201,6 +202,8 @@ namespace manager.aiv.it.Controllers
                 hEdited.Description = exercise.Description;
                 hEdited.CourseId = exercise.CourseId;
                 hEdited.Value = exercise.Value;
+                hEdited.Type = db.ExerciseTypes.Find(exercise.TypeId);
+
 
                 db.Entry(hEdited).State = EntityState.Modified;
                 db.SaveChanges();

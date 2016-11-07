@@ -135,16 +135,20 @@ namespace manager.aiv.it.Controllers
                     hRoles.ForEach(r => hUser.Roles.Add(r));
                 }
 
+                bool bSendNewCredentials = hUser.Password != user.Password || hUser.Email != user.Email;
+
                 hUser.Name = user.Name;
                 hUser.Surname = user.Surname;
                 hUser.Email = user.Email;
                 hUser.Mobile = user.Mobile;
                 hUser.Password = user.Password;
 
-                //Emailer.Send("info@aiv01.it", hUser.Email, "Password Change", "your password has been changed into" + hUser.Password);
-
                 db.Entry(hUser).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (bSendNewCredentials)
+                    Emailer.Send(hUser.Email, "Credentials Change", $"Your login has been changed!{Environment.NewLine}Username: {hUser.Email}{Environment.NewLine}Password: {hUser.Password}{Environment.NewLine}");
+
                 return RedirectToAction("Index");
             }
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);

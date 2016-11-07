@@ -108,14 +108,17 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
 
                 //Send Email to all the users for this class
-                List<User> hUsers = db.Classes.Find(assignment.ClassId).Students.ToList();
+                List<User> hUsers   = db.Classes.Find(assignment.ClassId).Students.ToList();
+
                 Emailer.Send(hUsers, "New Homework starting on " + assignment.UnlockDate.ToShortDateString(), string.Empty);
 
                 return RedirectToAction("Index");
             }
                                     
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
-            ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
+            ViewBag.ClassId     = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
+            ViewBag.ExerciseId  = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
+
+
             return View(assignment);
         }
 
