@@ -860,11 +860,20 @@ form .row.row-submit {
     border-color: #4cae4c;
 }
 
+.card-image .card-quote.lesson-follow-alert.followed *{
+    color: #ffffff;
+}
+
 .card-image .card-quote.lesson-follow-alert.not-followed {
     color: #ffffff;
     background-color: #d9534f;
     border-color: #d43f3a;
 }
+
+.card-image .card-quote.lesson-follow-alert.not-followed *{
+    color: #ffffff;
+}
+
 
 .card-image pre {
     margin-bottom: 0px;
