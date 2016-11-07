@@ -903,9 +903,9 @@ input.image-checkbox[type=checkbox] ~ label
 {
     position:relative;
     background-size:100%;
-    height: 32px;
-    width: 32px;
-    border-radius: 16px;
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
     display:inline-block;
     padding: 0 0 0 0px;
 }
@@ -916,11 +916,12 @@ input.image-checkbox[type=checkbox]:checked ~ label:after
     color: aquamarine;
     position:absolute;
     background: rgba(0, 0, 0, 0.3);
-    height: 32px;
-    width: 32px;
-    border-radius: 16px;
-    padding-left: 8px;
-    padding-top: 6px;
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    padding-left: 20px;
+    padding-top: 12px;
+    font-size: 24px;
 }
 .image-checkbox-description {
 
