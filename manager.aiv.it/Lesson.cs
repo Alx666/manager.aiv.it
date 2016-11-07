@@ -28,6 +28,7 @@ namespace manager.aiv.it
         public string Notes { get; set; }
         public Nullable<short> ClassSize { get; set; }
         public double Frequency { get; set; }
+        public Nullable<int> BinaryId { get; set; }
     
         public virtual Class Class { get; set; }
         public virtual User Teacher { get; set; }
@@ -35,5 +36,6 @@ namespace manager.aiv.it
         public virtual ICollection<User> Students { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual Binary Binary { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace manager.aiv.it
             this.Submissions = new HashSet<Submission>();
             this.Pictures = new HashSet<User>();
             this.Topics = new HashSet<Topic>();
+            this.Lessons = new HashSet<Lesson>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,7 @@ namespace manager.aiv.it
         public virtual ICollection<User> Pictures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }
