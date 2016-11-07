@@ -46,6 +46,7 @@
         <AssociationConnector Association="AivModel.CoveredTopic" />
         <AssociationConnector Association="AivModel.EditionSchedule" />
         <AssociationConnector Association="AivModel.ExerciseTopic" />
+        <AssociationConnector Association="AivModel.FK_Lesson_ToTBinary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

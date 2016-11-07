@@ -186,11 +186,11 @@ namespace manager.aiv.it.Controllers
 
 
                 hLesson.Notes = lesson.Notes;
-                hLesson.Date = lesson.Date;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
                 hLesson.Class = db.Classes.Find(lesson.ClassId);
                 hLesson.ClassSize = (short)hLesson.Class.Students.Count();
                 hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
+                hLesson.Date = lesson.Date;
 
                 if (double.IsNaN(hLesson.Frequency))
                     hLesson.Frequency = 0.0;
@@ -227,7 +227,12 @@ namespace manager.aiv.it.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Lesson lesson = db.Lessons.Find(id);
+
+            if (lesson.BinaryId != null)
+                db.Binaries.Remove(db.Binaries.Find(lesson.BinaryId));
+
             db.Lessons.Remove(lesson);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

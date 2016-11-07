@@ -13,20 +13,24 @@ namespace manager.aiv.it
 {
     public static class Emailer
     {
-        private const int Port          = 25;
+        private const int    Port          = 25;
         private const string Smtp       = "authsmtp.aiv01.it";
         private const string Username   = "amministrazione@aiv01.it";
         private const string Password   = "amministrazioneaiv01";
         private const string Sender     = "didattica@aiv01.it";
         private const string SYSAdMail  = "alxeyesoul@live.com";
+        
 
         private static SmtpClient                        m_hClient;
         private static BlockingCollection<MailMessage>   m_hQueue;
-        private static Thread                            m_hSenderThread;
-        private static int                               m_iSysAdId;
+        private static Thread                            m_hSenderThread;        
+
+        public static EmailerState State        { get; private set; }
 
         static Emailer()
         {
+            State = EmailerState.NotStarted;
+
             Initialize();
 
             m_hQueue                        = new BlockingCollection<MailMessage>();
@@ -36,12 +40,12 @@ namespace manager.aiv.it
 
         private static void Initialize()
         {
-            m_hClient = new SmtpClient(Smtp, Port);
-            m_hClient.EnableSsl = false;
-            m_hClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            m_hClient.DeliveryFormat = SmtpDeliveryFormat.International;
+            m_hClient                       = new SmtpClient(Smtp, Port);
+            m_hClient.EnableSsl             = false;
+            m_hClient.DeliveryMethod        = SmtpDeliveryMethod.Network;
+            m_hClient.DeliveryFormat        = SmtpDeliveryFormat.International;
             m_hClient.UseDefaultCredentials = false;
-            m_hClient.Credentials = new NetworkCredential(Username, Password);
+            m_hClient.Credentials           = new NetworkCredential(Username, Password);
         }
 
         public static void Send(string sRcpt, string sSubject, string sBody)
@@ -55,7 +59,9 @@ namespace manager.aiv.it
         }
 
         private static void ThreadSendRoutine()
-        {            
+        {
+            State = EmailerState.Online;
+
             while (true)
             {
                 MailMessage hCurrent = null;
@@ -99,21 +105,19 @@ namespace manager.aiv.it
                 catch (Exception)
                 {
                     m_hClient.Dispose();
-                    return; // for now terminate the thread
+                    State = EmailerState.Offline;
+                    break;
                 }
             }
         }
+
+
+
+        public enum EmailerState
+        {
+            NotStarted,
+            Online,
+            Offline
+        }
     }
 }
-
-
-
-
-//SmtpClient client = new SmtpClient();
-//client.Port = 25;
-//client.DeliveryMethod = SmtpDeliveryMethod.Network;
-//client.UseDefaultCredentials = false;
-//client.Host = "smtp.google.com";
-//mail.Subject = "this is a test email.";
-//mail.Body = "this is my test email body";
-//client.Send(mail);

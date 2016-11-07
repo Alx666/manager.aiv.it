@@ -14,12 +14,15 @@
     <div class="navbar-inverse navbar-collapse collapse navbar-right pull-right">
         <ul class="nav navbar-nav">
             @{
+
                 User hUser = Session.GetUser();
                 if (hUser != null)
                 {
                     if (!hUser.IsOnly(RoleType.Student))
                     {
-                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Aiv Management", "Index", "Home")</li>
+                        string sHome = Emailer.State == Emailer.EmailerState.Offline ? "Aiv Management (Offline)" : "Aiv Management";
+
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink(sHome, "Index", "Home")</li>
                     }
 
                     if (hUser.IsAdmin)

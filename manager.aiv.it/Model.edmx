@@ -115,6 +115,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="ClassSize" Type="smallint" />
           <Property Name="Frequency" Type="float" Nullable="false" />
+          <Property Name="BinaryId" Type="int" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -438,6 +439,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lesson_ToTBinary">
+          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Lesson_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
@@ -712,6 +725,10 @@
             <End Role="Class" EntitySet="Class" />
             <End Role="Lesson" EntitySet="Lesson" />
           </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToTBinary" Association="Self.FK_Lesson_ToTBinary">
+            <End Role="Binary" EntitySet="Binary" />
+            <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
           <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Lesson" EntitySet="Lesson" />
@@ -899,6 +916,10 @@
             <End Role="Exercise" EntitySet="Exercises" />
             <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToTBinary" Association="AivModel.FK_Lesson_ToTBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Assignment">
           <Key>
@@ -928,6 +949,7 @@
           <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
           <NavigationProperty Name="Pictures" Relationship="AivModel.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
           <NavigationProperty Name="Topics" Relationship="AivModel.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
+          <NavigationProperty Name="Lessons" Relationship="AivModel.FK_Lesson_ToTBinary" FromRole="Binary" ToRole="Lesson" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -1008,6 +1030,8 @@
           <NavigationProperty Name="Teacher" Relationship="AivModel.FK_Lesson_ToUser" FromRole="Lesson" ToRole="User" />
           <NavigationProperty Name="Students" Relationship="AivModel.Attending" FromRole="Lesson" ToRole="User" />
           <NavigationProperty Name="Topics" Relationship="AivModel.CoveredTopic" FromRole="Lesson" ToRole="Topic" />
+          <Property Name="BinaryId" Type="Int32" />
+          <NavigationProperty Name="Binary" Relationship="AivModel.FK_Lesson_ToTBinary" FromRole="Lesson" ToRole="Binary" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -1381,6 +1405,18 @@
           <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
           <End Type="AivModel.Topic" Role="Topic" Multiplicity="*" />
         </Association>
+        <Association Name="FK_Lesson_ToTBinary">
+          <End Type="AivModel.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1464,6 +1500,7 @@
           <EntitySetMapping Name="Lessons">
             <EntityTypeMapping TypeName="AivModel.Lesson">
               <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
                 <ScalarProperty Name="Frequency" ColumnName="Frequency" />
                 <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
