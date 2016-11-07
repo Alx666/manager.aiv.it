@@ -46,6 +46,19 @@
                                     <h4 class="section-title">Base Data</h4>
 
                                     <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12" layout-align="end">
+                                            @if (Session.GetUser().IsDirector)
+                                            {
+                                                <div class="text-right">
+                                                    <a class="btn btn-primary" href="@Url.Action("ResetCredentials", new { id = Model.Id })">
+                                                        <span>Reset Credentials</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col col-xs-6">
                                             <span class="bold">
                                                 Class
@@ -94,17 +107,6 @@
                         </div>
                     </div>
                 </div>
-
-                @if (Session.GetUser().IsDirector)
-                {
-                    <div class="col col-xs-4 col-sm-2">
-                        <div class="text-right">
-                            <a class="btn btn-primary" href="@Url.Action("ResetCredentials", new { id = Model.Id })">
-                                <span>Reset Credentials</span>
-                            </a>
-                        </div>
-                    </div>
-                }
 
 
                 <div class="panel-group" id="classDetailPanels" role="tablist" aria-multiselectable="true">
