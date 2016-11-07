@@ -186,7 +186,6 @@ namespace manager.aiv.it.Controllers
 
 
                 hLesson.Notes = lesson.Notes;
-                hLesson.Date = lesson.Date;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
                 hLesson.Class = db.Classes.Find(lesson.ClassId);
                 hLesson.ClassSize = (short)hLesson.Class.Students.Count();
