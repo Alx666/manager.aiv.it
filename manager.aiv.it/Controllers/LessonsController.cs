@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using manager.aiv.it;
 using manager.aiv.it.Models;
+using System.Text.RegularExpressions;
 
 namespace manager.aiv.it.Controllers
 {
@@ -95,7 +96,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher)]
-        public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students)
+        public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {                
@@ -107,7 +108,33 @@ namespace manager.aiv.it.Controllers
                     lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
                     lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
-                
+
+                if (upload != null)
+                {
+                    Binary binaryFile = new Binary();
+                    byte[] fileBytes = new byte[upload.InputStream.Length];
+                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                    binaryFile.Data = fileBytes;
+
+                    string binaryPath = upload.FileName;
+                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                    string filename = pathParts[pathParts.Length - 1];
+                    binaryFile.Filename = filename;
+
+                    db.Binaries.Add(binaryFile);
+                    db.SaveChanges();
+                    /* 
+                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                    */
+                    Binary saved = db.Binaries.Find(binaryFile.Id);
+                    if (saved != null)
+                    {
+                        lesson.Binary = saved;
+                        lesson.BinaryId = saved.Id;
+                    }
+                }
+
 
                 db.Lessons.Add(lesson);
                 db.SaveChanges();
@@ -164,7 +191,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher, RoleType.Secretary)]
-        public ActionResult Edit([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> students, List<int> topics)
+        public ActionResult Edit([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> students, List<int> topics, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
@@ -184,6 +211,31 @@ namespace manager.aiv.it.Controllers
                     hTopics.ToList().ForEach(t => hLesson.Topics.Add(t));
                 }
 
+                if (upload != null)
+                {
+                    Binary binaryFile = new Binary();
+                    byte[] fileBytes = new byte[upload.InputStream.Length];
+                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                    binaryFile.Data = fileBytes;
+
+                    string binaryPath = upload.FileName;
+                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                    string filename = pathParts[pathParts.Length - 1];
+                    binaryFile.Filename = filename;
+
+                    db.Binaries.Add(binaryFile);
+                    db.SaveChanges();
+                    /* 
+                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                    */
+                    Binary saved = db.Binaries.Find(binaryFile.Id);
+                    if (saved != null)
+                    {
+                        lesson.Binary = saved;
+                        lesson.BinaryId = saved.Id;
+                    }
+                }
 
                 hLesson.Notes = lesson.Notes;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
@@ -202,6 +254,15 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
             ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
             return View(lesson);
+        }
+        
+        public FileContentResult Download(int BinaryId)
+        {
+            Binary foundFile = db.Binaries.Find(BinaryId);
+            if (foundFile != null)
+                return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+
+            return null;
         }
 
         // GET: Lessons/Delete/5

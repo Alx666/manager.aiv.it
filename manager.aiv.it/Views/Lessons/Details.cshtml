@@ -34,6 +34,25 @@
             <div class="col col-xs-12">
 
                 <div class="thumbnail">
+
+                    <div class="card-image">
+
+                        @if (Model.Binary != null)
+                        {
+                            <div class="card-quote text-center">
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("Download", new { BinaryId = Model.BinaryId })">
+                                    <i class="glyphicon glyphicon-floppy-save"></i>
+                                    <span><strong>Download</strong></span>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-quote text-center">
+                                No Available Download
+                            </div>
+                        }
+                    </div>
                     <div class="card-content">
                         <div class="row">
                             <div class="col-xs-12">
