@@ -227,7 +227,12 @@ namespace manager.aiv.it.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Lesson lesson = db.Lessons.Find(id);
+
+            if (lesson.BinaryId != null)
+                db.Binaries.Remove(db.Binaries.Find(lesson.BinaryId));
+
             db.Lessons.Remove(lesson);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
