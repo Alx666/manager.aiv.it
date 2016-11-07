@@ -132,7 +132,8 @@ namespace manager.aiv.it.Controllers
                 Emailer.Send(u.Email, "Credentials Change", $"Your login has been changed!{Environment.NewLine}Username: {u.Email}{Environment.NewLine}Password: {u.Password}{Environment.NewLine}");
             });
 
-            return RedirectToAction("Index");            
+            return RedirectToAction("Index");
+            
         }
 
 
