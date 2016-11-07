@@ -35,6 +35,21 @@ namespace manager.aiv.it
         }
 
         [DisplayFormat(NullDisplayText = "-")]
+        [DisplayName("Frequency")]
+        public float? DisplayFrequencyPercent
+        {
+            get
+            {
+                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue)
+                {
+                    return ((float)DisplayPresences / (float)DisplayTotalLessons) * 100.0f;
+                }
+                else
+                    return null;
+            }
+        }
+
+        [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Missed Lessons")]
         //public List<Lesson> MissedLessons => this.Class.Lessons.Where(l => !l.Students.Contains(this) && l.Date <= DateTime.Now).ToList();
         public List<Lesson> MissedLessons

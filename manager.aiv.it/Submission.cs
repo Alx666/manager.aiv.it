@@ -21,6 +21,7 @@ namespace manager.aiv.it
         public Nullable<System.DateTime> RevisionDate { get; set; }
         public Nullable<byte> Score { get; set; }
         public Nullable<int> RevisorId { get; set; }
+        public string RevisorNote { get; set; }
     
         public virtual Assignment Assignment { get; set; }
         public virtual Binary Binary { get; set; }

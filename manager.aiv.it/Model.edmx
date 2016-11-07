@@ -154,6 +154,7 @@
           <Property Name="RevisionDate" Type="date" />
           <Property Name="Score" Type="tinyint" />
           <Property Name="RevisorId" Type="int" />
+          <Property Name="RevisorNote" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Teaching">
           <Key>
@@ -526,7 +527,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Table_ToAssignment">
-          <End Role="Assignment" Type="Self.Assignment" Multiplicity="1" />
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Assignment">
@@ -1069,6 +1072,7 @@
           <NavigationProperty Name="Binary" Relationship="AivModel.FK_Table_Binary" FromRole="Submission" ToRole="Binary" />
           <NavigationProperty Name="Student" Relationship="AivModel.FK_Table_ToStudent" FromRole="Submission" ToRole="User" />
           <NavigationProperty Name="Revisor" Relationship="AivModel.FK_Table_ToTeacher" FromRole="Submission" ToRole="User" />
+          <Property Name="RevisorNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1533,6 +1537,7 @@
           <EntitySetMapping Name="Submissions">
             <EntityTypeMapping TypeName="AivModel.Submission">
               <MappingFragment StoreEntitySet="Submission">
+                <ScalarProperty Name="RevisorNote" ColumnName="RevisorNote" />
                 <ScalarProperty Name="RevisorId" ColumnName="RevisorId" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="RevisionDate" ColumnName="RevisionDate" />

@@ -130,16 +130,16 @@ namespace manager.aiv.it.Controllers
         {
             User hUser = db.Users.Find(Session.GetUser().Id);
 
-            var hClasses = from hClass in db.Classes
-                           where hClass.Edition.DateEnd > DateTime.Now
-                           from hCourse in db.Courses
-                           where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) && hClass.Edition.Course == hCourse
-                           select hClass;
+            var hClasses    = from hClass in db.Classes
+                              where hClass.Edition.DateEnd > DateTime.Now
+                              from hCourse in db.Courses
+                              where hCourse.Teachers.Select(t => t.Id).Contains(hUser.Id) && hClass.Edition.Course == hCourse
+                              select hClass;
 
 
-            var hExercises = from hExercise in db.Exercises
-                             where hExercise.Course.Teachers.Select(t => t.Id).Contains(hUser.Id)
-                             select hExercise;
+            var hExercises  = from hExercise in db.Exercises
+                              where hExercise.Course.Teachers.Select(t => t.Id).Contains(hUser.Id)
+                              select hExercise;
 
 
             ViewBag.ClassId = new SelectList(hClasses, "Id", "DisplayName");
