@@ -99,9 +99,9 @@ namespace manager.aiv.it.Controllers
             {
                 if (!string.IsNullOrEmpty(user.Email))
                 {
-                    User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email && u.Id != user.Id).FirstOrDefault();
+                    User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-                    if (hAlreadyPresent != null)
+                    if (Session.GetUser().Id != hAlreadyPresent.Id)
                         throw new HttpException("User Already Present");
                 }
 
@@ -163,9 +163,9 @@ namespace manager.aiv.it.Controllers
         {
             if (!string.IsNullOrEmpty(user.Email))
             {
-                User hAlreadyPresent = db.Users.Where(u => u.Email == user.Email && u.Id != user.Id).FirstOrDefault();
+                User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-                if (hAlreadyPresent != null)
+                if (Session.GetUser().Id != hAlreadyPresent.Id)
                     throw new HttpException("User Already Present");
             }
 
