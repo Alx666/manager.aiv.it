@@ -39,9 +39,11 @@ namespace manager.aiv.it
         [DisplayName("Frequency")]
         public float? DisplayFrequencyPercent
         {
+
             get
             {
-                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue)
+
+                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue && DisplayTotalLessons.Value > 0f)
                 {
                     return ((float)DisplayPresences / (float)DisplayTotalLessons) * 100.0f;
                 }

@@ -57,7 +57,7 @@
 
                                                 float? fPercent = item.DisplayFrequencyPercent;
 
-                                                if (fPercent.HasValue)
+                                                if (fPercent.HasValue && fPercent.Value != 0f)
                                                 {
                                                     sStatText   = $"{item.DisplayFrequency} ({item.DisplayFrequencyPercent.Value.ToString("F1")}%)";
                                                     sColor      = fPercent.Value >= 70f ? "green" : "red";

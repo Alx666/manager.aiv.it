@@ -30,7 +30,7 @@ namespace manager.aiv.it.Controllers
 
             if (option == "enlisted")
             {
-                model = from s in model where s.ClassId != null select s;
+                model = from s in model where s.ClassId != null orderby s.ClassId select s;
             }
             else if (option == "notes")
             {

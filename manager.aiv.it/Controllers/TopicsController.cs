@@ -15,6 +15,7 @@ namespace manager.aiv.it.Controllers
         private AivEntities db = new AivEntities();
 
         // GET: Topics
+        [CustomAuthorize(RoleType.Teacher, RoleType.Director)]
         public ActionResult Index(string search)
         {
             var model = db.Topics.OrderBy(t => t.Name);
@@ -28,6 +29,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Topics/Details/5        
+        [CustomAuthorize(RoleType.Teacher, RoleType.Director)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -155,6 +157,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Topics/Delete/5
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -172,6 +175,7 @@ namespace manager.aiv.it.Controllers
         // POST: Topics/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult DeleteConfirmed(int id)
         {
             Topic topic = db.Topics.Find(id);
