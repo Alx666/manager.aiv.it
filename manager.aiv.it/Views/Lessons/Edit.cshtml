@@ -16,10 +16,14 @@
     <div class="row row-title">
         <div class="col col-xs-4 col-sm-2">
             <div class="text-left">
-                <a class="btn btn-default" href='@Url.Action("Index")'>
-                    <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
-                    <span>Back</span>
-                </a>
+
+                @if (!Session.GetUser().IsOnly(RoleType.Secretary))
+                {
+                    <a class="btn btn-default" href='@Url.Action("Index")'>
+                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                        <span>Back</span>
+                    </a>
+                }
             </div>
         </div>
         <div class="col col-xs-4 col-sm-8">
@@ -58,7 +62,7 @@
                                         <div class="col-md-10">
                                             @if (Session.GetUser().IsOnly(RoleType.Secretary))
                                             {
-                                                @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Edit?id=" + Model.Id + "&classid='.concat(this.value);", @readonly = "readonly", @disabled = "disabled" })
+                                                @Html.DropDownList("ClassId", null, htmlAttributes: new { @class = "form-control", @onchange = "location.href = '/Lessons/Edit?id=" + Model.Id + "&classid='.concat(this.value);", @readonly = "readonly" })
                                             }
                                             else
                                             {
@@ -76,7 +80,7 @@
 
                                             @if (Session.GetUser().IsOnly(RoleType.Secretary))
                                             {
-                                                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                                                @Html.DropDownList("TeacherId", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
                                             }
                                             else
                                             {
@@ -93,7 +97,7 @@
 
                                             @if (Session.GetUser().IsOnly(RoleType.Secretary))
                                             {
-                                                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = Model.Date.ToString("yyyy-MM-dd"), @readonly = "readonly", @disabled = "disabled" } })
+                                                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = Model.Date.ToString("yyyy-MM-dd"), @readonly = "readonly" } })
                                             }
                                             else
                                             {
@@ -110,7 +114,7 @@
 
                                             @if (Session.GetUser().IsOnly(RoleType.Secretary))
                                             {
-                                                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" } })
+                                                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                             }
                                             else
                                             {
@@ -127,7 +131,7 @@
 
                                             @if (Session.GetUser().IsOnly(RoleType.Secretary))
                                             {
-                                                @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", @readonly = "readonly", @disabled = "disabled" })
+                                                @Html.ListBox("topics", null, htmlAttributes: new { @class = "form-control", @style = "min-height:150px;", @readonly = "readonly" })
                                             }
                                             else
                                             {
@@ -147,6 +151,8 @@
                                         </div>
                                     </div>
 
+                                    @if (Session.GetUser().IsTeacher)
+                                    {
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.BinaryId, "Change File", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-12">
@@ -168,6 +174,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    }
                                 </div>
 
                             </section>

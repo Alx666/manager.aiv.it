@@ -80,7 +80,6 @@
 
 @if (Session.GetUser().IsSecretary)
 {
-
     <div class="row row-title title-margin">
         <div class="col-md-10 col-xs-6">
             <span class="title">Lessons Presence</span>
@@ -116,7 +115,7 @@
                                 @Html.DisplayFor(model => item.Teacher.DisplayName)
                             </td>
                             <td class="text-right table-actions">
-                                <a title="View @item.DisplayName" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                                <a title="View @item.DisplayName" class="btn btn-default btn-sm action-button" href="@Url.Action("Edit", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-pencil" style="color:dodgerblue;"></i></a>
                             </td>
                         </tr>
                     }
