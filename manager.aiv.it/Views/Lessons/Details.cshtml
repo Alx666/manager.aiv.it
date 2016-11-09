@@ -8,25 +8,32 @@
 
     <div class="col-xs-12">
         <div class="row row-title">
-            <div class="col col-xs-4 col-sm-2">
-                <div class="text-left">
-                    <a class="btn btn-default" href='@Url.Action("Index")'>
-                        <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
-                        <span>Back</span>
-                    </a>
+                <div class="col col-xs-4 col-sm-2">
+                    @if (!Session.GetUser().IsOnly(RoleType.Student))
+                    {
+                        <div class="text-left">
+                            <a class="btn btn-default" href='@Url.Action("Index")'>
+                                <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
+                                <span>Back</span>
+                            </a>
+                        </div>
+                    }
                 </div>
-            </div>
             <div class="col col-xs-4 col-sm-8">
                 <span class="title">@Model.DisplayName</span>
             </div>
-            <div class="col col-xs-4 col-sm-2">
-                <div class="text-right">
-                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
-                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
-                        <span>Edit</span>
-                    </a>
+
+            @if (!Session.GetUser().IsOnly(RoleType.Student))
+            {
+                <div class="col col-xs-4 col-sm-2">
+                    <div class="text-right">
+                        <a class="btn btn-primary" href="@Url.Action("Edit", new { id = Model.Id })">
+                            <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                            <span>Edit</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         <div class="row">
@@ -168,13 +175,16 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="card-footer">
-                                                    <div class="row">
-                                                        <div class="col-sm-12 text-center">
-                                                            <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Students", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                                @if (!Session.GetUser().IsOnly(RoleType.Student))
+                                                {
+                                                    <div class="card-footer">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 text-center">
+                                                                <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Students", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i> Details</a>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                }
                                             </div>
                                         </div>
                                     }

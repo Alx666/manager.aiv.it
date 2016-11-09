@@ -29,7 +29,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Topics/Details/5        
-        [CustomAuthorize(RoleType.Teacher, RoleType.Director)]
+        //[CustomAuthorize(RoleType.Teacher, RoleType.Director)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -132,6 +132,15 @@ namespace manager.aiv.it.Controllers
                 if (upload != null)
                 {
                     Binary binary = Binary.CreateFrom(upload, true);
+
+                    //RIMOZIONE SICURA
+                    Binary hPrevious = db.Binaries.Find(hTopic.Binary.Id);
+                    if(hPrevious != null)
+                    {
+                        db.Binaries.Remove(hPrevious);
+                    }
+                    //RIMOZIONE SICURA
+
                     db.Binaries.Add(binary);
                     db.SaveChanges();
 
@@ -179,6 +188,15 @@ namespace manager.aiv.it.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Topic topic = db.Topics.Find(id);
+
+            //RIMOZIONE SICURA
+            Binary hPrevious = db.Binaries.Find(topic.Binary.Id);
+            if (hPrevious != null)
+            {
+                db.Binaries.Remove(hPrevious);
+            }
+            //RIMOZIONE SICURA
+
             db.Topics.Remove(topic);
             db.SaveChanges();
             return RedirectToAction("Index");
