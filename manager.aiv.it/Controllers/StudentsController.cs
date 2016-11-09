@@ -93,7 +93,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Secretary)]
-        public ActionResult Create([Bind(Include = "Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,MissedLessons")] User user)
+        public ActionResult Create([Bind(Include = "Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,MissedLessons,City,Address,Code")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -159,13 +159,13 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId,City,Address,Code")] User user)
         {
             if (!string.IsNullOrEmpty(user.Email))
             {
                 User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-                if (Session.GetUser().Id != hAlreadyPresent.Id)
+                if (user.Id != hAlreadyPresent.Id)
                     throw new HttpException("User Already Present");
             }
 
@@ -185,6 +185,9 @@ namespace manager.aiv.it.Controllers
             hToEdit.Password = user.Password;
             hToEdit.Mobile = user.Mobile;
             hToEdit.Class = db.Classes.Find(user.ClassId);
+            hToEdit.City = user.City;
+            hToEdit.Address = user.Address;
+            hToEdit.Code = user.Code;
 
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");

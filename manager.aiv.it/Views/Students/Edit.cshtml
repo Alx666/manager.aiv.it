@@ -120,6 +120,39 @@
 
                                         <div class="row">
                                             <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.City)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Address)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
+                                                @Html.LabelFor(model => model.Code)
+                                            </div>
+                                            <div class="col col-xs-6">
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-md-2 col-xs-6">
                                                 @Html.LabelFor(model => model.Class)
                                             </div>
                                             <div class="col col-xs-6">
@@ -129,6 +162,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     </section>
                                 </div>
                             </div>

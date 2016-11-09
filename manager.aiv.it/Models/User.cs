@@ -139,6 +139,18 @@ namespace manager.aiv.it
         [DisplayFormat(NullDisplayText = "-")]
         [StringLength(50)]
         string Mobile { get; }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [StringLength(50)]
+        string City { get; }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [StringLength(50)]
+        string Address { get; }
+
+        [DisplayFormat(NullDisplayText = "-")]
+        [StringLength(50)]
+        string Code { get; }
     }
 
     public static class SessionExtensions
