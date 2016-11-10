@@ -160,8 +160,10 @@
                                                 <div class="col-md-6">
                                                     <script type="text/javascript">
                                                         var tempFilename = "";
-                                                        var updateFilename = function (input) {
-                                                            if (input.files && input.files[0]) {
+                                                        var updateFilename = function (input)
+                                                        {
+                                                            if (input.files && input.files[0])
+                                                            {
                                                                 document.getElementById("uploadLabel").innerHTML = input.files[0].name;
                                                             }
                                                         };
@@ -170,6 +172,15 @@
                                                     <input type="file" id="MyUpload" name="upload" class="inputfile" onchange="updateFilename(this)" />
                                                     <label id="uploadLabel" class="btn btn-danger" for="MyUpload">Choose a file</label>
                                                     @Html.ValidationMessageFor(model => model.BinaryId, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    @if (Model.Binary != null && Model.BinaryId != null)
+                                                    {
+                                                        <div class="row">
+                                                            <strong>Current file &nbsp;</strong>
+                                                            @Html.ActionLink(Model.Binary.Filename, "Download", new { BinaryId = Model.BinaryId })
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
