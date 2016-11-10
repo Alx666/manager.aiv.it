@@ -111,32 +111,40 @@ namespace manager.aiv.it.Controllers
                     lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
                     lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
-
                 if (upload != null)
                 {
-                    Binary binaryFile = new Binary();
-                    byte[] fileBytes = new byte[upload.InputStream.Length];
-                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
-                    binaryFile.Data = fileBytes;
+                    Binary binary = Binary.CreateFrom(upload, true);
 
-                    string binaryPath = upload.FileName;
-                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
-                    string filename = pathParts[pathParts.Length - 1];
-                    binaryFile.Filename = filename;
-
-                    db.Binaries.Add(binaryFile);
+                    db.Binaries.Add(binary);
                     db.SaveChanges();
-                    /* 
-                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
-                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
-                    */
-                    Binary saved = db.Binaries.Find(binaryFile.Id);
-                    if (saved != null)
-                    {
-                        lesson.Binary = saved;
-                        lesson.BinaryId = saved.Id;
-                    }
+
+                    lesson.BinaryId = binary.Id;
                 }
+                //if (upload != null)
+                //{
+                //    Binary binaryFile = new Binary();
+                //    byte[] fileBytes = new byte[upload.InputStream.Length];
+                //    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                //    binaryFile.Data = fileBytes;
+
+                //    string binaryPath = upload.FileName;
+                //    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                //    string filename = pathParts[pathParts.Length - 1];
+                //    binaryFile.Filename = filename;
+
+                //    db.Binaries.Add(binaryFile);
+                //    db.SaveChanges();
+                //    /* 
+                //    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                //    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                //    */
+                //    Binary saved = db.Binaries.Find(binaryFile.Id);
+                //    if (saved != null)
+                //    {
+                //        lesson.Binary = saved;
+                //        lesson.BinaryId = saved.Id;
+                //    }
+                //}
 
 
                 db.Lessons.Add(lesson);
