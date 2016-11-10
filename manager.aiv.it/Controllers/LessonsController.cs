@@ -46,8 +46,8 @@ namespace manager.aiv.it.Controllers
                 return HttpNotFound();
             }
 
-            //if (lesson.BinaryId != null)
-            //    lesson.Binary = db.Binaries.Find(lesson.BinaryId);
+            if (lesson.BinaryId != null)
+                lesson.Binary = db.Binaries.Find(lesson.BinaryId);
             return View(lesson);
         }
 
