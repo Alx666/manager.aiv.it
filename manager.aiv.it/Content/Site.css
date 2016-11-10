@@ -665,7 +665,6 @@ fieldset[disabled] .btn-dark.active {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  overflow-x: auto;
 }
 
 .row > [class*='col-'] {
@@ -807,7 +806,6 @@ form .row.row-submit {
     display: -webkit-box;
     display: -webkit-flex;
     min-height: 100%;
-    height: 100%;
     flex-direction: column;
 }
 
@@ -988,6 +986,15 @@ form.filters > .row{
     min-width: 100%;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.panel-collapse .panel-body .thumbnail .card-content > .row {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.panel-collapse .panel-body .thumbnail .card-content > .row > *[class*='col-'] {
+    overflow-y: hidden;
 }
 
 .panel-collapse .card,
