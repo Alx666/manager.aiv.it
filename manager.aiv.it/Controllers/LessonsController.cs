@@ -45,6 +45,9 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
+
+            //if (lesson.BinaryId != null)
+            //    lesson.Binary = db.Binaries.Find(lesson.BinaryId);
             return View(lesson);
         }
 
@@ -210,32 +213,49 @@ namespace manager.aiv.it.Controllers
                     var hTopics = topics.Select(t => db.Topics.Find(t));
                     hTopics.ToList().ForEach(t => hLesson.Topics.Add(t));
                 }
-
+                
                 if (upload != null)
                 {
-                    Binary binaryFile = new Binary();
-                    byte[] fileBytes = new byte[upload.InputStream.Length];
-                    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
-                    binaryFile.Data = fileBytes;
+                    Binary binary = Binary.CreateFrom(upload, true);
 
-                    string binaryPath = upload.FileName;
-                    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
-                    string filename = pathParts[pathParts.Length - 1];
-                    binaryFile.Filename = filename;
-
-                    db.Binaries.Add(binaryFile);
-                    db.SaveChanges();
-                    /* 
-                    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
-                    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
-                    */
-                    Binary saved = db.Binaries.Find(binaryFile.Id);
-                    if (saved != null)
+                    //RIMOZIONE SICURA
+                    Binary hPrevious = db.Binaries.Find(hLesson.BinaryId);
+                    if (hPrevious != null)
                     {
-                        lesson.Binary = saved;
-                        lesson.BinaryId = saved.Id;
+                        db.Binaries.Remove(hPrevious);
                     }
+                    //RIMOZIONE SICURA
+
+                    db.Binaries.Add(binary);
+                    db.SaveChanges();
+
+                    hLesson.BinaryId = binary.Id;
                 }
+                //if (upload != null)
+                //{
+                //    Binary binaryFile = new Binary();
+                //    byte[] fileBytes = new byte[upload.InputStream.Length];
+                //    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
+                //    binaryFile.Data = fileBytes;
+
+                //    string binaryPath = upload.FileName;
+                //    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
+                //    string filename = pathParts[pathParts.Length - 1];
+                //    binaryFile.Filename = filename;
+
+                //    db.Binaries.Add(binaryFile);
+                //    db.SaveChanges();
+                //    /* 
+                //    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
+                //    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
+                //    */
+                //    Binary saved = db.Binaries.Find(binaryFile.Id);
+                //    if (saved != null)
+                //    {
+                //        lesson.Binary = saved;
+                //        lesson.BinaryId = saved.Id;
+                //    }
+                //}
 
                 hLesson.Notes = lesson.Notes;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
