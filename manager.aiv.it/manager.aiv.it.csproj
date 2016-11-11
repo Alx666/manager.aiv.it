@@ -195,6 +195,7 @@
     <Compile Include="Controllers\AssignmentsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -433,6 +434,7 @@
     <Content Include="Views\Classes\_PartialDetailStudents.cshtml" />
     <Content Include="Views\Classes\_PartialDetailLessons.cshtml" />
     <Content Include="Views\Users\_PartialUserRoles.cshtml" />
+    <Content Include="Views\Developer\ClearBinaries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

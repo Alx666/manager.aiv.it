@@ -15,6 +15,7 @@ namespace manager.aiv.it
         Bursar = 32,
         Manager = 64,
         Admin = 128,
+        Developer = 256
     }
 
 

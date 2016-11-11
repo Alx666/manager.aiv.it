@@ -189,13 +189,9 @@ namespace manager.aiv.it.Controllers
         {
             Topic topic = db.Topics.Find(id);
 
-            //RIMOZIONE SICURA
-            Binary hPrevious = db.Binaries.Find(topic.Binary.Id);
-            if (hPrevious != null)
-            {
-                db.Binaries.Remove(hPrevious);
-            }
-            //RIMOZIONE SICURA
+            if(topic.BinaryId.HasValue)
+                db.Binaries.Remove(db.Binaries.Find(topic.BinaryId));
+            
 
             db.Topics.Remove(topic);
             db.SaveChanges();

@@ -32,7 +32,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Data" Type="varbinary(max)" Nullable="false" />
-          <Property Name="Filename" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Filename" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -306,20 +306,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Exercise_ToBinary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Exercise">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Exercise_ToCourse">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Exercise" Type="Self.Exercise" Multiplicity="*" />
@@ -440,18 +426,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Lesson_ToTBinary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Lesson">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Lesson_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
@@ -511,18 +485,6 @@
             </Principal>
             <Dependent Role="Roles">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Table_Binary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
-          <End Role="Submission" Type="Self.Submission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Submission">
-              <PropertyRef Name="BinaryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -588,18 +550,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Topic_ToBinary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
-          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Topic">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Topic_ToCourse">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
@@ -609,18 +559,6 @@
             </Principal>
             <Dependent Role="Topic">
               <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_ToBinary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="PictureId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -688,10 +626,6 @@
             <End Role="Topic" EntitySet="Topic" />
             <End Role="EditionSchedule" EntitySet="EditionSchedule" />
           </AssociationSet>
-          <AssociationSet Name="FK_Exercise_ToBinary" Association="Self.FK_Exercise_ToBinary">
-            <End Role="Binary" EntitySet="Binary" />
-            <End Role="Exercise" EntitySet="Exercise" />
-          </AssociationSet>
           <AssociationSet Name="FK_Exercise_ToCourse" Association="Self.FK_Exercise_ToCourse">
             <End Role="Course" EntitySet="Course" />
             <End Role="Exercise" EntitySet="Exercise" />
@@ -728,10 +662,6 @@
             <End Role="Class" EntitySet="Class" />
             <End Role="Lesson" EntitySet="Lesson" />
           </AssociationSet>
-          <AssociationSet Name="FK_Lesson_ToTBinary" Association="Self.FK_Lesson_ToTBinary">
-            <End Role="Binary" EntitySet="Binary" />
-            <End Role="Lesson" EntitySet="Lesson" />
-          </AssociationSet>
           <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Lesson" EntitySet="Lesson" />
@@ -751,10 +681,6 @@
           <AssociationSet Name="FK_Roles_ToUser" Association="Self.FK_Roles_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Roles" EntitySet="Roles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Table_Binary" Association="Self.FK_Table_Binary">
-            <End Role="Binary" EntitySet="Binary" />
-            <End Role="Submission" EntitySet="Submission" />
           </AssociationSet>
           <AssociationSet Name="FK_Table_ToAssignment" Association="Self.FK_Table_ToAssignment">
             <End Role="Assignment" EntitySet="Assignment" />
@@ -776,17 +702,9 @@
             <End Role="User" EntitySet="User" />
             <End Role="Teaching" EntitySet="Teaching" />
           </AssociationSet>
-          <AssociationSet Name="FK_Topic_ToBinary" Association="Self.FK_Topic_ToBinary">
-            <End Role="Binary" EntitySet="Binary" />
-            <End Role="Topic" EntitySet="Topic" />
-          </AssociationSet>
           <AssociationSet Name="FK_Topic_ToCourse" Association="Self.FK_Topic_ToCourse">
             <End Role="Course" EntitySet="Course" />
             <End Role="Topic" EntitySet="Topic" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_ToBinary" Association="Self.FK_User_ToBinary">
-            <End Role="Binary" EntitySet="Binary" />
-            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_ToClass" Association="Self.FK_User_ToClass">
             <End Role="Class" EntitySet="Class" />
@@ -947,7 +865,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="Filename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Filename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
           <NavigationProperty Name="Submissions" Relationship="AivModel.FK_Table_Binary" FromRole="Binary" ToRole="Submission" />
           <NavigationProperty Name="Pictures" Relationship="AivModel.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
