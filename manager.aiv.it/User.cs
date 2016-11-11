@@ -24,7 +24,7 @@ namespace manager.aiv.it
             this.NotesReceived = new HashSet<Note>();
             this.SubmissionsCreated = new HashSet<Submission>();
             this.SubmissionsReviewed = new HashSet<Submission>();
-            this.LessonFollowed = new HashSet<Lesson>();
+            this.LessonsFollowed = new HashSet<Lesson>();
             this.Roles = new HashSet<Role>();
             this.Courses = new HashSet<Course>();
         }
@@ -59,7 +59,7 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Submission> SubmissionsReviewed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> LessonFollowed { get; set; }
+        public virtual ICollection<Lesson> LessonsFollowed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

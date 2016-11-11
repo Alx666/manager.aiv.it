@@ -1299,7 +1299,7 @@
           <NavigationProperty Name="NotesReceived" Relationship="AivModel.FK_Note_Student" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="SubmissionsCreated" Relationship="AivModel.FK_Table_ToStudent" FromRole="User" ToRole="Submission" />
           <NavigationProperty Name="SubmissionsReviewed" Relationship="AivModel.FK_Table_ToTeacher" FromRole="User" ToRole="Submission" />
-          <NavigationProperty Name="LessonFollowed" Relationship="AivModel.Attending" FromRole="User" ToRole="Lesson" />
+          <NavigationProperty Name="LessonsFollowed" Relationship="AivModel.Attending" FromRole="User" ToRole="Lesson" />
           <NavigationProperty Name="Roles" Relationship="AivModel.Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Courses" Relationship="AivModel.Teaching" FromRole="User" ToRole="Course" />
         </EntityType>

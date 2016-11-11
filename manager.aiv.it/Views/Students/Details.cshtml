@@ -98,13 +98,13 @@
                                                             <input type="hidden" name="userId" value="@Model.Id" />
                                                             <input type="file" id="uploadPicture" name="picture" class="inputfile" onchange="fileChanged(this)" />
                                                             <label style="width:100%;" id="uploadLabel" class="btn btn-danger" for="uploadPicture">Change/Upload Picture</label>
-                                                            @Html.ValidationMessageFor(model => model.PictureId, "", new { @class = "text-danger" })
+                                                            @Html.ValidationMessageFor(model => model.BinaryId, "", new { @class = "text-danger" })
                                                         }
                                                     }
                                                     else if (Model.Picture != null)
                                                     {
                                                         <div class="card-quote text-center">
-                                                            <a class="btn btn-primary btn-sm" href="@Url.Action("DownloadPicture", new { PictureId = Model.PictureId })">
+                                                            <a class="btn btn-primary btn-sm" href="@Url.Action("DownloadPicture", new { BinaryId = Model.BinaryId })">
                                                                 <i class="glyphicon glyphicon-floppy-save"></i>
                                                                 <span><strong>Download</strong></span>
                                                             </a>
