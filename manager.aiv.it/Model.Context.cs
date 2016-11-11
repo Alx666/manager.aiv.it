@@ -36,7 +36,7 @@ namespace manager.aiv.it
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Submission> Submissions { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

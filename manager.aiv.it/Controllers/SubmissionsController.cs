@@ -124,7 +124,7 @@ namespace manager.aiv.it.Controllers
                 else
                     return Redirect(Request.UrlReferrer.ToString());
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }            

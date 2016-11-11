@@ -37,8 +37,8 @@ namespace manager.aiv.it.Controllers
             Lesson lesson = db.Lessons.Find(id);
             foreach(var student in lesson.Students)
             {
-                if (student.PictureId != null)
-                    student.Picture = db.Binaries.Find(student.PictureId);
+                if (student.BinaryId != null)
+                    student.Picture = db.Binaries.Find(student.BinaryId);
             }
 
             if (lesson == null)

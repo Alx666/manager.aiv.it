@@ -16,7 +16,7 @@ namespace manager.aiv.it
     {
         public int AssignmentId { get; set; }
         public int StudentId { get; set; }
-        public Nullable<int> BinaryId { get; set; }
+        public int BinaryId { get; set; }
         public System.DateTime SubmissionDate { get; set; }
         public Nullable<System.DateTime> RevisionDate { get; set; }
         public Nullable<byte> Score { get; set; }

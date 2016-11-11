@@ -111,7 +111,6 @@ namespace manager.aiv.it
 
             m_hRoles = hRoles;
         }
-
     }
 
     public interface IUserMetaData
@@ -151,6 +150,9 @@ namespace manager.aiv.it
         [DisplayFormat(NullDisplayText = "-")]
         [StringLength(50)]
         string Code { get; }
+
+
+        
     }
 
     public static class SessionExtensions

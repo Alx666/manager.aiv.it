@@ -69,9 +69,9 @@ namespace manager.aiv.it.Controllers
             }
            
 
-            if(user.PictureId != null)
+            if(user.BinaryId != null)
             {
-                Binary picture = db.Binaries.Find(user.PictureId);
+                Binary picture = db.Binaries.Find(user.BinaryId);
                 user.Picture = picture; // TODO: potrebbe essere null?
             }
 
@@ -144,9 +144,9 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
 
-            if (user.PictureId != null)
+            if (user.BinaryId != null)
             {
-                Binary picture = db.Binaries.Find(user.PictureId);
+                Binary picture = db.Binaries.Find(user.BinaryId);
                 user.Picture = picture; // TODO: potrebbe essere null?
             }
 
@@ -229,7 +229,7 @@ namespace manager.aiv.it.Controllers
                 Binary saved = db.Binaries.Find(binaryFile.Id);
                 if (saved != null)
                 {
-                    user.PictureId = saved.Id;
+                    user.BinaryId = saved.Id;
                     user.Picture = saved;
                     db.Entry(user).State = EntityState.Modified;
                 }
