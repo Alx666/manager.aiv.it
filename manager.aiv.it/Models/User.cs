@@ -93,6 +93,7 @@ namespace manager.aiv.it
         public bool IsDirector      { get; private set; }
         public bool IsManager       { get; private set; }
         public bool IsStudent       { get; private set; }
+        public bool IsDeveloper     { get; private set; }
 
         public bool IsOnly(RoleType eType)
         {
@@ -108,6 +109,7 @@ namespace manager.aiv.it
             IsDirector  = hRoles.Contains(RoleType.Director);
             IsManager   = hRoles.Contains(RoleType.Manager);
             IsStudent   = hRoles.Contains(RoleType.Student);
+            IsDeveloper = hRoles.Contains(RoleType.Developer);
 
             m_hRoles = hRoles;
         }

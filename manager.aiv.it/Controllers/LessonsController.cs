@@ -20,9 +20,20 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
         public ActionResult Index()
         {
-            var lessons = (from hL in db.Lessons select hL).ToList().OrderByDescending(l => l.Date).ToList();
+            IEnumerable<Lesson> hLessons = (from hL in db.Lessons select hL).Include(l => l.Class.Edition.Course).ToList().OrderByDescending(l => l.Date); 
 
-            return View(lessons);
+            if (Session.GetUser().IsTeacher && !Session.GetUser().IsDeveloper)
+            {
+                User hUser = db.Users.Find((int)Session.GetUser().Id);
+
+                //get the courses for the user
+                                
+                hLessons = from l in hLessons where l.Class.Edition.Course.Teachers.Contains(hUser) select l;
+            }
+            
+                
+
+            return View(hLessons.ToList());
         }
 
         // GET: Lessons/Details/5
