@@ -105,9 +105,9 @@ namespace manager.aiv.it.Controllers
                         throw new HttpException("User Already Present");
                 }
 
-
                 Role hRole = (from r in db.Roles where r.Id == (int)RoleType.Student select r).First();
 
+                user.RegistrationDate = DateTime.Now.Date;
                 user.Roles.Add(hRole);
                 db.Users.Add(user);
 
@@ -188,6 +188,7 @@ namespace manager.aiv.it.Controllers
             hToEdit.City = user.City;
             hToEdit.Address = user.Address;
             hToEdit.Code = user.Code;
+            hToEdit.RegistrationDate = DateTime.Now.Date;
 
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
