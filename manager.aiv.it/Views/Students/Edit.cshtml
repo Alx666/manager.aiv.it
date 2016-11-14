@@ -15,7 +15,7 @@
             <div class="row">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.PictureId)
+                @Html.HiddenFor(model => model.Picture.Id)
             </div>
 
             <div class="row row-title">
