@@ -143,6 +143,11 @@ namespace manager.aiv.it.Controllers
                 hUser.Mobile = user.Mobile;
                 hUser.Password = user.Password;
 
+
+                Binary hPicture = db.Binaries.Find(hUser.BinaryId);
+                if (hPicture == null)
+                    hUser.BinaryId = null;
+
                 db.Entry(hUser).State = EntityState.Modified;
                 db.SaveChanges();
 
