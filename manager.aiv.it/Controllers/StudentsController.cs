@@ -159,7 +159,7 @@ namespace manager.aiv.it.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,PictureId,City,Address,Code")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,BinaryId,City,Address,Code")] User user)
         {
             if (!string.IsNullOrEmpty(user.Email))
             {
