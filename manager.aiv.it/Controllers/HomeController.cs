@@ -21,7 +21,7 @@ namespace manager.aiv.it.Controllers
                 hModel.Submissions = db.Submissions.Where(s => DateTime.Now > s.Assignment.Deadline);
 
             if(Session.GetUser().IsSecretary)
-                hModel.Lessons     = from l in db.Lessons where !l.ClassSize.HasValue select l;
+                hModel.Lessons     = from l in db.Lessons where (!l.ClassSize.HasValue || l.Students.Count() == 0)  && l.Date <= DateTime.Now orderby l.Date descending select l;
 
             return View(hModel);
         }

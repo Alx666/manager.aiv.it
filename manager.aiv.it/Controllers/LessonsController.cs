@@ -250,31 +250,7 @@ namespace manager.aiv.it.Controllers
 
                     hLesson.BinaryId = binary.Id;
                 }
-                //if (upload != null)
-                //{
-                //    Binary binaryFile = new Binary();
-                //    byte[] fileBytes = new byte[upload.InputStream.Length];
-                //    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
-                //    binaryFile.Data = fileBytes;
 
-                //    string binaryPath = upload.FileName;
-                //    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
-                //    string filename = pathParts[pathParts.Length - 1];
-                //    binaryFile.Filename = filename;
-
-                //    db.Binaries.Add(binaryFile);
-                //    db.SaveChanges();
-                //    /* 
-                //    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
-                //    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
-                //    */
-                //    Binary saved = db.Binaries.Find(binaryFile.Id);
-                //    if (saved != null)
-                //    {
-                //        lesson.Binary = saved;
-                //        lesson.BinaryId = saved.Id;
-                //    }
-                //}
 
                 hLesson.Notes = lesson.Notes;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);

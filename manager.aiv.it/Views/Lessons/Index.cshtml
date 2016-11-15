@@ -58,7 +58,15 @@
                     <td class="text-right">
                         @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
                         {
-                            <a title="Edit @item.DisplayName" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                            if (item.Date > DateTime.Now)
+                            {
+                                <img src="https://s-media-cache-ak0.pinimg.com/736x/e3/fa/8f/e3fa8ffd66f263030e8bf9a0e64fd206.jpg" class="btn btn-default text-primary btn-sm action-button" style="width:90px; height:80px;"/>                                
+                            }
+                            else
+                            {
+                                <a title="Edit @item.DisplayName" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                            }
                             if(Session.GetUser().IsTeacher)
                             {
                                 <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>

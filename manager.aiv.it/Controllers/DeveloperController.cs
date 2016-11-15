@@ -51,6 +51,12 @@ namespace manager.aiv.it.Controllers
             return hToRemove;
         }
 
+        public void RepairBrokenLessons()
+        {
+            var hLessons = from l in db.Lessons where l.Students.Count() == 0 select l;
+            hLessons.ToList().ForEach(l => l.ClassSize = null);
+        }
+
 
 
         protected override void Dispose(bool disposing)
