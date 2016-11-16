@@ -13,7 +13,7 @@
         <div class="panel-body">
             <div class="row">
                 @{ 
-                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons).OrderByDescending(L => L.Date);
+                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons.Where(hL => hL.ClassSize != null)).OrderByDescending(L => L.Date);
                 }
 
                 @if (allLessons.Count() == 0)
