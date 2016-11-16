@@ -158,7 +158,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Secretary, RoleType.Student)]
+        [CustomAuthorize(RoleType.Secretary)]
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,BinaryId,City,Address,Code")] User user)
         {
             if (!string.IsNullOrEmpty(user.Email))
@@ -184,12 +184,23 @@ namespace manager.aiv.it.Controllers
             hToEdit.Email = user.Email;
             hToEdit.Password = user.Password;
             hToEdit.Mobile = user.Mobile;
-            hToEdit.Class = db.Classes.Find(user.ClassId);
             hToEdit.City = user.City;
             hToEdit.Address = user.Address;
             hToEdit.Code = user.Code;
             hToEdit.RegistrationDate = DateTime.Now.Date;
 
+
+            
+            //Class Change
+            if (hToEdit.ClassId != user.ClassId)
+            {
+                hToEdit.Class?.Students.Remove(hToEdit);
+
+                if (user.ClassId != null)
+                    hToEdit.Class = db.Classes.Find(user.ClassId);
+            }
+
+            
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
             ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
 

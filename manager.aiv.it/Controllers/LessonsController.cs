@@ -94,7 +94,7 @@ namespace manager.aiv.it.Controllers
 
                 ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
                 ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
-                ViewBag.topics      = new MultiSelectList(selected.Edition.Topics, "Id", "DisplayName");
+                ViewBag.topics      = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
                 ViewBag.students    = new MultiSelectList(selected.Students, "Id", "DisplayName");
             }
 
@@ -122,6 +122,7 @@ namespace manager.aiv.it.Controllers
                     lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
                     lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
+
                 if (upload != null)
                 {
                     Binary binary = Binary.CreateFrom(upload, true);
@@ -131,31 +132,7 @@ namespace manager.aiv.it.Controllers
 
                     lesson.BinaryId = binary.Id;
                 }
-                //if (upload != null)
-                //{
-                //    Binary binaryFile = new Binary();
-                //    byte[] fileBytes = new byte[upload.InputStream.Length];
-                //    upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
-                //    binaryFile.Data = fileBytes;
 
-                //    string binaryPath = upload.FileName;
-                //    string[] pathParts = Regex.Split(binaryPath, @"(/)|(\\)");
-                //    string filename = pathParts[pathParts.Length - 1];
-                //    binaryFile.Filename = filename;
-
-                //    db.Binaries.Add(binaryFile);
-                //    db.SaveChanges();
-                //    /* 
-                //    Layer di validazione : se il file è stato effettivamente salvato, lo vado a cercare nel db 
-                //    per essere sicuro di non attribuire a "excercise" un BinaryId fasullo
-                //    */
-                //    Binary saved = db.Binaries.Find(binaryFile.Id);
-                //    if (saved != null)
-                //    {
-                //        lesson.Binary = saved;
-                //        lesson.BinaryId = saved.Id;
-                //    }
-                //}
 
 
                 db.Lessons.Add(lesson);
@@ -202,7 +179,7 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
             ViewBag.TeacherId = new SelectList(db.Users.Select(u => new { Id = u.Id, Name = u.Name + " " + u.Surname }), "Id", "Name", lesson.TeacherId);
             ViewBag.Students = new MultiSelectList(vClassStudents, "Id", "Name", hSelectedStudents);
-            ViewBag.topics = new MultiSelectList(hClass.Edition.Topics.Select(t => new { Id = t.Id, Name = t.Name + ", " + t.Description }), "Id", "Name", lesson.Topics.Select(e => e.Id));
+            ViewBag.topics = new MultiSelectList(hClass.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName", lesson.Topics.Select(e => e.Id));
 
             return View(lesson);
         }
@@ -264,10 +241,13 @@ namespace manager.aiv.it.Controllers
 
                 db.Entry(hLesson).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
             ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
+
             return View(lesson);
         }
         

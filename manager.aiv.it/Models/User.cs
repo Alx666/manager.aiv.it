@@ -16,7 +16,7 @@ namespace manager.aiv.it
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Class Lessons")]
-        public int?         DisplayTotalLessons => Class?.Lessons.Where(l => l.Date < DateTime.Now).Count();
+        public int?         DisplayTotalLessons => Class?.Lessons.Where(l => l.Date < DateTime.Now && l.ClassSize != null).Count();
 
         [DisplayFormat(NullDisplayText = "-")]
         [DisplayName("Followed Lessons")]
