@@ -71,6 +71,7 @@ namespace manager.aiv.it.Controllers
             if(hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+           
             var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) select c;
 
             if (!classid.HasValue)
@@ -112,6 +113,17 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students, HttpPostedFileBase upload)
         {
+            User hTeacher  = db.Users.Find(Session.GetUser().Id);
+
+            Lesson already = (from l in db.Lessons
+                              where l.Teacher.Id == hTeacher.Id && 
+                              DbFunctions.TruncateTime(l.Date) == DbFunctions.TruncateTime(DateTime.Now) &&
+                              l.ClassId == lesson.ClassId
+                              select l).FirstOrDefault();
+
+            if(already != null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             if (ModelState.IsValid)
             {                
                 topics?.ForEach(t => lesson.Topics.Add(db.Topics.Find(t)));
