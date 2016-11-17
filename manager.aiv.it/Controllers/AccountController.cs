@@ -60,7 +60,7 @@ namespace manager.aiv.it.Controllers
                 if (hLogin.IsOnly(RoleType.Student))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
                 else
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Home");
             }
             else
             {

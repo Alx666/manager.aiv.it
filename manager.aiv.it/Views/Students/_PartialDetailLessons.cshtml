@@ -25,9 +25,9 @@
 
                 @foreach (var item in allLessons)
                 {
-                    var followedClass = Model.LessonsFollowed.Contains(item) ? "followed" : "not-followed";
-                    var icon = Model.LessonsFollowed.Contains(item) ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
-                    var message = Model.LessonsFollowed.Contains(item) ? "Followed" : "Missed";
+                    var followedClass   = Model.LessonsFollowed.Contains(item) ? "followed" : "not-followed";
+                    var icon            = Model.LessonsFollowed.Contains(item) ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                    var message         = Model.LessonsFollowed.Contains(item) ? "Followed" : "Missed";
 
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="thumbnail" flex>
@@ -61,6 +61,11 @@
                                         }
                                     </div>
                                 </div>
+
+                                <div class="row col-sm-12" style="text-align:justify;">
+                                    @item.Notes
+                                </div>
+                                
                             </div>
 
                             <div class="card-footer">
