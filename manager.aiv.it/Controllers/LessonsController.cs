@@ -18,20 +18,132 @@ namespace manager.aiv.it.Controllers
 
         // GET: Lessons
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
-        public ActionResult Index()
+        public ActionResult Index(string search, int? searchId)
         {
-            IEnumerable<Lesson> hLessons = (from hL in db.Lessons select hL).Include(l => l.Class.Edition.Course).ToList().OrderByDescending(l => l.Date); 
+            User hUser = db.Users.Find((int)Session.GetUser().Id);
 
-            if (Session.GetUser().IsTeacher && !Session.GetUser().IsDeveloper)
+            var     hSearchTypes    =   from t in Enum.GetValues(typeof(LessonsSearchType)) as LessonsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(LessonsSearchType), t)};
+            int?    vSelectedvalue  =   null;
+
+            //defaults lessons of interest for the current teacher
+            IEnumerable<Lesson> hLessons = db.Lessons.Include(l => l.Class.Edition.Course).OrderByDescending(l => l.Date);
+
+            if (searchId.HasValue && search != null)
             {
-                User hUser = db.Users.Find((int)Session.GetUser().Id);
+                string[]            hKeywords   = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                LessonsSearchType   eType       = (LessonsSearchType)searchId.Value;
 
-                //get the courses for the user
-                                
-                hLessons = from l in hLessons where l.Class.Edition.Course.Teachers.Contains(hUser) select l;
+                if (eType == LessonsSearchType.Teacher)
+                {
+                    var hSearchSet = from t in db.Roles.Find((int)RoleType.Teacher).Users select new { Teacher = t, Name = t.Name + " " + t.Surname };
+
+                    hLessons = (from t in hSearchSet
+                                from l in t.Teacher.LessonsTeached
+                                from k in hKeywords
+                                where k.All(kw => t.Name.Contains(k))
+                                select l).Distinct();
+
+                }
+                else if (eType == LessonsSearchType.Student)
+                {
+                    var hSearchSet = from s in db.Roles.Find((int)RoleType.Student).Users select new { Student = s, Name = s.Name + " " + s.Surname };
+
+                    hLessons = (from s in hSearchSet
+                                from l in s.Student.LessonsFollowed
+                                from k in hKeywords
+                                where k.All(kw => s.Name.Contains(k))
+                                select l).Distinct();
+                }
+                else if (eType == LessonsSearchType.Class)
+                {
+                    var hSearchSet = db.Classes.ToList().Select(c => new { Class = c, Name = c.DisplayName }); //Can't invoke DisplayName on entity model
+
+                    hLessons = (from s in hSearchSet
+                                from l in s.Class.Lessons
+                                from k in hKeywords
+                                where k.All(kw => s.Name.Contains(k))
+                                select l).Distinct();
+                }
+                else if (eType == LessonsSearchType.Course)
+                {
+                    //TODO: bug fix ("Programming 1" produces bad results)
+                    var hSearchSet = db.Courses.ToList().Select(c => new { Course = c, Name = c.DisplayName }); //Can't invoke DisplayName on entity model
+
+                    hLessons = (from k in hKeywords
+                                from c in hSearchSet
+                                from l in db.Lessons
+                                where l.Class.Edition.Course == c.Course && k.All(kw => c.Name.Contains(kw))
+                                select l).Distinct();
+                }
+                else if (eType == LessonsSearchType.Note)
+                {
+                    hLessons = (from k in hKeywords
+                                from l in db.Lessons
+                                where k.All(kw => l.Notes.Contains(kw))
+                                select l).Distinct();                        
+                }
+                else if (eType == LessonsSearchType.Topic)
+                {
+                    throw new NotImplementedException();
+                    //var hSearchSet = db.Topics.ToList().Select(t => new { Topic = t, Name = t.DisplayName }); //Can't invoke DisplayName on entity model
+
+                    //hLessons = (from k in hKeywords
+                    //            from l in db.Lessons
+                    //            from t in hSearchSet
+                    //            where k.All(kw => .Contains(kw))
+                    //            select l;
+                }
+                else
+                {
+                    //search everything everywhere
+                    hLessons = (from l in db.Lessons.Include(x => x.Class.Edition.Course)
+                                from s in l.Students
+                                from t in l.Topics
+                                from x in hKeywords
+                                where
+                                l.Notes.Contains(x) ||
+                                s.Name.Contains(x) ||
+                                s.Surname.Contains(x) ||
+                                t.Name.Contains(x) ||
+                                t.Description.Contains(x) ||
+                                l.Teacher.Name.Contains(x) ||
+                                l.Teacher.Surname.Contains(x)
+                                orderby l.Date descending
+                                select l).DistinctBy(l => l.Id);
+                }
+
+
+
+                vSelectedvalue      = searchId.Value;
+                ViewBag.SearchId    =   new SelectList(hSearchTypes, "Id", "Name", vSelectedvalue); 
             }
-            
-                
+            else
+            {
+                ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
+            }
+
+
+
+            //if (CourseId != null)
+            //    hAllLessons = hAllLessons.Where(l => l.Class.Edition.CourseId == CourseId);
+
+            //if(TeacherId != null)
+            //    hAllLessons = hAllLessons.Where(l => l.TeacherId == TeacherId);
+
+            //if (ClassId != null)
+            //    hAllLessons = hAllLessons.Where(l => l.ClassId == ClassId);
+
+            //IEnumerable<Lesson> hLessons = (from hL in db.Lessons select hL).Include(l => l.Class.Edition.Course).ToList().OrderByDescending(l => l.Date);
+            //hLessons = from l in hLessons where l.Class.Edition.Course.Teachers.Contains(hUser) select l;
+
+
+            //if (search != null)
+            //{
+            //    string[] hKeywords = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+            //}
+
 
             return View(hLessons.ToList());
         }
@@ -166,7 +278,9 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Lesson lesson = db.Lessons.Find(id);
+
             if (lesson == null)
             {
                 return HttpNotFound();

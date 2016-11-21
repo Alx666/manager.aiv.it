@@ -17,6 +17,28 @@
         </a>
     </div>
     }
+
+    @using (Html.BeginForm("Index", "Lessons", FormMethod.Get, new { @class = "filters" }))
+    {
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="input-group">
+                    <input id="search" type="text" name="search" placeholder="" class="form-control" value='@Request.QueryString["search"]' />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6" layout-align="end">
+                <div class="btn-group activable-group">
+                    @Html.DropDownList("SearchId", null, "-", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 <div class="row">
@@ -58,16 +80,9 @@
                     <td class="text-right">
                         @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
                         {
+                            <a title="Edit @item.DisplayName" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
 
-                            if (item.Date > DateTime.Now)
-                            {
-                                <img src="https://s-media-cache-ak0.pinimg.com/736x/e3/fa/8f/e3fa8ffd66f263030e8bf9a0e64fd206.jpg" class="btn btn-default text-primary btn-sm action-button" style="width:90px; height:80px;"/>
-                            }
-                            else
-                            {
-                                <a title="Edit @item.DisplayName" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-                            }
-                            if(Session.GetUser().IsTeacher)
+                            if (Session.GetUser().IsTeacher)
                             {
                                 <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
                             }

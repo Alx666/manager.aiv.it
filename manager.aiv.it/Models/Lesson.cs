@@ -32,4 +32,14 @@ namespace manager.aiv.it
         [DataType(DataType.MultilineText)]
         string Notes { get; }        
     }
+
+    public enum LessonsSearchType
+    {
+        Student = 0,
+        Teacher = 1,
+        Topic = 2,
+        Note = 3,
+        Class = 4,
+        Course = 5,                
+    }
 }
