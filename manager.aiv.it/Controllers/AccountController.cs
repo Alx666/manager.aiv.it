@@ -30,11 +30,15 @@ namespace manager.aiv.it.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            //this.Session["UserId"] = 0;
-            //this.Session["Roles"] = new List<RoleType>() { RoleType.Student, RoleType.Teacher, RoleType.Secretary, RoleType.Manager, RoleType.Director, RoleType.Bursar, RoleType.Admin };
-            //return RedirectToLocal(returnUrl);
+#if DEBUG
+            User hDeveloper = db.Roles.Find((int)RoleType.Developer).Users.First();
+            Session.LoadUser(hDeveloper);
+            hDeveloper.Picture = (hDeveloper != null && hDeveloper.Picture != null) ? new Binary(hDeveloper.Picture) : null; //Hax
 
+            return RedirectToLocal(returnUrl);
+#else
             return View();
+#endif
         }
 
 
@@ -97,7 +101,7 @@ namespace manager.aiv.it.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
+#region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -154,6 +158,6 @@ namespace manager.aiv.it.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-        #endregion
+#endregion
     }
 }
