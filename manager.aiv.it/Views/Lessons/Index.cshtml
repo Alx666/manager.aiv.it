@@ -5,40 +5,42 @@
 }
 
 <div class="row row-title title-margin">
-    <div class="col-md-10 col-xs-6">
-        <span class="title">Index</span>
-    </div>
-    @if (Session.GetUser().IsTeacher)
-    { 
-        <div class="col-md-2 col-xs-6 text-right">
-        <a class="btn btn-primary" href="@Url.Action("Create")">
-            <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
-            <span>Create New</span>
-        </a>
-    </div>
-    }
-
-    @using (Html.BeginForm("Index", "Lessons", FormMethod.Get, new { @class = "filters" }))
-    {
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                <div class="input-group">
-                    <input id="search" type="text" name="search" placeholder="" class="form-control" value='@Request.QueryString["search"]' />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="submit">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="row" layout-align="center">
+            <div class="col-md-8 col-xs-6 col-sm-6">
+                <span class="title">Index</span>
             </div>
+            @if (Session.GetUser().IsTeacher)
+            {
+                <div class="col-md-4 col-xs-6 col-sm-6 text-right">
+                    <a class="btn btn-primary" href="@Url.Action("Create")">
+                        <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
+                        <span>Create New</span>
+                    </a>
+                </div>
+            }
+        </div>
 
-            <div class="col-xs-6 col-sm-6 col-md-6" layout-align="end">
-                <div class="btn-group activable-group">
+        @using (Html.BeginForm("Index", "Lessons", FormMethod.Get, new { @class = "filters" }))
+        {
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="input-group">
+                        <input id="search" type="text" name="search" placeholder="" class="form-control" value='@Request.QueryString["search"]' />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6" layout-align="end">
                     @Html.DropDownList("SearchId", null, "-", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 <div class="row">
