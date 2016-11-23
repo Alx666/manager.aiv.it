@@ -91,7 +91,7 @@
 </div>
 
 
-
+<!--
 <div class="row">
     <div class="col-xs-12 table-container">
 
@@ -185,3 +185,105 @@
 
     </div>
 </div>
+-->
+
+
+<div class="panel panel-default">
+    <div id="collapseStudents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingStudents">
+        <div class="panel-body">
+            <div class="row">
+                @if (Model.Count() == 0)
+                {
+                    <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
+                        <h5>No results found.</h5>
+                    </div>
+                }
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="card-image">
+                                <div class="card-quote text-right">
+                                    <strong>@item.DisplayName</strong>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="row" layout-align="center">
+                                    <div class="col-sm-3 col-md-3 col-xs-3">
+
+                                        @{
+                                            var imageSource = "/Content/default_avatar.png";
+                                            if (item.Picture != null && item.Picture.Data != null)
+                                            {
+                                                var base64 = Convert.ToBase64String(item.Picture.Data);
+                                                imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
+                                            }
+                                        }
+                                        <img class="table-list-avatar small" src="@imageSource" />
+
+                                    </div>
+                                    <div class="col-sm-9 col-md-9 col-xs-9" layout-align="end">
+
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">
+                                                @if (item.Email != null && !string.IsNullOrEmpty(item.Email))
+                                                {
+                                                    <span>@item.Email</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Nessuna mail</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">
+                                                @if (item.Mobile != null)
+                                                {
+                                                    <span>@item.Mobile</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Nessun telefono</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">
+                                                @if(item.Class != null)
+                                                {
+                                                    <span>@item.Class.DisplayName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Nessuna classe</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (!Session.GetUser().IsOnly(RoleType.Student))
+                            {
+                                <div class="card-footer">
+                                    <div class="table-actions text-right">
+                                        <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i>Edit</a>
+                                        <a title="Delete Student" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i>Delete</a>
+                                        <a title="View Student profile" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i>Details</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                                            }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

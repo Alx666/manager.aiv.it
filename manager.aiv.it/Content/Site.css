@@ -832,6 +832,7 @@ form .row.row-submit {
 
 .panel .thumbnail {
   box-shadow: none;
+  border: none;
 }
 
 .card-image {
