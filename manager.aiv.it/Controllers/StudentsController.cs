@@ -101,7 +101,7 @@ namespace manager.aiv.it.Controllers
                 {
                     User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-                    if (Session.GetUser().Id != hAlreadyPresent.Id)
+                    if (hAlreadyPresent != null && Session.GetUser().Id != hAlreadyPresent.Id)
                         throw new HttpException("User Already Present");
                 }
 
