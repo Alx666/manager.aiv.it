@@ -194,6 +194,40 @@
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonFullData">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Frequency" />
+            <PropertyRef Name="AcademicYear" />
+            <PropertyRef Name="TeacherName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="ClassSize" Type="smallint" />
+          <Property Name="Frequency" Type="float" Nullable="false" />
+          <Property Name="BinaryId" Type="int" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="52" />
+          <Property Name="AcademicYear" Type="smallint" Nullable="false" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="StudentsCount" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonPresences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonPresences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StudentsCount" Type="int" />
+        </EntityType>
         <Association Name="FK_Attending_ToLesson">
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -656,6 +690,28 @@
           <EntitySet Name="Teaching" EntityType="Self.Teaching" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewLessonFullData" EntityType="Self.ViewLessonFullData" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonFullData].[Id] AS [Id], 
+    [ViewLessonFullData].[ClassId] AS [ClassId], 
+    [ViewLessonFullData].[TeacherId] AS [TeacherId], 
+    [ViewLessonFullData].[Date] AS [Date], 
+    [ViewLessonFullData].[Notes] AS [Notes], 
+    [ViewLessonFullData].[ClassSize] AS [ClassSize], 
+    [ViewLessonFullData].[Frequency] AS [Frequency], 
+    [ViewLessonFullData].[BinaryId] AS [BinaryId], 
+    [ViewLessonFullData].[ClassName] AS [ClassName], 
+    [ViewLessonFullData].[AcademicYear] AS [AcademicYear], 
+    [ViewLessonFullData].[TeacherName] AS [TeacherName], 
+    [ViewLessonFullData].[StudentsCount] AS [StudentsCount]
+    FROM [dbo].[ViewLessonFullData] AS [ViewLessonFullData]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewLessonPresences" EntityType="Self.ViewLessonPresences" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonPresences].[Id] AS [Id], 
+    [ViewLessonPresences].[StudentsCount] AS [StudentsCount]
+    FROM [dbo].[ViewLessonPresences] AS [ViewLessonPresences]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Attending_ToLesson" Association="Self.FK_Attending_ToLesson">
             <End Role="Lesson" EntitySet="Lesson" />
             <End Role="Attending" EntitySet="Attending" />
@@ -923,6 +979,8 @@
             <End Role="Course" EntitySet="Courses" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ViewLessonFullDatas" EntityType="AivModel.ViewLessonFullData" />
+          <EntitySet Name="ViewLessonPresences" EntityType="AivModel.ViewLessonPresence" />
           </EntityContainer>
         <EntityType Name="Assignment">
           <Key>
@@ -1425,6 +1483,36 @@
           <End Type="AivModel.Course" Role="Course" Multiplicity="*" />
           <End Type="AivModel.User" Role="User" Multiplicity="*" />
         </Association>
+        <EntityType Name="ViewLessonFullData">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Frequency" />
+            <PropertyRef Name="AcademicYear" />
+            <PropertyRef Name="TeacherName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassSize" Type="Int16" />
+          <Property Name="Frequency" Type="Double" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" />
+          <Property Name="ClassName" Type="String" MaxLength="52" FixedLength="false" Unicode="true" />
+          <Property Name="AcademicYear" Type="Int16" Nullable="false" />
+          <Property Name="TeacherName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="StudentsCount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewLessonPresence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StudentsCount" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1632,6 +1720,32 @@
               <ScalarProperty Name="Id" ColumnName="EditionId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ViewLessonFullDatas">
+            <EntityTypeMapping TypeName="AivModel.ViewLessonFullData">
+              <MappingFragment StoreEntitySet="ViewLessonFullData">
+                <ScalarProperty Name="StudentsCount" ColumnName="StudentsCount" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewLessonPresences">
+            <EntityTypeMapping TypeName="AivModel.ViewLessonPresence">
+              <MappingFragment StoreEntitySet="ViewLessonPresences">
+                <ScalarProperty Name="StudentsCount" ColumnName="StudentsCount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

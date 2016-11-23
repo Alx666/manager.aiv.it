@@ -38,5 +38,7 @@ namespace manager.aiv.it
         public virtual DbSet<Submission> Submissions { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ViewLessonFullData> ViewLessonFullDatas { get; set; }
+        public virtual DbSet<ViewLessonPresence> ViewLessonPresences { get; set; }
     }
 }

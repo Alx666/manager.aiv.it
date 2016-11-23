@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.Lesson>
+﻿@model IEnumerable<manager.aiv.it.ViewLessonFullData>
 
 @{
     ViewBag.Title = "Index";
@@ -49,13 +49,13 @@
                     @Html.DisplayNameFor(model => model.Date)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Class)
+                    @Html.DisplayNameFor(model => model.ClassName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Teacher)
+                    @Html.DisplayNameFor(model => model.TeacherName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DisplayStudentsCount)
+                    @Html.DisplayNameFor(model => model.StudentsCount)
                 </th>
                 <th class="text-right table-actions">
                     Actions
@@ -69,25 +69,25 @@
                         @item.Date.ToShortDateString()
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Class.DisplayName)
+                        @Html.DisplayFor(modelItem => item.ClassName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
+                        @Html.DisplayFor(modelItem => item.TeacherName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DisplayStudentsCount)
+                        @Html.DisplayFor(modelItem => item.StudentsCount)
                     </td>
                     <td class="text-right">
                         @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
                         {
-                            <a title="Edit @item.DisplayName" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
 
                             if (Session.GetUser().IsTeacher)
                             {
-                                <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                                <a title="Delete Lesson" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
                             }
                         }
-                        <a title="View @item.DisplayName"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                        <a title="View Lesson"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
                     </td>
                 </tr>
             }
