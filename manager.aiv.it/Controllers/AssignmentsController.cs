@@ -142,7 +142,6 @@ namespace manager.aiv.it.Controllers
                               select hExercise;
 
 
-            ViewBag.ClassId = new SelectList(hClasses, "Id", "DisplayName");
             ViewBag.ExerciseId = new SelectList(hExercises, "Id", "Name");
 
 
@@ -154,6 +153,8 @@ namespace manager.aiv.it.Controllers
             }
             else
                 hAssignment.Exercise = db.Exercises.Find(hExercises.First().Id);
+
+            ViewBag.ClassId = new SelectList(hClasses, "Id", "DisplayName", hAssignment.ClassId);
 
             ViewBag.topics = new MultiSelectList(hAssignment.Exercise.Topics, "Id", "DisplayName");
 
