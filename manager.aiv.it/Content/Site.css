@@ -4,6 +4,12 @@
     outline: none !important;
 }
 
+pre {
+    word-break: normal;
+    word-wrap: normal;
+    margin: 8px;
+}
+
 .logobg {
     background-image: url(http://www.aiv01.it/images/LogoAIV.png);
     background-size: contain;
@@ -1010,61 +1016,73 @@ form.filters > .row{
     overflow-y: hidden;
 }
 
-.panel-collapse.thumbnail-list .card a,
-.panel-collapse.thumbnail-list .thumbnail a {
+.panel.thumbnail-list {
+    border: none;
+}
+
+.panel.thumbnail-list .card a,
+.panel.thumbnail-list .thumbnail a {
     color: silver;
+}
+
+.panel.thumbnail-list .panel-collapse {
+    background:none;
+    border:none;
 }
 
 .panel-collapse .card,
 .panel-collapse .thumbnail,
-.panel-collapse.thumbnail-list .card a.btn,
-.panel-collapse.thumbnail-list .thumbnail a.btn,
-.panel-collapse.thumbnail-list .card a.btn:hover,
-.panel-collapse.thumbnail-list .thumbnail a.btn:hover {
+.panel.thumbnail-list .card a.btn,
+.panel.thumbnail-list .thumbnail a.btn,
+.panel.thumbnail-list .card a.btn:hover,
+.panel.thumbnail-list .thumbnail a.btn:hover {
     color: #333333;
 }
 
-.panel-collapse.thumbnail-list .card a:hover,
-.panel-collapse.thumbnail-list .thumbnail a:hover{
+.panel.thumbnail-list .card a:hover,
+.panel.thumbnail-list .thumbnail a:hover{
     color: #ffffff;
 }
 
-.panel-collapse.thumbnail-list .card .card-image,
-.panel-collapse.thumbnail-list .thumbnail .card-image {
+.panel.thumbnail-list .card .card-image,
+.panel.thumbnail-list .thumbnail .card-image {
     color: #333333;
 }
 
-.panel-collapse.thumbnail-list .card img,
-.panel-collapse.thumbnail-list .thumbnail img{
+.panel.thumbnail-list .card img,
+.panel.thumbnail-list .thumbnail img{
     height: 86px;
     object-fit: cover;
     font-family: 'object-fit: cover';
+    box-shadow: inset 0px 0px 8px black;
 }
 
-
-.panel-collapse.thumbnail-list .card .card-image .card-quote,
-.panel-collapse.thumbnail-list .thumbnail .card-image .card-quote {
+.panel.thumbnail-list .card .card-image .card-quote,
+.panel.thumbnail-list .thumbnail .card-image .card-quote,
+.panel.thumbnail-list .card .card-footer,
+.panel.thumbnail-list .thumbnail .card-footer {
     background-image: url(http://www.aiv01.it/images/BGcorsi.jpg);
     color: silver;
     background-position: 50%;
     background-size: 100%;
+    border: none;
 }
 
-.panel-collapse.thumbnail-list .card,
-.panel-collapse.thumbnail-list .thumbnail {
+.panel.thumbnail-list .card,
+.panel.thumbnail-list .thumbnail {
     border: 1px solid #333;
 }
 
-.panel-collapse.thumbnail-list .card .card-content,
-.panel-collapse.thumbnail-list .thumbnail .card-content {
+.panel.thumbnail-list .card .card-content,
+.panel.thumbnail-list .thumbnail .card-content {
     background-image: url(http://www.aiv01.it/images/BGcorsi.jpg);
     color: silver;
     background-position: 50%;
     background-size: 100%;
 }
 
-.panel-collapse.thumbnail-list .card .card-content > .row,
-.panel-collapse.thumbnail-list .thumbnail .card-content > .row {
+.panel.thumbnail-list .card .card-content > .row,
+.panel.thumbnail-list .thumbnail .card-content > .row {
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -1088,6 +1106,17 @@ form.filters > .row{
 .card .full-height-image,
 .thumbnail .full-height-image {
     padding: 0;
+}
+
+.card .full-height-image .shadow,
+.thumbnail .full-height-image .shadow{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    content:"";
+    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.5);
 }
 
 .card .full-height-image .image-column,
