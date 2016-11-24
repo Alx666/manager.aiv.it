@@ -171,6 +171,18 @@ namespace manager.aiv.it.Controllers
             return View(user);
         }
 
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Admin)]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePicture(int userId, HttpPostedFileBase picture)
@@ -198,16 +210,23 @@ namespace manager.aiv.it.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // GET: Users/ChangePassword/5
         [CustomAuthorize(RoleType.Admin)]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult ChangePassword(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(user);
         }
 
         protected override void Dispose(bool disposing)

@@ -10,7 +10,7 @@
         <div class="row row-title">
             <div class="col col-xs-4 col-sm-2">
                 @if (Session.GetUser() != null && !Session.GetUser().IsOnly(RoleType.Student))
-                { 
+                {
                     <div class="text-left">
                         <a class="btn btn-default" href='@Url.Action("Index")'>
                             <i class="glyphicon glyphicon-chevron-left pull-left icon-left"></i>
@@ -217,18 +217,34 @@
                                         </div>
                                     </div>
 
+                                     @if (Session.GetUser().Id == Model.Id)
+                                     {
+                                         using (Html.BeginForm("ChangePassword", "Users", null, FormMethod.Get, new { name = "form_picture", enctype = "multipart/form-data" }))
+                                         {
+                                            <div class="pull-right">
+                                                <div class="text-right">
+                                                    <a class="btn btn-primary" @*href="@Url.Action("Edit", new { id = Model.Id })"*@>
+                                                        <i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
+                                                        <span>Change Password</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                         }
+                                     }
+
                                 </section>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                @if(Model.Class != null) {
+                @if (Model.Class != null)
+                {
 
-                <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
-                    @Html.Partial("_PartialDetailHomeworks", Model)
-                    @Html.Partial("_PartialDetailLessons", Model)
-                </div>
+                    <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
+                        @Html.Partial("_PartialDetailHomeworks", Model)
+                        @Html.Partial("_PartialDetailLessons", Model)
+                    </div>
                 }
             </div>
         </div>

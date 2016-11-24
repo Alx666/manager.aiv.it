@@ -30,15 +30,15 @@ namespace manager.aiv.it.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-#if DEBUG
-            User hDeveloper = db.Roles.Find((int)RoleType.Developer).Users.First();
-            Session.LoadUser(hDeveloper);
-            hDeveloper.Picture = (hDeveloper != null && hDeveloper.Picture != null) ? new Binary(hDeveloper.Picture) : null; //Hax
+//#if DEBUG
+//            User hDeveloper = db.Roles.Find((int)RoleType.Developer).Users.First();
+//            Session.LoadUser(hDeveloper);
+//            hDeveloper.Picture = (hDeveloper != null && hDeveloper.Picture != null) ? new Binary(hDeveloper.Picture) : null; //Hax
 
-            return RedirectToLocal(returnUrl);
-#else
+//            return RedirectToLocal(returnUrl);
+//#else
             return View();
-#endif
+//#endif
         }
 
 
