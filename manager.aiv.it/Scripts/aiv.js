@@ -93,6 +93,36 @@
                 }
             };
 
+
+            /* Check if scrollbar is visible (PLUGIN) */
+            (function ($) {
+                $.fn.hasScrollBar = function () {
+                    var elem = this.get(0);
+                    var innerHeight = this.innerHeight();
+                    return elem ? (elem.scrollHeight > innerHeight) : false;
+                }
+            })(jQuery);
+            // margin-right: -18px;
+            $(".panel-body").each(function (index, panel) {
+                var value = 0;
+                if ($(panel).hasScrollBar()) {
+                    value = -18;
+                }
+
+                $(panel).parent(".panel-collapse").css({ 'margin-right': value + "px" });
+            });
+
+            $(".panel-collapse").on('shown.bs.collapse', function () {
+                var value = 0;
+                var body = $(this).find(".panel-body");
+                if (body && $(body.get(0)).hasScrollBar()) {
+                    value = -18;
+                }
+
+                $(this).css({ 'margin-right': value + "px" });
+            });
+
+
             // window.AIV.closeLoading();
             // FOR TESTING: 
             // ------------
