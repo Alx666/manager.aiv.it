@@ -473,9 +473,21 @@ img.table-list-avatar {
     font-family: 'object-fit: contain'; /* OFI.js */
 }
 
+.thumbnail .full-height-image img {
+    border-radius: 0;
+    border: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
 img.table-list-avatar.small {
     margin: 4px 0px;
     box-shadow: none;
+}
+
+img.table-list-avatar.small {
+    margin: 0px;
 }
 
 .profile-navbar-avatar.logout-btn img{
@@ -794,9 +806,8 @@ form .row.row-submit {
 }
 
 .thumbnail {
-  
   padding: 0;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 20px;
   border: 1px solid #dddddd;
@@ -999,9 +1010,62 @@ form.filters > .row{
     overflow-y: hidden;
 }
 
+.panel-collapse.thumbnail-list .card a,
+.panel-collapse.thumbnail-list .thumbnail a {
+    color: silver;
+}
+
 .panel-collapse .card,
-.panel-collapse .thumbnail {
+.panel-collapse .thumbnail,
+.panel-collapse.thumbnail-list .card a.btn,
+.panel-collapse.thumbnail-list .thumbnail a.btn,
+.panel-collapse.thumbnail-list .card a.btn:hover,
+.panel-collapse.thumbnail-list .thumbnail a.btn:hover {
     color: #333333;
+}
+
+.panel-collapse.thumbnail-list .card a:hover,
+.panel-collapse.thumbnail-list .thumbnail a:hover{
+    color: #ffffff;
+}
+
+.panel-collapse.thumbnail-list .card .card-image,
+.panel-collapse.thumbnail-list .thumbnail .card-image {
+    color: #333333;
+}
+
+.panel-collapse.thumbnail-list .card img,
+.panel-collapse.thumbnail-list .thumbnail img{
+    height: 86px;
+    object-fit: cover;
+    font-family: 'object-fit: cover';
+}
+
+
+.panel-collapse.thumbnail-list .card .card-image .card-quote,
+.panel-collapse.thumbnail-list .thumbnail .card-image .card-quote {
+    background-image: url(http://www.aiv01.it/images/BGcorsi.jpg);
+    color: silver;
+    background-position: 50%;
+    background-size: 100%;
+}
+
+.panel-collapse.thumbnail-list .card,
+.panel-collapse.thumbnail-list .thumbnail {
+    border: 1px solid #333;
+}
+
+.panel-collapse.thumbnail-list .card .card-content,
+.panel-collapse.thumbnail-list .thumbnail .card-content {
+    background-image: url(http://www.aiv01.it/images/BGcorsi.jpg);
+    color: silver;
+    background-position: 50%;
+    background-size: 100%;
+}
+
+.panel-collapse.thumbnail-list .card .card-content > .row,
+.panel-collapse.thumbnail-list .thumbnail .card-content > .row {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .panel-collapse .card .card-content,
@@ -1009,6 +1073,27 @@ form.filters > .row{
 .panel-collapse .card .card-footer,
 .panel-collapse .thumbnail .card-footer {
     padding: 12px;
+}
+
+.panel-collapse .card.full-height-image .card-content,
+.panel-collapse .thumbnail.full-height-image .card-content{
+    padding: 0 12px;
+}
+
+.panel-collapse .card.full-height-image .card-footer,
+.panel-collapse .thumbnail.full-height-image .card-footer {
+    padding: 8px 12px;
+}
+
+.card .full-height-image,
+.thumbnail .full-height-image {
+    padding: 0;
+}
+
+.card .full-height-image .image-column,
+.thumbnail .full-height-image .image-column{
+    padding: 0;
+    height: 100%;
 }
 
 .panel-collapse .card .card-content .btn i,

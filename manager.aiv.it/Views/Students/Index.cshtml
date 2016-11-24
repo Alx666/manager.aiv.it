@@ -189,7 +189,7 @@
 
 
 <div class="panel panel-default">
-    <div id="collapseStudents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingStudents">
+    <div id="collapseStudents" class="panel-collapse thumbnail-list collapse in" role="tabpanel" aria-labelledby="headingStudents">
         <div class="panel-body">
             <div class="row">
                 @if (Model.Count() == 0)
@@ -202,15 +202,17 @@
                 @foreach (var item in Model)
                 {
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="thumbnail">
+                        <div class="thumbnail full-height-image">
                             <div class="card-image">
-                                <div class="card-quote text-right">
-                                    <strong>@item.DisplayName</strong>
+                                <div class="card-quote">
+                                    <strong>
+                                        <a href="@Url.Action("Details", new { id = item.Id })">@item.DisplayName</a>
+                                    </strong>
                                 </div>
                             </div>
                             <div class="card-content">
                                 <div class="row" layout-align="center">
-                                    <div class="col-sm-3 col-md-3 col-xs-3">
+                                    <div class="col-sm-3 col-md-3 col-xs-3 full-height-image">
 
                                         @{
                                             var imageSource = "/Content/default_avatar.png";
@@ -229,7 +231,7 @@
                                             <div class="col-sm-12 text-right">
                                                 @if (item.Email != null && !string.IsNullOrEmpty(item.Email))
                                                 {
-                                                    <span>@item.Email</span>
+                                                    <a href="mailto:@item.Email">@item.Email</a>
                                                 }
                                                 else
                                                 {
@@ -271,9 +273,9 @@
                             {
                                 <div class="card-footer">
                                     <div class="table-actions text-right">
-                                        <a title="Edit Student profile" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i>Edit</a>
-                                        <a title="Delete Student" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i>Delete</a>
-                                        <a title="View Student profile" class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i>Details</a>
+                                        <a title="Edit Student profile" class="btn btn-default text-primary btn-xs action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i>Edit</a>
+                                        <a title="Delete Student" class="btn btn-default text-danger btn-xs action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i>Delete</a>
+                                        <a title="View Student profile" class="btn btn-default btn-xs action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i>Details</a>
                                     </div>
                                 </div>
                             }
