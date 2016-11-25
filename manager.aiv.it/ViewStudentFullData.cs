@@ -15,32 +15,40 @@ namespace manager.aiv.it
 using System;
     using System.Collections.Generic;
     
-public partial class ViewLessonFullData
+public partial class ViewStudentFullData
 {
 
     public int Id { get; set; }
 
-    public int ClassId { get; set; }
+    public string Name { get; set; }
 
-    public int TeacherId { get; set; }
+    public string Surname { get; set; }
 
-    public System.DateTime Date { get; set; }
+    public string Email { get; set; }
 
-    public string Notes { get; set; }
+    public string Password { get; set; }
 
-    public Nullable<short> ClassSize { get; set; }
+    public string Mobile { get; set; }
 
-    public double Frequency { get; set; }
+    public System.DateTime RegistrationDate { get; set; }
+
+    public Nullable<int> ClassId { get; set; }
 
     public Nullable<int> BinaryId { get; set; }
 
+    public string City { get; set; }
+
+    public string Address { get; set; }
+
+    public string Code { get; set; }
+
     public string ClassName { get; set; }
 
-    public short AcademicYear { get; set; }
+    public byte[] Picture { get; set; }
 
-    public string TeacherName { get; set; }
+    public string PictureFileName { get; set; }
 
-    public Nullable<int> StudentsCount { get; set; }
+    public int NotesCount { get; set; }
 
 }
 

@@ -15,24 +15,12 @@ namespace manager.aiv.it
 using System;
     using System.Collections.Generic;
     
-public partial class Note
+public partial class ViewStudentNote
 {
 
     public int Id { get; set; }
 
-    public int StudentId { get; set; }
-
-    public int StaffId { get; set; }
-
-    public string Text { get; set; }
-
-    public System.DateTime Date { get; set; }
-
-
-
-    public virtual User Author { get; set; }
-
-    public virtual User Subject { get; set; }
+    public Nullable<int> NotesReceived { get; set; }
 
 }
 

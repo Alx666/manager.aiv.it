@@ -37,13 +37,17 @@ namespace manager.aiv.it.Controllers
                 model = (from n in db.Notes select n.Subject).Distinct();
             }
             
-
             if (!string.IsNullOrEmpty(search))
             {
                 model = from s in model where s.Name.Contains(search) || s.Surname.Contains(search) select s;
             }
 
-            return View(model);
+            var result = from s in model
+                         join x in db.ViewStudentFullDatas
+                         on s.Id equals x.Id
+                         select x;
+
+            return View(result);
         }
 
         // GET: Students/Details/5        

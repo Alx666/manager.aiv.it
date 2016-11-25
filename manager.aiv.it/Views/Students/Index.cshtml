@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.User>
+﻿@model IEnumerable<ViewStudentFullData>
 
 @{
     ViewBag.Title = "Index";
@@ -98,7 +98,7 @@
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Picture)
+                    @Html.DisplayNameFor(model => model.BinaryId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -113,7 +113,7 @@
                     @Html.DisplayNameFor(model => model.Mobile)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Class)
+                    @Html.DisplayNameFor(model => model.ClassName)
                 </th>
                 <th>
                     Notes
@@ -129,9 +129,9 @@
                     <td>
                         @{
                             var imageSource = "/Content/default_avatar.png";
-                            if (item.Picture != null && item.Picture.Data != null)
+                            if (item.Picture != null && item.Picture != null)
                             {
-                                var base64 = Convert.ToBase64String(item.Picture.Data);
+                                var base64 = Convert.ToBase64String(item.Picture);
                                 imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
                             }
                         }
@@ -152,11 +152,11 @@
                         @Html.DisplayFor(modelItem => item.Mobile)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Class.DisplayName)
+                        @Html.DisplayFor(modelItem => item.ClassName)
                     </td>
                     <td>
                         <a title="Create a note for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Create", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-bookmark"></i></a>
-                        @if(item.NotesReceived.Count != 0)
+                        @if(item.NotesCount != 0)
                         {
                             <a title="List all notes for this student" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Index", "Notes", new { studentId = item.Id })"><i class="glyphicon glyphicon-book"></i></a>
                         }
