@@ -77,9 +77,12 @@
                         @Html.DisplayFor(modelItem => item.TeacherName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StudentsCount)
-                        /
-                        @Html.DisplayFor(modelItem => item.ClassSize)
+                         @if (item.ClassSize.HasValue)
+                         {
+                            @Html.DisplayFor(modelItem => item.StudentsCount)
+                            <text>/</text>
+                            @Html.DisplayFor(modelItem => item.ClassSize)                        
+                         }
                     </td>
                     <td class="text-right">
                         @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
