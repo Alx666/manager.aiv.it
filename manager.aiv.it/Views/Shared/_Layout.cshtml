@@ -10,7 +10,10 @@
     @Styles.Render("~/Content/jasny-bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="@(ViewContext.RouteData.Values["controller"].ToString().ToLower()) @(ViewContext.RouteData.Values["action"].ToString().ToLower())">
+<body class="@(ViewContext.RouteData.Values["controller"].ToString().ToLower()) 
+             @(ViewContext.RouteData.Values["action"].ToString().ToLower())">
+    <canvas id="starfield"></canvas>
+
     <div class="navbar-inverse navbar-collapse collapse navbar-right pull-right">
         <ul class="nav navbar-nav">
             @{
@@ -132,6 +135,7 @@
     <script type="text/javascript" src="~/Scripts/jasny-bootstrap.js"></script>
     <script type="text/javascript" src="~/Scripts/mozilla-string-view.js"></script>
     <script type="text/javascript" src="~/Scripts/aiv.js"></script>
+    <!--<script type="text/javascript" src="~/Scripts/starfield.js"></script>-->
     
 </body>
 </html>

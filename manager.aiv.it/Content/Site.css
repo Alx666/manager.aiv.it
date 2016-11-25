@@ -47,10 +47,20 @@ body {
 }
 
 body.login {
-    background: url(http://www.aiv01.it/galleries/10.jpg);
+    /*background: url(http://www.aiv01.it/galleries/10.jpg);*/
+    background-color: black;
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+canvas#starfield {
+    display: none;
+    overflow:hidden;
+}
+
+body.login canvas#starfield {
+    display: block;
 }
 
 .text-danger.field-validation-error {
@@ -260,9 +270,10 @@ body.login {
 
 .login-panel {
     padding: 32px;
-    border: 1px solid #eee;
+    border: none;
+    background: none;
+    background-color: transparent;
     border-radius: 22px;
-    background-color: rgba(255, 255, 255, 0.3);
     margin-left: 16px;
     color: white;
     width: 560px;
@@ -398,6 +409,21 @@ button a {
 .checkbox .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-handle-on, 
 .checkbox .bootstrap-switch.bootstrap-switch-readonly .bootstrap-switch-label {
     cursor: not-allowed !important;
+}
+
+.login .navbar {
+    opacity: 0.6;
+    -webkit-transition: opacity .3s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out;
+    -ms-transition: opacity .3s ease-in-out;
+    -o-transition: opacity .3s ease-in-out;
+    transition: opacity .3s ease-in-out;
+}
+
+.navbar,
+.navbar:hover,
+.navbar:focus {
+    opacity: 1;
 }
 
 .navbar navbar-inverse navbar-fixed-top > .container,
