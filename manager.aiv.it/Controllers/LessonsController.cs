@@ -21,101 +21,100 @@ namespace manager.aiv.it.Controllers
         public ActionResult Index(string search, int? searchId)
         {
             User hUser = db.Users.Find((int)Session.GetUser().Id);
-
             
-
             var     hSearchTypes    =   from t in Enum.GetValues(typeof(LessonsSearchType)) as LessonsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(LessonsSearchType), t)};
             int?    vSelectedvalue  =   null;
 
             //defaults lessons of interest for the current teacher
-            IEnumerable<ViewLessonFullData> hLessons = db.ViewLessonFullDatas;
+            IEnumerable<ViewLessonFullData> hLessonsView = db.ViewLessonFullDatas;
+            IEnumerable<Lesson> hLessons;
 
-            //if (searchId.HasValue && search != null)
-            //{
-            //    string[]            hKeywords   = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
-            //    LessonsSearchType   eType       = (LessonsSearchType)searchId.Value;
+            if (searchId.HasValue && search != null)
+            {
+                string[] hKeywords = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
+                LessonsSearchType eType = (LessonsSearchType)searchId.Value;
 
-            //    if (eType == LessonsSearchType.Teacher)
-            //    {
-            //        var hSearchSet = from t in db.Roles.Find((int)RoleType.Teacher).Users select new { Teacher = t, Name = t.Name + " " + t.Surname };
+                if (eType == LessonsSearchType.Teacher)
+                {
+                    var hSearchSet = from t in db.Roles.Find((int)RoleType.Teacher).Users select new { Teacher = t, Name = t.DisplayName.ToLower() };
 
-            //        hLessons = (from t in hSearchSet
-            //                    from l in t.Teacher.LessonsTeached
-            //                    where hKeywords.All(kw => t.Name.Contains(kw))
-            //                    select l).Distinct();
+                    hLessons =  (from t in hSearchSet
+                                 where hKeywords.All(kw => t.Name.Contains(kw))
+                                 select t.Teacher).SelectMany(t => t.LessonsTeached);
+                }
+                else if (eType == LessonsSearchType.Student)
+                {
+                    var hSearchSet = from t in db.Roles.Find((int)RoleType.Student).Users select new { Student = t, Name = t.DisplayName.ToLower() };
 
-            //    }
-            //    else if (eType == LessonsSearchType.Student)
-            //    {
-            //        var hSearchSet = from s in db.Roles.Find((int)RoleType.Student).Users select new { Student = s, Name = s.Name + " " + s.Surname };
+                    hLessons = (from t in hSearchSet
+                                where hKeywords.All(kw => t.Name.Contains(kw))
+                                select t.Student).SelectMany(t => t.LessonsFollowed);
+                }
+                else if (eType == LessonsSearchType.Class)
+                {
+                    var hSearchSet = db.Classes.ToList().Select(c => new { Class = c, Name = c.DisplayName.ToLower() });
 
-            //        hLessons = (from s in hSearchSet
-            //                    from l in s.Student.LessonsFollowed
-            //                    from k in hKeywords
-            //                    where k.All(kw => s.Name.Contains(k))
-            //                    select l).Distinct();
-            //    }
-            //    else if (eType == LessonsSearchType.Class)
-            //    {
-            //        var hSearchSet = db.Classes.ToList().Select(c => new { Class = c, Name = c.DisplayName.ToLower() });
+                    hLessons = (from s in hSearchSet
+                                where hKeywords.All(kw => s.Name.Contains(kw))
+                                select s.Class).SelectMany(c => c.Lessons);
+                }
+                else if (eType == LessonsSearchType.Course)
+                {
+                    var hSearchSet = db.Courses.ToList().Select(c => new { Course = c, Name = c.DisplayName.ToLower() }); //Can't invoke DisplayName on entity model
 
-            //        hLessons = (from s in hSearchSet
-            //                    where hKeywords.All(kw => s.Name.Contains(kw))
-            //                    select s.Class).SelectMany(c => c.Lessons);
-            //    }
-            //    else if (eType == LessonsSearchType.Course)
-            //    {
-            //        var hSearchSet = db.Courses.ToList().Select(c => new { Course = c, Name = c.DisplayName.ToLower() }); //Can't invoke DisplayName on entity model
+                    hLessons = (from c in hSearchSet
+                                from l in db.Lessons
+                                where l.Class.Edition.Course == c.Course && hKeywords.All(kw => c.Name.Contains(kw))
+                                select l).Distinct();
+                }
+                else if (eType == LessonsSearchType.Note)
+                {
+                    hLessons = from l in db.Lessons
+                               where hKeywords.All(kw => l.Notes.Contains(kw))
+                               select l;
+                }
+                else if (eType == LessonsSearchType.Topic)
+                {
+                    var hSearchSet = db.Topics.ToList().Select(t => new { Topic = t, Name = t.DisplayName.ToLower() }); //Can't invoke DisplayName on entity model
 
-            //        hLessons = (from c in hSearchSet
-            //                    from l in db.Lessons
-            //                    where l.Class.Edition.Course == c.Course && hKeywords.All(kw => c.Name.Contains(kw))
-            //                    select l).Distinct();
-            //    }
-            //    else if (eType == LessonsSearchType.Note)
-            //    {
-            //        hLessons = from l in db.Lessons
-            //                   where hKeywords.All(kw => l.Notes.Contains(kw))
-            //                   select l;
-            //    }
-            //    else if (eType == LessonsSearchType.Topic)
-            //    {
-            //        var hSearchSet = db.Topics.ToList().Select(t => new { Topic = t, Name = t.DisplayName.ToLower() }); //Can't invoke DisplayName on entity model
+                    hLessons = from t in hSearchSet
+                               from l in t.Topic.Lessons
+                               where hKeywords.All(kw => t.Name.Contains(kw))
+                               select l;
+                }
+                else
+                {
+                    //search everything everywhere
+                    hLessons = (from l in db.Lessons.Include(x => x.Class.Edition.Course)
+                                from s in l.Students
+                                from t in l.Topics
+                                from x in hKeywords
+                                where
+                                    l.Notes.Contains(x) ||
+                                    s.Name.Contains(x) ||
+                                    s.Surname.Contains(x) ||
+                                    t.Name.Contains(x) ||
+                                    t.Description.Contains(x) ||
+                                    l.Teacher.Name.Contains(x) ||
+                                    l.Teacher.Surname.Contains(x)
+                                select l).DistinctBy(l => l.Id);
+                }
 
-            //        hLessons =  from t in hSearchSet
-            //                    from l in t.Topic.Lessons
-            //                    where hKeywords.All(kw => t.Name.Contains(kw))
-            //                    select l;
-            //    }
-            //    else
-            //    {
-            //        //search everything everywhere
-            //        hLessons = (from l in db.Lessons.Include(x => x.Class.Edition.Course)
-            //                    from s in l.Students
-            //                    from t in l.Topics
-            //                    from x in hKeywords
-            //                    where
-            //                    l.Notes.Contains(x) ||
-            //                    s.Name.Contains(x) ||
-            //                    s.Surname.Contains(x) ||
-            //                    t.Name.Contains(x) ||
-            //                    t.Description.Contains(x) ||
-            //                    l.Teacher.Name.Contains(x) ||
-            //                    l.Teacher.Surname.Contains(x)
-            //                    select l).DistinctBy(l => l.Id);
-            //    }
+                vSelectedvalue = searchId.Value;
 
-            //    vSelectedvalue      = searchId.Value;
-            //    ViewBag.SearchId    =   new SelectList(hSearchTypes, "Id", "Name", vSelectedvalue); 
-            //}
-            //else
-            //{
-            //    ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
-            //}
+                hLessonsView = from l in hLessons
+                               join v in hLessonsView
+                               on l.Id equals v.Id
+                               select v;
 
-
-            ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
-            return View(hLessons.OrderByDescending(l => l.Date));
+                ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", vSelectedvalue);
+            }
+            else
+            {
+                ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
+            }
+           
+            return View(hLessonsView.OrderByDescending(l => l.Date));
         }
 
         // GET: Lessons/Details/5
