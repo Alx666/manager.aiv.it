@@ -259,7 +259,7 @@ namespace manager.aiv.it.Controllers
 
             IEnumerable<int> hSelectedStudents;
 
-            if (!classid.HasValue)
+            if (classid.HasValue)
             {
                 classid = lesson.Class.Id;
                 hSelectedStudents = lesson.Students.Select(s => s.Id);
@@ -273,8 +273,8 @@ namespace manager.aiv.it.Controllers
             //var vToSelect      = from hS in lesson.Class.S where hS.c
 
 
-            User hTeacher = db.Users.Find(Session.GetUser().Id);
-            if (hTeacher == null)
+            User hUser = db.Users.Find(Session.GetUser().Id);
+            if (hUser == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             Class hClass = db.Classes.Find(classid);
@@ -282,13 +282,13 @@ namespace manager.aiv.it.Controllers
             if (hClass == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            if (!hClass.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id))
+            if (!hClass.Edition.Course.Teachers.Select(t => t.Id).Contains(hUser.Id) && !Session.GetUser().IsSecretary)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var hTeachers = hClass.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
             ViewBag.ClassId   = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
-            ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
+            ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", lesson.TeacherId);
             ViewBag.Students  = new MultiSelectList(vClassStudents, "Id", "Name", hSelectedStudents);
             ViewBag.topics    = new MultiSelectList(hClass.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName", lesson.Topics.Select(e => e.Id));
 

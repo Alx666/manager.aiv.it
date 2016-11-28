@@ -82,13 +82,13 @@ namespace manager.aiv.it.Controllers
                 return View(model);
             }
 
-            User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).FirstOrDefault();
+            User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).Include(u => u.Picture).FirstOrDefault();
 
             if (hLogin != null)
             {
                 Session.LoadUser(hLogin);
 
-                hLogin.Picture = (hLogin != null && hLogin.Picture != null) ? new Binary(hLogin.Picture) : null; //Hax
+                //hLogin.Picture = (hLogin != null && hLogin.Picture != null) ? new Binary(hLogin.Picture) : null; //Hax
                 EventLog.Log(db, hLogin, EventLogType.LoginSuccess, null, true);
 
                 if (hLogin.IsOnly(RoleType.Student))
