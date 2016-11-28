@@ -57,6 +57,11 @@
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Assignments" ? "active" : "")">@Html.ActionLink("Assignments", "Index", "Assignments")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
                     }
+
+                    if (hUser.IsDeveloper)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Developer" ? "active" : "")">@Html.ActionLink("EventLogs", "EventLogs", "Developer")</li>
+                    }
                 }
             }
         </ul>

@@ -17,11 +17,65 @@ namespace manager.aiv.it.Controllers
     public class AccountController : Controller
     {
         private AivEntities db = new AivEntities();
+     
 
         public AccountController()
         {
         }
 
+
+        [AllowAnonymous]
+        public void GetPasswordToken(string sEmail, string sNewPassword)
+        {
+            try
+            {
+                sEmail = sEmail.ToLower();
+
+                System.Web.HttpContext.Current.Application.Lock();
+
+                string sToken = $"{sEmail} {sNewPassword}".Encrypt();
+
+                System.Web.HttpContext.Current.Application[sToken] = true;
+
+                Emailer.Send(sEmail, "Password Change Request", "http://37.187.154.24:28080/Account/PasswordReset?sEncodedData=" + sToken);
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                System.Web.HttpContext.Current.Application.UnLock();
+            }
+        }
+
+        [AllowAnonymous]
+        public void PasswordReset(string sEncodedData)
+        {
+            try
+            {
+                System.Web.HttpContext.Current.Application.Lock();                
+                System.Web.HttpContext.Current.Application[sEncodedData] = false;
+
+                string[] sChangeData = sEncodedData.Decrypt().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                string sEmail       = sChangeData[0];
+                string sPassword    = sChangeData[1];
+
+                User hUser = db.Users.Where(u => u.Email == sEmail).First();
+
+                hUser.Password = sPassword;
+
+                db.SaveChanges();
+
+                Emailer.Send(hUser.Email, "Password Changed","Password Change Successful");
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                System.Web.HttpContext.Current.Application.UnLock();
+            }
+        }
 
         //
         // GET: /Account/Login
