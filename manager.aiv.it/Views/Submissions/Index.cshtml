@@ -78,9 +78,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.RevisorNote)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Binary.Filename)
-                    </td>
+                        @if (item.Binary != null)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Binary.Filename)
+                            </td>
+                        }
                     <td class="text-right">
                         @*<a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-pencil"></i></a>*@
                         @*<a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-remove"></i></a>*@

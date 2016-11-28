@@ -16,7 +16,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date);
+                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date.Day <= a.Deadline.Date.Day);
                 }
 
                 @if (assignments.Count() == 0)

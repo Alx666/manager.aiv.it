@@ -18,7 +18,7 @@ namespace manager.aiv.it.Controllers
             HomeViewModel hModel = new HomeViewModel();
 
             if(Session.GetUser().IsTeacher)
-                hModel.Submissions = db.Submissions.Where(s => DateTime.Now.Day > s.Assignment.Deadline.Day);
+                hModel.Submissions = db.Submissions.Where(s => DateTime.Now.Day > s.Assignment.Deadline.Day && s.Score == null);
 
             if(Session.GetUser().IsSecretary)
                 hModel.Lessons     = from l in db.Lessons where (!l.ClassSize.HasValue || l.Students.Count() == 0)  && l.Date <= DateTime.Now orderby l.Date descending select l;
