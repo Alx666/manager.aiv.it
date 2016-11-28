@@ -87,7 +87,7 @@
                     <td class="text-right">
                         @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
                         {
-                            <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id, classid = item.ClassId })"><i class="glyphicon glyphicon-pencil"></i></a>
 
                             if (Session.GetUser().IsTeacher)
                             {
