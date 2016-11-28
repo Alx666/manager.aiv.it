@@ -113,8 +113,10 @@ namespace manager.aiv.it.Controllers
             {
                 ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
             }
-           
-            return View(hLessonsView.OrderByDescending(l => l.Date));
+
+            
+
+            return View(hLessonsView.GroupBy(l => l.Date).OrderByDescending(l => l.Key));
         }
 
         // GET: Lessons/Details/5

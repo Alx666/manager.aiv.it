@@ -1,4 +1,4 @@
-﻿@model IEnumerable<manager.aiv.it.ViewLessonFullData>
+﻿@model IEnumerable<IGrouping<DateTime, ViewLessonFullData>>
 
 @{
     ViewBag.Title = "Index";
@@ -48,7 +48,7 @@
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date
                 </th>
                 <th>
                     Class
@@ -64,39 +64,47 @@
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var group in Model)
             {
-                <tr>
-                    <td>
-                        @item.Date.ToShortDateString()
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TeacherName)
-                    </td>
-                    <td>
-                         @if (item.ClassSize.HasValue)
-                         {
-                            @Html.DisplayFor(modelItem => item.StudentsCount)
-                            <text>/</text>
-                            @Html.DisplayFor(modelItem => item.ClassSize)                        
-                         }
-                    </td>
-                    <td class="text-right">
-                        @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
-                        {
-                            <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-
-                            if (Session.GetUser().IsTeacher)
+                foreach (var lesson in group)
+                {
+                    <tr>
+                        <td>
+                            @if (lesson == group.First())
                             {
-                                <a title="Delete Lesson" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                                <strong>@lesson.Date.ToShortDateString()</strong>
                             }
-                        }
-                        <a title="View Lesson"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => lesson.ClassName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => lesson.TeacherName)
+                        </td>
+                        <td>
+                             @if (lesson.ClassSize.HasValue)
+                             {
+                                @Html.DisplayFor(modelItem => lesson.StudentsCount)
+                                <text>/</text>
+                                @Html.DisplayFor(modelItem => lesson.ClassSize)                        
+                             }
+                        </td>
+                        <td class="text-right">
+                            @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
+                            {
+                                <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = lesson.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                                if (Session.GetUser().IsTeacher)
+                                {
+                                    <a title="Delete Lesson" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = lesson.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                                }
+                            }
+                            <a title="View Lesson"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = lesson.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                }
+
+
             }
 
             @if (Model.Count() == 0)
