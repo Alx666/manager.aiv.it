@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EventLog>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "EventLogs";
 }
 
 <div class="row row-title title-margin">
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("IndexEventLogs", "Developer", FormMethod.Get, new { @class = "filters" }))
+        @*@using (Html.BeginForm("EventLogs", "Developer", FormMethod.Get, new { @class = "filters" }))
         {
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6">
@@ -30,7 +30,7 @@
                     @Html.DropDownList("SearchId", null, "-", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
-        }
+        }*@
     </div>
 </div>
 

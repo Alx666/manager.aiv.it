@@ -60,6 +60,7 @@ namespace manager.aiv.it.Controllers
                 Session.LoadUser(hLogin);
 
                 hLogin.Picture = (hLogin != null && hLogin.Picture != null) ? new Binary(hLogin.Picture) : null; //Hax
+                EventLog.Log(db, hLogin, EventLogType.LoginSuccess, null, true);
 
                 if (hLogin.IsOnly(RoleType.Student))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
@@ -68,7 +69,9 @@ namespace manager.aiv.it.Controllers
             }
             else
             {
+                
                 ModelState.AddModelError("", "Invalid login attempt.");
+                EventLog.Log(db, null, EventLogType.LoginFailed, $"Login Failed: \"{Request.UserHostAddress}\" on (\"{model.Email}\",\"{model.Password}\")", true);
                 return View(model);
             }
         }

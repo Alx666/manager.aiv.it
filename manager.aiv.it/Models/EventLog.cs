@@ -8,20 +8,35 @@ namespace manager.aiv.it
 {
     public partial class EventLog
     {
-        public static EventLog Create(User hUser, EventLogType eType, string sText)
+        public static EventLog Create(AivEntities hDb, User hUser, EventLogType eType, string sText)
         {
             EventLog hNew = new EventLog();
-            hNew.User = hUser;
-            hNew.Type = (short)eType;
-            hNew.Description = sText;
-            hNew.Date = DateTime.Now;
+
+            try
+            {
+                hNew.User           = hDb.Users.Find(hUser.Id);
+            }
+            catch (Exception)
+            {
+                hNew.User           = null;
+            }
+            finally
+            {
+                hNew.Type           = (short)eType;
+                hNew.Description    = sText;
+                hNew.Date           = DateTime.Now;
+            }
+            
             return hNew;
         }
 
-        public void Log(AivEntities hDb, User hUser, EventLogType eType, string sText)
+        public static void Log(AivEntities hDb, User hUser, EventLogType eType, string sText, bool bAutosave = false)
         {
-            EventLog hNew = Create(hUser, eType, sText);
+            EventLog hNew = Create(hDb, hUser, eType, sText);
             hDb.EventLogs.Add(hNew);
+
+            if (bAutosave)
+                hDb.SaveChanges();
         }
     }
 

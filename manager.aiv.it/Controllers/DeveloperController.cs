@@ -12,35 +12,41 @@ namespace manager.aiv.it.Controllers
     {
         private AivEntities db = new AivEntities();
 
+
         [CustomAuthorize(RoleType.Developer)]
-        public ActionResult ClearBinaries()
+        public ActionResult EventLogs()
         {
-            List<Binary> hTopicBin = this.Clear<Topic, Binary>(db.Topics, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
-            List<Binary> hLessoBin = this.Clear<Lesson, Binary>(db.Lessons, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
-            List<Binary> hSubmiBin = this.Clear<Submission, Binary>(db.Submissions, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
-            List<Binary> hExercise = this.Clear<Exercise, Binary>(db.Exercises, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
-
-            List<string> hAll = new List<string>();
-            hAll.Add($"Removed From Topics: {hTopicBin.Count}");
-            hAll.AddRange(hTopicBin.Select(b => $"{b.Id} {b.Filename}"));
-
-            hAll.Add($"Removed From Lessons: {hLessoBin.Count}");
-            hAll.AddRange(hLessoBin.Select(b => $"{b.Id} {b.Filename}"));
-
-            hAll.Add($"Removed From Submissions: {hSubmiBin.Count}");
-            hAll.AddRange(hSubmiBin.Select(b => $"{b.Id} {b.Filename}"));
-
-            hAll.Add($"Removed From Exercise: {hExercise.Count}");
-            hAll.AddRange(hExercise.Select(b => $"{b.Id} {b.Filename}"));
-
-
-            db.SaveChanges();
-
-            return View(hAll);
+            return View(db.EventLogs.OrderBy(e => e.Date));
         }
 
-        //Generic purpose clean-up algorithm
+        //[CustomAuthorize(RoleType.Developer)]
+        //public ActionResult ClearBinaries()
+        //{
+        //    List<Binary> hTopicBin = this.Clear<Topic, Binary>(db.Topics, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
+        //    List<Binary> hLessoBin = this.Clear<Lesson, Binary>(db.Lessons, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
+        //    List<Binary> hSubmiBin = this.Clear<Submission, Binary>(db.Submissions, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
+        //    List<Binary> hExercise = this.Clear<Exercise, Binary>(db.Exercises, db.Binaries, t => t.Binary != null, t => t.Binary, t => t.Binary = null);
 
+        //    List<string> hAll = new List<string>();
+        //    hAll.Add($"Removed From Topics: {hTopicBin.Count}");
+        //    hAll.AddRange(hTopicBin.Select(b => $"{b.Id} {b.Filename}"));
+
+        //    hAll.Add($"Removed From Lessons: {hLessoBin.Count}");
+        //    hAll.AddRange(hLessoBin.Select(b => $"{b.Id} {b.Filename}"));
+
+        //    hAll.Add($"Removed From Submissions: {hSubmiBin.Count}");
+        //    hAll.AddRange(hSubmiBin.Select(b => $"{b.Id} {b.Filename}"));
+
+        //    hAll.Add($"Removed From Exercise: {hExercise.Count}");
+        //    hAll.AddRange(hExercise.Select(b => $"{b.Id} {b.Filename}"));
+
+
+        //    db.SaveChanges();
+
+        //    return View(hAll);
+        //}
+
+        //Generic purpose clean-up algorithm
         private List<T> Clear<K,T>(DbSet<K> hSet, DbSet<T> hRemoveSet, Func<K,bool> hCondition, Func<K,T> hSelector, Action<K> hNullifier) 
             where K : class
             where T : class
@@ -52,12 +58,12 @@ namespace manager.aiv.it.Controllers
             return hToRemove;
         }
 
-        [CustomAuthorize(RoleType.Developer)]
-        public void RepairBrokenLessons()
-        {
-            var hLessons = from l in db.Lessons where l.Students.Count() == 0 select l;
-            hLessons.ToList().ForEach(l => l.ClassSize = null);
-        }
+        //[CustomAuthorize(RoleType.Developer)]
+        //public void RepairBrokenLessons()
+        //{
+        //    var hLessons = from l in db.Lessons where l.Students.Count() == 0 select l;
+        //    hLessons.ToList().ForEach(l => l.ClassSize = null);
+        //}
 
 
 

@@ -365,8 +365,12 @@ namespace manager.aiv.it.Controllers
         public FileContentResult Download(int BinaryId)
         {
             Binary foundFile = db.Binaries.Find(BinaryId);
+
             if (foundFile != null)
+            {
+                EventLog.Log(db, Session.GetUser(), EventLogType.LessonDownload, $"Downloaded lesson binary: {BinaryId}", true);
                 return File(foundFile.Data, System.Net.Mime.MediaTypeNames.Application.Octet, foundFile.Filename);
+            }
 
             return null;
         }
