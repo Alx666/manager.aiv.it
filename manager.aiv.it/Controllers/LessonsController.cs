@@ -261,7 +261,6 @@ namespace manager.aiv.it.Controllers
 
             if (classid.HasValue)
             {
-                classid = lesson.Class.Id;
                 hSelectedStudents = lesson.Students.Select(s => s.Id);
             }
             else
@@ -270,7 +269,6 @@ namespace manager.aiv.it.Controllers
             }
 
             var vClassStudents = from hU in db.Classes.Find(classid).Students select new { Id = hU.Id, Name = hU.Name + " " + hU.Surname };
-            //var vToSelect      = from hS in lesson.Class.S where hS.c
 
 
             User hUser = db.Users.Find(Session.GetUser().Id);
