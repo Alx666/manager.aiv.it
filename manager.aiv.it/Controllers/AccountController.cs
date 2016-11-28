@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using manager.aiv.it.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace manager.aiv.it.Controllers
 {
