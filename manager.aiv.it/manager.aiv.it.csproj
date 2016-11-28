@@ -214,6 +214,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Emailer.cs" />
+    <Compile Include="EventLog.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Exercise.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -247,6 +250,7 @@
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -447,6 +451,7 @@
     <Content Include="Views\Classes\_PartialDetailLessons.cshtml" />
     <Content Include="Views\Users\_PartialUserRoles.cshtml" />
     <Content Include="Views\Developer\ClearBinaries.cshtml" />
+    <Content Include="Views\Developer\EventLogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

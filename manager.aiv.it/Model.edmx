@@ -77,6 +77,16 @@
           <Property Name="EditionId" Type="int" Nullable="false" />
           <Property Name="TopicId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Exercise">
           <Key>
             <PropertyRef Name="Id" />
@@ -374,6 +384,20 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Principal>
             <Dependent Role="EditionSchedule">
               <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventLog_ToUser">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EventLog" Type="Self.EventLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventLog">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -716,6 +740,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="CoveredTopic" EntityType="Self.CoveredTopic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Edition" EntityType="Self.Edition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EditionSchedule" EntityType="Self.EditionSchedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventLog" EntityType="Self.EventLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exercise" EntityType="Self.Exercise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExerciseTopic" EntityType="Self.ExerciseTopic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExerciseType" EntityType="Self.ExerciseType" Schema="dbo" store:Type="Tables" />
@@ -806,6 +831,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <AssociationSet Name="FK_EditionSchedule_ToTopic" Association="Self.FK_EditionSchedule_ToTopic">
             <End Role="Topic" EntitySet="Topic" />
             <End Role="EditionSchedule" EntitySet="EditionSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventLog_ToUser" Association="Self.FK_EventLog_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="EventLog" EntitySet="EventLog" />
           </AssociationSet>
           <AssociationSet Name="FK_Exercise_ToBinary" Association="Self.FK_Exercise_ToBinary">
             <End Role="Binary" EntitySet="Binary" />
@@ -1046,6 +1075,11 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="ViewLessonPresences" EntityType="AivModel.ViewLessonPresence" />
           <EntitySet Name="ViewStudentFullDatas" EntityType="AivModel.ViewStudentFullData" />
           <EntitySet Name="ViewStudentNotes" EntityType="AivModel.ViewStudentNote" />
+          <EntitySet Name="EventLogs" EntityType="AivModel.EventLog" />
+          <AssociationSet Name="FK_EventLog_ToUser" Association="AivModel.FK_EventLog_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="EventLog" EntitySet="EventLogs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Assignment">
           <Key>
@@ -1426,6 +1460,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="LessonsFollowed" Relationship="AivModel.Attending" FromRole="User" ToRole="Lesson" />
           <NavigationProperty Name="Roles" Relationship="AivModel.Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Courses" Relationship="AivModel.Teaching" FromRole="User" ToRole="Course" />
+          <NavigationProperty Name="Logs" Relationship="AivModel.FK_EventLog_ToUser" FromRole="User" ToRole="EventLog" />
         </EntityType>
         <Association Name="FK_ExerciseAssignment_ToTeacher">
           <End Type="AivModel.User" Role="User" Multiplicity="1">
@@ -1611,6 +1646,31 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="NotesReceived" Type="Int32" />
         </EntityType>
+        <EntityType Name="EventLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="AivModel.FK_EventLog_ToUser" FromRole="EventLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_EventLog_ToUser">
+          <End Type="AivModel.User" Role="User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AivModel.EventLog" Role="EventLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventLog">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1871,6 +1931,17 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <EntityTypeMapping TypeName="AivModel.ViewStudentNote">
               <MappingFragment StoreEntitySet="ViewStudentNotes">
                 <ScalarProperty Name="NotesReceived" ColumnName="NotesReceived" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLogs">
+            <EntityTypeMapping TypeName="AivModel.EventLog">
+              <MappingFragment StoreEntitySet="EventLog">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
