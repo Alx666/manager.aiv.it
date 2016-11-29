@@ -46,7 +46,7 @@
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
                     }
 
-                    if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher)
+                    if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher || hUser.IsDirector)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
                     }
@@ -58,10 +58,18 @@
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Submissions" ? "active" : "")">@Html.ActionLink("Submissions", "Index", "Submissions")</li>
                     }
 
+                    if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher || hUser.IsDirector)
+                    {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Communications" ? "active" : "")">@Html.ActionLink("Communication", "Create", "Communications")</li>
+                    }
+
                     if (hUser.IsDeveloper)
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Developer" ? "active" : "")">@Html.ActionLink("EventLogs", "EventLogs", "Developer")</li>
                     }
+
+
+
                 }
             }
         </ul>

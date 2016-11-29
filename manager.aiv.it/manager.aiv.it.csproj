@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssignmentsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\CommunicationsController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\EditionsController.cs" />
@@ -452,6 +453,7 @@
     <Content Include="Views\Users\_PartialUserRoles.cshtml" />
     <Content Include="Views\Developer\ClearBinaries.cshtml" />
     <Content Include="Views\Developer\EventLogs.cshtml" />
+    <Content Include="Views\Communications\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
