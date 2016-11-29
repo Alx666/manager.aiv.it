@@ -44,7 +44,7 @@ namespace manager.aiv.it.Controllers
 
             var hAll = hStudents.Concat(hStaff).Distinct().ToList();
 
-            Emailer.Send(hAll, subject, message);
+            //Emailer.Send(hAll, subject, message);
 
             return RedirectToAction("Index", "Home");
         }
