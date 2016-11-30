@@ -31,7 +31,6 @@ namespace manager.aiv.it
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
-        public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -43,5 +42,6 @@ namespace manager.aiv.it
         public virtual DbSet<ViewStudentFullData> ViewStudentFullDatas { get; set; }
         public virtual DbSet<ViewStudentNote> ViewStudentNotes { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
+        public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
     }
 }

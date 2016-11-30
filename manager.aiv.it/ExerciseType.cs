@@ -22,6 +22,7 @@ namespace manager.aiv.it
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Extensions { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exercise> Exercises { get; set; }

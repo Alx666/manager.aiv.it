@@ -114,6 +114,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Extensions" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Lesson">
           <Key>
@@ -952,7 +953,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="Courses" EntityType="AivModel.Course" />
           <EntitySet Name="Editions" EntityType="AivModel.Edition" />
           <EntitySet Name="Exercises" EntityType="AivModel.Exercise" />
-          <EntitySet Name="ExerciseTypes" EntityType="AivModel.ExerciseType" />
           <EntitySet Name="Lessons" EntityType="AivModel.Lesson" />
           <EntitySet Name="Notes" EntityType="AivModel.Note" />
           <EntitySet Name="Roles" EntityType="AivModel.Role" />
@@ -1005,10 +1005,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <AssociationSet Name="FK_Topic_ToCourse" Association="AivModel.FK_Topic_ToCourse">
             <End Role="Course" EntitySet="Courses" />
             <End Role="Topic" EntitySet="Topics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Exercise_ToExerciseType" Association="AivModel.FK_Exercise_ToExerciseType">
-            <End Role="ExerciseType" EntitySet="ExerciseTypes" />
-            <End Role="Exercise" EntitySet="Exercises" />
           </AssociationSet>
           <AssociationSet Name="CoveredTopic" Association="AivModel.CoveredTopic">
             <End Role="Lesson" EntitySet="Lessons" />
@@ -1079,6 +1075,11 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <AssociationSet Name="FK_EventLog_ToUser" Association="AivModel.FK_EventLog_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="EventLog" EntitySet="EventLogs" />
+          </AssociationSet>
+          <EntitySet Name="ExerciseTypes" EntityType="AivModel.ExerciseType" />
+          <AssociationSet Name="FK_Exercise_ToExerciseType" Association="AivModel.FK_Exercise_ToExerciseType">
+            <End Role="ExerciseType" EntitySet="ExerciseTypes" />
+            <End Role="Exercise" EntitySet="Exercises" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Assignment">
@@ -1164,17 +1165,9 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="Assignments" Relationship="AivModel.FK_ExerciseAssignment_ToExercise" FromRole="Exercise" ToRole="Assignment" />
           <NavigationProperty Name="Binary" Relationship="AivModel.FK_Exercise_ToBinary" FromRole="Exercise" ToRole="Binary" />
           <NavigationProperty Name="Course" Relationship="AivModel.FK_Exercise_ToCourse" FromRole="Exercise" ToRole="Course" />
-          <NavigationProperty Name="Type" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="Exercise" ToRole="ExerciseType" />
           <NavigationProperty Name="Topics" Relationship="AivModel.ExerciseTopic" FromRole="Exercise" ToRole="Topic" />
           <NavigationProperty Name="Author" Relationship="AivModel.FK_Exercise_ToUser" FromRole="Exercise" ToRole="User" />
-        </EntityType>
-        <EntityType Name="ExerciseType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="ExerciseType" ToRole="Exercise" />
+          <NavigationProperty Name="ExerciseType" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="Exercise" ToRole="ExerciseType" />
         </EntityType>
         <EntityType Name="Lesson">
           <Key>
@@ -1405,18 +1398,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Principal>
             <Dependent Role="Topic">
               <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Exercise_ToExerciseType">
-          <End Type="AivModel.ExerciseType" Role="ExerciseType" Multiplicity="1" />
-          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ExerciseType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Exercise">
-              <PropertyRef Name="TypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1671,6 +1652,27 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ExerciseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Extensions" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Exercises" Relationship="AivModel.FK_Exercise_ToExerciseType" FromRole="ExerciseType" ToRole="Exercise" />
+        </EntityType>
+        <Association Name="FK_Exercise_ToExerciseType">
+          <End Type="AivModel.ExerciseType" Role="ExerciseType" Multiplicity="1" />
+          <End Type="AivModel.Exercise" Role="Exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExerciseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exercise">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1740,14 +1742,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExerciseTypes">
-            <EntityTypeMapping TypeName="AivModel.ExerciseType">
-              <MappingFragment StoreEntitySet="ExerciseType">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1942,6 +1936,15 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExerciseTypes">
+            <EntityTypeMapping TypeName="AivModel.ExerciseType">
+              <MappingFragment StoreEntitySet="ExerciseType">
+                <ScalarProperty Name="Extensions" ColumnName="Extensions" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

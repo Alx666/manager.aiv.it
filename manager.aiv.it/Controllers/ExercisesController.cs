@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace manager.aiv.it.Controllers
 {
+    
     public class ExercisesController : Controller
     {
         private AivEntities db = new AivEntities();

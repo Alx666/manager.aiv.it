@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace manager.aiv.it
 {
@@ -21,7 +22,8 @@ namespace manager.aiv.it
 
         [Required]
         [DataType(DataType.MultilineText)]
-        [StringLength(1000)]
+        [StringLength(5000)]
+        [AllowHtml]
         string Description { get; }
 
         [Required]
