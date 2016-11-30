@@ -22,10 +22,10 @@
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SubmissionDate)
+                    Submission Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RevisionDate)
+                    Revision Date
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Score)
@@ -36,15 +36,15 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Revisor)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.Assignment.Description)
-                </th>
-                <th>
+                </th>*@
+                @*<th>
                     Revisor's Note
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Binary.Filename)
-                </th>
+                </th>*@
                 <th class="text-right table-actions">
                     Actions
                 </th>
@@ -59,20 +59,23 @@
                     <td>
                         @if (item.RevisionDate != null && item.RevisionDate is System.DateTime)
                         {
-                            <span>((System.DateTime) item.RevisionDate).ToShortDateString()</span>
+                            <span>@(((System.DateTime)item.RevisionDate).ToShortDateString())</span>
                         }
-                        @Html.DisplayFor(modelItem => item.RevisionDate)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Score)
+                        /
+                        @Html.DisplayFor(modelItem => item.Assignment.ExerciseValue)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Student.Name)
+                        @Html.DisplayFor(modelItem => item.Student.DisplayName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Revisor.Name)
+                        @Html.DisplayFor(modelItem => item.Revisor.DisplayName)
                     </td>
-                    <td>
+
+
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Assignment.Description)
                     </td>
                     <td>
@@ -83,7 +86,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Binary.Filename)
                             </td>
-                        }
+                        }*@
+
+
                     <td class="text-right">
                         @*<a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-pencil"></i></a>*@
                         @*<a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { assignmentId = item.AssignmentId, studentId = item.StudentId })"><i class="glyphicon glyphicon-remove"></i></a>*@

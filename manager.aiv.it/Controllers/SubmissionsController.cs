@@ -58,6 +58,7 @@ namespace manager.aiv.it.Controllers
                 existing.Revisor = db.Users.Find(Session.GetUser().Id);
                 existing.Score = submission.Score;
                 existing.RevisorNote = submission.RevisorNote;
+                existing.RevisionDate = DateTime.Now;
                 db.Entry(existing).State = EntityState.Modified;
                 db.SaveChanges();
             }
