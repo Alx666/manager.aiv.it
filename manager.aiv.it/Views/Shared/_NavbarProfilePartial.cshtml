@@ -4,7 +4,7 @@
             @{
                 var imageSource = "/Content/default_avatar.png";
                 var logged = Session.GetUser();
-                if (logged.Picture != null && logged.Picture.Data != null)
+                if (logged.Picture != null)
                 {
                     var base64 = Convert.ToBase64String(logged.Picture.Data);
                     imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);

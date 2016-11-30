@@ -85,6 +85,15 @@ namespace manager.aiv.it.Controllers
 
             User hLogin = (from u in db.Users where u.Email == model.Email && u.Password == model.Password select u).Include(u => u.Picture).FirstOrDefault();
 
+
+            if (hLogin.BinaryId != null && hLogin.Picture == null)
+            {
+                hLogin.BinaryId = null;
+                db.SaveChanges();
+            }
+
+
+
             if (hLogin != null)
             {
                 Session.LoadUser(hLogin);
