@@ -217,22 +217,15 @@
                                         </div>
                                     </div>
 
-
-                                     @*@if (Session.GetUser().Id == Model.Id)
-                                     {
-                                         using (Html.BeginForm("ChangePassword", "Users", null, FormMethod.Get, new { name = "form_picture", enctype = "multipart/form-data" }))
-                                         {
-                                            <div class="pull-right">
-                                                <div class="text-right">
-                                                    <a class="btn btn-primary" @*href="@Url.Action("Edit", new { id = Model.Id })"*@>
-                                                        @*<i class="glyphicon glyphicon-pencil pull-right icon-right"></i>
-                                                        <span>Change Password</span>
-                                                    </a>
-                                                </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-xs-3 col-sm-3 col-md-6">
+                                            <span class="bold">Access Type</span>
+                                        </div>
+                                            <div class="col-xs-9 col-sm-9 col-md-6 text-right">
+                                            @Model.Roles.Select(r => r.Name).Aggregate((c, n) => c + ", " + n)
                                             </div>
-                                         }
-                                     }*@
-
+                                    </div>
                                 </section>
                             </div>
                         </div>

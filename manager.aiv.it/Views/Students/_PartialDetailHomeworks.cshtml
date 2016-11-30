@@ -16,7 +16,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date.Day <= a.Deadline.Date.Day);
+                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date);
                 }
 
                 @if (assignments.Count() == 0)
@@ -26,7 +26,7 @@
                     </div>
                 }
 
-                @foreach (var item in Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date))
+                @foreach (var item in assignments)
                 {
                     Submission hSubmitted = (from s in item.Submissions where s.AssignmentId == item.Id && s.StudentId == Model.Id select s).FirstOrDefault();
 
@@ -103,7 +103,7 @@
                                                 <input type="hidden" name="assignmentId" value=@item.Id />
                                                 if (canUpload)
                                                 {
-                                                    <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange />
+                                                    <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange accept="@item.Exercise.Type.Extensions"/>
                                                 }
                                                 else
                                                 {
