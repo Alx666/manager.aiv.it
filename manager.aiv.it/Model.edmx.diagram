@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="0.75" PointY="8.25" />
         <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="3" PointY="8.25" />
         <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="12" PointY="2.875" />
-        <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="1.125" PointY="2.375" />
+        <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="1.25" PointY="1.875" />
         <EntityTypeShape EntityType="AivModel.Note" Width="1.5" PointX="12" PointY="12.375" />
         <EntityTypeShape EntityType="AivModel.Role" Width="1.5" PointX="7.5" PointY="4.875" />
         <EntityTypeShape EntityType="AivModel.Submission" Width="1.5" PointX="12.75" PointY="7.75" />

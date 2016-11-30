@@ -171,9 +171,15 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
-                assignment.Teacher = db.Users.Find(Session.GetUser().Id);
+                Assignment hPrevious = db.Assignments.Find(assignment.Id);
 
-                db.Entry(assignment).State = EntityState.Modified;
+                hPrevious.UnlockDate = assignment.UnlockDate;
+                hPrevious.Deadline = assignment.Deadline;
+                hPrevious.Description = assignment.Description;
+                hPrevious.TeacherId = assignment.TeacherId;
+                hPrevious.Teacher = db.Users.Find(Session.GetUser().Id);
+                hPrevious.Exercise = db.Exercises.Find(assignment.ExerciseId);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -181,6 +187,7 @@ namespace manager.aiv.it.Controllers
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", assignment.ClassId);
             ViewBag.ExerciseId = new SelectList(db.Exercises, "Id", "Name", assignment.ExerciseId);
             ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", assignment.TeacherId);
+
             return View(assignment);
         }
 

@@ -37,6 +37,6 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
         public virtual User Author { get; set; }
-        public virtual ExerciseType ExerciseType { get; set; }
+        public virtual ExerciseType Type { get; set; }
     }
 }
