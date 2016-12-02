@@ -175,6 +175,7 @@ namespace manager.aiv.it.Controllers
 
                 hPrevious.UnlockDate = assignment.UnlockDate;
                 hPrevious.Deadline = assignment.Deadline;
+                hPrevious.Class = db.Classes.Find(assignment.ClassId);
                 hPrevious.Description = assignment.Description;
                 hPrevious.TeacherId = assignment.TeacherId;
                 hPrevious.Teacher = db.Users.Find(Session.GetUser().Id);
