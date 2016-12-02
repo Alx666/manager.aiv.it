@@ -16,7 +16,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Developer)]
         public ActionResult EventLogs()
         {
-            return View(db.EventLogs.OrderBy(e => e.Date));
+            return View(db.EventLogs.OrderByDescending(e => e.Date));
         }
 
         //[CustomAuthorize(RoleType.Developer)]

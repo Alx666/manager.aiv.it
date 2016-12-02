@@ -31,20 +31,24 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Director, RoleType.Admin, RoleType.Teacher, RoleType.Secretary)]
         public ActionResult Create(List<int> classes, List<int> staff, string subject, string message)
         {
-            var hStudents = from i in classes
-                            join c in db.Classes
-                            on i equals c.Id
-                            from s in c.Students
-                            select s;
+            classes         = classes   ?? new List<int>();
+            staff           = staff     ?? new List<int>();
 
-            var hStaff    = from i in staff
-                            join u in db.Users
-                            on i equals u.Id
-                            select u;
+
+            var hStudents   = from i in classes
+                                join c in db.Classes
+                                on i equals c.Id
+                                from s in c.Students
+                                select s;
+
+            var hStaff      = from i in staff
+                                join u in db.Users
+                                on i equals u.Id
+                                select u;
 
             var hAll = hStudents.Concat(hStaff).Distinct().ToList();
 
-            //Emailer.Send(hAll, subject, message);
+            Emailer.Send(hAll, subject, message);
 
             return RedirectToAction("Index", "Home");
         }
