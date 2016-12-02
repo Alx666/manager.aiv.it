@@ -27,14 +27,18 @@
                 <div class="col col-xs-4 col-sm-8">
                     <span class="title">@Model.DisplayName</span>
                 </div>
-                <div class="col col-xs-4 col-sm-2">
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-floppy-disk pull-right icon-right"></i>
-                            <span>Save</span>
-                        </button>
+                @if (Model.RevisorId == null || (Model.RevisorId != null && Session.GetUser().Id == Model.RevisorId))
+                {
+                    <div class="col col-xs-4 col-sm-2">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-floppy-disk pull-right icon-right"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                }
+               
             </div>
 
             <div class="row">
