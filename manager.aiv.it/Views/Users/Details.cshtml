@@ -179,6 +179,26 @@
                                         </div>
                                     </div>
 
+                                    @if (Session.GetUser().Id == Model.Id)
+                                    {
+                                        using (Html.BeginForm("GetPasswordToken", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            <div class="row change-password">
+                                                <div class="col-sm-12 col-xs-12 col-md-12">
+                                                    <h6>Cambio password</h6>
+                                                    <input type="hidden" name="sEmail" value="@Model.Email" />
+                                                    <div class="input-group">
+                                                        <input name="sNewPassword" type="password" class="form-control">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default btn-primary" type="submit">Vai!</button>
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
                                 </section>
                             </div>
                         </div>
