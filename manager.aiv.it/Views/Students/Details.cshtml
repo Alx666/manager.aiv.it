@@ -4,6 +4,23 @@
     ViewBag.Title = "Details";
 }
 
+<div class="vertical-toolbar">
+    <ul>
+        <li title="Dati anagrafici">
+            <a href="#baseData"><i class="glyphicon glyphicon-user"></i></a>
+        </li>
+        <li title="Homeworks">
+            <a href="#headingHomeworks"><i class="glyphicon glyphicon-file"></i></a>
+        </li>
+        <li title="Lezioni">
+            <a href="#headingLessons"><i class="glyphicon glyphicon-film"></i></a>
+        </li>
+        <li title="Cambio password">
+            <a href="#changePassword"><i class="glyphicon glyphicon-asterisk"></i></a>
+        </li>
+    </ul>
+</div>
+
 <div class="details row">
 
     <div class="col-xs-12">
@@ -39,7 +56,7 @@
 
             <div class="col col-xs-12">
 
-                <div class="thumbnail">
+                <div class="thumbnail" id="baseData">
 
                     <div class="card-content">
                         <div class="row">
@@ -243,7 +260,7 @@
 
                 @if (Session.GetUser().Id == Model.Id)
                 {
-                    <div class="thumbnail">
+                    <div class="thumbnail" id="changePassword">
                         <div class="card-image">
                             <div class="card-quote">
                                 Cambio password
