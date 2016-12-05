@@ -93,7 +93,8 @@
                                                                            where s.AssignmentId == item.Id
                                                                            select s).FirstOrDefault();
                                                 bool bUploaded = anySubmitted != null;
-                                                bool canUpload = ((Model.Id == Session.GetUser().Id));
+                                                bool bDaysLeft = DateTime.Now.Date.AddDays(-1) < item.Deadline;
+                                                bool canUpload = (Model.Id == Session.GetUser().Id && bDaysLeft);
 
                                                 string sInputId = $"Input{@item.Id}";
                                                 string sOnChange = $"document.form_{@item.Id}.submit();";
