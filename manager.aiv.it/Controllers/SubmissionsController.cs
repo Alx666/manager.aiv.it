@@ -20,7 +20,7 @@ namespace manager.aiv.it.Controllers
         public ActionResult Index()
         {
             var submissions = db.Submissions.Include(s => s.Student).Include(s => s.Revisor).Include(s => s.Assignment);
-            return View(submissions.ToList());
+            return View(submissions.OrderByDescending(s => s.SubmissionDate));
         }
 
         // GET: Submissions/Details/5
