@@ -227,6 +227,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AivHelpers.cs" />
     <Compile Include="Lesson.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
