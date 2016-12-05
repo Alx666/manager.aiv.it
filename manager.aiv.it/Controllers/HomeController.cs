@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace manager.aiv.it.Controllers
@@ -17,8 +15,17 @@ namespace manager.aiv.it.Controllers
         {
             HomeViewModel hModel = new HomeViewModel();
 
-            if(Session.GetUser().IsTeacher)
-                hModel.Submissions = db.Submissions.Where(s => DateTime.Now.Day > s.Assignment.Deadline.Day && s.Score == null);
+            if (Session.GetUser().IsTeacher)
+            {
+                User hTeacher = db.Users.Find(Session.GetUser().Id);
+                DateTime hNextDay = DateTime.Now.AddDays(-1);
+
+                hModel.Submissions = from a in hTeacher.Assignments
+                                     where hNextDay > a.Deadline
+                                     from s in a.Submissions
+                                     where s.Score == null
+                                     select s;                
+            }
 
             if(Session.GetUser().IsSecretary)
                 hModel.Lessons     = from l in db.Lessons where (!l.ClassSize.HasValue || l.Students.Count() == 0)  && l.Date <= DateTime.Now orderby l.Date descending select l;

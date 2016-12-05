@@ -70,21 +70,6 @@ namespace manager.aiv.it
             }
         }
 
-        public List<Assignment> ClassAssignments
-        {
-            get
-            {
-                if (this.Class == null || this.Class.Assignments == null)
-                    return new List<Assignment>();
-
-                IEnumerable<Assignment> dbResults = this.Class.Assignments.Where(a => a.UnlockDate <= DateTime.Now.Date && a.Deadline >= DateTime.Now.Date );
-                if (dbResults == null)
-                    return new List<Assignment>();
-
-                return dbResults.ToList();
-            }
-        }
-
         private List<RoleType> m_hRoles;
         public bool IsSecretary     { get; private set; }
         public bool IsAdmin         { get; private set; }

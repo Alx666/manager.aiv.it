@@ -12,6 +12,8 @@ namespace manager.aiv.it
     {
         [DisplayName("Name")]
         public string DisplayName => $"Submission";
+
+      
     }
 
     public interface ISubmissionMetaData
