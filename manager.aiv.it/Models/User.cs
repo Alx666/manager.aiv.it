@@ -87,14 +87,29 @@ namespace manager.aiv.it
 
         public void LoadRoles(List<RoleType> hRoles)
         {
-            IsSecretary = hRoles.Contains(RoleType.Secretary);
-            IsAdmin     = hRoles.Contains(RoleType.Admin);
-            IsBursar    = hRoles.Contains(RoleType.Bursar);
-            IsTeacher   = hRoles.Contains(RoleType.Teacher);
-            IsDirector  = hRoles.Contains(RoleType.Director);
-            IsManager   = hRoles.Contains(RoleType.Manager);
-            IsStudent   = hRoles.Contains(RoleType.Student);
             IsDeveloper = hRoles.Contains(RoleType.Developer);
+
+            if (IsDeveloper)
+            {
+                IsSecretary = true;
+                IsAdmin     = true;
+                IsBursar    = true;
+                IsTeacher   = true;
+                IsDirector  = true;
+                IsManager   = true;
+                IsStudent   = true;
+            }
+            else
+            {
+                IsSecretary = hRoles.Contains(RoleType.Secretary);
+                IsAdmin     = hRoles.Contains(RoleType.Admin);
+                IsBursar    = hRoles.Contains(RoleType.Bursar);
+                IsTeacher   = hRoles.Contains(RoleType.Teacher);
+                IsDirector  = hRoles.Contains(RoleType.Director);
+                IsManager   = hRoles.Contains(RoleType.Manager);
+                IsStudent   = hRoles.Contains(RoleType.Student);
+            }
+
 
             m_hRoles = hRoles;
         }

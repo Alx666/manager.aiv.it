@@ -20,9 +20,7 @@ namespace manager.aiv.it
         {
             try
             {
-                int iUserId = (int)httpContext.Session["UserId"];
-                List<RoleType> hRoles = httpContext.Session["Roles"] as List<RoleType>;
-                return hRoles.Any(r => allowedroles.Contains(r));
+                return httpContext.Session.GetUser().Roles.Select(r => (RoleType)r.Id).Any(x => this.allowedroles.Contains(x));                
             }
             catch (Exception)
             {
