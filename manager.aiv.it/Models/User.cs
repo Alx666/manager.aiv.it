@@ -70,7 +70,7 @@ namespace manager.aiv.it
             }
         }
 
-        private List<RoleType> m_hRoles;
+        public List<RoleType> LoadedRoles { get; private set; }
         public bool IsSecretary     { get; private set; }
         public bool IsAdmin         { get; private set; }
         public bool IsBursar        { get; private set; }
@@ -82,7 +82,7 @@ namespace manager.aiv.it
 
         public bool IsOnly(RoleType eType)
         {
-            return (Roles.Count == 1 && m_hRoles != null && m_hRoles.Contains(eType));
+            return (Roles.Count == 1 && LoadedRoles != null && LoadedRoles.Contains(eType));
         }
 
         public void LoadRoles(List<RoleType> hRoles)
@@ -98,6 +98,7 @@ namespace manager.aiv.it
                 IsDirector  = true;
                 IsManager   = true;
                 IsStudent   = true;
+                LoadedRoles = (Enum.GetValues(typeof(RoleType)) as RoleType[]).ToList();
             }
             else
             {
@@ -108,10 +109,10 @@ namespace manager.aiv.it
                 IsDirector  = hRoles.Contains(RoleType.Director);
                 IsManager   = hRoles.Contains(RoleType.Manager);
                 IsStudent   = hRoles.Contains(RoleType.Student);
+                LoadedRoles = hRoles;
             }
 
 
-            m_hRoles = hRoles;
         }
     }
 
@@ -167,9 +168,7 @@ namespace manager.aiv.it
         {
             List<RoleType> hRoles = user.Roles.Select(r => (RoleType)r.Id).ToList();
 
-            session["UserId"] = user.Id;
-            session["Roles"]  = hRoles;
-            session["User"]   = user;
+            session["User"] = user;
 
             user.LoadRoles(hRoles);
         }

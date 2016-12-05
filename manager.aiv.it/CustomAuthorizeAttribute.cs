@@ -20,7 +20,7 @@ namespace manager.aiv.it
         {
             try
             {
-                return httpContext.Session.GetUser().Roles.Select(r => (RoleType)r.Id).Any(x => this.allowedroles.Contains(x));                
+                return httpContext.Session.GetUser().LoadedRoles.Any(x => this.allowedroles.Contains(x));                
             }
             catch (Exception)
             {

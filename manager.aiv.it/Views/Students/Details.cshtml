@@ -227,7 +227,7 @@
                                             </div>
                                     </div>
 
-                                    @if (Session.GetUser().Id == Model.Id)
+                                    @*@if (Session.GetUser().Id == Model.Id)
                                     {
                                         using (Html.BeginForm("GetPasswordToken", "Account", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                         {
@@ -240,12 +240,11 @@
                                                         <span class="input-group-btn">
                                                             <button class="btn btn-default btn-primary" type="submit">Vai!</button>
                                                         </span>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         }
-                                    }
+                                    }*@
                                 </section>
                             </div>
                         </div>
