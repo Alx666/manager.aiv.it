@@ -135,7 +135,6 @@
         var flag = true;
         var test = true;
         var n = parseInt((url.indexOf('n=') != -1) ? url.substring(url.indexOf('n=') + 2, ((url.substring(url.indexOf('n=') + 2, url.length)).indexOf('&') != -1) ? url.indexOf('n=') + 2 + (url.substring(url.indexOf('n=') + 2, url.length)).indexOf('&') : url.length) : 512);
-        n = 1024;
         var w = 0;
         var h = 0;
         var x = 0;
@@ -220,7 +219,7 @@
                 bgCanvasCtx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height, 0, 0, finalW, finalH);
                 context.fillStyle = context.createPattern(bgCanvas, 'no-repeat');
             };
-            bgImage.src = "http://kingofwallpapers.com/galaxy/galaxy-008.jpg";
+            bgImage.src = "/Content/galaxy3.jpg";
 
             context.strokeStyle = 'rgb(255,255,255)';
         }
@@ -248,6 +247,12 @@
                 }
             }
             timeout = setTimeout(anim, (fps) > 17 ? fps : 17);
+
+            // TODO: 
+            // trovare modo di ingrandire tela
+            //context.translate(w / 2, h / 2);
+            //context.rotate(2 * Math.PI / 18000);
+            //context.translate(-w / 2, -h / 2);
         }
 
         function move(evt) {
