@@ -30,8 +30,10 @@
                 {
                     Submission hSubmitted = (from s in item.Submissions where s.AssignmentId == item.Id && s.StudentId == Model.Id select s).FirstOrDefault();
 
-                    var reviewed    = hSubmitted != null && hSubmitted.Revisor != null ? "followed" : "not-followed";
-                    var icon        = reviewed == "followed" ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                    var reviewed     = hSubmitted != null && hSubmitted.Revisor != null ? "followed" : "not-followed";
+                    var icon         = reviewed == "followed" ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                    bool bActive = DateTime.Now.Date.AddDays(-1) < item.Deadline;
+                    string sDaysLeft = bActive ? string.Format("{0} DaysLeft", (item.Deadline - DateTime.Now).Days) : "Submission Closed" ;
 
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -51,21 +53,27 @@
 
                                 <div class="row">
                                     <div class="col-sm-3"><label>Deadline</label></div>
-                                    <div class="col-sm-9 text-right">@string.Format("{0} Days", (item.Deadline - item.UnlockDate).Days)</div>
+                                    <div class="col-sm-9 text-right">@sDaysLeft</div>
                                 </div>
 
                                 <div class="row">
                                     @{                                                   
-                                        if (hSubmitted == null)
+                                        if (hSubmitted == null && bActive)
                                         {
                                             <div class="col-sm-3"><label>Value</label></div>
                                             <div class="col-sm-9 text-right">@item.ExerciseValue</div>
+                                        }
+                                        else if (hSubmitted == null && !bActive)
+                                        {
+                                            <div class="col-sm-3"><label>Score</label></div>
+                                            <div class="col-sm-9 text-right">0 / @item.ExerciseValue</div>
                                         }
                                         else
                                         {
                                             <div class="col-sm-3"><label>Score</label></div>
                                             <div class="col-sm-9 text-right">@hSubmitted.Score / @item.ExerciseValue</div>
                                         }
+
                                     }
                                 </div>
 
@@ -93,8 +101,7 @@
                                                                            where s.AssignmentId == item.Id
                                                                            select s).FirstOrDefault();
                                                 bool bUploaded = anySubmitted != null;
-                                                bool bDaysLeft = DateTime.Now.Date.AddDays(-1) < item.Deadline;
-                                                bool canUpload = (Model.Id == Session.GetUser().Id && bDaysLeft);
+                                                bool canUpload = (Model.Id == Session.GetUser().Id && bActive);
 
                                                 string sInputId = $"Input{@item.Id}";
                                                 string sOnChange = $"document.form_{@item.Id}.submit();";
