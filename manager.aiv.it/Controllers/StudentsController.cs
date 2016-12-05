@@ -76,7 +76,7 @@ namespace manager.aiv.it.Controllers
             if(user.BinaryId != null)
             {
                 Binary picture = db.Binaries.Find(user.BinaryId);
-                user.Picture = picture; // TODO: potrebbe essere null?
+                user.Picture = picture; 
             }
 
             return View(user);
@@ -151,7 +151,7 @@ namespace manager.aiv.it.Controllers
             if (user.BinaryId != null)
             {
                 Binary picture = db.Binaries.Find(user.BinaryId);
-                user.Picture = picture; // TODO: potrebbe essere null?
+                user.Picture = picture;
             }
 
             return View(user);

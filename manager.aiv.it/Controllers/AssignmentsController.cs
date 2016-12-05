@@ -40,10 +40,6 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Assignments/Create
-        //TODO: gli esercizi proposti vengono selezionati in base ad alcuni criteri
-        //1) esercizi non già assegnati alla classe
-        //2) tutti gli esercizi per il corso della classe (ma di tutti i livelli, per esempio programmazione 3 può fare gli esercizi di programmazione 1 e 2 ma non il contrario, discriminare in base al Course.Name e Course.Grade)
-        //3) il docente deve essere abilitato all'assegnazione degli esercizi di un corso
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create(int? exerciseid)
         {

@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using manager.aiv.it;
 using System.Text.RegularExpressions;
 
+
+//TODO: Submission.Details, pulsante Save deve redirettare correttamente
+//TODO: Submission.Setails, necessita di un link all'esercizio associato (non si sa cosa si sta correggendo)
+
 namespace manager.aiv.it.Controllers
 {
     public class SubmissionsController : Controller
@@ -103,7 +107,10 @@ namespace manager.aiv.it.Controllers
                 if (hSubmission.Binary != null)
                     db.Binaries.Remove(hSubmission.Binary);
 
-                hSubmission.SubmissionDate = DateTime.Now;
+                hSubmission.SubmissionDate  = DateTime.Now;
+                hSubmission.RevisionDate    = null;
+                hSubmission.Score           = null;
+                hSubmission.RevisorId       = null;
                 
                 Binary hBinaryData      = new Binary();
                 byte[] fileBytes        = new byte[upload.InputStream.Length];

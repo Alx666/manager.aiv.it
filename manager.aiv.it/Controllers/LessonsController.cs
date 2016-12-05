@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using manager.aiv.it;
-using manager.aiv.it.Models;
-using System.Text.RegularExpressions;
+
+
+//TODO: icona materiale didattico visibile su Index (eventualmente scaricabile dalla stessa action presente in details)
 
 namespace manager.aiv.it.Controllers
 {
