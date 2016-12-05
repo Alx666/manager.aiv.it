@@ -268,10 +268,6 @@ body.login canvas#starfield {
     margin: 0;
 }
 
-.change-password {
-    margin-top:20px;
-}
-
 .login-panel {
     padding: 32px;
     border: none;
@@ -519,6 +515,10 @@ body .navbar-inverse .navbar-nav a:hover,
 body .navbar-inverse .navbar-nav a:focus {
     background: none !important;
     background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+body .navbar-inverse .navbar-nav a {
+    padding: 8px;
 }
 
 body .navbar.navbar-inverse.navbar-fixed-top > .container {
@@ -869,7 +869,7 @@ form .row.row-submit {
 }
 
 .card-image .picture-wrapper {
-    height: 364px;
+    height: 256px;
 }
 
 .card-image img {

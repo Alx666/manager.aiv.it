@@ -26,13 +26,27 @@ namespace manager.aiv.it.Controllers
 
 
         [AllowAnonymous]
-        public void GetPasswordToken(string sEmail, string sNewPassword)
+        public void GetPasswordToken(string sEmail, string sPassword, string sNewPassword)
         {
-            sEmail = sEmail.ToLower();
+            List<User> hQuery = db.Users.Where((u) => (u.Email == sEmail && u.Password == sPassword)).ToList();
 
-            string sToken = $"{sEmail} {sNewPassword}".Encrypt();
+            if (hQuery != null)
+            {
+                User hAuth = hQuery.First();
 
-            Emailer.Send(sEmail, "Password Change Request", "http://37.187.154.24:28080/Account/PasswordReset?sEncodedData=" + sToken);
+                if (hAuth != null)
+                {
+                    sEmail = sEmail.ToLower();
+
+                    string sToken = $"{sEmail} {sNewPassword}".Encrypt();
+
+                    Emailer.Send(sEmail, "Password Change Request", "http://37.187.154.24:28080/Account/PasswordReset?sEncodedData=" + sToken);
+
+                    Login("");
+                }
+            }
+
+            
         }
 
 
