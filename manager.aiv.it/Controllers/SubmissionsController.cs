@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 
 //TODO: Submission.Details, pulsante Save deve redirettare correttamente
-//TODO: Submission.Setails, necessita di un link all'esercizio associato (non si sa cosa si sta correggendo)
+//TODO: Submission.Details, necessita di un link all'esercizio associato (non si sa cosa si sta correggendo)
 
 namespace manager.aiv.it.Controllers
 {
@@ -80,9 +80,8 @@ namespace manager.aiv.it.Controllers
 
         
 
-        // POST: Submissions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //TODO: Implementare nella view, i filtri per i tipi di file accettato
         [HttpPost]
         public ActionResult Upload(int assignmentId, HttpPostedFileBase upload)
         {
