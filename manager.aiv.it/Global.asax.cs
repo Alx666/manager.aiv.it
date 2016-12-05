@@ -17,5 +17,16 @@ namespace manager.aiv.it
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error(Object sender, EventArgs e)
+        {
+            var raisedException = Server.GetLastError();
+
+
+            using (AivEntities hDb = new AivEntities())
+            {
+                EventLog.Log(hDb, null, EventLogType.ApplicationError, raisedException.ToString(), true);
+            }
+        }
     }
 }

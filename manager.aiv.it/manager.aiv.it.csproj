@@ -454,6 +454,7 @@
     <Content Include="Views\Developer\ClearBinaries.cshtml" />
     <Content Include="Views\Developer\EventLogs.cshtml" />
     <Content Include="Views\Communications\Create.cshtml" />
+    <Content Include="Views\Shared\Error - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

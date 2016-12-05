@@ -14,7 +14,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Director, RoleType.Admin, RoleType.Teacher, RoleType.Secretary)]
         public ActionResult Create()
         {
-            ViewBag.classes =   new SelectList(db.Classes.ToList(), "Id", "DisplayName");
+            ViewBag.classes = new SelectList(db.Classes.ToList(), "Id", "DisplayName");
             ViewBag.staff   = new SelectList((from r in db.Roles
                                               from u in r.Users
                                               where r.Id > (int)RoleType.Student
@@ -29,6 +29,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [CustomAuthorize(RoleType.Director, RoleType.Admin, RoleType.Teacher, RoleType.Secretary)]
+        [HandleError()]
         public ActionResult Create(List<int> classes, List<int> staff, string subject, string message)
         {
             classes         = classes   ?? new List<int>();
@@ -52,8 +53,5 @@ namespace manager.aiv.it.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-
-
     }
 }

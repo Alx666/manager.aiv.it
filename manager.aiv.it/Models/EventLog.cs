@@ -67,5 +67,6 @@ namespace manager.aiv.it
         EditionEdited       = 21,
         EditionDeleted      = 22,
         EmailerTriggered    = 23,
+        ApplicationError    = 666,
     }
 }
