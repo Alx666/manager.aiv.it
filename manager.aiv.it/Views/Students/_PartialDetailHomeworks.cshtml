@@ -16,7 +16,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate && DateTime.Now.Date <= a.Deadline.Date);
+                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate);
                 }
 
                 @if (assignments.Count() == 0)
@@ -93,7 +93,7 @@
                                                                            where s.AssignmentId == item.Id
                                                                            select s).FirstOrDefault();
                                                 bool bUploaded = anySubmitted != null;
-                                                bool canUpload = ((Model.Id == Session.GetUser().Id) || Session.GetUser().IsTeacher || Session.GetUser().IsAdmin);
+                                                bool canUpload = ((Model.Id == Session.GetUser().Id));
 
                                                 string sInputId = $"Input{@item.Id}";
                                                 string sOnChange = $"document.form_{@item.Id}.submit();";
