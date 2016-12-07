@@ -21,6 +21,7 @@
             }
         </div>
 
+
         @using (Html.BeginForm("Index", "Students", FormMethod.Get, new { @class = "filters" }))
         {
             <div class="row">
@@ -98,22 +99,18 @@
         <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.BinaryId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Surname)
+                    Last Name
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Mobile)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassName)
+                    Class
                 </th>
                 <th>
                     Notes
@@ -147,9 +144,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mobile)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ClassName)

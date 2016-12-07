@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using manager.aiv.it.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Net;
 
 namespace manager.aiv.it.Controllers
 {
@@ -25,47 +26,62 @@ namespace manager.aiv.it.Controllers
         }
 
 
-        [AllowAnonymous]
-        public void GetPasswordToken(string sEmail, string sPassword, string sNewPassword)
+        [CustomAuthorize(RoleType.Student)]
+        public ActionResult GetPasswordToken(string sEmail, string sPassword, string sNewPassword)
         {
-            List<User> hQuery = db.Users.Where((u) => (u.Email == sEmail && u.Password == sPassword)).ToList();
 
-            if (hQuery != null)
+            User hUser = db.Users.Find(Session.GetUser().Id);
+
+            if (sPassword == sNewPassword)
             {
-                User hAuth = hQuery.First();
-
-                if (hAuth != null)
-                {
-                    sEmail = sEmail.ToLower();
-
-                    string sToken = $"{sEmail} {sNewPassword}".Encrypt();
-
-                    Emailer.Send(sEmail, "Password Change Request", "http://37.187.154.24:28080/Account/PasswordReset?sEncodedData=" + sToken);
-
-                    Login("");
-                }
+                hUser.Password = sNewPassword;
+                db.SaveChanges();
+                return RedirectToAction("Details", "Students", new { Id = hUser.Id });
+            }
+            else
+            {
+                //TODO: 
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
 
-            
+
+
+            //List<User> hQuery = db.Users.Where((u) => (u.Email == sEmail && u.Password == sPassword)).ToList();
+
+            //if (hQuery != null)
+            //{
+            //    User hAuth = hQuery.First();
+
+            //    if (hAuth != null)
+            //    {
+            //        sEmail = sEmail.ToLower();
+
+            //        string sToken = $"{sEmail} {sNewPassword}".Encrypt();
+
+            //        Emailer.Send(sEmail, "Password Change Request", "http://37.187.154.24:28080/Account/PasswordReset?sEncodedData=" + sToken);
+
+            //        Login("");
+            //    }
+            //}            
         }
 
 
         // GET: /Account/Login (for now)
-        [AllowAnonymous]
-        public void PasswordReset(string sEncodedData)
-        {
-            string[] sChangeData = sEncodedData.Decrypt().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string sEmail = sChangeData[0];
-            string sPassword = sChangeData[1];
+        //[AllowAnonymous]
+        //public void PasswordReset(string sEncodedData)
+        //{
+        //    string[] sChangeData = sEncodedData.Decrypt().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        //    string sEmail = sChangeData[0];
+        //    string sPassword = sChangeData[1];
 
-            User hUser = db.Users.Where(u => u.Email == sEmail).First();
+        //    User hUser = db.Users.Where(u => u.Email == sEmail).First();
 
-            hUser.Password = sPassword;
+        //    hUser.Password = sPassword;
 
-            db.SaveChanges();
+        //    db.SaveChanges();
 
-            Emailer.Send(hUser.Email, "Password Changed", "Password Change Successful");
-        }
+        //    Emailer.Send(hUser.Email, "Password Changed", "Password Change Successful");
+        //}
 
 
         // GET: /Account/Login

@@ -111,6 +111,7 @@ namespace manager.aiv.it.Controllers
                 hSubmission.Score           = null;
                 hSubmission.RevisorId       = null;
                 
+                //TODO: rivedere l'upload dei binari utilizzando Binary.CreateFrom
                 Binary hBinaryData      = new Binary();
                 byte[] fileBytes        = new byte[upload.InputStream.Length];
                 upload.InputStream.Read(fileBytes, 0, fileBytes.Length);
@@ -188,3 +189,4 @@ namespace manager.aiv.it.Controllers
         }
     }
 }
+
