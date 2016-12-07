@@ -25,6 +25,9 @@
                     Submission Date
                 </th>
                 <th>
+                    Exercise
+                </th>
+                <th>
                     Revision Date
                 </th>
                 <th>
@@ -36,15 +39,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Revisor)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.Assignment.Description)
-                </th>*@
-                @*<th>
-                    Revisor's Note
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Binary.Filename)
-                </th>*@
                 <th class="text-right table-actions">
                     Actions
                 </th>
@@ -55,6 +49,9 @@
                 <tr>
                     <td>
                         @item.SubmissionDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Assignment.Exercise.Name, "Details", "Exercises", new { Id = item.Assignment.ExerciseId }, null)
                     </td>
                     <td>
                         @if (item.RevisionDate != null && item.RevisionDate is System.DateTime)
