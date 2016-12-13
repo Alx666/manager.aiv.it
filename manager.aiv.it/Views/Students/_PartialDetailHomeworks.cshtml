@@ -85,6 +85,14 @@
                                         <div class="col-sm-8 text-right">@hSubmitted.Revisor.DisplayName</div>
                                     </div>
                                 }
+
+                                @if (hSubmitted != null)
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-3"><label>Submission</label></div>
+                                        <div class="col-sm-9 text-right">@Html.ActionLink(hSubmitted.Binary.Filename, "Details", "Submissions", new { assignmentId = hSubmitted.AssignmentId, studentId = hSubmitted.StudentId }, null)</div>
+                                    </div>
+                                }
                             </div>
 
 

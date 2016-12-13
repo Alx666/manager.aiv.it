@@ -67,7 +67,7 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
             }
 
-            return Redirect(Request.UrlReferrer.ToString());
+            return RedirectToAction("Index");
         }
 
         // FALLBACK for Create action
