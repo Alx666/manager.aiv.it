@@ -26,7 +26,8 @@ namespace manager.aiv.it.Controllers
         }
 
 
-        [CustomAuthorize(RoleType.Student)]
+        [HttpPost]
+        [AllowAnonymous]
         public ActionResult GetPasswordToken(string sEmail, string sPassword, string sNewPassword)
         {
 
