@@ -121,7 +121,7 @@ namespace manager.aiv.it.Controllers
 
             hClassUsers.ToList().ForEach(u => 
             {
-                string sPassword = StringExtensions.Random(6);
+                string sPassword = AivExtensions.Random(6);
                 u.Password = sPassword;
             });
 

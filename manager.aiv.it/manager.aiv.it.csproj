@@ -271,7 +271,7 @@
     </Compile>
     <Compile Include="RoleType.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="StringExtensions.cs" />
+    <Compile Include="AivExtensions.cs" />
     <Compile Include="Submission.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

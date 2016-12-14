@@ -21,7 +21,9 @@
             }
         </div>
 
-        @using (Html.BeginForm("Index", "Lessons", FormMethod.Get, new { @class = "filters" }))
+        
+
+        @*@using (Html.BeginForm("Index", "Lessons", FormMethod.Get, new { @class = "filters" }))
         {
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6">
@@ -39,7 +41,12 @@
                     @Html.DropDownList("SearchId", null, "-", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
-        }
+        }*@
+
+        @Html.SearchBar("Index", "Lessons", FormMethod.Get, (Enum.GetValues(typeof(LessonsSearchType)) as LessonsSearchType[]).Select(x => new { Id = (int)x, Name = x.ToString() }), "Id", "Name")
+
+
+
     </div>
 </div>
 

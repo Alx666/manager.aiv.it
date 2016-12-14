@@ -76,7 +76,7 @@ namespace manager.aiv.it
             hBin.Data       = hBytes;
 
             if(!bKeepFileName)
-                hBin.Filename = $"{StringExtensions.Random(15)}{sExtension}";
+                hBin.Filename = $"{AivExtensions.Random(15)}{sExtension}";
             else
                 hBin.Filename = hFInfo.Name;
 
