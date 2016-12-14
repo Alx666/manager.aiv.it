@@ -70,6 +70,7 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
+                User hLogged = Session.GetUser();
                 if (roles != null)
                 {
                     var hRoles = roles.Select(r => db.Roles.Find(r)).ToList();
@@ -79,6 +80,12 @@ namespace manager.aiv.it.Controllers
                 user.RegistrationDate = DateTime.Now;
                 db.Users.Add(user);
                 db.SaveChanges();
+
+                if (!user.IsOnly(RoleType.Student))
+                {
+                    EventLog.Log(db, hLogged, EventLogType.StaffCreated, $"Created User {user.DisplayName}", true);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -102,7 +109,6 @@ namespace manager.aiv.it.Controllers
             {
                 return HttpNotFound();
             }
-
             
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);            
             ViewBag.roles   = new MultiSelectList(db.Roles, "Id", "Name", user.Roles.Select(x => x.Id));
@@ -120,6 +126,8 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {                
+                User hLogged = Session.GetUser();
+
                 User hUser = db.Users.Find(user.Id);
                 hUser.Roles.Clear();
 
@@ -144,6 +152,11 @@ namespace manager.aiv.it.Controllers
 
                 db.Entry(hUser).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (!user.IsOnly(RoleType.Student))
+                {
+                    EventLog.Log(db, hLogged, EventLogType.StaffEdited, $"Edited User {user.DisplayName}", true);
+                }
 
                 if (bSendNewCredentials)
                     Emailer.Send(hUser.Email, "Credentials Change", $"Your login has been changed!{Environment.NewLine}Username: {hUser.Email}{Environment.NewLine}Password: {hUser.Password}{Environment.NewLine}");
@@ -177,9 +190,16 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Admin)]
         public ActionResult DeleteConfirmed(int id)
         {
+            User hLogged = Session.GetUser();
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+
+            if (!user.IsOnly(RoleType.Student))
+            {
+                EventLog.Log(db, hLogged, EventLogType.StaffDeleted, $"Deleted User {user.DisplayName}", true);
+            }
+
             return RedirectToAction("Index");
         }
 

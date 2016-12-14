@@ -29,11 +29,11 @@ namespace manager.aiv.it.Controllers
                 hNotes = from hN in db.Notes select hN;
             }
 
-            
+
             return View(hNotes.ToList());
         }
 
-        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director,RoleType.Manager)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -62,7 +62,7 @@ namespace manager.aiv.it.Controllers
                          where r.Id > (int)RoleType.Student
                          select u).Include(x => x.Picture).Distinct();
 
-            
+
             ViewBag.Luca = db.Users.Where(u => u.Name == "Luca" && u.Surname == "De Dominicis").First();
             return View();
         }
@@ -73,10 +73,10 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Create([Bind(Include = "Id,StudentId,StaffId,Text")] Note note, bool notify)
         {
-            User hAuthor  = db.Users.Find(Session.GetUser().Id);
+            User hAuthor = db.Users.Find(Session.GetUser().Id);
             User hStudent = db.Users.Find(note.StudentId);
 
-            if(hAuthor == null || hStudent == null)
+            if (hAuthor == null || hStudent == null)
                 return HttpNotFound();
 
 
@@ -92,6 +92,8 @@ namespace manager.aiv.it.Controllers
                 db.Notes.Add(hNew);
                 db.SaveChanges();
 
+                EventLog.Log(db, hAuthor, EventLogType.NoteCreated, $"Created Note on Student {hStudent.DisplayName}", true);
+
                 try
                 {
                     string sMessage = $"{hAuthor.DisplayName} wrote something about {hStudent.DisplayName}:{Environment.NewLine}{note.Text}";
@@ -100,7 +102,7 @@ namespace manager.aiv.it.Controllers
                 catch (Exception)
                 {
                     //if send fails for now do nothing
-                    
+
                 }
 
                 return RedirectToAction("Index", "Students");
@@ -124,19 +126,22 @@ namespace manager.aiv.it.Controllers
             return View(note);
         }
 
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult DeleteConfirmed(int id)
         {
+            User hLogged = Session.GetUser();
             Note note = db.Notes.Find(id);
             db.Notes.Remove(note);
             db.SaveChanges();
 
+            EventLog.Log(db, hLogged, EventLogType.NoteDeleted, $"Deleted Note on Student {note.Subject.DisplayName}", true);
+
             User hSubject = db.Users.Find(Session["NoteStudentId"]);
 
-            if(hSubject.NotesReceived.Count() == 0)
+            if (hSubject.NotesReceived.Count() == 0)
                 return RedirectToAction("Index", "Students");
             else
                 return RedirectToAction("Index", "Notes", new { studentid = hSubject.Id });
