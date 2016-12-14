@@ -16,7 +16,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right  text-right">
-        @if (this.Session["UserId"] != null)
+        @if (this.Session.GetUser() != null)
         {
             <li>@Html.ActionLink("Log Out", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
         }
