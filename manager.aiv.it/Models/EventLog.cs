@@ -45,28 +45,37 @@ namespace manager.aiv.it
     {
         LoginSuccess        = 0,
         LoginFailed         = 1,
+
         StudentCreated      = 2,
         StudentEdited       = 3,
         StudentDeleted      = 4,
+
         StaffCreated        = 5,
         StaffEdited         = 6,
         StaffDeleted        = 7,
+
         NoteCreated         = 8,
         NoteDeleted         = 9,
+
         LessonCreated       = 10,
         LessonEdited        = 11,
         LessonDeleted       = 12,
         LessonDownload      = 13,
+
         TopicCreated        = 14,
         TopicEdited         = 15,
         TopicDeleted        = 16,
+
         CourseCreated       = 17,
         CourseEdited        = 18,
         CourseDeleted       = 19,
+
         EditionCreated      = 20,
         EditionEdited       = 21,
         EditionDeleted      = 22,
+
         EmailerTriggered    = 23,
+
         ApplicationError    = 666,
     }
 }

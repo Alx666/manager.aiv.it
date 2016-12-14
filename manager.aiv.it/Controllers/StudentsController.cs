@@ -36,7 +36,7 @@ namespace manager.aiv.it.Controllers
             {
                 model = (from n in db.Notes select n.Subject).Distinct();
             }
-            
+
             if (!string.IsNullOrEmpty(search))
             {
                 model = from s in model where s.Name.Contains(search) || s.Surname.Contains(search) select s;
@@ -59,10 +59,10 @@ namespace manager.aiv.it.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user       = db.Users.Find(id);
-            User hLogged    = Session.GetUser();
+            User user = db.Users.Find(id);
+            User hLogged = Session.GetUser();
 
-   
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -71,12 +71,12 @@ namespace manager.aiv.it.Controllers
             {
                 return Redirect(Request.UrlReferrer.ToString());
             }
-           
 
-            if(user.BinaryId != null)
+
+            if (user.BinaryId != null)
             {
                 Binary picture = db.Binaries.Find(user.BinaryId);
-                user.Picture = picture; 
+                user.Picture = picture;
             }
 
             return View(user);
@@ -87,7 +87,7 @@ namespace manager.aiv.it.Controllers
         public ActionResult Create()
         {
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "DisplayName");
-            ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
 
@@ -101,11 +101,12 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
+                User hLogged = Session.GetUser();
                 if (!string.IsNullOrEmpty(user.Email))
                 {
                     User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-                    if (hAlreadyPresent != null && Session.GetUser().Id != hAlreadyPresent.Id)
+                    if (hAlreadyPresent != null && hLogged.Id != hAlreadyPresent.Id)
                         throw new HttpException("User Already Present");
                 }
 
@@ -116,6 +117,9 @@ namespace manager.aiv.it.Controllers
                 db.Users.Add(user);
 
                 db.SaveChanges();
+
+                EventLog.Log(db, hLogged, EventLogType.StudentCreated, $"Created Student {user.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
@@ -146,7 +150,7 @@ namespace manager.aiv.it.Controllers
             }
 
             ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
-            ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
 
             if (user.BinaryId != null)
             {
@@ -176,11 +180,11 @@ namespace manager.aiv.it.Controllers
 
             User hLogged = Session.GetUser();
 
-            if(hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)
+            if (hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
             User hToEdit = db.Users.Find(user.Id);
-            if(hToEdit ==  null)
+            if (hToEdit == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             hToEdit.Name = user.Name;
@@ -194,7 +198,7 @@ namespace manager.aiv.it.Controllers
             hToEdit.RegistrationDate = DateTime.Now.Date;
 
 
-            
+
             //Class Change
             if (hToEdit.ClassId != user.ClassId)
             {
@@ -204,11 +208,13 @@ namespace manager.aiv.it.Controllers
                     hToEdit.Class = db.Classes.Find(user.ClassId);
             }
 
-            
+
             ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
-            ViewBag.RoleId  = new SelectList(db.Roles, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
 
             db.SaveChanges();
+
+            EventLog.Log(db, hLogged, EventLogType.StudentEdited, $"Edited Student {user.DisplayName}", true);
 
             return RedirectToAction("Index");
         }
@@ -221,7 +227,7 @@ namespace manager.aiv.it.Controllers
             User user = db.Users.Find(userId);
             User hLogged = Session.GetUser();
 
-            if(hLogged.Id != user.Id)
+            if (hLogged.Id != user.Id)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
             if (user != null && picture != null)
@@ -288,9 +294,13 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary)]
         public ActionResult DeleteConfirmed(int id)
         {
+            User hLogged = Session.GetUser();
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+
+            EventLog.Log(db, hLogged, EventLogType.StudentDeleted, $"Deleted Student {user.DisplayName}", true);
+
             return RedirectToAction("Index");
         }
 

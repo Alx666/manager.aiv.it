@@ -129,7 +129,7 @@ namespace manager.aiv.it.Controllers
                 Session.LoadUser(hLogin);
 
                 //hLogin.Picture = (hLogin != null && hLogin.Picture != null) ? new Binary(hLogin.Picture) : null; //Hax
-                EventLog.Log(db, hLogin, EventLogType.LoginSuccess, null, true);
+                EventLog.Log(db, hLogin, EventLogType.LoginSuccess, "Logged in", true);
 
                 if (hLogin.IsOnly(RoleType.Student))
                     return RedirectToLocal("/Students/Details/" + hLogin.Id);
