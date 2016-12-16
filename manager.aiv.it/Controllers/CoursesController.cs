@@ -59,6 +59,9 @@ namespace manager.aiv.it.Controllers
 
                 db.Courses.Add(course);
                 db.SaveChanges();
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.CourseCreated, $"Created Course {course.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
@@ -107,6 +110,9 @@ namespace manager.aiv.it.Controllers
 
                 db.Entry(hCourse).State = EntityState.Modified;
                 db.SaveChanges();
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.CourseEdited, $"Edited Course {course.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -135,6 +141,9 @@ namespace manager.aiv.it.Controllers
             Course course = db.Courses.Find(id);
             db.Courses.Remove(course);
             db.SaveChanges();
+
+            EventLog.Log(db, Session.GetUser(), EventLogType.CourseDeleted, $"Deleted Course {course.DisplayName}", true);
+
             return RedirectToAction("Index");
         }
 

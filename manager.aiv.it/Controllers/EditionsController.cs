@@ -75,6 +75,9 @@ namespace manager.aiv.it.Controllers
 
                 db.Editions.Add(edition);
                 db.SaveChanges();
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.EditionCreated, $"Created Edition{edition.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
@@ -131,6 +134,9 @@ namespace manager.aiv.it.Controllers
 
                 db.Entry(hEdition).State = EntityState.Modified;
                 db.SaveChanges();
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.EditionEdited, $"Edited Edition{edition.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
@@ -161,6 +167,9 @@ namespace manager.aiv.it.Controllers
             Edition edition = db.Editions.Find(id);
             db.Editions.Remove(edition);
             db.SaveChanges();
+
+            EventLog.Log(db, Session.GetUser(), EventLogType.EditionDeleted, $"Deleted Edition{edition.DisplayName}", true);
+
             return RedirectToAction("Index");
         }
 

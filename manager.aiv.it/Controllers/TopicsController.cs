@@ -77,6 +77,9 @@ namespace manager.aiv.it.Controllers
                 }
                 db.Topics.Add(topic);
                 db.SaveChanges();
+
+                EventLog.Log(db, Session.GetUser(), EventLogType.TopicCreated, $"Created Topic {topic.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
@@ -144,6 +147,8 @@ namespace manager.aiv.it.Controllers
                     db.Binaries.Add(binary);
                     db.SaveChanges();
 
+                    EventLog.Log(db, Session.GetUser(), EventLogType.TopicEdited, $"Edited Topic {topic.DisplayName}", true);
+
                     hTopic.BinaryId = binary.Id;
                 }
 
@@ -195,6 +200,9 @@ namespace manager.aiv.it.Controllers
 
             db.Topics.Remove(topic);
             db.SaveChanges();
+
+            EventLog.Log(db, Session.GetUser(), EventLogType.TopicDeleted, $"Deleted Topic {topic.DisplayName}", true);
+
             return RedirectToAction("Index");
         }
 
