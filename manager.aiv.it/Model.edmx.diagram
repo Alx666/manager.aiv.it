@@ -47,7 +47,7 @@
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="8.75" PointY="13.625" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
         <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="20.375" PointY="0.875" />
-        <EntityTypeShape EntityType="AivModel.ViewLessonFullData" Width="2.375" PointX="26" PointY="4.375" />
+        <EntityTypeShape EntityType="AivModel.ViewLessonFullData" Width="2.375" PointX="21.375" PointY="5.25" />
         <AssociationConnector Association="AivModel.FK_Lesson_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Lesson_ToClass" />
         <AssociationConnector Association="AivModel.FK_Lesson_ToUser" />
