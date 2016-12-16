@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +19,39 @@ namespace manager.aiv.it.Controllers
         public ActionResult EventLogs()
         {
             return View(db.EventLogs.OrderByDescending(e => e.Date));
+        }
+
+
+        [CustomAuthorize(RoleType.Developer)]
+        public void UpdateLessons()
+        {
+            string sPath = Server.MapPath("~\\FileStorage");
+
+            if (!Directory.Exists(sPath))
+                Directory.CreateDirectory(sPath);
+
+
+            foreach (Lesson hLesson in db.Lessons)
+            {
+                if (hLesson.BinaryId == null)
+                    continue;
+
+                manager.aiv.it.File hFile = new it.File();
+
+                hFile.OriginalName      = hLesson.Binary.Filename;
+                hFile.ArchivationName   = AivExtensions.RandomString(50) + ".dat";
+                
+                using (FileStream hFs = System.IO.File.OpenWrite(sPath + "\\" + hFile.ArchivationName))
+                {
+                    hFs.Write(hLesson.Binary.Data, 0, hLesson.Binary.Data.Length);
+                    hFs.Flush();
+                }
+
+                hLesson.File = hFile;
+            }
+
+            db.SaveChanges();
+
         }
 
         //[CustomAuthorize(RoleType.Developer)]

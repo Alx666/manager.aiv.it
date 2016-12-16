@@ -53,6 +53,8 @@
         <AssociationConnector Association="AivModel.FK_EventLog_ToUser" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="8.75" PointY="13.625" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
+        <EntityTypeShape EntityType="AivModel.File" Width="1.5" PointX="1.5" PointY="11.375" />
+        <AssociationConnector Association="AivModel.FK_Lesson_ToFile" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

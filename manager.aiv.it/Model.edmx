@@ -116,6 +116,14 @@
           <Property Name="Name" Type="nchar" MaxLength="25" Nullable="false" />
           <Property Name="Extensions" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArchivationName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OriginalName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Lesson">
           <Key>
             <PropertyRef Name="Id" />
@@ -128,6 +136,7 @@
           <Property Name="ClassSize" Type="smallint" />
           <Property Name="Frequency" Type="float" Nullable="false" />
           <Property Name="BinaryId" Type="int" />
+          <Property Name="FileId" Type="int" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -546,6 +555,18 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lesson_ToFile">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Lesson_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
@@ -745,6 +766,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="Exercise" EntityType="Self.Exercise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExerciseTopic" EntityType="Self.ExerciseTopic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExerciseType" EntityType="Self.ExerciseType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
@@ -879,6 +901,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           </AssociationSet>
           <AssociationSet Name="FK_Lesson_ToClass" Association="Self.FK_Lesson_ToClass">
             <End Role="Class" EntitySet="Class" />
+            <End Role="Lesson" EntitySet="Lesson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToFile" Association="Self.FK_Lesson_ToFile">
+            <End Role="File" EntitySet="File" />
             <End Role="Lesson" EntitySet="Lesson" />
           </AssociationSet>
           <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
@@ -1081,6 +1107,11 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <End Role="ExerciseType" EntitySet="ExerciseTypes" />
             <End Role="Exercise" EntitySet="Exercises" />
           </AssociationSet>
+          <EntitySet Name="Files" EntityType="AivModel.File" />
+          <AssociationSet Name="FK_Lesson_ToFile" Association="AivModel.FK_Lesson_ToFile">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Assignment">
           <Key>
@@ -1186,6 +1217,8 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="Topics" Relationship="AivModel.CoveredTopic" FromRole="Lesson" ToRole="Topic" />
           <NavigationProperty Name="Teacher" Relationship="AivModel.FK_Lesson_ToUser" FromRole="Lesson" ToRole="User" />
           <NavigationProperty Name="Students" Relationship="AivModel.Attending" FromRole="Lesson" ToRole="User" />
+          <Property Name="FileId" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="AivModel.FK_Lesson_ToFile" FromRole="Lesson" ToRole="File" />
         </EntityType>
         <EntityType Name="Note">
           <Key>
@@ -1673,6 +1706,27 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArchivationName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lessons" Relationship="AivModel.FK_Lesson_ToFile" FromRole="File" ToRole="Lesson" />
+        </EntityType>
+        <Association Name="FK_Lesson_ToFile">
+          <End Type="AivModel.File" Role="File" Multiplicity="0..1" />
+          <End Type="AivModel.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1749,6 +1803,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySetMapping Name="Lessons">
             <EntityTypeMapping TypeName="AivModel.Lesson">
               <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
                 <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
                 <ScalarProperty Name="Frequency" ColumnName="Frequency" />
                 <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
@@ -1945,6 +2000,15 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
               <MappingFragment StoreEntitySet="ExerciseType">
                 <ScalarProperty Name="Extensions" ColumnName="Extensions" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="AivModel.File">
+              <MappingFragment StoreEntitySet="File">
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+                <ScalarProperty Name="ArchivationName" ColumnName="ArchivationName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

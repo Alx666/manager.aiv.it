@@ -43,5 +43,6 @@ namespace manager.aiv.it
         public virtual DbSet<ViewStudentNote> ViewStudentNotes { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
         public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
+        public virtual DbSet<File> Files { get; set; }
     }
 }
