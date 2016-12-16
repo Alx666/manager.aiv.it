@@ -21,9 +21,9 @@ namespace manager.aiv.it.Controllers
         public ActionResult Index(string search, int? searchId)
         {
             User hUser = db.Users.Find((int)Session.GetUser().Id);
-            
-            var     hSearchTypes    =   from t in Enum.GetValues(typeof(LessonsSearchType)) as LessonsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(LessonsSearchType), t)};
-            int?    vSelectedvalue  =   null;
+
+            var hSearchTypes = from t in Enum.GetValues(typeof(LessonsSearchType)) as LessonsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(LessonsSearchType), t) };
+            int? vSelectedvalue = null;
 
             //defaults lessons of interest for the current teacher
             IEnumerable<ViewLessonFullData> hLessonsView = db.ViewLessonFullDatas;
@@ -38,9 +38,9 @@ namespace manager.aiv.it.Controllers
                 {
                     var hSearchSet = from t in db.Roles.Find((int)RoleType.Teacher).Users select new { Teacher = t, Name = t.DisplayName.ToLower() };
 
-                    hLessons =  (from t in hSearchSet
-                                 where hKeywords.All(kw => t.Name.Contains(kw))
-                                 select t.Teacher).SelectMany(t => t.LessonsTeached);
+                    hLessons = (from t in hSearchSet
+                                where hKeywords.All(kw => t.Name.Contains(kw))
+                                select t.Teacher).SelectMany(t => t.LessonsTeached);
                 }
                 else if (eType == LessonsSearchType.Student)
                 {
@@ -114,7 +114,7 @@ namespace manager.aiv.it.Controllers
                 ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
             }
 
-            
+
 
             return View(hLessonsView.GroupBy(l => l.Date).OrderByDescending(l => l.Key));
         }
@@ -127,9 +127,9 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             Lesson lesson = db.Lessons.Find(id);
-            foreach(var student in lesson.Students)
+            foreach (var student in lesson.Students)
             {
                 if (student.BinaryId != null)
                     student.Picture = db.Binaries.Find(student.BinaryId);
@@ -151,40 +151,40 @@ namespace manager.aiv.it.Controllers
         public ActionResult Create(int? classid)
         {
             User hTeacher = db.Users.Find(Session.GetUser().Id);
-            if(hTeacher == null)
+            if (hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-           
+
             var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) select c;
 
             if (!classid.HasValue)
             {
-                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName");
-                ViewBag.TeacherId   = new SelectList(classes.First().Edition.Course.Teachers, "Id", "DisplayName");
-                ViewBag.topics      = new MultiSelectList(classes.First().Edition.Topics, "Id", "DisplayName");
-                ViewBag.Students    = new MultiSelectList(classes.First().Students, "Id", "DisplayName");
+                ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName");
+                ViewBag.TeacherId = new SelectList(classes.First().Edition.Course.Teachers, "Id", "DisplayName");
+                ViewBag.topics = new MultiSelectList(classes.First().Edition.Topics, "Id", "DisplayName");
+                ViewBag.Students = new MultiSelectList(classes.First().Students, "Id", "DisplayName");
             }
             else
             {
-                Class selected      = db.Classes.Find(classid);
+                Class selected = db.Classes.Find(classid);
 
-                if(selected == null)
+                if (selected == null)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
                 if (!selected.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id))
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-               
-                var hTeachers       = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
-                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
-                ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
-                ViewBag.topics      = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
-                ViewBag.students    = new MultiSelectList(selected.Students, "Id", "DisplayName");
+                var hTeachers = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
+
+                ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName", selected.Id);
+                ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
+                ViewBag.topics = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
+                ViewBag.students = new MultiSelectList(selected.Students, "Id", "DisplayName");
             }
 
             Lesson hLesson = new Lesson();
             hLesson.Date = DateTime.Now;
-           
+
             return View(hLesson);
         }
 
@@ -196,25 +196,27 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students, HttpPostedFileBase upload)
         {
-            User hTeacher  = db.Users.Find(Session.GetUser().Id);
+            User hTeacher = db.Users.Find(Session.GetUser().Id);
 
             Lesson already = (from l in db.Lessons
-                              where l.Teacher.Id == hTeacher.Id && 
+                              where l.Teacher.Id == hTeacher.Id &&
                               DbFunctions.TruncateTime(l.Date) == DbFunctions.TruncateTime(DateTime.Now) &&
                               l.ClassId == lesson.ClassId
                               select l).FirstOrDefault();
 
-            if(already != null)
+            if (already != null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (ModelState.IsValid)
-            {                
+            {
+                Class hClass = db.Classes.Find(lesson.ClassId);
                 topics?.ForEach(t => lesson.Topics.Add(db.Topics.Find(t)));
 
                 if (students != null)
                 {
                     students.ForEach(s => lesson.Students.Add(db.Users.Find(s)));
-                    lesson.ClassSize = (short)db.Classes.Find(lesson.ClassId).Students.Count();
+
+                    lesson.ClassSize = (short)hClass.Students.Count();
                     lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
 
@@ -225,7 +227,6 @@ namespace manager.aiv.it.Controllers
                     db.Binaries.Add(binary);
                     db.SaveChanges();
 
-                    EventLog.Log(db, hTeacher, EventLogType.LessonCreated, $"Created Lesson for {lesson.Class.DisplayName}", true);
 
                     lesson.BinaryId = binary.Id;
                 }
@@ -234,11 +235,14 @@ namespace manager.aiv.it.Controllers
 
                 db.Lessons.Add(lesson);
                 db.SaveChanges();
+
+                EventLog.Log(db, hTeacher, EventLogType.LessonCreated, $"Created Lesson for {hClass.DisplayName}", true);
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassId     = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
-            ViewBag.TeacherId   = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);            
+            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
+            ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
 
             return View(lesson);
         }
@@ -287,10 +291,10 @@ namespace manager.aiv.it.Controllers
 
             var hTeachers = hClass.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
-            ViewBag.ClassId   = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
+            ViewBag.ClassId = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
             ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", lesson.TeacherId);
-            ViewBag.Students  = new MultiSelectList(vClassStudents, "Id", "Name", hSelectedStudents);
-            ViewBag.topics    = new MultiSelectList(hClass.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName", lesson.Topics.Select(e => e.Id));
+            ViewBag.Students = new MultiSelectList(vClassStudents, "Id", "Name", hSelectedStudents);
+            ViewBag.topics = new MultiSelectList(hClass.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName", lesson.Topics.Select(e => e.Id));
 
             return View(lesson);
         }
@@ -312,7 +316,7 @@ namespace manager.aiv.it.Controllers
 
                 if (students != null && hLogged.IsSecretary)
                 {
-                    var hStudents = students.Select(s => db.Users.Find(s));                    
+                    var hStudents = students.Select(s => db.Users.Find(s));
                     hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
                 }
 
@@ -321,7 +325,7 @@ namespace manager.aiv.it.Controllers
                     var hTopics = topics.Select(t => db.Topics.Find(t));
                     hTopics.ToList().ForEach(t => hLesson.Topics.Add(t));
                 }
-                
+
                 if (upload != null)
                 {
                     Binary binary = Binary.CreateFrom(upload, true);
@@ -364,7 +368,7 @@ namespace manager.aiv.it.Controllers
 
             return View(lesson);
         }
-        
+
         public FileContentResult Download(int BinaryId)
         {
             Binary foundFile = db.Binaries.Find(BinaryId);
@@ -410,7 +414,7 @@ namespace manager.aiv.it.Controllers
 
             db.SaveChanges();
 
-            EventLog.Log(db, hTeacher, EventLogType.LessonDeleted, $"Deleted Lesson for {lesson.Class.DisplayName}", true);
+            EventLog.Log(db, hTeacher, EventLogType.LessonDeleted, $"Deleted Lesson {lesson.Id}", true);
 
             return RedirectToAction("Index");
         }
