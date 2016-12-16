@@ -124,7 +124,7 @@ namespace manager.aiv.it
                 hSb.AppendLine("<div class=\"row\">");
                     hSb.AppendLine("<div class=\"col-xs-12 col-sm-12 col-md-6\">");
                         hSb.AppendLine("<div class=\"input-group\">");
-                            hSb.AppendLine("<input id=\"search\" type=\"text\" name=\"search\" placeholder=\"\" class=\"form-control\" value='@Request.QueryString[\"search\"]' />");
+                            hSb.AppendLine("<input id=\"search\" type=\"text\" name=\"search\" placeholder=\"\" class=\"form-control\" />");
                             hSb.AppendLine("<span class=\"input-group-btn\">");
                                 hSb.AppendLine("<button class=\"btn btn-info\" type=\"submit\">");
                                     hSb.AppendLine("<span class=\"glyphicon glyphicon-search\"></span>");

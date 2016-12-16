@@ -42,12 +42,12 @@
                     {
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Courses" ? "active" : "")">@Html.ActionLink("Courses", "Index", "Courses")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Editions" ? "active" : "")">@Html.ActionLink("Editions", "Index", "Editions")</li>
-                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Topics" ? "active" : "")">@Html.ActionLink("Topics", "Index", "Topics")</li>
                     }
 
                     if (hUser.IsSecretary || hUser.IsBursar || hUser.IsAdmin || hUser.IsManager || hUser.IsTeacher || hUser.IsDirector)
                     {
+                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classes" ? "active" : "")">@Html.ActionLink("Classes", "Index", "Classes")</li>
                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Lessons" ? "active" : "")">@Html.ActionLink("Lessons", "Index", "Lessons")</li>
                     }
 

@@ -9,10 +9,13 @@
         <span class="title">Index</span>
     </div>
     <div class="col-md-2 col-xs-6 text-right">
-        <a class="btn btn-primary" href="@Url.Action("Create")">
-            <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
-            <span>Create New</span>
-        </a>
+        @if (Session.GetUser().IsDirector)
+        {
+            <a class="btn btn-primary" href="@Url.Action("Create")">
+                <i class="glyphicon glyphicon-plus pull-right icon-right"></i>
+                <span>Create New</span>
+            </a>
+        }
     </div>
 </div>
 
@@ -59,8 +62,11 @@
                         @Html.DisplayFor(modelItem => item.DisplayPoints)
                     </td>
                     <td class="text-right">
-                        <a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                        @if (Session.GetUser().IsDirector)
+                        {
+                            <a title="Edit @item.DisplayName"   class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = item.Id })"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a title="Delete @item.DisplayName" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
+                        }
                         <a title="View @item.DisplayName"   class="btn btn-default btn-sm action-button" href="@Url.Action("Details", new { id = item.Id })"><i class="glyphicon glyphicon-chevron-right"></i></a>
                     </td>
                 </tr>

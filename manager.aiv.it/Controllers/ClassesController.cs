@@ -15,13 +15,13 @@ namespace manager.aiv.it.Controllers
     {
         private AivEntities db = new AivEntities();
 
-        // GET: Classes
+        [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
         public ActionResult Index()
         {            
             return View(db.Classes.Include(x => x.Edition).ToList());
         }
 
-        // GET: Classes/Details/5
+        [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +36,7 @@ namespace manager.aiv.it.Controllers
             return View(@class);
         }
 
-        // GET: Classes/Create
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Create()
         {
             ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now), "Id", "DisplayName");
@@ -48,6 +48,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Create([Bind(Include = "Id,EditionId,Section")] Class @class)
         {
             if (ModelState.IsValid)
@@ -62,6 +63,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Classes/Edit/5
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +84,7 @@ namespace manager.aiv.it.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Edit([Bind(Include = "Id,EditionId,Section")] Class @class)
         {
             if (ModelState.IsValid)
@@ -95,6 +98,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Classes/Delete/5
+        [CustomAuthorize(RoleType.Director)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
