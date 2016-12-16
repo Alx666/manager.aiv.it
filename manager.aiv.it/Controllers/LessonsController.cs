@@ -307,7 +307,7 @@ namespace manager.aiv.it.Controllers
                 hLesson.Students.Clear();
                 hLesson.Topics.Clear();
 
-                if (students != null)
+                if (students != null && Session.GetUser().IsSecretary)
                 {
                     var hStudents = students.Select(s => db.Users.Find(s));                    
                     hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
