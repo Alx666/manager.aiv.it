@@ -225,6 +225,8 @@ namespace manager.aiv.it.Controllers
                     db.Binaries.Add(binary);
                     db.SaveChanges();
 
+                    EventLog.Log(db, hTeacher, EventLogType.LessonCreated, $"Created Lesson for {lesson.Class.DisplayName}", true);
+
                     lesson.BinaryId = binary.Id;
                 }
 
@@ -303,11 +305,12 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
+                User hLogged = Session.GetUser();
                 Lesson hLesson = db.Lessons.Find(lesson.Id);
                 hLesson.Students.Clear();
                 hLesson.Topics.Clear();
 
-                if (students != null && Session.GetUser().IsSecretary)
+                if (students != null && hLogged.IsSecretary)
                 {
                     var hStudents = students.Select(s => db.Users.Find(s));                    
                     hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
@@ -333,6 +336,8 @@ namespace manager.aiv.it.Controllers
 
                     db.Binaries.Add(binary);
                     db.SaveChanges();
+
+                    EventLog.Log(db, hLogged, EventLogType.LessonEdited, $"Edited Lesson for {lesson.Class.DisplayName}", true);
 
                     hLesson.BinaryId = binary.Id;
                 }
@@ -395,6 +400,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Teacher)]
         public ActionResult DeleteConfirmed(int id)
         {
+            User hTeacher = Session.GetUser();
             Lesson lesson = db.Lessons.Find(id);
 
             if (lesson.BinaryId != null)
@@ -403,6 +409,9 @@ namespace manager.aiv.it.Controllers
             db.Lessons.Remove(lesson);
 
             db.SaveChanges();
+
+            EventLog.Log(db, hTeacher, EventLogType.LessonDeleted, $"Deleted Lesson for {lesson.Class.DisplayName}", true);
+
             return RedirectToAction("Index");
         }
 
