@@ -25,32 +25,32 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Developer)]
         public void UpdateLessons()
         {
-            string sPath = Server.MapPath("~\\FileStorage");
+            //string sPath = Server.MapPath("~\\FileStorage");
 
-            if (!Directory.Exists(sPath))
-                Directory.CreateDirectory(sPath);
+            //if (!Directory.Exists(sPath))
+            //    Directory.CreateDirectory(sPath);
 
 
-            foreach (Lesson hLesson in db.Lessons)
-            {
-                if (hLesson.BinaryId == null)
-                    continue;
+            //foreach (Lesson hLesson in db.Lessons)
+            //{
+            //    if (hLesson.BinaryId == null)
+            //        continue;
 
-                manager.aiv.it.File hFile = new it.File();
+            //    manager.aiv.it.File hFile = new it.File();
 
-                hFile.OriginalName      = hLesson.Binary.Filename;
-                hFile.ArchivationName   = AivExtensions.RandomString(50) + ".dat";
+            //    hFile.OriginalName      = hLesson.Binary.Filename;
+            //    hFile.ArchivationName   = AivExtensions.RandomString(50) + ".dat";
                 
-                using (FileStream hFs = System.IO.File.OpenWrite(sPath + "\\" + hFile.ArchivationName))
-                {
-                    hFs.Write(hLesson.Binary.Data, 0, hLesson.Binary.Data.Length);
-                    hFs.Flush();
-                }
+            //    using (FileStream hFs = System.IO.File.OpenWrite(sPath + "\\" + hFile.ArchivationName))
+            //    {
+            //        hFs.Write(hLesson.Binary.Data, 0, hLesson.Binary.Data.Length);
+            //        hFs.Flush();
+            //    }
 
-                hLesson.File = hFile;
-            }
+            //    hLesson.File = hFile;
+            //}
 
-            db.SaveChanges();
+            //db.SaveChanges();
 
         }
 

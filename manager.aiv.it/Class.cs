@@ -18,8 +18,8 @@ namespace manager.aiv.it
         public Class()
         {
             this.Assignments = new HashSet<Assignment>();
-            this.Lessons = new HashSet<Lesson>();
             this.Students = new HashSet<User>();
+            this.Lessons = new HashSet<Lesson>();
         }
     
         public int Id { get; set; }
@@ -31,8 +31,8 @@ namespace manager.aiv.it
         public virtual ICollection<Assignment> Assignments { get; set; }
         public virtual Edition Edition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> Lessons { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Students { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }

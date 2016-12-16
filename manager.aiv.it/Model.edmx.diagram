@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="0.75" PointY="8.25" />
         <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="3" PointY="8.25" />
         <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="12" PointY="2.875" />
-        <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="1.25" PointY="1.875" />
         <EntityTypeShape EntityType="AivModel.Note" Width="1.5" PointX="12" PointY="12.375" />
         <EntityTypeShape EntityType="AivModel.Role" Width="1.5" PointX="7.5" PointY="4.875" />
         <EntityTypeShape EntityType="AivModel.Submission" Width="1.5" PointX="12.75" PointY="7.75" />
@@ -21,15 +20,12 @@
         <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
         <AssociationConnector Association="AivModel.FK_Table_ToAssignment" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Table_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
         <AssociationConnector Association="AivModel.FK_Class_ToEdition" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToClass" />
         <AssociationConnector Association="AivModel.FK_Edition_ToCourse" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToCourse" />
         <AssociationConnector Association="AivModel.FK_Topic_ToCourse" />
-        <AssociationConnector Association="AivModel.CoveredTopic" />
         <AssociationConnector Association="AivModel.EditionSchedule" />
         <AssociationConnector Association="AivModel.ExerciseTopic" />
         <EntityTypeShape EntityType="AivModel.User" Width="2.875" PointX="3.75" PointY="0.5" />
@@ -37,24 +33,27 @@
         <AssociationConnector Association="AivModel.FK_User_ToBinary" />
         <AssociationConnector Association="AivModel.FK_User_ToClass" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToUser" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToUser" />
         <AssociationConnector Association="AivModel.FK_Note_Staff" />
         <AssociationConnector Association="AivModel.FK_Note_Student" />
         <AssociationConnector Association="AivModel.FK_Table_ToStudent" />
         <AssociationConnector Association="AivModel.FK_Table_ToTeacher" />
-        <AssociationConnector Association="AivModel.Attending" />
         <AssociationConnector Association="AivModel.Roles" />
         <AssociationConnector Association="AivModel.Teaching" />
-        <EntityTypeShape EntityType="AivModel.ViewLessonFullData" Width="1.75" PointX="22" PointY="0.75" />
         <EntityTypeShape EntityType="AivModel.ViewLessonPresence" Width="1.75" PointX="24.125" PointY="0.75" />
-        <EntityTypeShape EntityType="AivModel.ViewStudentFullData" Width="1.5" PointX="22" PointY="7.75" />
-        <EntityTypeShape EntityType="AivModel.ViewStudentNote" Width="1.5" PointX="22" PointY="5.625" />
+        <EntityTypeShape EntityType="AivModel.ViewStudentFullData" Width="1.5" PointX="24.125" PointY="4.375" />
+        <EntityTypeShape EntityType="AivModel.ViewStudentNote" Width="1.5" PointX="24.125" PointY="2.625" />
         <EntityTypeShape EntityType="AivModel.EventLog" Width="1.5" PointX="7.375" PointY="1.375" />
         <AssociationConnector Association="AivModel.FK_EventLog_ToUser" />
         <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="8.75" PointY="13.625" />
         <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
-        <EntityTypeShape EntityType="AivModel.File" Width="1.5" PointX="1.5" PointY="11.375" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToFile" />
+        <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="20.375" PointY="0.875" />
+        <EntityTypeShape EntityType="AivModel.ViewLessonFullData" Width="2.375" PointX="26" PointY="4.375" />
+        <AssociationConnector Association="AivModel.FK_Lesson_ToBinary" />
+        <AssociationConnector Association="AivModel.FK_Lesson_ToClass" />
+        <AssociationConnector Association="AivModel.FK_Lesson_ToUser" />
+        <AssociationConnector Association="AivModel.Attending" />
+        <AssociationConnector Association="AivModel.CoveredTopic" />
+        <EntityTypeShape EntityType="AivModel.File" Width="1.5" PointX="0.75" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
