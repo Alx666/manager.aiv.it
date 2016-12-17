@@ -20,7 +20,7 @@ namespace manager.aiv.it.Controllers
 
         // GET: Students
         [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
-        public ActionResult Index(string search, string option = "enlisted")
+        public ActionResult Index(string search, int? searchId)
         {
             //Main query
             var model = (from r in db.Roles
@@ -28,13 +28,26 @@ namespace manager.aiv.it.Controllers
                          where r.Id == (int)RoleType.Student
                          select s).Include(s => s.Picture);
 
-            if (option == "enlisted")
+            var hSearchTypes = from t in Enum.GetValues(typeof(StudentsSearchType)) as StudentsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(StudentsSearchType), t) };
+
+            if (searchId.HasValue)
             {
-                model = from s in model where s.ClassId != null orderby s.ClassId select s;
+                StudentsSearchType eType = (StudentsSearchType)searchId.Value;
+
+                if (eType == StudentsSearchType.Enlisted)
+                {
+                    model = from s in model where s.ClassId != null orderby s.ClassId select s;
+                }
+                else if (eType == StudentsSearchType.WithNotes)
+                {
+                    model = (from n in db.Notes select n.Subject).Distinct();
+                }
+
+                ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", searchId.Value);
             }
-            else if (option == "notes")
+            else
             {
-                model = (from n in db.Notes select n.Subject).Distinct();
+                ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
             }
 
             if (!string.IsNullOrEmpty(search))

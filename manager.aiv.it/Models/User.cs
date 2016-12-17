@@ -173,4 +173,11 @@ namespace manager.aiv.it
             user.LoadRoles(hRoles);
         }
     }
+
+    public enum StudentsSearchType
+    {
+        Enlisted = 0,
+        WithNotes = 1,
+        All = 2,
+    }
 }
