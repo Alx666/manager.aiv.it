@@ -312,6 +312,8 @@ namespace manager.aiv.it.Controllers
             {
                 User hLogged = Session.GetUser();
                 Lesson hLesson = db.Lessons.Find(lesson.Id);
+                Class hClass = db.Classes.Find(lesson.ClassId);
+
                 hLesson.Students.Clear();
                 hLesson.Topics.Clear();
 
@@ -342,7 +344,7 @@ namespace manager.aiv.it.Controllers
                     db.Binaries.Add(binary);
                     db.SaveChanges();
 
-                    EventLog.Log(db, hLogged, EventLogType.LessonEdited, $"Edited Lesson for {lesson.Class.DisplayName}", true);
+                    EventLog.Log(db, hLogged, EventLogType.LessonEdited, $"Edited Lesson for {hClass.DisplayName}", true);
 
                     hLesson.BinaryId = binary.Id;
                 }
