@@ -22,13 +22,18 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary, RoleType.Admin, RoleType.Bursar, RoleType.Director, RoleType.Manager, RoleType.Teacher)]
         public ActionResult Index(string search, int? searchId)
         {
-            //Main query
-            var model = (from r in db.Roles
-                         from s in r.Users
-                         where r.Id == (int)RoleType.Student
-                         select s).Include(s => s.Picture);
+            search = search ?? string.Empty;
 
-            var hSearchTypes = from t in Enum.GetValues(typeof(StudentsSearchType)) as StudentsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(StudentsSearchType), t) };
+            var hSearchTypes    = from t in Enum.GetValues(typeof(StudentsSearchType)) as StudentsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(StudentsSearchType), t) };            
+
+            string[] hKeywords  = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
+
+            var hStudents       = from t in db.Roles.Find((int)RoleType.Student).Users select new { Student = t, Name = t.DisplayName.ToLower() };
+
+            //Main query
+            var model           = from s in hStudents
+                                  where hKeywords.All(kw => s.Name.Contains(kw))
+                                  select s;
 
             if (searchId.HasValue)
             {
@@ -36,11 +41,11 @@ namespace manager.aiv.it.Controllers
 
                 if (eType == StudentsSearchType.Enlisted)
                 {
-                    model = from s in model where s.ClassId != null orderby s.ClassId select s;
+                    model = from s in model where s.Student.ClassId != null orderby s.Student.ClassId select s;
                 }
                 else if (eType == StudentsSearchType.WithNotes)
                 {
-                    model = (from n in db.Notes select n.Subject).Distinct();
+                    model = from s in model where s.Student.NotesReceived.Count() > 0 select s;
                 }
 
                 ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", searchId.Value);
@@ -50,14 +55,11 @@ namespace manager.aiv.it.Controllers
                 ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
             }
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                model = from s in model where s.Name.Contains(search) || s.Surname.Contains(search) select s;
-            }
+
 
             var result = from s in model
                          join x in db.ViewStudentFullDatas
-                         on s.Id equals x.Id
+                         on s.Student.Id equals x.Id
                          select x;
 
             return View(result);
