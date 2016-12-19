@@ -17,7 +17,7 @@ namespace manager.aiv.it
         private static  string s_hChars = "abcdefghijklmnoqqrstuvwxyz0123456789";
         private static  Random s_hRand  = new System.Random();
 
-
+         
         public static string RandomString(int iLength)
         {
             return new string(Enumerable.Repeat(s_hChars, iLength).Select(s => s[s_hRand.Next(s.Length)]).ToArray());
