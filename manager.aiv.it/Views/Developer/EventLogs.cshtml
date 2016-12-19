@@ -31,6 +31,9 @@
                 </div>
             </div>
         }*@
+
+        @Html.SearchBar("EventLogs", "Developer", FormMethod.Get, (Enum.GetValues(typeof(EventLogType)) as EventLogType[]).Select(x => new { Id = (int)x, Name = x.ToString() }), "Id", "Name")
+
     </div>
 </div>
 

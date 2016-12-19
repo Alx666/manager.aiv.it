@@ -31,7 +31,8 @@ namespace manager.aiv.it.Controllers
 
             if (searchId.HasValue && search != null)
             {
-                string[] hKeywords = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
+                string[] hKeywords = search.ToKeywordsArray();
+
                 LessonsSearchType eType = (LessonsSearchType)searchId.Value;
 
                 if (eType == LessonsSearchType.Teacher)

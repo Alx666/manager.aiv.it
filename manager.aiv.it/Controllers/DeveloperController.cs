@@ -16,9 +16,25 @@ namespace manager.aiv.it.Controllers
 
 
         [CustomAuthorize(RoleType.Developer)]
-        public ActionResult EventLogs()
+        public ActionResult EventLogs(string search, int? searchId)
         {
-            return View(db.EventLogs.OrderByDescending(e => e.Date));
+            search = search ?? string.Empty;
+
+            string[] hKeywords = search.ToKeywordsArray();
+
+            var hSearchSet  =   from l in db.EventLogs.Select(e => new { Event = e, FullText = e.User == null ? e.Description : e.User.Name + " " + e.User.Surname + ": " + e.Description  }) 
+                                where hKeywords.All(kw => l.FullText.Contains(kw))
+                                select l;
+
+            var hResult     =   from log in db.EventLogs
+                                join la in hSearchSet
+                                on log.Id equals la.Event.Id
+                                select log;
+                           
+            if (searchId != null)
+                hResult = hResult.Where(l => l.Type == searchId);
+
+            return View(hResult.OrderByDescending(e => e.Date));
         }
 
 
@@ -111,4 +127,7 @@ namespace manager.aiv.it.Controllers
             base.Dispose(disposing);
         }
     }
+
+
+    
 }

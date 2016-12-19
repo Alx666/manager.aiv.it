@@ -37,6 +37,11 @@ namespace manager.aiv.it
         }
 
 
+        public static string[] ToKeywordsArray(this string sString)
+        {
+            return sString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
+        }
+
         #region Cryptography
 
         private const string Password = "AivManager666!**";
@@ -120,7 +125,7 @@ namespace manager.aiv.it
         {
             StringBuilder hSb = new StringBuilder();
 
-            hSb.AppendLine($"<form action=\"/{controllerName}\" class=\"filters\" method=\"{method.ToString().ToLower()}\">");
+            hSb.AppendLine($"<form action=\"/{controllerName}/{actionName}\" class=\"filters\" method=\"{method.ToString().ToLower()}\">");
                 hSb.AppendLine("<div class=\"row\">");
                     hSb.AppendLine("<div class=\"col-xs-12 col-sm-12 col-md-6\">");
                         hSb.AppendLine("<div class=\"input-group\">");

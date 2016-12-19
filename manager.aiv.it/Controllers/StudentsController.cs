@@ -26,7 +26,7 @@ namespace manager.aiv.it.Controllers
 
             var hSearchTypes    = from t in Enum.GetValues(typeof(StudentsSearchType)) as StudentsSearchType[] select new { Id = (int)t, Name = Enum.GetName(typeof(StudentsSearchType), t) };            
 
-            string[] hKeywords  = search.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => k.ToLower()).ToArray();
+            string[] hKeywords  = search.ToKeywordsArray();
 
             var hStudents       = from t in db.Roles.Find((int)RoleType.Student).Users select new { Student = t, Name = t.DisplayName.ToLower() };
 
