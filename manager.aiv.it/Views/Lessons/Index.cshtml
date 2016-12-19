@@ -97,6 +97,13 @@
                              }
                         </td>
                         <td class="text-right">
+
+                            @if (lesson.BinaryId != null)
+                            {
+                                <i class="glyphicon glyphicon-cloud-download"></i>
+                                @*<a title="Download Lesson" class="btn btn-default btn-sm action-button" href="@Url.Action("Download", new { id = lesson.BinaryId })"></a>*@
+                            }
+
                             @if (Session.GetUser().IsTeacher || Session.GetUser().IsSecretary)
                             {
                                 <a title="Edit Lesson" class="btn btn-default text-primary btn-sm action-button" href="@Url.Action("Edit", new { id = lesson.Id, classid = lesson.ClassId })"><i class="glyphicon glyphicon-pencil"></i></a>
