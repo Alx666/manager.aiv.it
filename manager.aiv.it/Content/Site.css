@@ -252,6 +252,9 @@ body.login canvas#starfield {
 .table tbody > tr > td, 
 .table tfoot > tr > td {
     vertical-align: middle;
+    min-width: 92px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .validation-summary-errors {
@@ -1476,4 +1479,6 @@ form.filters > .row{
         left:0;
         color: #eeeeee;
     }
+
+
 
