@@ -134,6 +134,7 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="LastModifyDate" Type="date" Nullable="false" />
+          <Property Name="FileId" Type="int" />
         </EntityType>
         <EntityType Name="KnowledgeAccess">
           <Key>
@@ -547,6 +548,18 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Knowledge_ToFile">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="Knowledge" Type="Self.Knowledge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Knowledge">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Knowledge_ToUser">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Knowledge" Type="Self.Knowledge" Multiplicity="*" />
@@ -939,6 +952,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <End Role="Topic" EntitySet="Topic" />
             <End Role="ExerciseTopic" EntitySet="ExerciseTopic" />
           </AssociationSet>
+          <AssociationSet Name="FK_Knowledge_ToFile" Association="Self.FK_Knowledge_ToFile">
+            <End Role="File" EntitySet="File" />
+            <End Role="Knowledge" EntitySet="Knowledge" />
+          </AssociationSet>
           <AssociationSet Name="FK_Knowledge_ToUser" Association="Self.FK_Knowledge_ToUser">
             <End Role="User" EntitySet="User" />
             <End Role="Knowledge" EntitySet="Knowledge" />
@@ -1161,6 +1178,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           </AssociationSet>
           <EntitySet Name="Files" EntityType="AivModel.File" />
           <EntitySet Name="Knowledges" EntityType="AivModel.Knowledge" />
+          <AssociationSet Name="FK_Knowledge_ToFile" Association="AivModel.FK_Knowledge_ToFile">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Knowledge" EntitySet="Knowledges" />
+          </AssociationSet>
           <AssociationSet Name="FK_Knowledge_ToUser" Association="AivModel.FK_Knowledge_ToUser">
             <End Role="User" EntitySet="Users" />
             <End Role="Knowledge" EntitySet="Knowledges" />
@@ -1770,6 +1791,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ArchivationName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OriginalName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Knowledges" Relationship="AivModel.FK_Knowledge_ToFile" FromRole="File" ToRole="Knowledge" />
         </EntityType>
         <EntityType Name="Knowledge">
           <Key>
@@ -1781,9 +1803,23 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LastModifyDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FileId" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="AivModel.FK_Knowledge_ToFile" FromRole="Knowledge" ToRole="File" />
           <NavigationProperty Name="Author" Relationship="AivModel.FK_Knowledge_ToUser" FromRole="Knowledge" ToRole="User" />
-          <NavigationProperty Name="Accesses" Relationship="AivModel.KnowledgeAccess" FromRole="Knowledge" ToRole="User" />
+          <NavigationProperty Name="AllowedAccess" Relationship="AivModel.KnowledgeAccess" FromRole="Knowledge" ToRole="User" />
         </EntityType>
+        <Association Name="FK_Knowledge_ToFile">
+          <End Type="AivModel.File" Role="File" Multiplicity="0..1" />
+          <End Type="AivModel.Knowledge" Role="Knowledge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Knowledge">
+              <PropertyRef Name="FileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Knowledge_ToUser">
           <End Type="AivModel.User" Role="User" Multiplicity="1" />
           <End Type="AivModel.Knowledge" Role="Knowledge" Multiplicity="*" />
@@ -2088,6 +2124,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySetMapping Name="Knowledges">
             <EntityTypeMapping TypeName="AivModel.Knowledge">
               <MappingFragment StoreEntitySet="Knowledge">
+                <ScalarProperty Name="FileId" ColumnName="FileId" />
                 <ScalarProperty Name="LastModifyDate" ColumnName="LastModifyDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

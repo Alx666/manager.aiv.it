@@ -17,7 +17,7 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Knowledge()
         {
-            this.Accesses = new HashSet<User>();
+            this.AllowedAccess = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -26,9 +26,11 @@ namespace manager.aiv.it
         public string Description { get; set; }
         public System.DateTime CreationDate { get; set; }
         public System.DateTime LastModifyDate { get; set; }
+        public Nullable<int> FileId { get; set; }
     
+        public virtual File File { get; set; }
         public virtual User Author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Accesses { get; set; }
+        public virtual ICollection<User> AllowedAccess { get; set; }
     }
 }
