@@ -28,6 +28,8 @@ namespace manager.aiv.it
             this.Logs = new HashSet<EventLog>();
             this.LessonsTeached = new HashSet<Lesson>();
             this.LessonsFollowed = new HashSet<Lesson>();
+            this.KnowledgesCreated = new HashSet<Knowledge>();
+            this.KnowledgesVisible = new HashSet<Knowledge>();
         }
     
         public int Id { get; set; }
@@ -67,5 +69,9 @@ namespace manager.aiv.it
         public virtual ICollection<Lesson> LessonsTeached { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lesson> LessonsFollowed { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Knowledge> KnowledgesCreated { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Knowledge> KnowledgesVisible { get; set; }
     }
 }

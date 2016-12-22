@@ -44,5 +44,6 @@ namespace manager.aiv.it
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<ViewLessonFullData> ViewLessonFullDatas { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Knowledge> Knowledges { get; set; }
     }
 }

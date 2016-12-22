@@ -54,6 +54,9 @@
         <AssociationConnector Association="AivModel.Attending" />
         <AssociationConnector Association="AivModel.CoveredTopic" />
         <EntityTypeShape EntityType="AivModel.File" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AivModel.Knowledge" Width="1.5" PointX="2.5" PointY="15.5" />
+        <AssociationConnector Association="AivModel.FK_Knowledge_ToUser" />
+        <AssociationConnector Association="AivModel.KnowledgeAccess" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

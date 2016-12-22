@@ -200,6 +200,7 @@
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KnowledgesController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
@@ -231,6 +232,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AivHelpers.cs" />
+    <Compile Include="Knowledge.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Lesson.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -461,6 +465,11 @@
     <Content Include="Views\Developer\EventLogs.cshtml" />
     <Content Include="Views\Communications\Create.cshtml" />
     <Content Include="Views\Shared\Error - Copy.cshtml" />
+    <Content Include="Views\Knowledges\Create.cshtml" />
+    <Content Include="Views\Knowledges\Delete.cshtml" />
+    <Content Include="Views\Knowledges\Details.cshtml" />
+    <Content Include="Views\Knowledges\Edit.cshtml" />
+    <Content Include="Views\Knowledges\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
