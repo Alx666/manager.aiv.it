@@ -4,61 +4,60 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4e850516916146ba90ffdf53ab76f3d1" Name="Diagram1" ZoomLevel="60">
-        <EntityTypeShape EntityType="AivModel.Manager" Width="1.5" PointX="6.75" PointY="1.625" />
-        <EntityTypeShape EntityType="AivModel.Assignment" Width="1.5" PointX="3.875" PointY="8.375" />
-        <EntityTypeShape EntityType="AivModel.Binary" Width="1.5" PointX="15.5" PointY="18.125" />
-        <EntityTypeShape EntityType="AivModel.Class" Width="1.5" PointX="7" PointY="19.125" />
-        <EntityTypeShape EntityType="AivModel.Course" Width="1.5" PointX="4.125" PointY="16.5" />
-        <EntityTypeShape EntityType="AivModel.Edition" Width="1.5" PointX="0.5" PointY="16.625" />
-        <EntityTypeShape EntityType="AivModel.Exercise" Width="1.5" PointX="18.875" PointY="15.25" />
-        <EntityTypeShape EntityType="AivModel.Note" Width="1.5" PointX="4" PointY="13.375" />
-        <EntityTypeShape EntityType="AivModel.Role" Width="1.5" PointX="8.5" PointY="5" />
-        <EntityTypeShape EntityType="AivModel.Submission" Width="1.5" PointX="14.5" PointY="9.125" />
-        <EntityTypeShape EntityType="AivModel.Topic" Width="1.5" PointX="9.625" PointY="22.625" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToClass" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToExercise" />
-        <AssociationConnector Association="AivModel.FK_Table_ToAssignment" />
-        <AssociationConnector Association="AivModel.FK_Exercise_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_Table_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_Topic_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_Class_ToEdition" />
-        <AssociationConnector Association="AivModel.FK_Edition_ToCourse" />
-        <AssociationConnector Association="AivModel.FK_Exercise_ToCourse" />
-        <AssociationConnector Association="AivModel.FK_Topic_ToCourse" />
-        <AssociationConnector Association="AivModel.EditionSchedule" />
-        <AssociationConnector Association="AivModel.ExerciseTopic" />
-        <EntityTypeShape EntityType="AivModel.User" Width="2.875" PointX="9.375" PointY="9.875" />
-        <AssociationConnector Association="AivModel.FK_ExerciseAssignment_ToTeacher" />
-        <AssociationConnector Association="AivModel.FK_User_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_User_ToClass" />
-        <AssociationConnector Association="AivModel.FK_Exercise_ToUser" />
-        <AssociationConnector Association="AivModel.FK_Note_Staff" />
-        <AssociationConnector Association="AivModel.FK_Note_Student" />
-        <AssociationConnector Association="AivModel.FK_Table_ToStudent" />
-        <AssociationConnector Association="AivModel.FK_Table_ToTeacher" />
-        <AssociationConnector Association="AivModel.Roles" />
-        <AssociationConnector Association="AivModel.Teaching" />
-        <EntityTypeShape EntityType="AivModel.ViewLessonPresence" Width="2.375" PointX="5.625" PointY="0.5" />
-        <EntityTypeShape EntityType="AivModel.ViewStudentFullData" Width="2.25" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="AivModel.ViewStudentNote" Width="2.375" PointX="5.625" PointY="2.125" />
-        <EntityTypeShape EntityType="AivModel.EventLog" Width="1.5" PointX="11.125" PointY="5" />
-        <AssociationConnector Association="AivModel.FK_EventLog_ToUser" />
-        <EntityTypeShape EntityType="AivModel.ExerciseType" Width="1.5" PointX="21.5" PointY="15.25" />
-        <AssociationConnector Association="AivModel.FK_Exercise_ToExerciseType" />
-        <EntityTypeShape EntityType="AivModel.Lesson" Width="1.5" PointX="10" PointY="17.625" />
-        <EntityTypeShape EntityType="AivModel.ViewLessonFullData" Width="2.375" PointX="3" PointY="0.5" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToBinary" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToClass" />
-        <AssociationConnector Association="AivModel.FK_Lesson_ToUser" />
-        <AssociationConnector Association="AivModel.Attending" />
-        <AssociationConnector Association="AivModel.CoveredTopic" />
-        <EntityTypeShape EntityType="AivModel.File" Width="1.5" PointX="16.75" PointY="3.125" />
-        <EntityTypeShape EntityType="AivModel.Knowledge" Width="1.5" PointX="14.5" PointY="3.125" />
-        <AssociationConnector Association="AivModel.FK_Knowledge_ToFile" />
-        <AssociationConnector Association="AivModel.FK_Knowledge_ToUser" />
-        <AssociationConnector Association="AivModel.KnowledgeAccess" />
-        </Diagram>
+      <Diagram DiagramId="8d3baedf21e1418090a7f1dfc68999fd" Name="Diagram1">
+        <EntityTypeShape EntityType="AivEntities.Assignment" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Binary" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Class" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ClassStudent" Width="1.5" PointX="10.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Course" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Edition" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.EventLog" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Exercise" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ExerciseType" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Lesson" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Note" Width="1.5" PointX="10.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Role" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Submission" Width="1.5" PointX="13.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Topic" Width="1.5" PointX="11.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.User" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewClassStudentCount" Width="2.75" PointX="13.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonFullData" Width="1.5" PointX="0.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonPresence" Width="1.5" PointX="2.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewStudentFullData" Width="1.5" PointX="4.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewStudentNote" Width="1.875" PointX="6.75" PointY="15.5" IsExpanded="true" />
+        <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToClass" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToExercise" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Table_ToAssignment" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Exercise_ToBinary" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Lesson_ToBinary" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Table_ToBinary" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Topic_ToBinary" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_User_ToBinary" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Class_ToEdition" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_ClassStudent_ToClass" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Lesson_ToClass" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_User_ToClass" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_ClassStudent_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Edition_ToCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Exercise_ToCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Topic_ToCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_EventLog_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Exercise_ToExerciseType" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Exercise_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Lesson_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Note_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Note_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Table_ToStudent" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.FK_Table_ToTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.Attending" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.CoveredTopic" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.EditionSchedule" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.ExerciseTopic" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="AivEntities.Teaching" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AivEntities.ViewClassIndex" Width="1.5" PointX="13.375" PointY="3.75" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -13,8 +13,8 @@ using System.Text;
 namespace manager.aiv.it.Controllers
 {
     public class AssignmentsController : Controller
-    {
-        private AivEntities db = new AivEntities();
+    {        
+        private AivManagementEntities db = new AivManagementEntities();
 
         // GET: Assignments
         [CustomAuthorize(RoleType.Teacher, RoleType.Director, RoleType.Manager)]

@@ -12,7 +12,7 @@ namespace manager.aiv.it.Controllers
 {
     public class DeveloperController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
 
         [CustomAuthorize(RoleType.Developer)]

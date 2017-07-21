@@ -191,6 +191,9 @@
     <Compile Include="Class.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClassStudent.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssignmentsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
@@ -200,7 +203,6 @@
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\ExercisesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KnowledgesController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
@@ -225,16 +227,10 @@
     <Compile Include="ExerciseType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="File.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AivHelpers.cs" />
-    <Compile Include="Knowledge.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Lesson.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -261,7 +257,6 @@
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\Exercise.cs" />
-    <Compile Include="Models\File.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lesson.cs" />
@@ -278,6 +273,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleType.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="AivExtensions.cs" />
     <Compile Include="Submission.cs">
@@ -288,6 +289,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewClassIndex.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewClassStudentCount.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewLessonFullData.cs">
@@ -329,6 +336,12 @@
     <Content Include="Scripts\aiv.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\jasny-bootstrap.css.map" />
+    <Content Include="Scripts\d3\API.md" />
+    <Content Include="Scripts\d3\CHANGES.md" />
+    <Content Include="Scripts\d3\LICENSE" />
+    <Content Include="Scripts\d3\README.md" />
+    <Content Include="Content\VT323-Regular.ttf" />
     <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -336,12 +349,6 @@
     <Content Include="Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\jasny-bootstrap.css.map" />
-    <Content Include="Scripts\d3\API.md" />
-    <Content Include="Scripts\d3\CHANGES.md" />
-    <Content Include="Scripts\d3\LICENSE" />
-    <Content Include="Scripts\d3\README.md" />
-    <Content Include="Content\VT323-Regular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
@@ -465,11 +472,6 @@
     <Content Include="Views\Developer\EventLogs.cshtml" />
     <Content Include="Views\Communications\Create.cshtml" />
     <Content Include="Views\Shared\Error - Copy.cshtml" />
-    <Content Include="Views\Knowledges\Create.cshtml" />
-    <Content Include="Views\Knowledges\Delete.cshtml" />
-    <Content Include="Views\Knowledges\Details.cshtml" />
-    <Content Include="Views\Knowledges\Edit.cshtml" />
-    <Content Include="Views\Knowledges\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

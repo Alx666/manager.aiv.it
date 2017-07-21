@@ -12,7 +12,7 @@ namespace manager.aiv.it.Controllers
 {
     public class NotesController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Bursar, RoleType.Secretary, RoleType.Admin, RoleType.Director, RoleType.Manager)]
         public ActionResult Index(int? studentId)

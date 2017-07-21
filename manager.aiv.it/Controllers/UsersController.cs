@@ -15,7 +15,7 @@ namespace manager.aiv.it.Controllers
 {
     public class UsersController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
 
         [CustomAuthorize(RoleType.Admin)]

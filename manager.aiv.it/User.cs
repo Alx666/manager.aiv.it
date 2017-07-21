@@ -18,18 +18,17 @@ namespace manager.aiv.it
         public User()
         {
             this.Assignments = new HashSet<Assignment>();
+            this.ClassStudents = new HashSet<ClassStudent>();
+            this.EventLogs = new HashSet<EventLog>();
             this.Exercises = new HashSet<Exercise>();
-            this.NotesCreated = new HashSet<Note>();
+            this.LessonsTeached = new HashSet<Lesson>();
+            this.Notes = new HashSet<Note>();
             this.NotesReceived = new HashSet<Note>();
             this.SubmissionsCreated = new HashSet<Submission>();
-            this.SubmissionsReviewed = new HashSet<Submission>();
+            this.SubmissionsRevised = new HashSet<Submission>();
+            this.LessonsFollowed = new HashSet<Lesson>();
             this.Roles = new HashSet<Role>();
             this.Courses = new HashSet<Course>();
-            this.Logs = new HashSet<EventLog>();
-            this.LessonsTeached = new HashSet<Lesson>();
-            this.LessonsFollowed = new HashSet<Lesson>();
-            this.KnowledgesCreated = new HashSet<Knowledge>();
-            this.KnowledgesVisible = new HashSet<Knowledge>();
         }
     
         public int Id { get; set; }
@@ -50,28 +49,26 @@ namespace manager.aiv.it
         public virtual Binary Picture { get; set; }
         public virtual Class Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClassStudent> ClassStudents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventLog> EventLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exercise> Exercises { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> NotesCreated { get; set; }
+        public virtual ICollection<Lesson> LessonsTeached { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Note> Notes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> NotesReceived { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Submission> SubmissionsCreated { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Submission> SubmissionsReviewed { get; set; }
+        public virtual ICollection<Submission> SubmissionsRevised { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lesson> LessonsFollowed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventLog> Logs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> LessonsTeached { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lesson> LessonsFollowed { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Knowledge> KnowledgesCreated { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Knowledge> KnowledgesVisible { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace manager.aiv.it.Controllers
 {
     public class TopicsController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         // GET: Topics
         [CustomAuthorize(RoleType.Teacher, RoleType.Director)]

@@ -81,7 +81,7 @@ namespace manager.aiv.it
                 }
                 catch (SmtpFailedRecipientsException hEx)
                 {
-                    using (AivEntities db = new AivEntities())
+                    using (AivManagementEntities db = new AivManagementEntities())
                     {
                         User hBadMailUser = (from u in db.Users where u.Email == hEx.FailedRecipient select u).FirstOrDefault();
                         User hAdmin       = (from u in db.Users where u.Email == SYSAdMail select u).FirstOrDefault();

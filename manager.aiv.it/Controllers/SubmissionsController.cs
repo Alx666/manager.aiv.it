@@ -17,7 +17,7 @@ namespace manager.aiv.it.Controllers
 {
     public class SubmissionsController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         // GET: Submissions
         [CustomAuthorize(RoleType.Teacher)]

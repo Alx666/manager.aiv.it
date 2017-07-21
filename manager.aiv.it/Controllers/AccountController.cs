@@ -18,7 +18,7 @@ namespace manager.aiv.it.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
      
 
         public AccountController()

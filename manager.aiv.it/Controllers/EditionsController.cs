@@ -13,7 +13,7 @@ namespace manager.aiv.it.Controllers
 {
     public class EditionsController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         // GET: Editions
         public ActionResult Index()

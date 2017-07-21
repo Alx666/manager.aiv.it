@@ -8,7 +8,7 @@ namespace manager.aiv.it
 {
     public partial class EventLog
     {
-        public static EventLog Create(AivEntities hDb, User hUser, EventLogType eType, string sText)
+        public static EventLog Create(AivManagementEntities hDb, User hUser, EventLogType eType, string sText)
         {
             EventLog hNew = new EventLog();
 
@@ -30,7 +30,7 @@ namespace manager.aiv.it
             return hNew;
         }
 
-        public static void Log(AivEntities hDb, User hUser, EventLogType eType, string sText, bool bAutosave = false)
+        public static void Log(AivManagementEntities hDb, User hUser, EventLogType eType, string sText, bool bAutosave = false)
         {
             EventLog hNew = Create(hDb, hUser, eType, sText);
             hDb.EventLogs.Add(hNew);

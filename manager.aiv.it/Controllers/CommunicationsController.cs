@@ -8,7 +8,7 @@ namespace manager.aiv.it.Controllers
 {
     public class CommunicationsController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
 
         [CustomAuthorize(RoleType.Director, RoleType.Admin, RoleType.Teacher, RoleType.Secretary)]

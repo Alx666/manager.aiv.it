@@ -7,7 +7,7 @@ namespace manager.aiv.it.Controllers
 {
     public class HomeController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
                 
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Teacher, RoleType.Secretary, RoleType.Bursar)]

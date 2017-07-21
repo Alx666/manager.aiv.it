@@ -23,7 +23,7 @@ namespace manager.aiv.it
             var raisedException = Server.GetLastError();
 
 
-            using (AivEntities hDb = new AivEntities())
+            using (AivManagementEntities hDb = new AivManagementEntities())
             {
                 EventLog.Log(hDb, null, EventLogType.ApplicationError, raisedException.ToString(), true);
             }

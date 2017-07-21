@@ -8,7 +8,7 @@ namespace manager.aiv.it
 {
     public class CustomAuthorizeAttribute : System.Web.Mvc.AuthorizeAttribute
     {  
-        private AivEntities context = new AivEntities();
+        private AivManagementEntities context = new AivManagementEntities();
 
         private readonly RoleType[] allowedroles;  
         public CustomAuthorizeAttribute(params RoleType[] roles)

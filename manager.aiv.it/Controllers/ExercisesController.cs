@@ -17,7 +17,7 @@ namespace manager.aiv.it.Controllers
     
     public class ExercisesController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         [CustomAuthorize(RoleType.Teacher, RoleType.Manager, RoleType.Director)]
         public ActionResult Index()

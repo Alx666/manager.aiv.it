@@ -13,12 +13,13 @@ namespace manager.aiv.it.Controllers
 {
     public class ClassesController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
         public ActionResult Index()
         {            
-            return View(db.Classes.Include(x => x.Edition).ToList());
+            
+            return View(db.ViewClassIndexes.Where(x => !x.IsClosed).ToList());
         }
 
         [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
@@ -113,42 +114,19 @@ namespace manager.aiv.it.Controllers
             return View(@class);
         }
 
-        [CustomAuthorize(RoleType.Director, RoleType.Admin)]
-        public ActionResult ResetCredentials(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var hClassUsers = from u in db.Users where u.ClassId == id select u;
-
-            hClassUsers.ToList().ForEach(u => 
-            {
-                string sPassword = AivExtensions.RandomString(6);
-                u.Password = sPassword;
-            });
-
-            db.SaveChanges();
-
-            hClassUsers.ToList().ForEach(u => 
-            {
-                Emailer.Send(u.Email, "Credentials Change", $"Your login has been changed!{Environment.NewLine}Username: {u.Email}{Environment.NewLine}Password: {u.Password}{Environment.NewLine}");
-            });
-
-            return RedirectToAction("Index");
-            
-        }
-
-
 
         // POST: Classes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Class @class = db.Classes.Find(id);
-            db.Classes.Remove(@class);
+            Class hToClose = db.Classes.Find(id);
+            hToClose.IsClosed = true;
+
+            var hStudents = hToClose.Students;
+            hStudents.ToList().ForEach(x => x.ClassId = null);
+
+            
             db.SaveChanges();
             return RedirectToAction("Index");
         }

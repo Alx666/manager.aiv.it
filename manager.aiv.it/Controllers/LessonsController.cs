@@ -14,7 +14,7 @@ namespace manager.aiv.it.Controllers
 {
     public class LessonsController : Controller
     {
-        private AivEntities db = new AivEntities();
+        private AivManagementEntities db = new AivManagementEntities();
 
         // GET: Lessons
         [CustomAuthorize(RoleType.Admin, RoleType.Director, RoleType.Manager, RoleType.Secretary, RoleType.Teacher)]
