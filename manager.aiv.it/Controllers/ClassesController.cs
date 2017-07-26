@@ -39,7 +39,7 @@ namespace manager.aiv.it.Controllers
 
         [CustomAuthorize(RoleType.Director)]
         public ActionResult Create()
-        {
+        {            
             ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now), "Id", "DisplayName");
             return View();
         }
@@ -59,7 +59,7 @@ namespace manager.aiv.it.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EditionId = new SelectList(db.Editions, "Id", "Id", @class.EditionId);
+            ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now), "Id", "Id", @class.EditionId);
             return View(@class);
         }
 
@@ -121,11 +121,18 @@ namespace manager.aiv.it.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Class hToClose = db.Classes.Find(id);
-            hToClose.IsClosed = true;
 
-            var hStudents = hToClose.Students;
-            hStudents.ToList().ForEach(x => x.ClassId = null);
+            if (hToClose.Lessons.Count > 0)
+            {
+                hToClose.IsClosed = true;
 
+                var hStudents = hToClose.ActiveStudents;
+                hStudents.ToList().ForEach(x => x.ClassId = null);
+            }
+            else
+            {
+                db.Classes.Remove(hToClose);
+            }
             
             db.SaveChanges();
             return RedirectToAction("Index");

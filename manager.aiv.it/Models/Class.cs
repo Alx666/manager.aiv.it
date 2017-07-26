@@ -14,7 +14,7 @@ namespace manager.aiv.it
     public partial class Class
     {        
         [DisplayName("Students")]
-        public int      DisplayStudentsCount    => this.Students.Count();
+        public int      DisplayStudentsCount    => this.ActiveStudents.Count();
 
         [DisplayName("Lessons")]
         public int      DisplayLessonsCount     => this.Lessons.Count();

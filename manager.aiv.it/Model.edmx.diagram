@@ -6,21 +6,20 @@
     <edmx:Diagrams>
       <Diagram DiagramId="8d3baedf21e1418090a7f1dfc68999fd" Name="Diagram1">
         <EntityTypeShape EntityType="AivEntities.Assignment" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.Binary" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Binary" Width="1.5" PointX="0.5" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Class" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ClassStudent" Width="1.5" PointX="10.5" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Course" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Edition" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.EventLog" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.Exercise" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Exercise" Width="1.5" PointX="3.125" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ExerciseType" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.Lesson" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Lesson" Width="1.5" PointX="5.375" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Note" Width="1.5" PointX="10.5" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Role" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.Submission" Width="1.5" PointX="13.5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.Topic" Width="1.5" PointX="11.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Submission" Width="1.5" PointX="14.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.Topic" Width="1.5" PointX="11.125" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.User" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.ViewClassStudentCount" Width="2.75" PointX="13.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ViewLessonFullData" Width="1.5" PointX="0.75" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ViewLessonPresence" Width="1.5" PointX="2.75" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ViewStudentFullData" Width="1.5" PointX="4.75" PointY="15.5" IsExpanded="true" />
@@ -56,7 +55,7 @@
         <AssociationConnector Association="AivEntities.ExerciseTopic" ManuallyRouted="false" />
         <AssociationConnector Association="AivEntities.Roles" ManuallyRouted="false" />
         <AssociationConnector Association="AivEntities.Teaching" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AivEntities.ViewClassIndex" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AivEntities.ViewClassIndex" Width="1.5" PointX="13.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

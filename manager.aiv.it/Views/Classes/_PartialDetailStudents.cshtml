@@ -12,7 +12,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var students = Model.Students.ToList();
+                    var students = Model.ActiveStudents.ToList();
                 }
 
                 @if (students.Count() == 0)

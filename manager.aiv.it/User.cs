@@ -18,7 +18,7 @@ namespace manager.aiv.it
         public User()
         {
             this.Assignments = new HashSet<Assignment>();
-            this.ClassStudents = new HashSet<ClassStudent>();
+            this.CompletedClasses = new HashSet<ClassStudent>();
             this.EventLogs = new HashSet<EventLog>();
             this.Exercises = new HashSet<Exercise>();
             this.LessonsTeached = new HashSet<Lesson>();
@@ -49,7 +49,7 @@ namespace manager.aiv.it
         public virtual Binary Picture { get; set; }
         public virtual Class Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassStudent> ClassStudents { get; set; }
+        public virtual ICollection<ClassStudent> CompletedClasses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventLog> EventLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -104,7 +104,7 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
 
                 //Send Email to all the users for this class
-                List<User> hUsers   = db.Classes.Find(assignment.ClassId).Students.ToList();
+                List<User> hUsers   = db.Classes.Find(assignment.ClassId).ActiveStudents.ToList();
 
                 Emailer.Send(hUsers, "New Homework starting on " + assignment.UnlockDate.ToShortDateString(), string.Empty);
 

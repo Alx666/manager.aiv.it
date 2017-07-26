@@ -16,7 +16,7 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate);
+                    var assignments = Model.CompletedClasses.Select(x => x.Class).SelectMany(x => x.Assignments).Where(a => DateTime.Now.Date >= a.UnlockDate);
                 }
 
                 @if (assignments.Count() == 0)

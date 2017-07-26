@@ -217,10 +217,20 @@ namespace manager.aiv.it.Controllers
             //Class Change
             if (hToEdit.ClassId != user.ClassId)
             {
-                hToEdit.Class?.Students.Remove(hToEdit);
+                hToEdit.Class?.ActiveStudents.Remove(hToEdit);
+
+                ClassStudent hRecord = db.ClassStudents.Where(x => x.ClassId == user.ClassId).FirstOrDefault();
+                if (hRecord != null)
+                    db.ClassStudents.Remove(hRecord);
 
                 if (user.ClassId != null)
+                {
                     hToEdit.Class = db.Classes.Find(user.ClassId);
+                    ClassStudent hNewRecord = new ClassStudent();
+                    hNewRecord.ClassId = user.ClassId.Value;
+                    hNewRecord.UserId = hToEdit.Id;
+                    db.ClassStudents.Add(hNewRecord);
+                }
             }
 
 

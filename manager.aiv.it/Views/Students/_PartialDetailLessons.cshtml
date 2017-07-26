@@ -13,7 +13,15 @@
         <div class="panel-body">
             <div class="row">
                 @{ 
-                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons.Where(hL => hL.ClassSize != null)).OrderByDescending(L => L.Date);
+                    var missed = (from c in Model.CompletedClasses
+                                 from l in c.Class.Lessons
+                                 from a in l.Students
+                                 where !l.Students.Contains(Model)
+                                 select l).Distinct();
+
+                    missed     = missed.Where(hL => hL.ClassSize != null);
+
+                    var allLessons = Model.LessonsFollowed.Concat(missed).OrderByDescending(L => L.Date);
                 }
 
                 @if (allLessons.Count() == 0)

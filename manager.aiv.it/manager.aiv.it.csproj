@@ -294,9 +294,6 @@
     <Compile Include="ViewClassIndex.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewClassStudentCount.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewLessonFullData.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

@@ -14,11 +14,13 @@ namespace manager.aiv.it
     
     public partial class ViewClassIndex
     {
+        public int Class { get; set; }
+        public int Course { get; set; }
+        public int Edition { get; set; }
         public string Name { get; set; }
-        public int Id { get; set; }
         public Nullable<int> Students { get; set; }
         public Nullable<int> Lessons { get; set; }
-        public Nullable<double> Frequency { get; set; }
+        public double Frequency { get; set; }
         public int Points { get; set; }
         public bool IsClosed { get; set; }
     }

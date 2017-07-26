@@ -39,7 +39,7 @@ namespace manager.aiv.it.Controllers
             var hStudents   = from i in classes
                                 join c in db.Classes
                                 on i equals c.Id
-                                from s in c.Students
+                                from s in c.ActiveStudents
                                 select s;
 
             var hStaff      = from i in staff

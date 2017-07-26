@@ -220,26 +220,22 @@
 warning 6002: The table/view 'AivManagement.dbo.ViewClassIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewClassIndex">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Class" />
+            <PropertyRef Name="Course" />
+            <PropertyRef Name="Edition" />
+            <PropertyRef Name="Frequency" />
             <PropertyRef Name="Points" />
             <PropertyRef Name="IsClosed" />
           </Key>
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Course" Type="int" Nullable="false" />
+          <Property Name="Edition" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="72" />
-          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Students" Type="int" />
           <Property Name="Lessons" Type="int" />
-          <Property Name="Frequency" Type="float" />
+          <Property Name="Frequency" Type="float" Nullable="false" />
           <Property Name="Points" Type="int" Nullable="false" />
           <Property Name="IsClosed" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'AivManagement.dbo.ViewClassStudentCount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ViewClassStudentCount">
-          <Key>
-            <PropertyRef Name="Class" />
-          </Key>
-          <Property Name="Class" Type="int" Nullable="false" />
-          <Property Name="StudentsCount" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -846,20 +842,16 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewClassIndex" EntityType="Self.ViewClassIndex" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [ViewClassIndex].[Class] AS [Class], 
+    [ViewClassIndex].[Course] AS [Course], 
+    [ViewClassIndex].[Edition] AS [Edition], 
     [ViewClassIndex].[Name] AS [Name], 
-    [ViewClassIndex].[Id] AS [Id], 
     [ViewClassIndex].[Students] AS [Students], 
     [ViewClassIndex].[Lessons] AS [Lessons], 
     [ViewClassIndex].[Frequency] AS [Frequency], 
     [ViewClassIndex].[Points] AS [Points], 
     [ViewClassIndex].[IsClosed] AS [IsClosed]
     FROM [dbo].[ViewClassIndex] AS [ViewClassIndex]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ViewClassStudentCount" EntityType="Self.ViewClassStudentCount" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ViewClassStudentCount].[Class] AS [Class], 
-    [ViewClassStudentCount].[StudentsCount] AS [StudentsCount]
-    FROM [dbo].[ViewClassStudentCount] AS [ViewClassStudentCount]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ViewLessonFullData" EntityType="Self.ViewLessonFullData" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1102,9 +1094,9 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="ForumLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Assignments" Relationship="Self.FK_ExerciseAssignment_ToClass" FromRole="Class" ToRole="Assignment" />
           <NavigationProperty Name="Edition" Relationship="Self.FK_Class_ToEdition" FromRole="Class" ToRole="Edition" />
-          <NavigationProperty Name="ClassStudents" Relationship="Self.FK_ClassStudent_ToClass" FromRole="Class" ToRole="ClassStudent" />
+          <NavigationProperty Name="StudentHistory" Relationship="Self.FK_ClassStudent_ToClass" FromRole="Class" ToRole="ClassStudent" />
           <NavigationProperty Name="Lessons" Relationship="Self.FK_Lesson_ToClass" FromRole="Class" ToRole="Lesson" />
-          <NavigationProperty Name="Students" Relationship="Self.FK_User_ToClass" FromRole="Class" ToRole="User" />
+          <NavigationProperty Name="ActiveStudents" Relationship="Self.FK_User_ToClass" FromRole="Class" ToRole="User" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ClassStudent">
@@ -1275,7 +1267,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="Assignments" Relationship="Self.FK_ExerciseAssignment_ToTeacher" FromRole="User" ToRole="Assignment" />
           <NavigationProperty Name="Picture" Relationship="Self.FK_User_ToBinary" FromRole="User" ToRole="Binary" />
           <NavigationProperty Name="Class" Relationship="Self.FK_User_ToClass" FromRole="User" ToRole="Class" />
-          <NavigationProperty Name="ClassStudents" Relationship="Self.FK_ClassStudent_ToUser" FromRole="User" ToRole="ClassStudent" />
+          <NavigationProperty Name="CompletedClasses" Relationship="Self.FK_ClassStudent_ToUser" FromRole="User" ToRole="ClassStudent" />
           <NavigationProperty Name="EventLogs" Relationship="Self.FK_EventLog_ToUser" FromRole="User" ToRole="EventLog" />
           <NavigationProperty Name="Exercises" Relationship="Self.FK_Exercise_ToUser" FromRole="User" ToRole="Exercise" />
           <NavigationProperty Name="LessonsTeached" Relationship="Self.FK_Lesson_ToUser" FromRole="User" ToRole="Lesson" />
@@ -1286,13 +1278,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="LessonsFollowed" Relationship="Self.Attending" FromRole="User" ToRole="Lesson" />
           <NavigationProperty Name="Roles" Relationship="Self.Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Courses" Relationship="Self.Teaching" FromRole="User" ToRole="Course" />
-        </EntityType>
-        <EntityType Name="ViewClassStudentCount">
-          <Key>
-            <PropertyRef Name="Class" />
-          </Key>
-          <Property Name="Class" Type="Int32" Nullable="false" />
-          <Property Name="StudentsCount" Type="Int32" />
         </EntityType>
         <EntityType Name="ViewLessonFullData">
           <Key>
@@ -1714,7 +1699,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="Submissions" EntityType="Self.Submission" />
           <EntitySet Name="Topics" EntityType="Self.Topic" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="ViewClassStudentCounts" EntityType="Self.ViewClassStudentCount" />
           <EntitySet Name="ViewLessonFullDatas" EntityType="Self.ViewLessonFullData" />
           <EntitySet Name="ViewLessonPresences" EntityType="Self.ViewLessonPresence" />
           <EntitySet Name="ViewStudentFullDatas" EntityType="Self.ViewStudentFullData" />
@@ -1888,15 +1872,20 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
         </ComplexType>
         <EntityType Name="ViewClassIndex">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Class" />
+            <PropertyRef Name="Course" />
+            <PropertyRef Name="Edition" />
+            <PropertyRef Name="Frequency" />
             <PropertyRef Name="Points" />
             <PropertyRef Name="IsClosed" />
           </Key>
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Course" Type="Int32" Nullable="false" />
+          <Property Name="Edition" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="72" FixedLength="false" Unicode="true" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Students" Type="Int32" />
           <Property Name="Lessons" Type="Int32" />
-          <Property Name="Frequency" Type="Double" />
+          <Property Name="Frequency" Type="Double" Nullable="false" />
           <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
         </EntityType>
@@ -2082,14 +2071,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ViewClassStudentCounts">
-            <EntityTypeMapping TypeName="AivEntities.ViewClassStudentCount">
-              <MappingFragment StoreEntitySet="ViewClassStudentCount">
-                <ScalarProperty Name="Class" ColumnName="Class" />
-                <ScalarProperty Name="StudentsCount" ColumnName="StudentsCount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ViewLessonFullDatas">
             <EntityTypeMapping TypeName="AivEntities.ViewLessonFullData">
               <MappingFragment StoreEntitySet="ViewLessonFullData">
@@ -2226,8 +2207,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
                 <ScalarProperty Name="Frequency" ColumnName="Frequency" />
                 <ScalarProperty Name="Lessons" ColumnName="Lessons" />
                 <ScalarProperty Name="Students" ColumnName="Students" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Edition" ColumnName="Edition" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -163,7 +163,7 @@ namespace manager.aiv.it.Controllers
                 ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName");
                 ViewBag.TeacherId = new SelectList(classes.First().Edition.Course.Teachers, "Id", "DisplayName");
                 ViewBag.topics = new MultiSelectList(classes.First().Edition.Topics, "Id", "DisplayName");
-                ViewBag.Students = new MultiSelectList(classes.First().Students, "Id", "DisplayName");
+                ViewBag.Students = new MultiSelectList(classes.First().ActiveStudents, "Id", "DisplayName");
             }
             else
             {
@@ -180,7 +180,7 @@ namespace manager.aiv.it.Controllers
                 ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName", selected.Id);
                 ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
                 ViewBag.topics = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
-                ViewBag.students = new MultiSelectList(selected.Students, "Id", "DisplayName");
+                ViewBag.students = new MultiSelectList(selected.ActiveStudents, "Id", "DisplayName");
             }
 
             Lesson hLesson = new Lesson();
@@ -217,7 +217,7 @@ namespace manager.aiv.it.Controllers
                 {
                     students.ForEach(s => lesson.Students.Add(db.Users.Find(s)));
 
-                    lesson.ClassSize = (short)hClass.Students.Count();
+                    lesson.ClassSize = (short)hClass.ActiveStudents.Count();
                     lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
 
@@ -275,7 +275,7 @@ namespace manager.aiv.it.Controllers
                 hSelectedStudents = Enumerable.Empty<int>();
             }
 
-            var vClassStudents = from hU in db.Classes.Find(classid).Students select new { Id = hU.Id, Name = hU.Name + " " + hU.Surname };
+            var vClassStudents = from hU in db.Classes.Find(classid).ActiveStudents select new { Id = hU.Id, Name = hU.Name + " " + hU.Surname };
 
 
             User hUser = db.Users.Find(Session.GetUser().Id);
@@ -353,7 +353,7 @@ namespace manager.aiv.it.Controllers
                 hLesson.Notes = lesson.Notes;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
                 hLesson.Class = db.Classes.Find(lesson.ClassId);
-                hLesson.ClassSize = (short)hLesson.Class.Students.Count();
+                hLesson.ClassSize = (short)hLesson.Class.ActiveStudents.Count();
                 hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
                 hLesson.Date = lesson.Date;
 

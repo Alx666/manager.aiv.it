@@ -17,7 +17,7 @@ namespace manager.aiv.it.Controllers
 
         // GET: Editions
         public ActionResult Index()
-        {
+        {            
             return View(db.Editions.ToList());
         }
 
