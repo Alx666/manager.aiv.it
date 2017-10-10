@@ -164,7 +164,7 @@ namespace manager.aiv.it.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            ViewBag.ClassId = new SelectList(db.Classes.Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
+            ViewBag.ClassId = new SelectList(db.Classes.Where(c => !c.IsClosed).Include(c => c.Edition), "Id", "DisplayName", user.ClassId);
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
 
             if (user.BinaryId != null)

@@ -13,11 +13,11 @@
         <div class="panel-body">
             <div class="row">
                 @{ 
-                    var missed = (from c in Model.CompletedClasses
-                                 from l in c.Class.Lessons
-                                 from a in l.Students
-                                 where !l.Students.Contains(Model)
-                                 select l).Distinct();
+                    var missed =   (from c in Model.CompletedClasses
+                                    from l in c.Class.Lessons
+                                    from a in l.Students
+                                    where !l.Students.Contains(Model)
+                                    select l).Distinct();
 
                     missed     = missed.Where(hL => hL.ClassSize != null);
 
