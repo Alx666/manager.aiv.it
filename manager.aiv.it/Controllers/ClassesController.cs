@@ -17,9 +17,8 @@ namespace manager.aiv.it.Controllers
 
         [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
         public ActionResult Index()
-        {            
-            
-            return View(db.ViewClassIndexes.Where(x => !x.IsClosed).ToList());
+        {                        
+            return View(db.Classes.Where(c => !c.IsClosed).ToList());
         }
 
         [CustomAuthorize(RoleType.Director, RoleType.Secretary, RoleType.Teacher, RoleType.Manager, RoleType.Admin, RoleType.Bursar)]
@@ -29,11 +28,14 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Class @class = db.Classes.Find(id);
+
             if (@class == null)
             {
                 return HttpNotFound();
             }
+
             return View(@class);
         }
 
@@ -126,8 +128,11 @@ namespace manager.aiv.it.Controllers
             {
                 hToClose.IsClosed = true;
 
-                var hStudents = hToClose.ActiveStudents;
-                hStudents.ToList().ForEach(x => x.ClassId = null);
+                foreach (var student in hToClose.ActiveStudents)
+                {
+                    hToClose.PastStudents.Add(student);
+                    student.ClassId = null;
+                }
             }
             else
             {

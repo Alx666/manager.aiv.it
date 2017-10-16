@@ -18,7 +18,6 @@ namespace manager.aiv.it
         public User()
         {
             this.Assignments = new HashSet<Assignment>();
-            this.CompletedClasses = new HashSet<ClassStudent>();
             this.EventLogs = new HashSet<EventLog>();
             this.Exercises = new HashSet<Exercise>();
             this.LessonsTeached = new HashSet<Lesson>();
@@ -29,6 +28,7 @@ namespace manager.aiv.it
             this.LessonsFollowed = new HashSet<Lesson>();
             this.Roles = new HashSet<Role>();
             this.Courses = new HashSet<Course>();
+            this.PreviousClasses = new HashSet<Class>();
         }
     
         public int Id { get; set; }
@@ -49,8 +49,6 @@ namespace manager.aiv.it
         public virtual Binary Picture { get; set; }
         public virtual Class Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClassStudent> CompletedClasses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventLog> EventLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exercise> Exercises { get; set; }
@@ -70,5 +68,7 @@ namespace manager.aiv.it
         public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course> Courses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Class> PreviousClasses { get; set; }
     }
 }

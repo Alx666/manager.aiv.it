@@ -30,7 +30,6 @@ namespace manager.aiv.it
         public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Binary> Binaries { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
-        public virtual DbSet<ClassStudent> ClassStudents { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Edition> Editions { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }

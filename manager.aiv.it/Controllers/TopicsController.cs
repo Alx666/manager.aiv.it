@@ -25,7 +25,12 @@ namespace manager.aiv.it.Controllers
                 model = from t in model where t.Name.Contains(search) || t.Description.Contains(search) orderby t.Name select t;
             }
 
-            return View(model);
+            var result = from t in model
+                         group t by t.CourseId into g
+                         select g;
+
+
+            return View(result.ToList());
         }
 
         // GET: Topics/Details/5        

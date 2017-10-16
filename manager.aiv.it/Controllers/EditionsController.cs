@@ -18,7 +18,7 @@ namespace manager.aiv.it.Controllers
         // GET: Editions
         public ActionResult Index()
         {            
-            return View(db.Editions.ToList());
+            return View(db.Editions.OrderByDescending(e => e.AcademicYear).ToList());
         }
 
         // GET: Editions/Details/5
@@ -135,7 +135,7 @@ namespace manager.aiv.it.Controllers
                 db.Entry(hEdition).State = EntityState.Modified;
                 db.SaveChanges();
 
-                EventLog.Log(db, Session.GetUser(), EventLogType.EditionEdited, $"Edited Edition{edition.DisplayName}", true);
+                EventLog.Log(db, Session.GetUser(), EventLogType.EditionEdited, $"Edited Edition{hEdition.DisplayName}", true);
 
                 return RedirectToAction("Index");
             }

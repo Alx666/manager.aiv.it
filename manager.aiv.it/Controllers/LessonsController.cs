@@ -156,7 +156,7 @@ namespace manager.aiv.it.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
 
-            var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) select c;
+            var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) && !c.IsClosed select c;
 
             if (!classid.HasValue)
             {
@@ -211,6 +211,9 @@ namespace manager.aiv.it.Controllers
             if (ModelState.IsValid)
             {
                 Class hClass = db.Classes.Find(lesson.ClassId);
+                if (hClass.IsClosed)
+                    throw new ApplicationException("this class is closed");
+
                 topics?.ForEach(t => lesson.Topics.Add(db.Topics.Find(t)));
 
                 if (students != null)
@@ -227,7 +230,6 @@ namespace manager.aiv.it.Controllers
 
                     db.Binaries.Add(binary);
                     db.SaveChanges();
-
 
                     lesson.BinaryId = binary.Id;
                 }

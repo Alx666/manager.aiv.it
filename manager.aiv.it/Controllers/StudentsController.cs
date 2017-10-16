@@ -184,64 +184,72 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary)]
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password,Mobile,RegistrationDate,ClassId,BinaryId,City,Address,Code")] User user)
         {
-            if (!string.IsNullOrEmpty(user.Email))
-            {
-                User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
-
-                if (hAlreadyPresent != null && user.Id != hAlreadyPresent.Id)
-                    throw new HttpException("User Already Present");
-            }
+            //TODO: fix class change
+            throw new NotImplementedException();
 
 
-            User hLogged = Session.GetUser();
+            //if (!string.IsNullOrEmpty(user.Email))
+            //{
+            //    User hAlreadyPresent = (from u in db.Users where u.Email == user.Email select u).FirstOrDefault();
 
-            if (hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-
-            User hToEdit = db.Users.Find(user.Id);
-            if (hToEdit == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            hToEdit.Name = user.Name;
-            hToEdit.Surname = user.Surname;
-            hToEdit.Email = user.Email;
-            hToEdit.Password = user.Password;
-            hToEdit.Mobile = user.Mobile;
-            hToEdit.City = user.City;
-            hToEdit.Address = user.Address;
-            hToEdit.Code = user.Code;
-            hToEdit.RegistrationDate = DateTime.Now.Date;
+            //    if (hAlreadyPresent != null && user.Id != hAlreadyPresent.Id)
+            //        throw new HttpException("User Already Present");
+            //}
 
 
+            //User hLogged = Session.GetUser();
 
-            //Class Change
-            if (hToEdit.ClassId != user.ClassId)
-            {
-                hToEdit.Class?.ActiveStudents.Remove(hToEdit);
+            //if (hLogged.IsOnly(RoleType.Student) && hLogged.Id == user.Id)
+            //    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
-                ClassStudent hRecord = db.ClassStudents.Where(x => x.ClassId == user.ClassId).FirstOrDefault();
-                if (hRecord != null)
-                    db.ClassStudents.Remove(hRecord);
+            //User hToEdit = db.Users.Find(user.Id);
+            //if (hToEdit == null)
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                if (user.ClassId != null)
-                {
-                    hToEdit.Class = db.Classes.Find(user.ClassId);
-                    ClassStudent hNewRecord = new ClassStudent();
-                    hNewRecord.ClassId = user.ClassId.Value;
-                    hNewRecord.UserId = hToEdit.Id;
-                    db.ClassStudents.Add(hNewRecord);
-                }
-            }
+            //hToEdit.Name                = user.Name;
+            //hToEdit.Surname             = user.Surname;
+            //hToEdit.Email               = user.Email;
+            //hToEdit.Password            = user.Password;
+            //hToEdit.Mobile              = user.Mobile;
+            //hToEdit.City                = user.City;
+            //hToEdit.Address             = user.Address;
+            //hToEdit.Code                = user.Code;
+            //hToEdit.RegistrationDate    = DateTime.Now.Date;
+
+           
+            ////Class Change
+            //if (hToEdit.ClassId != user.ClassId)
+            //{
+            //    hToEdit.Class?.ActiveStudents.Remove(hToEdit);
+
+            //    //BUG, condizione sbagliata..  ogni volta che aggiungo uno studente, ne cancello un'altro dalla classe!
+
+            //    //ClassStudent hRecord = db.ClassStudents.Where(x => x.ClassId == user.ClassId).FirstOrDefault();
+            //    //if (hRecord != null)
+            //    //    db.ClassStudents.Remove(hRecord);
+
+            //    if (user.ClassId != null)
+            //    {
+            //        hToEdit.Class = db.Classes.Find(user.ClassId);
+
+            //        ClassStudent hNewRecord = new ClassStudent();
+            //        hNewRecord.ClassId  = user.ClassId.Value;
+            //        hNewRecord.UserId   = hToEdit.Id;
+            //        hNewRecord.JoinDate = DateTime.Now;
+
+            //        db.ClassStudents.Add(hNewRecord);
+            //    }
+            //}
 
 
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
-            ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
+            //ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
+            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
 
-            db.SaveChanges();
+            //db.SaveChanges();
 
-            EventLog.Log(db, hLogged, EventLogType.StudentEdited, $"Edited Student {user.DisplayName}", true);
+            //EventLog.Log(db, hLogged, EventLogType.StudentEdited, $"Edited Student {user.DisplayName}", true);
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
 
         [HttpPost]
