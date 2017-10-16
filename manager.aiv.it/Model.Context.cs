@@ -35,7 +35,6 @@ namespace manager.aiv.it
         public virtual DbSet<EventLog> EventLogs { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<ExerciseType> ExerciseTypes { get; set; }
-        public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Submission> Submissions { get; set; }
@@ -45,7 +44,8 @@ namespace manager.aiv.it
         public virtual DbSet<ViewLessonPresence> ViewLessonPresences { get; set; }
         public virtual DbSet<ViewStudentFullData> ViewStudentFullDatas { get; set; }
         public virtual DbSet<ViewStudentNote> ViewStudentNotes { get; set; }
-        public virtual DbSet<ViewClassIndex> ViewClassIndexes { get; set; }
+        public virtual DbSet<Attending> Attendings { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

@@ -49,7 +49,7 @@ namespace manager.aiv.it.Controllers
 
                     hLessons = (from t in hSearchSet
                                 where hKeywords.All(kw => t.Name.Contains(kw))
-                                select t.Student).SelectMany(t => t.LessonsFollowed);
+                                select t.Student).SelectMany(s => s.Attendings.Select(x => x.Lesson));
                 }
                 else if (eType == LessonsSearchType.Class)
                 {
@@ -87,17 +87,12 @@ namespace manager.aiv.it.Controllers
                 {
                     //search everything everywhere
                     hLessons = (from l in db.Lessons.Include(x => x.Class.Edition.Course)
-                                from s in l.Students
                                 from t in l.Topics
                                 from x in hKeywords
                                 where
                                     l.Notes.Contains(x) ||
-                                    s.Name.Contains(x) ||
-                                    s.Surname.Contains(x) ||
                                     t.Name.Contains(x) ||
-                                    t.Description.Contains(x) ||
-                                    l.Teacher.Name.Contains(x) ||
-                                    l.Teacher.Surname.Contains(x)
+                                    t.Description.Contains(x) 
                                 select l).DistinctBy(l => l.Id);
                 }
 
@@ -130,7 +125,7 @@ namespace manager.aiv.it.Controllers
             }
 
             Lesson lesson = db.Lessons.Find(id);
-            foreach (var student in lesson.Students)
+            foreach (var student in lesson.Attendings.Select(x => x.Student))
             {
                 if (student.BinaryId != null)
                     student.Picture = db.Binaries.Find(student.BinaryId);
@@ -218,10 +213,13 @@ namespace manager.aiv.it.Controllers
 
                 if (students != null)
                 {
-                    students.ForEach(s => lesson.Students.Add(db.Users.Find(s)));
+                    //TODO: not implemented
+                    throw new NotImplementedException();
 
-                    lesson.ClassSize = (short)hClass.ActiveStudents.Count();
-                    lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
+                    //students.ForEach(s => lesson.Attendings.Select(x => x.Student).Add(db.Users.Find(s)));
+
+                    //lesson.ClassSize = (short)hClass.ActiveStudents.Count();
+                    //lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
                 }
 
                 if (upload != null)
@@ -270,7 +268,8 @@ namespace manager.aiv.it.Controllers
 
             if (classid.HasValue)
             {
-                hSelectedStudents = lesson.Students.Select(s => s.Id);
+                throw new NotImplementedException();
+                //hSelectedStudents = lesson.Students.Select(s => s.Id);
             }
             else
             {
@@ -316,13 +315,15 @@ namespace manager.aiv.it.Controllers
                 Lesson hLesson = db.Lessons.Find(lesson.Id);
                 Class hClass = db.Classes.Find(lesson.ClassId);
 
-                hLesson.Students.Clear();
+                throw new NotImplementedException();
+                //hLesson.Students.Clear();
                 hLesson.Topics.Clear();
 
                 if (students != null && hLogged.IsSecretary)
                 {
+                    throw new NotImplementedException();
                     var hStudents = students.Select(s => db.Users.Find(s));
-                    hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
+                    //hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
                 }
 
                 if (topics != null)
@@ -351,12 +352,12 @@ namespace manager.aiv.it.Controllers
                     hLesson.BinaryId = binary.Id;
                 }
 
-
+                throw new NotImplementedException();
                 hLesson.Notes = lesson.Notes;
                 hLesson.Teacher = db.Users.Find(lesson.TeacherId);
                 hLesson.Class = db.Classes.Find(lesson.ClassId);
                 hLesson.ClassSize = (short)hLesson.Class.ActiveStudents.Count();
-                hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
+                //hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
                 hLesson.Date = lesson.Date;
 
                 if (double.IsNaN(hLesson.Frequency))

@@ -17,7 +17,7 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lesson()
         {
-            this.Students = new HashSet<User>();
+            this.Attendings = new HashSet<Attending>();
             this.Topics = new HashSet<Topic>();
         }
     
@@ -30,11 +30,11 @@ namespace manager.aiv.it
         public double Frequency { get; set; }
         public Nullable<int> BinaryId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attending> Attendings { get; set; }
         public virtual Binary Binary { get; set; }
         public virtual Class Class { get; set; }
         public virtual User Teacher { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Students { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
     }

@@ -27,9 +27,8 @@ namespace manager.aiv.it.Controllers
                          where r.Id > (int)RoleType.Student
                          select u).Distinct();
 
-            var roleless = from u in db.Users where u.Roles.Count() == 0 select u;
-
-            users = users.Union(roleless);
+            //var roleless = from u in db.Users where u.Roles.Count() == 0 select u;
+            //users = users.Union(roleless);
 
             
             return View(users.ToList());

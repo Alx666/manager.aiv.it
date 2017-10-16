@@ -20,7 +20,7 @@
                     }
                 </div>
             <div class="col col-xs-4 col-sm-8">
-                <span class="title">@Model.DisplayName</span>
+                <span class="title">@Model.Id</span>
             </div>
 
             @if (!Session.GetUser().IsOnly(RoleType.Student))
@@ -126,7 +126,7 @@
                         <div class="panel-heading" role="tab" id="headingStudents">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" href="#collapseStudents" aria-expanded="true" aria-controls="collapseStudents">
-                                    Students ( @string.Format("{0} / {1}", Model.Students.Count(), Model.ClassSize) )
+                                    @*Students ( @string.Format("{0} / {1}", Model.Students.Count(), Model.ClassSize) )*@
                                 </a>
                             </h4>
                         </div>
@@ -134,17 +134,17 @@
                             <div class="panel-body">
                                 <div class="row">
                                     @{
-                                        var students = Model.Students.ToList();
+                                        //var students = Model.Students.ToList();
                                     }
 
-                                    @if (students.Count() == 0)
+                                    @*@if (students.Count() == 0)
                                     {
                                         <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
                                             <h5>No results found.</h5>
                                         </div>
-                                    }
+                                    }*@
 
-                                    @foreach (var item in students)
+                                    @*@foreach (var item in students)
                                     {
                                         <div class="col-xs-12 col-sm-6 col-md-4">
                                             <div class="thumbnail">
@@ -187,7 +187,7 @@
                                                 }
                                             </div>
                                         </div>
-                                    }
+                                    }*@
                                 </div>
                             </div>
                         </div>

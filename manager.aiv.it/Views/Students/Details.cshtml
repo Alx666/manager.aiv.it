@@ -213,7 +213,7 @@
                                             <span class="bold">Presence Frequency</span>
                                         </div>
                                         <div class="col-xs-9 col-sm-9 col-md-6 text-right">
-                                            @Html.DisplayFor(model => model.DisplayFrequency)
+                                            Frequency
                                         </div>
                                     </div>
 
@@ -241,16 +241,16 @@
                     </div>
                 </div>
 
-                @if (Model.LessonsFollowed != null)
+                @*@if (Model.LessonsFollowed != null)
                 {
 
                     <div class="panel-group" id="studentDetailPanels" role="tablist" aria-multiselectable="true">
-                        @*@Html.Partial("_PartialDetailHomeworks", Model)*@
-                        @Html.Partial("_PartialDetailLessons", Model)
+                        @Html.Partial("_PartialDetailHomeworks", Model)
+                        Html.Partial("_PartialDetailLessons", Model)
                     </div>
-                }
+                }*@
 
-                @if (Session.GetUser().Id == Model.Id)
+                @*@if (Session.GetUser().Id == Model.Id)
                 {
                     <div class="thumbnail">
                         <div class="card-image">
@@ -287,7 +287,7 @@
                             </section>
                         </div>
                     </div>
-                }
+                }*@
             </div>
         </div>
     </div>

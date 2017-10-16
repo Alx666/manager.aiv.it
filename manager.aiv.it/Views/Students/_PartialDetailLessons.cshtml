@@ -12,16 +12,8 @@
     <div id="collapseLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLessons">
         <div class="panel-body">
             <div class="row">
-                @{ 
-                    var missed =   (from c in Model.CompletedClasses
-                                    from l in c.Class.Lessons
-                                    from a in l.Students
-                                    where !l.Students.Contains(Model)
-                                    select l).Distinct();
-
-                    missed     = missed.Where(hL => hL.ClassSize != null);
-
-                    var allLessons = Model.LessonsFollowed.Concat(missed).OrderByDescending(L => L.Date);
+                @*@{ 
+                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons.Where(hL => hL.ClassSize != null)).OrderByDescending(L => L.Date);
                 }
 
                 @if (allLessons.Count() == 0)
@@ -94,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                }
+                }*@
             </div>
         </div>
     </div>

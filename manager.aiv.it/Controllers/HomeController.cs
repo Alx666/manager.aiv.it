@@ -28,7 +28,7 @@ namespace manager.aiv.it.Controllers
             }
 
             if(Session.GetUser().IsSecretary)
-                hModel.Lessons     = from l in db.Lessons where (!l.ClassSize.HasValue || l.Students.Count() == 0)  && l.Date <= DateTime.Now orderby l.Date descending select l;
+                hModel.Lessons     = from l in db.Lessons where (!l.ClassSize.HasValue || l.Attendings.Where(x => x.WasPresent).Count() == 0)  && l.Date <= DateTime.Now orderby l.Date descending select l;
 
             return View(hModel);
         }

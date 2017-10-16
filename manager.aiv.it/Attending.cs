@@ -12,16 +12,15 @@ namespace manager.aiv.it
     using System;
     using System.Collections.Generic;
     
-    public partial class ViewClassIndex
+    public partial class Attending
     {
-        public int Class { get; set; }
-        public int Course { get; set; }
-        public int Edition { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Students { get; set; }
-        public Nullable<int> Lessons { get; set; }
-        public double Frequency { get; set; }
-        public int Points { get; set; }
-        public bool IsClosed { get; set; }
+        public int StudentId { get; set; }
+        public int LessonId { get; set; }
+        public int ClassId { get; set; }
+        public bool WasPresent { get; set; }
+    
+        public virtual Class Class { get; set; }
+        public virtual Lesson Lesson { get; set; }
+        public virtual User Student { get; set; }
     }
 }

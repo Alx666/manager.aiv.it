@@ -186,6 +186,9 @@
     <Compile Include="Assignment.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Attending.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Binary.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -287,9 +290,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewClassIndex.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewLessonFullData.cs">

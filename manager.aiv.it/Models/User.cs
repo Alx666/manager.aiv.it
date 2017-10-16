@@ -18,39 +18,39 @@ namespace manager.aiv.it
         [DisplayName("Class Lessons")]
         public int?         DisplayTotalLessons => Class?.Lessons.Where(l => l.Date < DateTime.Now && l.ClassSize != null).Count();
 
-        [DisplayFormat(NullDisplayText = "-")]
-        [DisplayName("Followed Lessons")]
-        public int?         DisplayPresences    => Class?.Lessons.Where(l => l.Students.Contains(this)).Count();
+        //[DisplayFormat(NullDisplayText = "-")]
+        //[DisplayName("Followed Lessons")]
+        //public int?         DisplayPresences    => Class?.Lessons.Where(l => l.Students.Contains(this)).Count();
 
-        [DisplayFormat(NullDisplayText = "-")]
-        [DisplayName("Presences")]
-        public string       DisplayFrequency
-        { 
-            get
-            {
-                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue)
-                    return $"{DisplayPresences} / {DisplayTotalLessons}";
-                else
-                    return null;
-            }
-        }
+        //[DisplayFormat(NullDisplayText = "-")]
+        //[DisplayName("Presences")]
+        //public string       DisplayFrequency
+        //{ 
+        //    get
+        //    {
+        //        if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue)
+        //            return $"{DisplayPresences} / {DisplayTotalLessons}";
+        //        else
+        //            return null;
+        //    }
+        //}
 
-        [DisplayFormat(NullDisplayText = "-")]
-        [DisplayName("Frequency")]
-        public float? DisplayFrequencyPercent
-        {
+        //[DisplayFormat(NullDisplayText = "-")]
+        //[DisplayName("Frequency")]
+        //public float? DisplayFrequencyPercent
+        //{
 
-            get
-            {
+        //    get
+        //    {
 
-                if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue && DisplayTotalLessons.Value > 0f)
-                {
-                    return ((float)DisplayPresences / (float)DisplayTotalLessons) * 100.0f;
-                }
-                else
-                    return null;
-            }
-        }
+        //        if (DisplayTotalLessons.HasValue && DisplayPresences.HasValue && DisplayTotalLessons.Value > 0f)
+        //        {
+        //            return ((float)DisplayPresences / (float)DisplayTotalLessons) * 100.0f;
+        //        }
+        //        else
+        //            return null;
+        //    }
+        //}
 
         //[DisplayFormat(NullDisplayText = "-")]
         //[DisplayName("Missed Lessons")]

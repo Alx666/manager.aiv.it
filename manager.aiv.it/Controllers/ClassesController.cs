@@ -73,12 +73,15 @@ namespace manager.aiv.it.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Class @class = db.Classes.Find(id);
+
             if (@class == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EditionId = new SelectList(db.Editions.Select(e => new { Id = e.Id, Name = e.Course.Name + " " + e.Course.Grade + " " + e.AcademicYear }), "Id", "Name");
+
+            ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now).Select(e => new { Id = e.Id, Name = e.Course.Name + " " + e.Course.Grade + " " + e.AcademicYear }), "Id", "Name");
             return View(@class);
         }
 
@@ -96,7 +99,7 @@ namespace manager.aiv.it.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EditionId = new SelectList(db.Editions, "Id", "Id", @class.EditionId);
+            ViewBag.EditionId = new SelectList(db.Editions.Where(e => e.DateEnd >= DateTime.Now), "Id", "Id", @class.EditionId);
             return View(@class);
         }
 

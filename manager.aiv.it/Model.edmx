@@ -20,11 +20,14 @@
         </EntityType>
         <EntityType Name="Attending">
           <Key>
-            <PropertyRef Name="LessonId" />
             <PropertyRef Name="StudentId" />
+            <PropertyRef Name="LessonId" />
+            <PropertyRef Name="ClassId" />
           </Key>
-          <Property Name="LessonId" Type="int" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="LessonId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="WasPresent" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Binary">
           <Key>
@@ -216,27 +219,6 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'AivManagement.dbo.ViewClassIndex' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ViewClassIndex">
-          <Key>
-            <PropertyRef Name="Class" />
-            <PropertyRef Name="Course" />
-            <PropertyRef Name="Edition" />
-            <PropertyRef Name="Frequency" />
-            <PropertyRef Name="Points" />
-            <PropertyRef Name="IsClosed" />
-          </Key>
-          <Property Name="Class" Type="int" Nullable="false" />
-          <Property Name="Course" Type="int" Nullable="false" />
-          <Property Name="Edition" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="72" />
-          <Property Name="Students" Type="int" />
-          <Property Name="Lessons" Type="int" />
-          <Property Name="Frequency" Type="float" Nullable="false" />
-          <Property Name="Points" Type="int" Nullable="false" />
-          <Property Name="IsClosed" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewLessonFullData">
           <Key>
@@ -306,10 +288,20 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="NotesReceived" Type="int" />
         </EntityType>
+        <Association Name="FK_Attending_ToClass">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Attending_ToLesson">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
           <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lesson">
@@ -321,9 +313,7 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Attending_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -839,19 +829,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="Teaching" EntityType="Self.Teaching" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ViewClassIndex" EntityType="Self.ViewClassIndex" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ViewClassIndex].[Class] AS [Class], 
-    [ViewClassIndex].[Course] AS [Course], 
-    [ViewClassIndex].[Edition] AS [Edition], 
-    [ViewClassIndex].[Name] AS [Name], 
-    [ViewClassIndex].[Students] AS [Students], 
-    [ViewClassIndex].[Lessons] AS [Lessons], 
-    [ViewClassIndex].[Frequency] AS [Frequency], 
-    [ViewClassIndex].[Points] AS [Points], 
-    [ViewClassIndex].[IsClosed] AS [IsClosed]
-    FROM [dbo].[ViewClassIndex] AS [ViewClassIndex]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="ViewLessonFullData" EntityType="Self.ViewLessonFullData" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewLessonFullData].[Id] AS [Id], 
@@ -900,6 +877,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
     [ViewStudentNotes].[NotesReceived] AS [NotesReceived]
     FROM [dbo].[ViewStudentNotes] AS [ViewStudentNotes]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Attending_ToClass" Association="Self.FK_Attending_ToClass">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Attending" EntitySet="Attending" />
+          </AssociationSet>
           <AssociationSet Name="FK_Attending_ToLesson" Association="Self.FK_Attending_ToLesson">
             <End Role="Lesson" EntitySet="Lesson" />
             <End Role="Attending" EntitySet="Attending" />
@@ -1078,10 +1059,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="Filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Exercises" Relationship="Self.FK_Exercise_ToBinary" FromRole="Binary" ToRole="Exercise" />
-          <NavigationProperty Name="Lessons" Relationship="Self.FK_Lesson_ToBinary" FromRole="Binary" ToRole="Lesson" />
           <NavigationProperty Name="Submissions" Relationship="Self.FK_Table_ToBinary" FromRole="Binary" ToRole="Submission" />
           <NavigationProperty Name="Topics" Relationship="Self.FK_Topic_ToBinary" FromRole="Binary" ToRole="Topic" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_ToBinary" FromRole="Binary" ToRole="User" />
+          <NavigationProperty Name="Lessons" Relationship="AivEntities.FK_Lesson_ToBinary" FromRole="Binary" ToRole="Lesson" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -1093,10 +1074,11 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="ForumLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Assignments" Relationship="Self.FK_ExerciseAssignment_ToClass" FromRole="Class" ToRole="Assignment" />
           <NavigationProperty Name="Edition" Relationship="Self.FK_Class_ToEdition" FromRole="Class" ToRole="Edition" />
-          <NavigationProperty Name="Lessons" Relationship="Self.FK_Lesson_ToClass" FromRole="Class" ToRole="Lesson" />
           <NavigationProperty Name="ActiveStudents" Relationship="Self.FK_User_ToClass" FromRole="Class" ToRole="User" />
           <Property Name="IsClosed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PastStudents" Relationship="AivEntities.PreviousClass" FromRole="Class" ToRole="User" />
+          <NavigationProperty Name="Attendings" Relationship="AivEntities.FK_Attending_ToClass" FromRole="Class" ToRole="Attending" />
+          <NavigationProperty Name="Lessons" Relationship="AivEntities.FK_Lesson_ToClass" FromRole="Class" ToRole="Lesson" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -1162,24 +1144,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="Extensions" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Exercises" Relationship="Self.FK_Exercise_ToExerciseType" FromRole="ExerciseType" ToRole="Exercise" />
         </EntityType>
-        <EntityType Name="Lesson">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClassId" Type="Int32" Nullable="false" />
-          <Property Name="TeacherId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClassSize" Type="Int16" />
-          <Property Name="Frequency" Type="Double" Nullable="false" />
-          <Property Name="BinaryId" Type="Int32" />
-          <NavigationProperty Name="Binary" Relationship="Self.FK_Lesson_ToBinary" FromRole="Lesson" ToRole="Binary" />
-          <NavigationProperty Name="Class" Relationship="Self.FK_Lesson_ToClass" FromRole="Lesson" ToRole="Class" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_Lesson_ToUser" FromRole="Lesson" ToRole="User" />
-          <NavigationProperty Name="Students" Relationship="Self.Attending" FromRole="Lesson" ToRole="User" />
-          <NavigationProperty Name="Topics" Relationship="Self.CoveredTopic" FromRole="Lesson" ToRole="Topic" />
-        </EntityType>
         <EntityType Name="Note">
           <Key>
             <PropertyRef Name="Id" />
@@ -1232,9 +1196,9 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Binary" Relationship="Self.FK_Topic_ToBinary" FromRole="Topic" ToRole="Binary" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Topic_ToCourse" FromRole="Topic" ToRole="Course" />
-          <NavigationProperty Name="Lessons" Relationship="Self.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
           <NavigationProperty Name="Editions" Relationship="Self.EditionSchedule" FromRole="Topic" ToRole="Edition" />
           <NavigationProperty Name="Exercises" Relationship="Self.ExerciseTopic" FromRole="Topic" ToRole="Exercise" />
+          <NavigationProperty Name="Lessons" Relationship="AivEntities.CoveredTopic" FromRole="Topic" ToRole="Lesson" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1257,15 +1221,15 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <NavigationProperty Name="Class" Relationship="Self.FK_User_ToClass" FromRole="User" ToRole="Class" />
           <NavigationProperty Name="EventLogs" Relationship="Self.FK_EventLog_ToUser" FromRole="User" ToRole="EventLog" />
           <NavigationProperty Name="Exercises" Relationship="Self.FK_Exercise_ToUser" FromRole="User" ToRole="Exercise" />
-          <NavigationProperty Name="LessonsTeached" Relationship="Self.FK_Lesson_ToUser" FromRole="User" ToRole="Lesson" />
           <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Staff" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="NotesReceived" Relationship="Self.FK_Note_Student" FromRole="User" ToRole="Note" />
           <NavigationProperty Name="SubmissionsCreated" Relationship="Self.FK_Table_ToStudent" FromRole="User" ToRole="Submission" />
           <NavigationProperty Name="SubmissionsRevised" Relationship="Self.FK_Table_ToTeacher" FromRole="User" ToRole="Submission" />
-          <NavigationProperty Name="LessonsFollowed" Relationship="Self.Attending" FromRole="User" ToRole="Lesson" />
           <NavigationProperty Name="Roles" Relationship="Self.Roles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Courses" Relationship="Self.Teaching" FromRole="User" ToRole="Course" />
           <NavigationProperty Name="PreviousClasses" Relationship="AivEntities.PreviousClass" FromRole="User" ToRole="Class" />
+          <NavigationProperty Name="Attendings" Relationship="AivEntities.FK_Attending_ToUser" FromRole="User" ToRole="Attending" />
+          <NavigationProperty Name="LessonsTeached" Relationship="AivEntities.FK_Lesson_ToUser" FromRole="User" ToRole="Lesson" />
         </EntityType>
         <EntityType Name="ViewLessonFullData">
           <Key>
@@ -1397,18 +1361,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Lesson_ToBinary">
-          <End Role="Binary" Type="Self.Binary" Multiplicity="0..1" />
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Binary">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Lesson">
-              <PropertyRef Name="BinaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Table_ToBinary">
           <End Role="Binary" Type="Self.Binary" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1458,20 +1410,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Principal>
             <Dependent Role="Class">
               <PropertyRef Name="EditionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Lesson_ToClass">
-          <End Role="Class" Type="Self.Class" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Class">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Lesson">
-              <PropertyRef Name="ClassId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1563,18 +1501,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Lesson_ToUser">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Lesson">
-              <PropertyRef Name="TeacherId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Note_Staff">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Note" Type="Self.Note" Multiplicity="*" />
@@ -1623,14 +1549,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Attending">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-        </Association>
-        <Association Name="CoveredTopic">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="*" />
-          <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
-        </Association>
         <Association Name="EditionSchedule">
           <End Role="Edition" Type="Self.Edition" Multiplicity="*" />
           <End Role="Topic" Type="Self.Topic" Multiplicity="*" />
@@ -1656,7 +1574,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="EventLogs" EntityType="Self.EventLog" />
           <EntitySet Name="Exercises" EntityType="Self.Exercise" />
           <EntitySet Name="ExerciseTypes" EntityType="Self.ExerciseType" />
-          <EntitySet Name="Lessons" EntityType="Self.Lesson" />
           <EntitySet Name="Notes" EntityType="Self.Note" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Submissions" EntityType="Self.Submission" />
@@ -1686,10 +1603,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <End Role="Binary" EntitySet="Binaries" />
             <End Role="Exercise" EntitySet="Exercises" />
           </AssociationSet>
-          <AssociationSet Name="FK_Lesson_ToBinary" Association="Self.FK_Lesson_ToBinary">
-            <End Role="Binary" EntitySet="Binaries" />
-            <End Role="Lesson" EntitySet="Lessons" />
-          </AssociationSet>
           <AssociationSet Name="FK_Table_ToBinary" Association="Self.FK_Table_ToBinary">
             <End Role="Binary" EntitySet="Binaries" />
             <End Role="Submission" EntitySet="Submissions" />
@@ -1705,10 +1618,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <AssociationSet Name="FK_Class_ToEdition" Association="Self.FK_Class_ToEdition">
             <End Role="Edition" EntitySet="Editions" />
             <End Role="Class" EntitySet="Classes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Lesson_ToClass" Association="Self.FK_Lesson_ToClass">
-            <End Role="Class" EntitySet="Classes" />
-            <End Role="Lesson" EntitySet="Lessons" />
           </AssociationSet>
           <AssociationSet Name="FK_User_ToClass" Association="Self.FK_User_ToClass">
             <End Role="Class" EntitySet="Classes" />
@@ -1738,10 +1647,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <End Role="User" EntitySet="Users" />
             <End Role="Exercise" EntitySet="Exercises" />
           </AssociationSet>
-          <AssociationSet Name="FK_Lesson_ToUser" Association="Self.FK_Lesson_ToUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Lesson" EntitySet="Lessons" />
-          </AssociationSet>
           <AssociationSet Name="FK_Note_Staff" Association="Self.FK_Note_Staff">
             <End Role="User" EntitySet="Users" />
             <End Role="Note" EntitySet="Notes" />
@@ -1757,14 +1662,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <AssociationSet Name="FK_Table_ToTeacher" Association="Self.FK_Table_ToTeacher">
             <End Role="User" EntitySet="Users" />
             <End Role="Submission" EntitySet="Submissions" />
-          </AssociationSet>
-          <AssociationSet Name="Attending" Association="Self.Attending">
-            <End Role="Lesson" EntitySet="Lessons" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="CoveredTopic" Association="Self.CoveredTopic">
-            <End Role="Lesson" EntitySet="Lessons" />
-            <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
           <AssociationSet Name="EditionSchedule" Association="Self.EditionSchedule">
             <End Role="Edition" EntitySet="Editions" />
@@ -1812,10 +1709,39 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="ViewClassIndexes" EntityType="AivEntities.ViewClassIndex" />
           <AssociationSet Name="PreviousClass" Association="AivEntities.PreviousClass">
             <End Role="Class" EntitySet="Classes" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Attendings" EntityType="AivEntities.Attending" />
+          <EntitySet Name="Lessons" EntityType="AivEntities.Lesson" />
+          <AssociationSet Name="FK_Attending_ToClass" Association="AivEntities.FK_Attending_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Attending" EntitySet="Attendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attending_ToLesson" Association="AivEntities.FK_Attending_ToLesson">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Attending" EntitySet="Attendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attending_ToUser" Association="AivEntities.FK_Attending_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Attending" EntitySet="Attendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToBinary" Association="AivEntities.FK_Lesson_ToBinary">
+            <End Role="Binary" EntitySet="Binaries" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToClass" Association="AivEntities.FK_Lesson_ToClass">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lesson_ToUser" Association="AivEntities.FK_Lesson_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="CoveredTopic" Association="AivEntities.CoveredTopic">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Topic" EntitySet="Topics" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1829,28 +1755,119 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <EntityType Name="ViewClassIndex">
-          <Key>
-            <PropertyRef Name="Class" />
-            <PropertyRef Name="Course" />
-            <PropertyRef Name="Edition" />
-            <PropertyRef Name="Frequency" />
-            <PropertyRef Name="Points" />
-            <PropertyRef Name="IsClosed" />
-          </Key>
-          <Property Name="Class" Type="Int32" Nullable="false" />
-          <Property Name="Course" Type="Int32" Nullable="false" />
-          <Property Name="Edition" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="72" FixedLength="false" Unicode="true" />
-          <Property Name="Students" Type="Int32" />
-          <Property Name="Lessons" Type="Int32" />
-          <Property Name="Frequency" Type="Double" Nullable="false" />
-          <Property Name="Points" Type="Int32" Nullable="false" />
-          <Property Name="IsClosed" Type="Boolean" Nullable="false" />
-        </EntityType>
         <Association Name="PreviousClass">
           <End Type="AivEntities.Class" Role="Class" Multiplicity="*" />
           <End Type="AivEntities.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Attending">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="LessonId" />
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="WasPresent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="AivEntities.FK_Attending_ToClass" FromRole="Attending" ToRole="Class" />
+          <NavigationProperty Name="Lesson" Relationship="AivEntities.FK_Attending_ToLesson" FromRole="Attending" ToRole="Lesson" />
+          <NavigationProperty Name="Student" Relationship="AivEntities.FK_Attending_ToUser" FromRole="Attending" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassSize" Type="Int16" />
+          <Property Name="Frequency" Type="Double" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" />
+          <NavigationProperty Name="Attendings" Relationship="AivEntities.FK_Attending_ToLesson" FromRole="Lesson" ToRole="Attending" />
+          <NavigationProperty Name="Binary" Relationship="AivEntities.FK_Lesson_ToBinary" FromRole="Lesson" ToRole="Binary" />
+          <NavigationProperty Name="Class" Relationship="AivEntities.FK_Lesson_ToClass" FromRole="Lesson" ToRole="Class" />
+          <NavigationProperty Name="Teacher" Relationship="AivEntities.FK_Lesson_ToUser" FromRole="Lesson" ToRole="User" />
+          <NavigationProperty Name="Topics" Relationship="AivEntities.CoveredTopic" FromRole="Lesson" ToRole="Topic" />
+        </EntityType>
+        <Association Name="FK_Attending_ToClass">
+          <End Type="AivEntities.Class" Role="Class" Multiplicity="1" />
+          <End Type="AivEntities.Attending" Role="Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attending_ToLesson">
+          <End Type="AivEntities.Lesson" Role="Lesson" Multiplicity="1" />
+          <End Type="AivEntities.Attending" Role="Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attending_ToUser">
+          <End Type="AivEntities.User" Role="User" Multiplicity="1" />
+          <End Type="AivEntities.Attending" Role="Attending" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attending">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToBinary">
+          <End Type="AivEntities.Binary" Role="Binary" Multiplicity="0..1" />
+          <End Type="AivEntities.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Binary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="BinaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToClass">
+          <End Type="AivEntities.Class" Role="Class" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AivEntities.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lesson_ToUser">
+          <End Type="AivEntities.User" Role="User" Multiplicity="1" />
+          <End Type="AivEntities.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CoveredTopic">
+          <End Type="AivEntities.Lesson" Role="Lesson" Multiplicity="*" />
+          <End Type="AivEntities.Topic" Role="Topic" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1943,20 +1960,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Extensions" ColumnName="Extensions" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lessons">
-            <EntityTypeMapping TypeName="AivEntities.Lesson">
-              <MappingFragment StoreEntitySet="Lesson">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2081,22 +2084,6 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Attending" TypeName="AivEntities.Attending" StoreEntitySet="Attending">
-            <EndProperty Name="Lesson">
-              <ScalarProperty Name="Id" ColumnName="LessonId" />
-            </EndProperty>
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="StudentId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="CoveredTopic" TypeName="AivEntities.CoveredTopic" StoreEntitySet="CoveredTopic">
-            <EndProperty Name="Lesson">
-              <ScalarProperty Name="Id" ColumnName="LessonId" />
-            </EndProperty>
-            <EndProperty Name="Topic">
-              <ScalarProperty Name="Id" ColumnName="TopicId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="EditionSchedule" TypeName="AivEntities.EditionSchedule" StoreEntitySet="EditionSchedule">
             <EndProperty Name="Edition">
               <ScalarProperty Name="Id" ColumnName="EditionId" />
@@ -2153,27 +2140,44 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="AivEntities.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="AivEntities.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="ViewClassIndexes">
-            <EntityTypeMapping TypeName="AivEntities.ViewClassIndex">
-              <MappingFragment StoreEntitySet="ViewClassIndex">
-                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
-                <ScalarProperty Name="Points" ColumnName="Points" />
-                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
-                <ScalarProperty Name="Lessons" ColumnName="Lessons" />
-                <ScalarProperty Name="Students" ColumnName="Students" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Edition" ColumnName="Edition" />
-                <ScalarProperty Name="Course" ColumnName="Course" />
-                <ScalarProperty Name="Class" ColumnName="Class" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="PreviousClass" TypeName="AivEntities.PreviousClass" StoreEntitySet="PreviousClass">
             <EndProperty Name="User">
               <ScalarProperty Name="Id" ColumnName="StudentId" />
             </EndProperty>
             <EndProperty Name="Class">
               <ScalarProperty Name="Id" ColumnName="ClassId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Attendings">
+            <EntityTypeMapping TypeName="AivEntities.Attending">
+              <MappingFragment StoreEntitySet="Attending">
+                <ScalarProperty Name="WasPresent" ColumnName="WasPresent" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lessons">
+            <EntityTypeMapping TypeName="AivEntities.Lesson">
+              <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CoveredTopic" TypeName="AivEntities.CoveredTopic" StoreEntitySet="CoveredTopic">
+            <EndProperty Name="Topic">
+              <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="Lesson">
+              <ScalarProperty Name="Id" ColumnName="LessonId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

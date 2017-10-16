@@ -13,14 +13,7 @@ namespace manager.aiv.it
     [MetadataType(typeof(ILessonMetadata))]
     public partial class Lesson
     {
-        [DisplayName("Name")]
-        public string DisplayName => $"Lesson";
 
-        [DisplayName("Students")]
-        public string DisplayStudentsCount  => (this.ClassSize != null) ? $"{this.Students.Count()} / {this.ClassSize}" : $"{this.Students.Count()} / 0";
-
-        [DisplayName("Missed Topics")]
-        public string DisplayTopics         => this.Topics.Select(t => t.DisplayName).Aggregate((x, y) => x + ", " + y);
     }
 
     public interface ILessonMetadata

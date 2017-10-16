@@ -101,7 +101,7 @@ namespace manager.aiv.it.Controllers
         [CustomAuthorize(RoleType.Secretary)]
         public ActionResult Create()
         {
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "DisplayName");
+            ViewBag.ClassId = new SelectList(db.Classes.Where(c => !c.IsClosed).Include(c => c.Edition), "Id", "DisplayName");
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View();
         }
@@ -138,7 +138,7 @@ namespace manager.aiv.it.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", user.ClassId);
+            ViewBag.ClassId = new SelectList(db.Classes.Where(c => !c.IsClosed).Include(c => c.Edition), "Id", "Section", user.ClassId);
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             return View(user);
         }
