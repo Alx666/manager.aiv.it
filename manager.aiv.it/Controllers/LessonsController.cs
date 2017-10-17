@@ -8,8 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 
 
-//TODO: icona materiale didattico visibile su Index (eventualmente scaricabile dalla stessa action presente in details)
-
 namespace manager.aiv.it.Controllers
 {
     public class LessonsController : Controller
@@ -150,7 +148,6 @@ namespace manager.aiv.it.Controllers
             if (hTeacher == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-
             var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) && !c.IsClosed select c;
 
             if (!classid.HasValue)
@@ -172,14 +169,14 @@ namespace manager.aiv.it.Controllers
 
                 var hTeachers = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
-                ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName", selected.Id);
-                ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
-                ViewBag.topics = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
-                ViewBag.students = new MultiSelectList(selected.ActiveStudents, "Id", "DisplayName");
+                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
+                ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
+                ViewBag.topics      = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
+                ViewBag.students    = new MultiSelectList(selected.ActiveStudents, "Id", "DisplayName");
             }
 
-            Lesson hLesson = new Lesson();
-            hLesson.Date = DateTime.Now;
+            Lesson hLesson          = new Lesson();
+            hLesson.Date            = DateTime.Now;
 
             return View(hLesson);
         }
@@ -211,16 +208,6 @@ namespace manager.aiv.it.Controllers
 
                 topics?.ForEach(t => lesson.Topics.Add(db.Topics.Find(t)));
 
-                if (students != null)
-                {
-                    //TODO: not implemented
-                    throw new NotImplementedException();
-
-                    //students.ForEach(s => lesson.Attendings.Select(x => x.Student).Add(db.Users.Find(s)));
-
-                    //lesson.ClassSize = (short)hClass.ActiveStudents.Count();
-                    //lesson.Frequency = (float)lesson.Students.Count() / (float)lesson.ClassSize;
-                }
 
                 if (upload != null)
                 {
@@ -231,7 +218,6 @@ namespace manager.aiv.it.Controllers
 
                     lesson.BinaryId = binary.Id;
                 }
-
 
 
                 db.Lessons.Add(lesson);
@@ -267,9 +253,8 @@ namespace manager.aiv.it.Controllers
             IEnumerable<int> hSelectedStudents;
 
             if (classid.HasValue)
-            {
-                throw new NotImplementedException();
-                //hSelectedStudents = lesson.Students.Select(s => s.Id);
+            {                
+                hSelectedStudents = lesson.Attendings.Select(s => s.StudentId);
             }
             else
             {
@@ -311,25 +296,34 @@ namespace manager.aiv.it.Controllers
         {
             if (ModelState.IsValid)
             {
-                User hLogged = Session.GetUser();
-                Lesson hLesson = db.Lessons.Find(lesson.Id);
-                Class hClass = db.Classes.Find(lesson.ClassId);
+                User hLogged    = Session.GetUser();
+                Lesson hLesson  = db.Lessons.Find(lesson.Id);
+                Class hClass    = db.Classes.Find(lesson.ClassId);
 
-                throw new NotImplementedException();
-                //hLesson.Students.Clear();
-                hLesson.Topics.Clear();
 
-                if (students != null && hLogged.IsSecretary)
+                if (hLogged.IsTeacher && topics != null)
                 {
-                    throw new NotImplementedException();
-                    var hStudents = students.Select(s => db.Users.Find(s));
-                    //hStudents.ToList().ForEach(s => hLesson.Students.Add(s));
+                    hLesson.Topics.Clear();
+                    topics.Select(t => db.Topics.Find(t)).ToList().ForEach(t => hLesson.Topics.Add(t));                    
                 }
 
-                if (topics != null)
+                
+                if (students != null && hLogged.IsSecretary)
                 {
-                    var hTopics = topics.Select(t => db.Topics.Find(t));
-                    hTopics.ToList().ForEach(t => hLesson.Topics.Add(t));
+                    hLesson.Attendings.Clear();
+                    var allStudents = hLesson.Class.ActiveStudents.Select(s => s.Id);
+
+                    foreach (var student in allStudents)
+                    {
+                        if (students.Contains(student))
+                        {
+                            hLesson.Attendings.Add(new Attending(student, hLesson.ClassId, hLesson.Id, true));
+                        }
+                        else
+                        {
+                            hLesson.Attendings.Add(new Attending(student, hLesson.ClassId, hLesson.Id, false));
+                        }
+                    }                    
                 }
 
                 if (upload != null)
@@ -352,13 +346,13 @@ namespace manager.aiv.it.Controllers
                     hLesson.BinaryId = binary.Id;
                 }
 
-                throw new NotImplementedException();
-                hLesson.Notes = lesson.Notes;
-                hLesson.Teacher = db.Users.Find(lesson.TeacherId);
-                hLesson.Class = db.Classes.Find(lesson.ClassId);
-                hLesson.ClassSize = (short)hLesson.Class.ActiveStudents.Count();
-                //hLesson.Frequency = (float)hLesson.Students.Count() / (float)hLesson.ClassSize;
-                hLesson.Date = lesson.Date;
+                
+                hLesson.Notes       = lesson.Notes;
+                hLesson.Teacher     = db.Users.Find(lesson.TeacherId);
+                hLesson.Class       = db.Classes.Find(lesson.ClassId);
+                hLesson.ClassSize   = (short)hLesson.Class.ActiveStudents.Count();
+                hLesson.Frequency   = (float)hLesson.Attendings.Where(a => a.WasPresent).Count() / (float)hLesson.ClassSize;
+                hLesson.Date        = lesson.Date;
 
                 if (double.IsNaN(hLesson.Frequency))
                     hLesson.Frequency = 0.0;
@@ -369,8 +363,8 @@ namespace manager.aiv.it.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassId = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
-            ViewBag.TeacherId = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
+            ViewBag.ClassId         = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
+            ViewBag.TeacherId       = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
 
             return View(lesson);
         }

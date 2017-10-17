@@ -12,22 +12,19 @@
     <div id="collapseLessons" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLessons">
         <div class="panel-body">
             <div class="row">
-                @*@{ 
-                    var allLessons = Model.LessonsFollowed.Concat(Model.MissedLessons.Where(hL => hL.ClassSize != null)).OrderByDescending(L => L.Date);
-                }
-
-                @if (allLessons.Count() == 0)
+                
+                @if (Model.Attendings.Count() == 0)
                 {
                     <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
                         <h5>No results found.</h5>
                     </div>
                 }
 
-                @foreach (var item in allLessons)
+                @foreach (var attending in Model.Attendings)
                 {
-                    var followedClass   = Model.LessonsFollowed.Contains(item) ? "followed" : "not-followed";
-                    var icon            = Model.LessonsFollowed.Contains(item) ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
-                    var message         = Model.LessonsFollowed.Contains(item) ? "Followed" : "Missed";
+                    var followedClass   = attending.WasPresent ? "followed" : "not-followed";
+                    var icon            = attending.WasPresent ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                    var message         = attending.WasPresent ? "Followed" : "Missed";
 
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="thumbnail" flex>
@@ -41,21 +38,21 @@
                                 <div class="row">
                                     <div class="col-sm-3"><label>Date</label></div>
                                     <div class="col-sm-9 text-right">
-                                        @item.Date.ToShortDateString()
+                                        @attending.Lesson.Date.ToShortDateString()
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-3"><label>Teacher</label></div>
                                     <div class="col-sm-9 text-right">
-                                        @Html.DisplayFor(modelItem => item.Teacher.DisplayName)
+                                        @Html.DisplayFor(modelItem => attending.Lesson.Teacher.DisplayName)
                                     </div>
                                 </div>
 
                                 <div class="row" flex>
                                     <div class="col-sm-3"><label>Topics</label></div>
                                     <div class="col-sm-9 text-right">
-                                        @foreach (var topic in item.Topics)
+                                        @foreach (var topic in attending.Lesson.Topics)
                                         {
                                             @Html.ActionLink(topic.DisplayName, "Details", "Topics", new { Id = topic.Id }, null)
                                         }
@@ -65,7 +62,7 @@
                                 <div class="row" >
                                     <div class="col-sm-12 col-xs-12 col-md-12">
                                         <div style="height:80px; text-align:justify;">
-                                            @item.Notes
+                                            @attending.Lesson.Notes
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +74,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-sm-12 text-center">
-                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = item.Id })">
+                                        <a class="btn btn-default btn-sm action-button" href="@Url.Action("Details", "Lessons", new { id = attending.Lesson.Id })">
                                             <i class="glyphicon glyphicon-chevron-right"></i>
                                             Details
                                         </a>
@@ -86,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                }*@
+                }
             </div>
         </div>
     </div>

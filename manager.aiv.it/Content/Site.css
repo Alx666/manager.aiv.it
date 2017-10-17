@@ -15,12 +15,12 @@ html {
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
 
 html, body {
     padding: 0px;
     margin: 0px;
-    height: 100%;
 }
 
 img {
@@ -29,7 +29,7 @@ img {
 
 body {
     background: white;
-    
+    min-height: 100%;
     /* 
     BACKGROUND AIV! 
     background: url(http://www.aiv01.it/images/BGcorsi.jpg);
@@ -599,16 +599,18 @@ fieldset[disabled] .btn-dark.active {
 }
 
 .logout-btn .btn-sm {
-    max-width: 50%;
-    padding: 6px;
+    width: 40px;
+    padding: 0;
     padding-right: 20px;
     height: 40px;
-    line-height: 30px;
+    line-height: 45px;
     margin: 4px;
+    text-align: center;
 }
 
 .logout-btn .glyphicon {
     font-size:1.4em;
+    width:40px;
 }
 
 

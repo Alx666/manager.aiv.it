@@ -16,128 +16,131 @@
         <div class="panel-body">
             <div class="row">
                 @{
-                    var assignments = Model.Class.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate);
+                    IEnumerable<Assignment> assignments = null;
+
+                    assignments = Model.Class?.Assignments.Where(a => DateTime.Now.Date >= a.UnlockDate);
                 }
 
-                @if (assignments.Count() == 0)
+                @if (assignments == null || assignments.Count() == 0)
                 {
                     <div class="col-sm-12 col-md-12 col-xs-12" layout-align="center">
                         <h5>No results found.</h5>
                     </div>
                 }
-
-                @foreach (var item in assignments)
+                else
                 {
-                    Submission hSubmitted = (from s in item.Submissions where s.AssignmentId == item.Id && s.StudentId == Model.Id select s).FirstOrDefault();
+                    foreach (var item in assignments)
+                    {
+                        Submission hSubmitted = (from s in item.Submissions where s.AssignmentId == item.Id && s.StudentId == Model.Id select s).FirstOrDefault();
 
-                    var reviewed     = hSubmitted != null && hSubmitted.Revisor != null ? "followed" : "not-followed";
-                    var icon         = reviewed == "followed" ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
-                    bool bActive = DateTime.Now.Date.AddDays(-1) < item.Deadline;
-                    string sDaysLeft = bActive ? string.Format("{0} DaysLeft", (item.Deadline - DateTime.Now).Days) : "Submission Closed" ;
+                        var reviewed = hSubmitted != null && hSubmitted.Revisor != null ? "followed" : "not-followed";
+                        var icon = reviewed == "followed" ? "glyphicon glyphicon-ok-circle" : "glyphicon glyphicon-remove-circle";
+                        bool bActive = DateTime.Now.Date.AddDays(-1) < item.Deadline;
+                        string sDaysLeft = bActive ? string.Format("{0} DaysLeft", (item.Deadline - DateTime.Now).Days) : "Submission Closed";
 
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="thumbnail">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="thumbnail">
 
-                            <div class="card-image">
-                                <div class="card-quote lesson-follow-alert @reviewed">
-                                    <i class="@icon pull-right"></i>
-                                    <span>@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</span>
+                                <div class="card-image">
+                                    <div class="card-quote lesson-follow-alert @reviewed">
+                                        <i class="@icon pull-right"></i>
+                                        <span>@Html.ActionLink(item.Exercise.Name, "Details", "Exercises", new { Id = item.Exercise.Id }, null)</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-content">
+                                <div class="card-content">
 
-                                <div class="row">
-                                    <div class="col-sm-3"><label>Type</label></div>
-                                    <div class="col-sm-9 text-right">@item.Exercise.Type.Name</div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-sm-3"><label>Type</label></div>
+                                        <div class="col-sm-9 text-right">@item.Exercise.Type.Name</div>
+                                    </div>
 
-                                <div class="row">
-                                    <div class="col-sm-4"><label>Deadline</label></div>
-                                    <div class="col-sm-8 text-right">@sDaysLeft</div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-sm-4"><label>Deadline</label></div>
+                                        <div class="col-sm-8 text-right">@sDaysLeft</div>
+                                    </div>
 
-                                <div class="row">
-                                    @{                                                   
-                                        if (hSubmitted == null && bActive)
-                                        {
-                                            <div class="col-sm-3"><label>Value</label></div>
-                                            <div class="col-sm-9 text-right">@item.ExerciseValue</div>
+                                    <div class="row">
+                                        @{
+                                            if (hSubmitted == null && bActive)
+                                            {
+                                                <div class="col-sm-3"><label>Value</label></div>
+                                                <div class="col-sm-9 text-right">@item.ExerciseValue</div>
+                                            }
+                                            else if (hSubmitted == null && !bActive)
+                                            {
+                                                <div class="col-sm-3"><label>Score</label></div>
+                                                <div class="col-sm-9 text-right">0 / @item.ExerciseValue</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-3"><label>Score</label></div>
+                                                <div class="col-sm-9 text-right">@hSubmitted.Score / @item.ExerciseValue</div>
+                                            }
+
                                         }
-                                        else if (hSubmitted == null && !bActive)
-                                        {
-                                            <div class="col-sm-3"><label>Score</label></div>
-                                            <div class="col-sm-9 text-right">0 / @item.ExerciseValue</div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-sm-3"><label>Score</label></div>
-                                            <div class="col-sm-9 text-right">@hSubmitted.Score / @item.ExerciseValue</div>
-                                        }
+                                    </div>
 
+
+                                    @if (hSubmitted != null && hSubmitted.Revisor != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-4"><label>Reviewer</label></div>
+                                            <div class="col-sm-8 text-right">@hSubmitted.Revisor.DisplayName</div>
+                                        </div>
+                                    }
+
+                                    @if (hSubmitted != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-3"><label>Submission</label></div>
+                                            <div class="col-sm-9 text-right">@Html.ActionLink(hSubmitted.Binary.Filename, "Details", "Submissions", new { assignmentId = hSubmitted.AssignmentId, studentId = hSubmitted.StudentId }, null)</div>
+                                        </div>
                                     }
                                 </div>
 
 
-                                @if (hSubmitted != null && hSubmitted.Revisor != null)
+                                @if (hSubmitted == null || hSubmitted != null && hSubmitted.Revisor == null)
                                 {
-                                    <div class="row">
-                                        <div class="col-sm-4"><label>Reviewer</label></div>
-                                        <div class="col-sm-8 text-right">@hSubmitted.Revisor.DisplayName</div>
-                                    </div>
-                                }
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center">
+                                                <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
 
-                                @if (hSubmitted != null)
-                                {
-                                    <div class="row">
-                                        <div class="col-sm-3"><label>Submission</label></div>
-                                        <div class="col-sm-9 text-right">@Html.ActionLink(hSubmitted.Binary.Filename, "Details", "Submissions", new { assignmentId = hSubmitted.AssignmentId, studentId = hSubmitted.StudentId }, null)</div>
+                                                    @{
+                                                        //  s.StudentId == Session.GetUser().Id
+                                                        Submission anySubmitted = (from s in Model.SubmissionsCreated
+                                                                                   where s.AssignmentId == item.Id
+                                                                                   select s).FirstOrDefault();
+                                                        bool bUploaded = anySubmitted != null;
+                                                        bool canUpload = (Model.Id == Session.GetUser().Id && bActive);
+
+                                                        string sInputId = $"Input{@item.Id}";
+                                                        string sOnChange = $"document.form_{@item.Id}.submit();";
+                                                        string sClass = (canUpload) ? (bUploaded ? "input-file-uploaded" : "input-file-not-uploaded") : "input-file-disabled";
+                                                        string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
+
+                                                        <input type="hidden" name="assignmentId" value=@item.Id />
+                                                        if (canUpload)
+                                                        {
+                                                            <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange accept="@item.Exercise.Type.Extensions" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
+                                                        }
+                                                        <label for=@sInputId class="btn btn-default action-button @sClass"><i class="glyphicon @sIcon"></i>Submit</label>
+                                                    }
+                                                </form>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 }
                             </div>
-
-
-                            @if (hSubmitted == null || hSubmitted != null && hSubmitted.Revisor == null)
-                            {                            
-                                <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-sm-12 text-center">
-                                        <form name="form_@item.Id" enctype="multipart/form-data" method="post" action="/Submissions/Upload">
-
-                                            @{
-                                                //  s.StudentId == Session.GetUser().Id
-                                                Submission anySubmitted = (from s in Model.SubmissionsCreated
-                                                                           where s.AssignmentId == item.Id
-                                                                           select s).FirstOrDefault();
-                                                bool bUploaded = anySubmitted != null;
-                                                bool canUpload = (Model.Id == Session.GetUser().Id && bActive);
-
-                                                string sInputId = $"Input{@item.Id}";
-                                                string sOnChange = $"document.form_{@item.Id}.submit();";
-                                                string sClass = (canUpload) ? (bUploaded ? "input-file-uploaded" : "input-file-not-uploaded") : "input-file-disabled";
-                                                string sIcon = bUploaded ? "glyphicon-ok" : "glyphicon-cloud-upload";
-
-                                                <input type="hidden" name="assignmentId" value=@item.Id />
-                                                if (canUpload)
-                                                {
-                                                    <input type="file" id=@sInputId name="upload" class="inputfile" onchange=@sOnChange accept="@item.Exercise.Type.Extensions"/>
-                                                }
-                                                else
-                                                {
-                                                    <input type="file" id=@sInputId name="upload" class="inputfile" readonly disabled />
-                                                }
-                                                <label for=@sInputId class="btn btn-default action-button @sClass"><i class="glyphicon @sIcon"></i>Submit</label>
-                                            }
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                            }
                         </div>
-                    </div>
-                                                }
+                    }
+                }
             </div>
         </div>
     </div>
 </div>
-

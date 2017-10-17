@@ -41,7 +41,6 @@ namespace manager.aiv.it.Controllers
             }
             else
             {
-                //TODO: 
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
 

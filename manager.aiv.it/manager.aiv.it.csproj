@@ -252,6 +252,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Assignment.cs" />
+    <Compile Include="Models\Attending.cs" />
     <Compile Include="Models\Binary.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Course.cs" />
