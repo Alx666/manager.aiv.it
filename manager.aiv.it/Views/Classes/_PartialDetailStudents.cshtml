@@ -13,6 +13,8 @@
             <div class="row">
                 @{
                     var students = Model.ActiveStudents.ToList();
+
+
                 }
 
                 @if (students.Count() == 0)
@@ -22,7 +24,7 @@
                     </div>
                 }
 
-                @*@foreach (var item in students.OrderBy(s => s.DisplayFrequencyPercent))
+                @foreach (var item in students)
                 {
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -37,6 +39,11 @@
                                                 var base64 = Convert.ToBase64String(item.Picture.Data);
                                                 imageSource = String.Format("data:image/jpg+png;base64,{0}", base64);
                                             }
+
+                                            int presenze = item.Attendings.Where(x => x.WasPresent).Count();
+                                            int assenze  = item.Attendings.Where(x => !x.WasPresent).Count();
+                                            int totale = item.Attendings.Count();
+                                            float fFreq = (float)presenze / assenze;
                                         }
                                         <img class="table-list-avatar small" src="@imageSource" />
 
@@ -54,17 +61,16 @@
                                             @{
                                                 string sStatText;
                                                 string sColor;
-
-                                                float? fPercent = item.DisplayFrequencyPercent;
+                                                float? fPercent = fFreq;
 
                                                 if (fPercent.HasValue && fPercent.Value != 0f)
                                                 {
-                                                    sStatText   = $"{item.DisplayFrequency} ({item.DisplayFrequencyPercent.Value.ToString("F1")}%)";
+                                                    sStatText   = $"{presenze}/{totale} ({fFreq.ToString("F1")}%)";
                                                     sColor      = fPercent.Value >= 70f ? "green" : "red";
                                                 }
                                                 else
                                                 {
-                                                    sStatText   = $"{item.DisplayFrequency} (0%)";
+                                                    sStatText   = $"{presenze}/{totale} (0%)";
                                                     sColor      = "red";
                                                 }
 
@@ -72,10 +78,6 @@
                                             }                         
                                         </div>                                        
                                     </div>
-
-
-
-
                                 </div>
                             </div>
 
@@ -88,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                }*@
+                }
             </div>
         </div>
     </div>

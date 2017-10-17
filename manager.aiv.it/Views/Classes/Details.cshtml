@@ -48,7 +48,7 @@
                                 <section>
                                     <h4 class="section-title">Base Data</h4>
 
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12" layout-align="end">
                                             @if (Session.GetUser().IsDirector)
                                             {
@@ -59,8 +59,18 @@
                                                 </div>
                                             }
                                         </div>
-                                    </div>
+                                    </div>*@
 
+                                    <div class="row">
+                                        <div class="col col-xs-6">
+                                            <span class="bold">
+                                                Id
+                                            </span>
+                                        </div>
+                                        <div class="col col-xs-6">
+                                            @Html.DisplayFor(model => model.Id)
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col col-xs-6">
                                             <span class="bold">
