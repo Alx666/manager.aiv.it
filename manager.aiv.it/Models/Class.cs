@@ -19,10 +19,6 @@ namespace manager.aiv.it
         [DisplayName("Lessons")]
         public int      DisplayLessonsCount     => this.Lessons.Count();
 
-        [DisplayName("Lesson Frequency")]
-        [DisplayFormat(DataFormatString = "{0:0.0}%")]
-        public float    DisplayFrequency        => this.Lessons.Count() == 0 ? 0f : (float)this.Lessons.Where(l => l.ClassSize != null).Average(l => l.Frequency) * 100f;
-
         [DisplayName("Points")]
         public int      DisplayPoints           => this.Assignments.Sum(a => a.ExerciseValue);
 
