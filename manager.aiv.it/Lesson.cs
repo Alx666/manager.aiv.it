@@ -33,9 +33,9 @@ namespace manager.aiv.it
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attending> Attendings { get; set; }
         public virtual Binary Binary { get; set; }
-        public virtual Class Class { get; set; }
         public virtual User Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Topic> Topics { get; set; }
+        public virtual Class Class { get; set; }
     }
 }

@@ -116,6 +116,7 @@
                             </td>
                             <td class="text-right table-actions">
                                 <a title="View @item.Id" class="btn btn-default btn-sm action-button" href="@Url.Action("Edit", "Lessons", new { id = item.Id, classid = item.ClassId })"><i class="glyphicon glyphicon-pencil" style="color:dodgerblue;"></i></a>
+                                <a title="Delete Lesson" class="btn btn-default text-danger btn-sm action-button" href="@Url.Action("Delete", "Lessons", new { id = item.Id })"><i class="glyphicon glyphicon-remove"></i></a>
                             </td>
                         </tr>
                     }

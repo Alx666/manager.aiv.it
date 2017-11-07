@@ -144,11 +144,11 @@
                                     </div>
 
                                     <div class="form-group">                                        
-                                        @*@Html.LabelFor(model => model.Students, "Students", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Class.ActiveStudents, "Students", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
                                             @Html.ListBox("students", null, htmlAttributes: new { @class = "form-control", style = "min-height: 300px;" })
-                                            @Html.ValidationMessageFor(model => model.Students, "", new { @class = "text-danger" })
-                                        </div>*@
+                                            @Html.ValidationMessageFor(model => model.Class.ActiveStudents, "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
 
                                     @if (Session.GetUser().IsTeacher)

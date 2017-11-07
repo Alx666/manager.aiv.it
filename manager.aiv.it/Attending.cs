@@ -19,8 +19,8 @@ namespace manager.aiv.it
         public int ClassId { get; set; }
         public bool WasPresent { get; set; }
     
-        public virtual Class Class { get; set; }
         public virtual Lesson Lesson { get; set; }
         public virtual User Student { get; set; }
+        public virtual Class Class { get; set; }
     }
 }

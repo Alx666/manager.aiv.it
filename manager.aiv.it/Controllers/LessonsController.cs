@@ -149,6 +149,8 @@ namespace manager.aiv.it.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) && !c.IsClosed select c;
+            
+            
 
             if (!classid.HasValue)
             {
@@ -169,7 +171,7 @@ namespace manager.aiv.it.Controllers
 
                 var hTeachers = selected.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
-                ViewBag.ClassId     = new SelectList(classes, "Id", "DisplayName", selected.Id);
+                ViewBag.ClassId     = new SelectList(db.Classes.Where(c => !c.IsClosed), "Id", "DisplayName", selected.Id);
                 ViewBag.TeacherId   = new SelectList(hTeachers, "Id", "Name", hTeacher.Id);
                 ViewBag.topics      = new MultiSelectList(selected.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName");
                 ViewBag.students    = new MultiSelectList(selected.ActiveStudents, "Id", "DisplayName");
@@ -191,14 +193,14 @@ namespace manager.aiv.it.Controllers
         {
             User hTeacher = db.Users.Find(Session.GetUser().Id);
 
-            Lesson already = (from l in db.Lessons
-                              where l.Teacher.Id == hTeacher.Id &&
-                              DbFunctions.TruncateTime(l.Date) == DbFunctions.TruncateTime(DateTime.Now) &&
-                              l.ClassId == lesson.ClassId
-                              select l).FirstOrDefault();
+            //Lesson already = (from l in db.Lessons
+            //                  where l.Teacher.Id == hTeacher.Id &&
+            //                  DbFunctions.TruncateTime(l.Date) == DbFunctions.TruncateTime(DateTime.Now) &&
+            //                  l.ClassId == lesson.ClassId
+            //                  select l).FirstOrDefault();
 
-            if (already != null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //if (already != null)
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (ModelState.IsValid)
             {
@@ -278,7 +280,9 @@ namespace manager.aiv.it.Controllers
 
             var hTeachers = hClass.Edition.Course.Teachers.Select(t => new { Id = t.Id, Name = t.Name + " " + t.Surname });
 
-            ViewBag.ClassId = new SelectList(db.Classes.Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
+            var classes = from c in db.Classes where !c.IsClosed select c;
+
+            ViewBag.ClassId = new SelectList(db.Classes.Where(c => !c.IsClosed).Select(c => new { Id = c.Id, Name = c.Edition.Course.Name + " " + c.Edition.Course.Grade + c.Section }), "Id", "Name", classid);
             ViewBag.TeacherId = new SelectList(hTeachers, "Id", "Name", lesson.TeacherId);
             ViewBag.Students = new MultiSelectList(vClassStudents, "Id", "Name", hSelectedStudents);
             ViewBag.topics = new MultiSelectList(hClass.Edition.Topics.OrderBy(t => t.Name).ThenBy(t => t.Description), "Id", "DisplayName", lesson.Topics.Select(e => e.Id));
@@ -352,7 +356,7 @@ namespace manager.aiv.it.Controllers
                 hLesson.Class       = db.Classes.Find(lesson.ClassId);
                 hLesson.ClassSize   = (short)hLesson.Class.ActiveStudents.Count();
                 hLesson.Frequency   = (float)hLesson.Attendings.Where(a => a.WasPresent).Count() / (float)hLesson.ClassSize;
-                hLesson.Date        = lesson.Date;
+                hLesson.Date        = lesson.Date;                
 
                 if (double.IsNaN(hLesson.Frequency))
                     hLesson.Frequency = 0.0;
@@ -363,7 +367,7 @@ namespace manager.aiv.it.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassId         = new SelectList(db.Classes, "Id", "Section", lesson.ClassId);
+            ViewBag.ClassId         = new SelectList(db.Classes.Where(c => !c.IsClosed), "Id", "Section", lesson.ClassId);
             ViewBag.TeacherId       = new SelectList(db.Users, "Id", "Name", lesson.TeacherId);
 
             return View(lesson);
@@ -383,7 +387,7 @@ namespace manager.aiv.it.Controllers
         }
 
         // GET: Lessons/Delete/5
-        [CustomAuthorize(RoleType.Teacher)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Secretary)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -401,7 +405,7 @@ namespace manager.aiv.it.Controllers
         // POST: Lessons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [CustomAuthorize(RoleType.Teacher)]
+        [CustomAuthorize(RoleType.Teacher, RoleType.Secretary)]
         public ActionResult DeleteConfirmed(int id)
         {
             User hTeacher = Session.GetUser();

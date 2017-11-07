@@ -29,10 +29,10 @@ namespace manager.aiv.it
         public System.DateTime UnlockDate { get; set; }
         public byte ExerciseValue { get; set; }
     
-        public virtual Class Class { get; set; }
         public virtual Exercise Exercise { get; set; }
         public virtual User Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Submission> Submissions { get; set; }
+        public virtual Class Class { get; set; }
     }
 }

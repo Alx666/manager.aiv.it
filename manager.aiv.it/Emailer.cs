@@ -14,11 +14,11 @@ namespace manager.aiv.it
     public static class Emailer
     {
         private const int    Port          = 25;
-        private const string Smtp       = "authsmtp.aiv01.it";
-        private const string Username   = "amministrazione@aiv01.it";
-        private const string Password   = "amministrazioneaiv01";
-        private const string Sender     = "didattica@aiv01.it";
-        private const string SYSAdMail  = "alxeyesoul@live.com";
+        private const string Smtp = "";
+        private const string Username   = "";
+        private const string Password   = "";
+        private const string Sender     = "";
+        private const string SYSAdMail  = "";
         
 
         private static SmtpClient                        m_hClient;
