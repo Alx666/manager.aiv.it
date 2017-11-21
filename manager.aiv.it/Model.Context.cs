@@ -46,6 +46,10 @@ namespace manager.aiv.it
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<ViewLessonFullData> ViewLessonFullDatas { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<ViewLessonAbsence> ViewLessonAbsences { get; set; }
+        public virtual DbSet<ViewLessonAttendance> ViewLessonAttendances { get; set; }
+        public virtual DbSet<ViewLessonAttendancesAbsence> ViewLessonAttendancesAbsences { get; set; }
+        public virtual DbSet<ViewLessonFullData2> ViewLessonFullData2 { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

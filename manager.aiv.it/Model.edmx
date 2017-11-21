@@ -219,6 +219,34 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonAbsences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonAbsences">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="int" Nullable="false" />
+          <Property Name="Absences" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonAttendances' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonAttendances">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="int" Nullable="false" />
+          <Property Name="Presences" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonAttendancesAbsences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonAttendancesAbsences">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="int" Nullable="false" />
+          <Property Name="Attendances" Type="int" />
+          <Property Name="Absences" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewLessonFullData">
           <Key>
@@ -242,6 +270,32 @@ warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData' does not hav
           <Property Name="AcademicYear" Type="smallint" Nullable="false" />
           <Property Name="TeacherName" Type="nvarchar" MaxLength="101" Nullable="false" />
           <Property Name="StudentsCount" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AivManagement.dbo.ViewLessonFullData2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewLessonFullData2">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Frequency" />
+            <PropertyRef Name="AcademicYear" />
+            <PropertyRef Name="TeacherName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="ClassSize" Type="smallint" />
+          <Property Name="Frequency" Type="float" Nullable="false" />
+          <Property Name="BinaryId" Type="int" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="52" />
+          <Property Name="AcademicYear" Type="smallint" Nullable="false" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="Attendances" Type="int" />
+          <Property Name="Absences" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AivManagement.dbo.ViewLessonPresences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -301,7 +355,9 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Attending_ToLesson">
-          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1" />
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Attending" Type="Self.Attending" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lesson">
@@ -829,6 +885,25 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <EntitySet Name="Teaching" EntityType="Self.Teaching" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewLessonAbsences" EntityType="Self.ViewLessonAbsences" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonAbsences].[LessonId] AS [LessonId], 
+    [ViewLessonAbsences].[Absences] AS [Absences]
+    FROM [dbo].[ViewLessonAbsences] AS [ViewLessonAbsences]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewLessonAttendances" EntityType="Self.ViewLessonAttendances" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonAttendances].[LessonId] AS [LessonId], 
+    [ViewLessonAttendances].[Presences] AS [Presences]
+    FROM [dbo].[ViewLessonAttendances] AS [ViewLessonAttendances]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewLessonAttendancesAbsences" EntityType="Self.ViewLessonAttendancesAbsences" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonAttendancesAbsences].[LessonId] AS [LessonId], 
+    [ViewLessonAttendancesAbsences].[Attendances] AS [Attendances], 
+    [ViewLessonAttendancesAbsences].[Absences] AS [Absences]
+    FROM [dbo].[ViewLessonAttendancesAbsences] AS [ViewLessonAttendancesAbsences]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ViewLessonFullData" EntityType="Self.ViewLessonFullData" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewLessonFullData].[Id] AS [Id], 
@@ -844,6 +919,23 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
     [ViewLessonFullData].[TeacherName] AS [TeacherName], 
     [ViewLessonFullData].[StudentsCount] AS [StudentsCount]
     FROM [dbo].[ViewLessonFullData] AS [ViewLessonFullData]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewLessonFullData2" EntityType="Self.ViewLessonFullData2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewLessonFullData2].[Id] AS [Id], 
+    [ViewLessonFullData2].[ClassId] AS [ClassId], 
+    [ViewLessonFullData2].[TeacherId] AS [TeacherId], 
+    [ViewLessonFullData2].[Date] AS [Date], 
+    [ViewLessonFullData2].[Notes] AS [Notes], 
+    [ViewLessonFullData2].[ClassSize] AS [ClassSize], 
+    [ViewLessonFullData2].[Frequency] AS [Frequency], 
+    [ViewLessonFullData2].[BinaryId] AS [BinaryId], 
+    [ViewLessonFullData2].[ClassName] AS [ClassName], 
+    [ViewLessonFullData2].[AcademicYear] AS [AcademicYear], 
+    [ViewLessonFullData2].[TeacherName] AS [TeacherName], 
+    [ViewLessonFullData2].[Attendances] AS [Attendances], 
+    [ViewLessonFullData2].[Absences] AS [Absences]
+    FROM [dbo].[ViewLessonFullData2] AS [ViewLessonFullData2]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ViewLessonPresences" EntityType="Self.ViewLessonPresences" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1664,6 +1756,10 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
             <End Role="Class" EntitySet="Classes" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ViewLessonAbsences" EntityType="AivEntities.ViewLessonAbsence" />
+          <EntitySet Name="ViewLessonAttendances" EntityType="AivEntities.ViewLessonAttendance" />
+          <EntitySet Name="ViewLessonAttendancesAbsences" EntityType="AivEntities.ViewLessonAttendancesAbsence" />
+          <EntitySet Name="ViewLessonFullData2" EntityType="AivEntities.ViewLessonFullData2" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1869,6 +1965,52 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
           <End Type="AivEntities.Class" Role="Class" Multiplicity="*" />
           <End Type="AivEntities.User" Role="User" Multiplicity="*" />
         </Association>
+        <EntityType Name="ViewLessonAbsence">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+          <Property Name="Absences" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewLessonAttendance">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+          <Property Name="Presences" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewLessonAttendancesAbsence">
+          <Key>
+            <PropertyRef Name="LessonId" />
+          </Key>
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+          <Property Name="Attendances" Type="Int32" />
+          <Property Name="Absences" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ViewLessonFullData2">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ClassId" />
+            <PropertyRef Name="TeacherId" />
+            <PropertyRef Name="Date" />
+            <PropertyRef Name="Frequency" />
+            <PropertyRef Name="AcademicYear" />
+            <PropertyRef Name="TeacherName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassSize" Type="Int16" />
+          <Property Name="Frequency" Type="Double" Nullable="false" />
+          <Property Name="BinaryId" Type="Int32" />
+          <Property Name="ClassName" Type="String" MaxLength="52" FixedLength="false" Unicode="true" />
+          <Property Name="AcademicYear" Type="Int16" Nullable="false" />
+          <Property Name="TeacherName" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="Attendances" Type="Int32" />
+          <Property Name="Absences" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2180,6 +2322,50 @@ warning 6002: The table/view 'AivManagement.dbo.ViewStudentNotes' does not have 
               <ScalarProperty Name="Id" ColumnName="ClassId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ViewLessonAbsences">
+            <EntityTypeMapping TypeName="AivEntities.ViewLessonAbsence">
+              <MappingFragment StoreEntitySet="ViewLessonAbsences">
+                <ScalarProperty Name="Absences" ColumnName="Absences" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewLessonAttendances">
+            <EntityTypeMapping TypeName="AivEntities.ViewLessonAttendance">
+              <MappingFragment StoreEntitySet="ViewLessonAttendances">
+                <ScalarProperty Name="Presences" ColumnName="Presences" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewLessonAttendancesAbsences">
+            <EntityTypeMapping TypeName="AivEntities.ViewLessonAttendancesAbsence">
+              <MappingFragment StoreEntitySet="ViewLessonAttendancesAbsences">
+                <ScalarProperty Name="Absences" ColumnName="Absences" />
+                <ScalarProperty Name="Attendances" ColumnName="Attendances" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewLessonFullData2">
+            <EntityTypeMapping TypeName="AivEntities.ViewLessonFullData2">
+              <MappingFragment StoreEntitySet="ViewLessonFullData2">
+                <ScalarProperty Name="Absences" ColumnName="Absences" />
+                <ScalarProperty Name="Attendances" ColumnName="Attendances" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="BinaryId" ColumnName="BinaryId" />
+                <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+                <ScalarProperty Name="ClassSize" ColumnName="ClassSize" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

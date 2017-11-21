@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IGrouping<DateTime, ViewLessonFullData>>
+﻿@model IEnumerable<IGrouping<DateTime, ViewLessonFullData2>>
 
 @{
     ViewBag.Title = "Index";
@@ -91,7 +91,7 @@
                         <td>
                              @if (lesson.ClassSize.HasValue)
                              {
-                                @Html.DisplayFor(modelItem => lesson.StudentsCount)
+                                @Html.DisplayFor(modelItem => lesson.Attendances)
                                 <text>/</text>
                                 @Html.DisplayFor(modelItem => lesson.ClassSize)                        
                              }

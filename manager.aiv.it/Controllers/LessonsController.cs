@@ -24,7 +24,7 @@ namespace manager.aiv.it.Controllers
             int? vSelectedvalue = null;
 
             //defaults lessons of interest for the current teacher
-            IEnumerable<ViewLessonFullData> hLessonsView = db.ViewLessonFullDatas;
+            IEnumerable<ViewLessonFullData2> hLessonsView = db.ViewLessonFullData2;
             IEnumerable<Lesson> hLessons;
 
             if (searchId.HasValue && search != null)
@@ -108,8 +108,6 @@ namespace manager.aiv.it.Controllers
                 ViewBag.SearchId = new SelectList(hSearchTypes, "Id", "Name", null);
             }
 
-
-
             return View(hLessonsView.GroupBy(l => l.Date).OrderByDescending(l => l.Key));
         }
 
@@ -151,7 +149,6 @@ namespace manager.aiv.it.Controllers
             var classes = from c in db.Classes where c.Edition.Course.Teachers.Select(t => t.Id).Contains(hTeacher.Id) && !c.IsClosed select c;
             
             
-
             if (!classid.HasValue)
             {
                 ViewBag.ClassId = new SelectList(classes, "Id", "DisplayName");
@@ -192,7 +189,7 @@ namespace manager.aiv.it.Controllers
         public ActionResult Create([Bind(Include = "Id,ClassId,TeacherId,Date,Notes")] Lesson lesson, List<int> topics, List<int> students, HttpPostedFileBase upload)
         {
             User hTeacher = db.Users.Find(Session.GetUser().Id);
-
+            
             //Lesson already = (from l in db.Lessons
             //                  where l.Teacher.Id == hTeacher.Id &&
             //                  DbFunctions.TruncateTime(l.Date) == DbFunctions.TruncateTime(DateTime.Now) &&

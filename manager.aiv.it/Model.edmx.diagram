@@ -17,8 +17,8 @@
         <EntityTypeShape EntityType="AivEntities.Submission" Width="1.5" PointX="14.25" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.Topic" Width="1.5" PointX="13" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.User" Width="1.5" PointX="9.375" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.ViewLessonPresence" Width="1.5" PointX="2.75" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AivEntities.ViewStudentFullData" Width="1.5" PointX="4.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonPresence" Width="2" PointX="1.125" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AivEntities.ViewStudentFullData" Width="2.125" PointX="4.625" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AivEntities.ViewStudentNote" Width="1.875" PointX="6.75" PointY="15.5" IsExpanded="true" />
         <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToExercise" ManuallyRouted="false" />
         <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToTeacher" ManuallyRouted="false" />
@@ -48,7 +48,7 @@
         <AssociationConnector Association="AivEntities.FK_Lesson_ToBinary" />
         <AssociationConnector Association="AivEntities.FK_Lesson_ToUser" />
         <AssociationConnector Association="AivEntities.CoveredTopic" />
-        <EntityTypeShape EntityType="AivEntities.ViewLessonFullData" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonFullData" Width="1.875" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="AivEntities.Class" Width="1.5" PointX="15.5" PointY="0.625" />
         <AssociationConnector Association="AivEntities.FK_ExerciseAssignment_ToClass" />
         <AssociationConnector Association="AivEntities.FK_Attending_ToClass" />
@@ -56,6 +56,10 @@
         <AssociationConnector Association="AivEntities.FK_Lesson_ToClass" />
         <AssociationConnector Association="AivEntities.FK_User_ToClass" />
         <AssociationConnector Association="AivEntities.PreviousClass" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonAbsence" Width="1.5" PointX="3.375" PointY="8.875" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonAttendance" Width="1.5" PointX="5.375" PointY="8.875" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonAttendancesAbsence" Width="1.5" PointX="10.375" PointY="9.875" />
+        <EntityTypeShape EntityType="AivEntities.ViewLessonFullData2" Width="2.25" PointX="15.375" PointY="12.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
